@@ -1,0 +1,135 @@
+<div class="wrapper">
+    <div class="sidebar" data-color="blue" data-image="">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="" class="simple-text">
+                    <div class="logo-img">
+                        <img src="/assets/img/logo.png"/>
+                    </div>
+                    M2I Smart Grid
+                </a>
+            </div>
+            
+        </div>
+        <div class="sidebar-background" style="background-image: url(assets/img/sidebar-background.png)"></div>
+    </div>
+    <div class="main-panel">
+    <div class="main-content" style="padding-top: 15px;">
+        <div class="container-fluid" >
+            <div class="row">
+                <div class="col-md-12">
+                     <div class="card">
+     
+                         <div class="main-content">
+                            
+                            <h2 class="position-h2">{{title}}</h2>
+                            
+                            <form (submit)="RegisterMethod()" [formGroup]="form"> 
+                                <div class="row">
+                                   <div class="form-group col-md-6">
+                                       <mat-form-field class="full-width" appearance="outline">
+                                               <mat-label>Username*</mat-label>
+                                               <input matInput placeholder="username" formControlName="username" type="text" name="username" id="username" />
+                                           <mat-error *ngIf="form.invalid">{{getErrorMessageUsername()}}</mat-error>
+                                       </mat-form-field>
+                                   </div>
+                               
+                                
+                                   <div class="form-group col-md-6">    
+                                       <mat-form-field class="full-width" appearance="outline">
+                                           <mat-label>Email*</mat-label>
+                                           <input matInput formControlName="uEmail" type="email" name="uEmail" id="uEmail"  placeholder="Ex. xyz@example.com"/>
+                                           <mat-error *ngIf="form.invalid">{{getErrorMessageEmail()}}</mat-error>
+                                       </mat-form-field>
+                                   </div>
+                                </div>
+                        
+                                <div class="row">
+                                   <div class="col-md-6 form-group">
+                                       <mat-form-field class="full-width" appearance="outline">
+                                           <mat-label>Password*</mat-label>
+                                           <input formControlName="password" type="password" name="password" id="password" (change)="onPasswordChange()" matInput/>
+                                           <mat-error *ngIf="form.invalid">{{getErrorMessagePassword()}}</mat-error>
+                                       </mat-form-field>
+                                   </div>  
+                                   <div class="col-md-6 form-group">
+                                       <mat-form-field class="full-width" appearance="outline" [disabled]="!form.get('password')">
+                                           <mat-label>Confirm password*</mat-label>
+                                           <input formControlName="passwordconfirmation" type="password" name="passwordconfirmation" id="passwordconfirmation" (change)="onPasswordChange()" matInput/>
+                                           <mat-error *ngIf="form.invalid">{{getErrorMessagePasswordConfirmation()}}</mat-error>
+                                       </mat-form-field>
+                                   </div>
+                                </div>
+                                <div class="row">
+                                   <div class="col-md-6 form-group">
+                                       <mat-form-field class="full-width" appearance="outline">
+                                            <mat-label>FirstName*</mat-label>
+                                            <input formControlName="firstname" type="text" name="firstname" id="firstname" matInput/>
+                                            <mat-error *ngIf="form.invalid">{{getErrorMessageFirstname()}}</mat-error>
+                                        </mat-form-field>
+                                   </div>
+                                   <div class="col-md-6 form-group">
+                                       <mat-form-field class="full-width" appearance="outline">
+                                           <mat-label>Last Name*</mat-label>
+                                           <input formControlName="lastname" type="text" name="lastname" id="lastname" matInput/>
+                                           <mat-error *ngIf="form.invalid">{{getErrorMessageLastname()}}</mat-error>
+                                       </mat-form-field>
+                                   </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <mat-form-field class="full-width"  appearance="outline">
+                                                <mat-label>Address*</mat-label>
+                                                <input matInput placeholder="Address" formControlName="address" type="text" name="address" id="address" />
+                                                <mat-error *ngIf="form.invalid">{{getErrorMessageAddress()}}</mat-error>
+                                            </mat-form-field>
+                                    
+                                            <mat-form-field class="full-width" appearance="outline">
+                                                <mat-label>Birthday*</mat-label>
+                                                <input formControlName="birthday" type="date" name="birthday" id="birthday" matInput/>
+                                                <mat-error *ngIf="form.invalid">{{getErrorMessageBirthday()}}</mat-error>
+                                            </mat-form-field>
+                        
+                                            <mat-form-field class="full-width" appearance="outline">
+                                                <mat-label>User role*</mat-label>
+                                                <mat-select formControlName="roleOfUser">
+                                                    <mat-option>--</mat-option>
+                                                    <mat-option *ngFor="let role of userRolesKeys()" value="{{role}}">{{role}}</mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="form.invalid">{{getErrorMessageUserRole()}}</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field *ngIf="form.get('roleOfUser')!.value === 'TEAM_MEMBER'" class="full-width" appearance="outline">
+                                               <mat-label>Team*</mat-label>
+                                               <mat-select formControlName="teamOfUser">
+                                                   <mat-option>--</mat-option>
+                                               </mat-select>
+                                               <mat-error *ngIf="form.invalid"></mat-error>
+                                           </mat-form-field>
+                                        </div>
+                                    </div>
+                                   <div class="col-md-6 image-placeholder">
+                                       <div class="form-group" matTooltip="Upload image">
+                                           <app-input-image></app-input-image>
+                                       </div>
+                                   </div>
+                                    
+                                </div>
+                                <div class="parent">
+                                    <div class="custom-width-div" style="text-align: center; margin-top: 2rem;">          
+                                    <button class="custom-width-btn" mat-flat-button color="Primary" [disabled]="form.invalid">Register</button>
+                                    <button class="custom-width-btn" mat-flat-button color="Accent" routerLink="/''">Cancel</button>
+                                    </div>
+                                </div>
+                            </form> 
+                         
+                            <router-outlet></router-outlet>     
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+

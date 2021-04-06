@@ -1,0 +1,14 @@
+<div class="full-width inline-block" >
+    <!--div *ngIf="!userProfileImage">
+        <img  class="image-placeholder" src="https://content.hostgator.com/img/weebly_image_sample.png" alt="Image field placeholder...">
+    </div>
+    <div *ngIf="userProfileImage">
+        <img  class="image-placeholder" src="{{userProfileImage}}" alt="Image field placeholder...">
+    </div-->
+    <div *ngIf="imageBase64">
+        <a class="custom-btn-img" mat-raised-button (click)="InputImageButton.click()"><img class="img-comp-set" [src]="imageBase64"/></a>
+    </div>
+    <!--button class="custom-btn-img" type="button" mat-raised-button >Select image</button-->
+    <input #InputImageButton type="file" style="display: none;" accept="image/*" (change)="change($event)">
+    
+</div>

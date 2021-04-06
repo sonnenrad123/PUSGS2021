@@ -1,0 +1,22 @@
+:host{
+    display: block;
+    width: 400px;
+    height: 200px;
+}
+
+.intro {
+    
+    height:150px;
+    width: 50px;
+    overflow:hidden;
+    }
+
+.img-comp-set{
+    height: 200px;
+    width: 150px;
+    margin: auto;
+}
+
+.custom-btn-img{
+    margin: 0 auto;
+}

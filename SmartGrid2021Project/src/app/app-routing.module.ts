@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
+import { RegisterComponent } from './register/register.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { TestComponent2Component } from './test-component2/test-component2.component';
 const routes: Routes = [
   {
     path:'',
-    redirectTo: 'test',
+    redirectTo: 'home',
     pathMatch: 'full',
     
+  },
+  {
+    path:'home',
+    component: HomeComponent
   },
   {
     path:'test',
@@ -23,7 +29,17 @@ const routes: Routes = [
     children:[
       {path: '', component: TestComponent2Component}
     ]
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
+    pathMatch: 'full'
   }
+  
 ];
 
 @NgModule({

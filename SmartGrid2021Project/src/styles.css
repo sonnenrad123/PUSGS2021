@@ -540,6 +540,7 @@ input:focus {
 .main-panel .main-content {
   padding: 30px 15px;
   min-height: calc(100% - 123px);
+  text-align: center;
 }
 .main-panel > .footer {
   border-top: 1px solid #e7e7e7;
@@ -2042,3 +2043,5 @@ input:focus {
 .btn-group.select.open {
   overflow: visible;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
