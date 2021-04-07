@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import VectorSource from 'ol/source/Vector';
 import  Map  from 'ol/Map';
 import View from 'ol/View';
 import VectorLayer from 'ol/layer/Vector';
@@ -7,6 +8,9 @@ import Icon from 'ol/style/Icon';
 import OSM from 'ol/source/OSM';
 import * as olProj from 'ol/proj';
 import TileLayer from 'ol/layer/Tile';
+import Layer from 'ol/layer/Layer';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
 
 @Component({
   selector: 'app-map',
@@ -31,6 +35,16 @@ export class MapComponent implements OnInit {
         zoom: 10
       })
     });
+    var layer = new VectorLayer({
+      source: new VectorSource({
+        features:[
+          new Feature({
+            geometry: new Point(olProj.fromLonLat([19.833549, 45.267136]))
+          })
+        ]
+      })
+    });
+    this.map.addLayer(layer);
   }
 
 }
