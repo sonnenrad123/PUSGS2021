@@ -9,8 +9,18 @@
     </div>
     <ul class="nav responsive-nav">
         
-        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem}}">
-            <a  [routerLink]="[menuItem.path]">
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
+            <a *ngIf="menuItem.class != 'secondary'" [routerLink]="[menuItem.path]">
+                <i class="{{menuItem.icon}}"></i>
+                <p>{{menuItem.title}}</p>
+            </a>
+        </li>
+        
+    </ul>
+    
+    <ul class="nav responsive-nav dole">
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="dole">
+            <a *ngIf="menuItem.class == 'secondary'" [routerLink]="[menuItem.path]">
                 <i class="{{menuItem.icon}}"></i>
                 <p>{{menuItem.title}}</p>
             </a>
