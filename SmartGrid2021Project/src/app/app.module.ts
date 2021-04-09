@@ -23,7 +23,11 @@ import { AngularFireDatabaseModule } from '@angular/fire/database'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { environment } from 'src/environments/environment';
 import { MapComponent } from './map/map.component';
+import { IncidentBrowserComponent } from './incident-browser/incident-browser.component';
 
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
+import {MatPaginatorModule} from '@angular/material/paginator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,11 +40,15 @@ import { MapComponent } from './map/map.component';
     InputImageComponent,
     HomeComponent,
     LoginComponent,
-    MapComponent
+    MapComponent,
+    IncidentBrowserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
     ReactiveFormsModule,
     AngularMaterialModule,
     BrowserAnimationsModule, 

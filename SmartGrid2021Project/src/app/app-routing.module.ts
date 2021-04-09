@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { IncidentBrowserComponent } from './incident-browser/incident-browser.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
 import { MapComponent } from './map/map.component';
 import { RegisterComponent } from './register/register.component';
@@ -22,6 +23,13 @@ const routes: Routes = [
     component: GeneralLayoutComponent,
     children:[
       {path: '',component: MapComponent},
+    ]
+  },
+  {
+    path:'IncidentBrowser',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: IncidentBrowserComponent},
     ]
   },
   {
