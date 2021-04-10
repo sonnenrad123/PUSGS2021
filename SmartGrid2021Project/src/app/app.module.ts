@@ -28,6 +28,7 @@ import { IncidentBrowserComponent } from './incident-browser/incident-browser.co
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { AddIncidentComponent } from './add-incident/add-incident.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     HomeComponent,
     LoginComponent,
     MapComponent,
-    IncidentBrowserComponent
+    IncidentBrowserComponent,
+    AddIncidentComponent
   ],
   imports: [
     BrowserModule,

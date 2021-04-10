@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddIncidentComponent } from './add-incident/add-incident.component';
 import { HomeComponent } from './home/home.component';
 import { IncidentBrowserComponent } from './incident-browser/incident-browser.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
@@ -30,6 +31,13 @@ const routes: Routes = [
     component: GeneralLayoutComponent,
     children:[
       {path: '',component: IncidentBrowserComponent},
+    ]
+  },
+  {
+    path:'AddIncident',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: AddIncidentComponent},
     ]
   },
   {

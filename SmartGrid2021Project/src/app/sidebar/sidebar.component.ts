@@ -20,7 +20,9 @@ export const ROUTES: RouteInfo[] = [
     
 
     { path: '/NoRoute', title: 'Notifications' , icon:'pe-7s-bell', class:'secondary'},
-    { path: '/NoRoute', title:'Settings',icon:'pe-7s-tools',class:'secondary'}
+    { path: '/NoRoute', title:'Settings',icon:'pe-7s-tools',class:'secondary'},
+
+    { path: '/AddIncident', title:'Add incident',icon:'',class:'hidden'}
   
 ];
 
