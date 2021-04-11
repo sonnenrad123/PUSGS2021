@@ -106,10 +106,10 @@ export class IncidentBrowserComponent implements OnInit {
   sortData(sortParameters: Sort) {
     const keyName = sortParameters.active;
     if (sortParameters.direction === 'asc') {
-      return this.Incidents= this.Incidents.sort((a: Incident, b: Incident) => a[keyName].localeCompare(b[keyName]));
+      return this.Incidents = this.Incidents.sort((a,b) => {return compare(a[keyName],b[keyName],true)});
     } 
     else if (sortParameters.direction === 'desc') {
-      return this.Incidents = this.Incidents.sort((a: Incident, b: Incident) => b[keyName].localeCompare(a[keyName]));
+      return this.Incidents = this.Incidents.sort((a,b) => {return compare(a[keyName],b[keyName], false)});
     } else 
     {
       if(this.toggleAll){
@@ -155,5 +155,7 @@ export class IncidentBrowserComponent implements OnInit {
     this.toggleMine = true;
   }
 }
-
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
 

@@ -82,4 +82,6 @@ export class MatTableComponent implements OnInit, AfterViewInit {
   emitRowAction(row: any) {
     this.rowAction.emit(row);
   }
+
+  
 }
