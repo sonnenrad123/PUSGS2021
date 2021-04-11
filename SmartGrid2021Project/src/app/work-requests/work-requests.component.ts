@@ -41,12 +41,12 @@ export class WorkRequestsComponent implements OnInit {
   
   getWorkRequests(): any[]{
     return [
-      {id:'WR 1', start_date:new Date().toDateString(), phone_no:'351-661-3252', status: WrDocumentStatus.DRAFT, address:'Some address 1'},
-      {id:'WR 2', start_date:new Date().toDateString(), phone_no:'251-661-5362', status: WrDocumentStatus.DRAFT, address:'Some address 2'},
-      {id:'WR 3', start_date:new Date().toDateString(), phone_no:'351-661-3252', status: WrDocumentStatus.DRAFT, address:'Some address 3'},
-      {id:'WR 4', start_date:new Date().toDateString(), phone_no:'251-661-5362', status: WrDocumentStatus.DRAFT, address:'Some address 4'},
-      {id:'WR 5', start_date:new Date().toDateString(), phone_no:'352-758-3154', status: WrDocumentStatus.DRAFT, address:'Some address 5'},
-      {id:'WR 6', start_date:new Date().toDateString(), phone_no:'351-661-1234', status: WrDocumentStatus.DRAFT, address:'Some address 6'},
+      {id:'WR 1', start_date:new Date(), phone_no:'351-661-3252', status: WrDocumentStatus.DRAFT, address:'Some address 1'},
+      {id:'WR 2', start_date:new Date("2020-04-16"), phone_no:'251-661-5362', status: WrDocumentStatus.DRAFT, address:'Some address 2'},
+      {id:'WR 3', start_date:new Date("2020-02-16"), phone_no:'351-661-3252', status: WrDocumentStatus.DRAFT, address:'Some address 3'},
+      {id:'WR 4', start_date:new Date("2021-01-02"), phone_no:'251-661-5362', status: WrDocumentStatus.DRAFT, address:'Some address 4'},
+      {id:'WR 5', start_date:new Date("2021-01-01"), phone_no:'352-758-3154', status: WrDocumentStatus.DRAFT, address:'Some address 5'},
+      {id:'WR 6', start_date:new Date(), phone_no:'351-661-1234', status: WrDocumentStatus.DRAFT, address:'Some address 6'},
     ];
   }
   initializeColumns(): void{
@@ -86,10 +86,10 @@ export class WorkRequestsComponent implements OnInit {
   sortData(sortParameters: Sort) {
     const keyName = sortParameters.active;
     if (sortParameters.direction === 'asc') {
-      return this.workRequests = this.workRequests.sort((a: WorkRequest, b: WorkRequest) => a[keyName].localeCompare(b[keyName]));
+      return this.workRequests = this.workRequests.sort((a,b) => {return compare(a[keyName],b[keyName],true)});
     } 
     else if (sortParameters.direction === 'desc') {
-      return this.workRequests = this.workRequests.sort((a: WorkRequest, b: WorkRequest) => b[keyName].localeCompare(a[keyName]));
+      return this.workRequests = this.workRequests.sort((a,b) => {return compare(a[keyName],b[keyName], false)});
     } else 
     {
       return this.workRequests = this.getWorkRequests();
@@ -100,3 +100,7 @@ export class WorkRequestsComponent implements OnInit {
     this.workRequests = this.workRequests.filter(item => item.id !== workRequest.id)
   }
 }
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
