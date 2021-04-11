@@ -13,7 +13,7 @@
           
         </td>
       </ng-container>
-      <ng-container *ngFor="let tableColumn of tableColumns" [matColumnDef]="tableColumn.name">
+      <ng-container *ngFor="let tableColumn of tableColumns" [matColumnDef]="tableColumn.name"  [sticky]= "'tableColumn.isSticky'">
   
         <!-- if sortable column header -->
         <ng-container *ngIf="tableColumn.isSortable; else notSortable">

@@ -19,7 +19,7 @@ export interface Incident{
   styleUrls: ['./incident-browser.component.css']
 })
 export class IncidentBrowserComponent implements OnInit {
-  displayedColumns: string[] = ['id','startDate','phoneNo','status','address'];
+  
   toggleAll: boolean;
   toggleMine: boolean;
   WRTableColumns: TableColumn[];
@@ -68,13 +68,16 @@ export class IncidentBrowserComponent implements OnInit {
       name: 'ID',
       dataKey: 'id',
       isSortable: true,
-      position: 'left'
+      position: 'left',
+      isSticky: true
+      
     },
     {
       name: 'START DATE',
       dataKey: 'startDate',
       isSortable: true,
-      position: 'left'
+      position: 'left',
+      isSticky:true
     },
     {
       name: 'PHONE NO.',
@@ -107,10 +110,10 @@ export class IncidentBrowserComponent implements OnInit {
     } else 
     {
       if(this.toggleAll){
-        return this.Incidents= this.incidents_examplesALL;
+        return this.Incidents = this.incidents_examplesALL.slice();
       }
       else{
-        return this.Incidents = this.incidents_examplesMINE;
+        return this.Incidents = this.incidents_examplesMINE.slice();
       }
     }
   }
@@ -129,7 +132,7 @@ export class IncidentBrowserComponent implements OnInit {
   ngOnInit(): void {
     this.toggleAll = true;
     this.toggleMine = false;
-    this.Incidents = this.incidents_examplesALL;
+    this.Incidents = this.incidents_examplesALL.slice();
     this.initializeColumns();
   }
 
@@ -138,13 +141,13 @@ export class IncidentBrowserComponent implements OnInit {
   }
   
   showAllData(){
-    this.Incidents = this.incidents_examplesALL;
+    this.Incidents = this.incidents_examplesALL.slice();
     this.toggleAll = true;
     this.toggleMine = false;
 
   }
   showMineData(){
-    this.Incidents = this.incidents_examplesMINE;
+    this.Incidents = this.incidents_examplesMINE.slice();
     this.toggleAll = false;
     this.toggleMine = true;
   }

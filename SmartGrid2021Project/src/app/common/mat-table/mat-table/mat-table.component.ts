@@ -22,6 +22,7 @@ export class MatTableComponent implements OnInit, AfterViewInit {
   @Input() isPageable = false;
   @Input() isSortable = false;
   @Input() isFilterable = false;
+  @Input() isSticky = false;
   @Input() tableColumns: TableColumn[];
   @Input() rowActionIcon: string;
   @Input() paginationSizes: number[] = [5, 10, 15];
@@ -57,6 +58,10 @@ export class MatTableComponent implements OnInit, AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.tableDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.tableDataSource.paginator) {
+      this.tableDataSource.paginator.firstPage();
+    }
   }
 
   sortTable(sortParameters: Sort) {
