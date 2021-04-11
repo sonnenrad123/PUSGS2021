@@ -20,16 +20,28 @@ export class LoginComponent {
   }
 
   login(){
+    this.afAuth.signInWithEmailAndPassword(this.loginForm.get('email').value, this.loginForm.get('password').value)
+    .then((userCredential) => {
+      var user = userCredential.user;
+    })
+    .catch((error)=>{
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
     this.router.navigate(['/test']);
   }
 
   loginWithGoogle(){
     this.afAuth.signInWithRedirect(new firebase.default.auth.GoogleAuthProvider());
+    this.router.navigate(['/test']);
   }
 
   loginWithFacebook(){
     this.afAuth.signInWithRedirect(new firebase.default.auth.FacebookAuthProvider());
+    this.router.navigate(['/test']);
   }
+
+ 
   getErrorMessageEmail(){
     const field = this.loginForm.get('email');
     

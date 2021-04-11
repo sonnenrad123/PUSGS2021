@@ -9,11 +9,28 @@
     </div>
     <ul class="nav responsive-nav">
         
-        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
-            <a *ngIf="menuItem.class != 'secondary'" [routerLink]="[menuItem.path]">
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}}" >
+            <a *ngIf="menuItem.class != 'secondary' && menuItem.path !== '/docs'" [routerLink]="[menuItem.path]">
                 <i class="{{menuItem.icon}}"></i>
                 <p>{{menuItem.title}}</p>
             </a>
+            <a *ngIf="menuItem.path === '/docs'" (click)="hideShowSubmenu()" class="menuItem.class" style="cursor: pointer;" >
+                <i class="{{menuItem.icon}}"></i>
+                <p>{{menuItem.title}}
+                    <span *ngIf="menuItem.children && menuItem.children.length > 0" class="fa fa-caret-down"></span>
+                </p>
+            </a>
+            <ng-container *ngIf="menuItem.children && menuItem.children.length > 0 && showSubMenu">
+                <ul class="dropdown-content" >
+                   <li routerLinkActive="active" *ngFor="let childmenu of menuItem.children" class="{{menuItem.class}} nav-item" style="list-style-type: none;">
+                     <a [routerLink]="[childmenu.path]">
+                        <i class="{{childmenu.icon}}"></i>
+                        <p>{{childmenu.title}}</p>
+                      </a>
+                   </li>
+                </ul>
+                
+            </ng-container>
         </li>
         
     </ul>

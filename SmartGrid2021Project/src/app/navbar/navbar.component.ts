@@ -44,11 +44,15 @@ export class NavbarComponent implements OnInit {
             return this.listTitles[item].title;
         }
     }
-    return 'test';
+    
   }
 
   getLocation(){
     var location = this.location.path();
     return location;
+  }
+
+  logOut(){
+    this.afAuth.signOut();
   }
 }
