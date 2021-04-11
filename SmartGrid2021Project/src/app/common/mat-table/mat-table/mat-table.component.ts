@@ -1,9 +1,9 @@
-import { EventEmitter, Output } from '@angular/core';
+import { EventEmitter, NgZone, Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from '../table-column';
 
 
@@ -18,6 +18,7 @@ export class MatTableComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[];
   @ViewChild(MatPaginator, {static:false}) matPaginator: MatPaginator;
   @ViewChild(MatSort, {static:true}) matSort: MatSort;
+  @ViewChild(MatTable, {static:false}) table: MatTable<any>;
 
   @Input() isPageable = false;
   @Input() isSortable = false;
@@ -35,9 +36,17 @@ export class MatTableComponent implements OnInit, AfterViewInit {
     this.setTableDataSource(data);
   }
 
-  constructor() { }
+  constructor(private ngZone: NgZone) {
+
+  }
   ngAfterViewInit(): void {
     this.tableDataSource.paginator = this.matPaginator;
+    
+  }
+  ngAfterViewChecked(): void {
+    if (this.table) {
+        this.table.updateStickyColumnStyles();
+    }
   }
 
   ngOnInit(): void {

@@ -36,14 +36,14 @@ export class IncidentBrowserComponent implements OnInit {
     {id: "61111", startDate: new Date("2021-02-16") , phoneNo: "255-256-256",status: "YotImplemented", address: "Mdressa neka neka"},
     {id: "71111", startDate: new Date("2021-04-16") , phoneNo: "255-258-256",status: "BotImplemented", address: "Rdressa neka neka"},
     {id: "81111", startDate: new Date("2021-01-15") , phoneNo: "255-257-256",status: "EotImplemented", address: "Adressa neka neka"},
-    {id: "91111", startDate: new Date("2021-01-16") , phoneNo: "255-259-256",status: "NotImplemented", address: "Adressa neka neka"},
-    {id: "11111", startDate: new Date() , phoneNo: "255-255-250",status: "AotImplemented", address: "Adressa neka neka"},
+    {id: "91111", startDate: new Date("2021-01-16"), phoneNo: "255-259-256",status: "NotImplemented", address: "Adressa neka neka"},
+    {id: "11111", startDate: new Date(), phoneNo: "255-255-250",status: "AotImplemented", address: "Adressa neka neka"},
     {id: "21111", startDate: new Date() , phoneNo: "255-255-252",status: "XotImplemented", address: "Cdressa neka neka"},
     {id: "31111", startDate: new Date("2019-01-16") , phoneNo: "255-255-251",status: "DotImplemented", address: "Bdressa neka neka"},
     {id: "41111", startDate: new Date("2020-01-16") , phoneNo: "255-255-253",status: "CtImplemented", address: "Ddressa neka neka"},
     {id: "51111", startDate: new Date("2021-03-16") , phoneNo: "255-255-258",status: "NotImplemented", address: "Ndressa neka neka"},
     {id: "61111", startDate: new Date("2021-02-16") , phoneNo: "255-256-256",status: "YotImplemented", address: "Mdressa neka neka"},
-    {id: "71111", startDate: new Date("2021-04-16") , phoneNo: "255-258-256",status: "BotImplemented", address: "Rdressa neka neka"},
+    {id: "71111", startDate: new Date("2021-04-16"), phoneNo: "255-258-256",status: "BotImplemented", address: "Rdressa neka neka"},
     {id: "81111", startDate: new Date("2021-01-15") , phoneNo: "255-257-256",status: "EotImplemented", address: "Adressa neka neka"},
     {id: "91111", startDate: new Date("2021-01-16") , phoneNo: "255-259-256",status: "NotImplemented", address: "Adressa neka neka"},
   ]
@@ -77,25 +77,28 @@ export class IncidentBrowserComponent implements OnInit {
       dataKey: 'startDate',
       isSortable: true,
       position: 'left',
-      isSticky:true
+      isSticky: true
     },
     {
       name: 'PHONE NO.',
       dataKey: 'phoneNo',
       isSortable: true,
-      position: 'left'
+      position: 'left',
+      
     },
     {
       name: 'STATUS',
       dataKey: 'status',
       isSortable: true,
-      position: 'left'
+      position: 'left',
+     
     },
     {
       name: 'ADDRESS',
       dataKey: 'address',
       isSortable: true,
-      position: 'left'
+      position: 'left',
+     
     },
     ];
   }

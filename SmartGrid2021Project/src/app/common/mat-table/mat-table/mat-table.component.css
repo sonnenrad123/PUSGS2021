@@ -10,10 +10,7 @@ white-space: nowrap;
 overflow: hidden;
 vertical-align: middle;
 }
-.mat-paginator{
-   width: 100%;
-   overflow-x:unset;
-}
+
 
 
 
