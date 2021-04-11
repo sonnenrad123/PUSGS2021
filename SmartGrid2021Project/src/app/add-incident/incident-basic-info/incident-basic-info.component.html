@@ -1,0 +1,181 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Basic information</h4>
+                    <div class="content">
+                        <form [formGroup]="basicInformationForm" (ngSubmit)="onSubmit()" >
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Incident ID (auto-generated)</label>
+                                        <input type="text" id="id" formControlName="id" class="form-control" readonly>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float:right">
+                                    <div class="form-group">
+                                        <label>Affected customers (Auto-set based on equipment)</label>
+                                        <input type="number" class="form-control" id="affectedCustomers" formControlName="affectedCustomers">
+                                        
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                      <label>Type</label>
+
+                                      <select formControlName="incidentType" id="incidentType" class="form-control">
+                                            <option *ngFor="let type of incidentTypes">
+                                                {{type}}
+                                            </option>
+                                      </select>
+                                      <div class="text-warning" *ngIf="basicInformationForm.controls.incidentType.invalid">
+                                            Please select incident type.
+                                      </div>
+                                    </div>
+                                      
+                                </div>
+                                <div class="col-md-3" style="float:right">
+                                    <div class="form-group">
+                                        <label>Outage time</label>
+                                        <input type="datetime-local" class="form-control" id="outageTime" formControlName="outageTime">
+                                        <div class="text-warning" *ngIf="basicInformationForm.controls.outageTime.invalid">
+                                            Please input outage time.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Priority (Auto-set based on equipment)</label>
+                                        <input type="number" class="form-control" id="priority" formControlName="priority" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float:right">
+                                    <div class="form-group">
+                                        <label>ETR</label>
+                                        <input type="datetime-local" class="form-control" id="etr" formControlName="etr">
+                                        <div class="text-warning" *ngIf="basicInformationForm.controls.etr.invalid">
+                                            Please input ETR.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <label for="confirmed">Confirmed check</label>
+                                        <input type="checkbox" id="confirmed" formControlName="confirmed" class="form-control" >
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float:right">
+                                    <div class="form-group">
+                                        <label>Calls</label>
+                                        <input type="number" class="form-control" id="calls" formControlName="calls" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : 
+                                        event.charCode >= 48 && event.charCode <= 57" min="1" placeholder="Number of calls">
+                                        <div class="text-warning" *ngIf="basicInformationForm.controls.calls.invalid">
+                                            Please enter number of received calls.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <label class="form-control">Dispatched</label>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float:right">
+                                    <div class="form-group">
+                                        <label>Voltage(kV)</label>
+                                        <input type="number" class="form-control"  id="voltage" formControlName="voltage" placeholder="Number of volts" min="0" step="0.1">
+                                        <div class="text-warning" *ngIf="basicInformationForm.controls.voltage.invalid">
+                                            Please enter voltage value.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>ETA</label>
+                                        <input type="datetime-local" class="form-control" id="eta" formControlName="eta">
+                                        <div class="text-warning" *ngIf="basicInformationForm.controls.eta.invalid">
+                                            Please input ETA.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float:right">
+                                    <div class="form-group">
+                                        <label>Scheduled time</label>
+                                        <input type="datetime-local" class="form-control" id="scheduledTime" formControlName="scheduledTime">
+                                        <div class="text-warning" *ngIf="basicInformationForm.controls.scheduledTime.invalid">
+                                            Please input scheduled time.
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>ATA</label>
+                                        <input type="datetime-local" class="form-control" id="ata" formControlName="ata">
+                                        <div class="text-warning" *ngIf="basicInformationForm.controls.ata.invalid">
+                                            Please input ATA.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="float:right">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control" id="incidentDesc" formControlName="incidentDesc">
+                                        
+                                    </div>
+
+                                </div>
+                                
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2" style="float: right;">
+                                    <div class="form-group">
+                                        <label for="dodeliSebi">I will solve incident</label>
+                                        <input type="checkbox" id="dodeliSebi" formControlName="dodeliSebi" class="form-control" >
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                                <div class="col-md-3" style="float:right">
+                                    <div class="form-group">
+                                        <button class="btn btn-success" [disabled]="!basicInformationForm.valid"  type="submit" style="margin-right: 10px;">Save</button>
+                                        <button class="btn btn-danger" (click)="onClear()" type="button">Clear</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { TestComponent2Component } from './test-component2/test-component2.component';
 import { WorkRequestsComponent } from './work-requests/work-requests.component';
+
 const routes: Routes = [
   {
     path:'',

@@ -32,6 +32,10 @@ import { AddIncidentComponent } from './add-incident/add-incident.component';
 import { WorkRequestsComponent } from './work-requests/work-requests.component';
 import { MatTableComponent } from './common/mat-table/mat-table/mat-table.component';
 import { DataPropertyGetterPipe } from './common/mat-table/data-property-getter/data-property-getter.pipe';
+import { IncidentBasicInfoComponent } from './add-incident/incident-basic-info/incident-basic-info.component';
+import {MatSelectModule} from '@angular/material/select';
+import { FormsModule} from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +53,8 @@ import { DataPropertyGetterPipe } from './common/mat-table/data-property-getter/
     AddIncidentComponent,
     WorkRequestsComponent,
     MatTableComponent,
-    DataPropertyGetterPipe
+    DataPropertyGetterPipe,
+    IncidentBasicInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +67,10 @@ import { DataPropertyGetterPipe } from './common/mat-table/data-property-getter/
     BrowserAnimationsModule, 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -10,6 +10,7 @@ export class AddIncidentComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.toggledButton = "BI";
   }
 
 
