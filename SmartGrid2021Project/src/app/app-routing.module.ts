@@ -8,6 +8,7 @@ import { MapComponent } from './map/map.component';
 import { RegisterComponent } from './register/register.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { TestComponent2Component } from './test-component2/test-component2.component';
+import { WorkRequestsComponent } from './work-requests/work-requests.component';
 const routes: Routes = [
   {
     path:'',
@@ -34,10 +35,17 @@ const routes: Routes = [
     ]
   },
   {
-    path:'AddIncident',
+    path:'workrequests',
     component: GeneralLayoutComponent,
     children:[
-      {path: '',component: AddIncidentComponent},
+      {path: '',component: WorkRequestsComponent},
+    ]
+  },
+  {
+    path:'switchingplans',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: TestComponentComponent},
     ]
   },
   {

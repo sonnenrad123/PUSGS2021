@@ -29,6 +29,9 @@ import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { AddIncidentComponent } from './add-incident/add-incident.component';
+import { WorkRequestsComponent } from './work-requests/work-requests.component';
+import { MatTableComponent } from './common/mat-table/mat-table/mat-table.component';
+import { DataPropertyGetterPipe } from './common/mat-table/data-property-getter/data-property-getter.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +46,10 @@ import { AddIncidentComponent } from './add-incident/add-incident.component';
     LoginComponent,
     MapComponent,
     IncidentBrowserComponent,
-    AddIncidentComponent
+    AddIncidentComponent,
+    WorkRequestsComponent,
+    MatTableComponent,
+    DataPropertyGetterPipe
   ],
   imports: [
     BrowserModule,
