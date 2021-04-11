@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
+import { Sort } from '@angular/material/sort';
+import { TableColumn } from '../common/mat-table/table-column';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
@@ -18,11 +19,11 @@ export interface Incident{
   styleUrls: ['./incident-browser.component.css']
 })
 export class IncidentBrowserComponent implements OnInit {
-  displayedColumns: string[] = ['id','startDate','phoneNo','status','address']
-  dataSource: MatTableDataSource<Incident>;
+  displayedColumns: string[] = ['id','startDate','phoneNo','status','address'];
   toggleAll: boolean;
   toggleMine: boolean;
- 
+  WRTableColumns: TableColumn[];
+  Incidents: Incident[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
@@ -61,46 +62,92 @@ export class IncidentBrowserComponent implements OnInit {
   ]
 
 
+  initializeColumns(): void{
+    this.WRTableColumns = [
+    {
+      name: 'ID',
+      dataKey: 'id',
+      isSortable: true,
+      position: 'left'
+    },
+    {
+      name: 'START DATE',
+      dataKey: 'startDate',
+      isSortable: true,
+      position: 'left'
+    },
+    {
+      name: 'PHONE NO.',
+      dataKey: 'phoneNo',
+      isSortable: true,
+      position: 'left'
+    },
+    {
+      name: 'STATUS',
+      dataKey: 'status',
+      isSortable: true,
+      position: 'left'
+    },
+    {
+      name: 'ADDRESS',
+      dataKey: 'address',
+      isSortable: true,
+      position: 'left'
+    },
+    ];
+  }
+
+  sortData(sortParameters: Sort) {
+    const keyName = sortParameters.active;
+    if (sortParameters.direction === 'asc') {
+      return this.Incidents= this.Incidents.sort((a: Incident, b: Incident) => a[keyName].localeCompare(b[keyName]));
+    } 
+    else if (sortParameters.direction === 'desc') {
+      return this.Incidents = this.Incidents.sort((a: Incident, b: Incident) => b[keyName].localeCompare(a[keyName]));
+    } else 
+    {
+      if(this.toggleAll){
+        return this.Incidents= this.incidents_examplesALL;
+      }
+      else{
+        return this.Incidents = this.incidents_examplesMINE;
+      }
+    }
+  }
+
+ 
 
   sortedData: Incident[];
   constructor() {
-    this.dataSource = new MatTableDataSource(this.incidents_examplesALL);
 
    }
 
   ngAfterViewInit(){
     
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   } 
 
   ngOnInit(): void {
     this.toggleAll = true;
     this.toggleMine = false;
+    this.Incidents = this.incidents_examplesALL;
+    this.initializeColumns();
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  removeOrder(incident: Incident) {
+    this.Incidents = this.Incidents.filter(item => item.id !== incident.id)
   }
   
   showAllData(){
-    this.dataSource.data = this.incidents_examplesALL;
+    this.Incidents = this.incidents_examplesALL;
     this.toggleAll = true;
     this.toggleMine = false;
 
   }
   showMineData(){
-    this.dataSource.data = this.incidents_examplesMINE;
+    this.Incidents = this.incidents_examplesMINE;
     this.toggleAll = false;
     this.toggleMine = true;
   }
 }
 
-function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-}
+

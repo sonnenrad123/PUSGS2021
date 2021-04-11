@@ -35,6 +35,13 @@ const routes: Routes = [
     ]
   },
   {
+    path:'AddIncident',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: AddIncidentComponent},
+    ]
+  },
+  {
     path:'workrequests',
     component: GeneralLayoutComponent,
     children:[
