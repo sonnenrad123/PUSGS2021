@@ -35,6 +35,8 @@ import { DataPropertyGetterPipe } from './common/mat-table/data-property-getter/
 import { IncidentBasicInfoComponent } from './add-incident/incident-basic-info/incident-basic-info.component';
 import {MatSelectModule} from '@angular/material/select';
 import { FormsModule} from '@angular/forms';
+import { IncidentDevicesComponent } from './add-incident/incident-devices/incident-devices.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { FormsModule} from '@angular/forms';
     WorkRequestsComponent,
     MatTableComponent,
     DataPropertyGetterPipe,
-    IncidentBasicInfoComponent
+    IncidentBasicInfoComponent,
+    IncidentDevicesComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import { FormsModule} from '@angular/forms';
     AngularFireAuthModule,
     MatSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent],
