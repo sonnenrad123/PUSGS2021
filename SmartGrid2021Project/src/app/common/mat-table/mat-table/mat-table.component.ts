@@ -77,10 +77,25 @@ export class MatTableComponent implements OnInit, AfterViewInit {
     // defining name of data property, to sort by, instead of column name
     sortParameters.active = this.tableColumns.find(column => column.name === sortParameters.active).dataKey;
     this.sort.emit(sortParameters);
+
+    const keyName = sortParameters.active;
+    if (sortParameters.direction === 'asc') {
+      return this.tableDataSource.filteredData = this.tableDataSource.filteredData.sort((a,b) => {return this.compare(a[keyName],b[keyName],true)});
+    } 
+    else if (sortParameters.direction === 'desc') {
+      return this.tableDataSource.filteredData = this.tableDataSource.filteredData.sort((a,b) => {return this.compare(a[keyName],b[keyName], false)});
+    } else 
+    {
+      return this.tableDataSource.filteredData = this.tableDataSource.filteredData;
+    }
   }
 
   emitRowAction(row: any) {
     this.rowAction.emit(row);
+  }
+
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
   

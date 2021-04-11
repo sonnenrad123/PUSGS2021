@@ -83,24 +83,5 @@ export class WorkRequestsComponent implements OnInit {
     },
   ];
   }
-  sortData(sortParameters: Sort) {
-    const keyName = sortParameters.active;
-    if (sortParameters.direction === 'asc') {
-      return this.workRequests = this.workRequests.sort((a,b) => {return compare(a[keyName],b[keyName],true)});
-    } 
-    else if (sortParameters.direction === 'desc') {
-      return this.workRequests = this.workRequests.sort((a,b) => {return compare(a[keyName],b[keyName], false)});
-    } else 
-    {
-      return this.workRequests = this.getWorkRequests();
-    }
-  }
-
-  removeOrder(workRequest: WorkRequest) {
-    this.workRequests = this.workRequests.filter(item => item.id !== workRequest.id)
-  }
-}
-function compare(a: number | string, b: number | string, isAsc: boolean) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 

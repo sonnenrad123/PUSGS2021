@@ -103,23 +103,7 @@ export class IncidentBrowserComponent implements OnInit {
     ];
   }
 
-  sortData(sortParameters: Sort) {
-    const keyName = sortParameters.active;
-    if (sortParameters.direction === 'asc') {
-      return this.Incidents = this.Incidents.sort((a,b) => {return compare(a[keyName],b[keyName],true)});
-    } 
-    else if (sortParameters.direction === 'desc') {
-      return this.Incidents = this.Incidents.sort((a,b) => {return compare(a[keyName],b[keyName], false)});
-    } else 
-    {
-      if(this.toggleAll){
-        return this.Incidents = this.incidents_examplesALL.slice();
-      }
-      else{
-        return this.Incidents = this.incidents_examplesMINE.slice();
-      }
-    }
-  }
+  
 
  
 
@@ -139,9 +123,7 @@ export class IncidentBrowserComponent implements OnInit {
     this.initializeColumns();
   }
 
-  removeOrder(incident: Incident) {
-    this.Incidents = this.Incidents.filter(item => item.id !== incident.id)
-  }
+  
   
   showAllData(){
     this.Incidents = this.incidents_examplesALL.slice();
@@ -154,8 +136,5 @@ export class IncidentBrowserComponent implements OnInit {
     this.toggleAll = false;
     this.toggleMine = true;
   }
-}
-function compare(a: number | string, b: number | string, isAsc: boolean) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 
