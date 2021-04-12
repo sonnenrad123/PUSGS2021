@@ -1,0 +1,32 @@
+.labelBeforeSlide {
+    vertical-align: top;
+    line-height: 24px; 
+    margin-right:2rem;
+    margin-bottom:0.5rem;
+    text-decoration: black;
+    font-weight: bold;
+  }
+
+.font-bold{
+    font-weight: bold;
+  }
+  .mat-slide-toggle-thumb {
+    width: 18px !important;
+    height: 18px !important;
+    transform: translate(0%, 0%);
+    background-image: url(https://cdn0.iconfinder.com/data/icons/flat-round-system/512/chrome_browser-512.png) !important;
+    background-origin: content-box;
+    background-size: contain;
+    background-position: center center;
+  }
+  .full-width{
+    width: 100%;
+}
+button{
+    width: 16%;
+    margin-right: 2rem;
+}
+
+.button-center-align{
+    text-align: center;
+}

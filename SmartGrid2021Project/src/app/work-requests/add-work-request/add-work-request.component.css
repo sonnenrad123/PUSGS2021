@@ -56,9 +56,7 @@
   .content-div{
     margin-left: 2rem;
   }
-  .margin-top-custom{
-    margin-top: 2rem;
-  }
+  
   ::ng-deep .mat-tab-label {
     padding: 20px !important; 
     justify-content: left !important;

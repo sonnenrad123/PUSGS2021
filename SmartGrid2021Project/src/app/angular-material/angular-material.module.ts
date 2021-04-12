@@ -10,6 +10,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatIconModule } from '@angular/material/icon'
 import { MatCommonModule } from '@angular/material/core'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatNativeDateModule } from '@angular/material/core'
 
 const modules = [
   MatInputModule,
@@ -20,7 +23,10 @@ const modules = [
   MatButtonToggleModule,
   MatTabsModule,
   MatIconModule, 
-  MatCommonModule
+  MatCommonModule,
+  MatSlideToggleModule,
+  MatNativeDateModule,
+  
 ];
 
 
@@ -30,7 +36,7 @@ const modules = [
     CommonModule
   ],
   exports:[
-    modules
+    
   ]
 })
 export class AngularMaterialModule { }

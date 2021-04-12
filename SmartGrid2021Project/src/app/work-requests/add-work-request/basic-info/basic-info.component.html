@@ -1,1 +1,160 @@
-<p>basic-info works!</p>
+<div class="main-content" style="margin-top: -15px;">
+    <div class="container-fluid">
+        <div class="row">    
+            <form [formGroup]="basicInfoForm">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Type of document*</mat-label>
+                            <mat-select formControlName="typeOfDocument" name="typeOfDocument" id="typeOfDocument">
+                                <mat-option value="PlannedWork">Planned work</mat-option>
+                                <mat-option value="UnplannedWork">Unplanned work</mat-option>
+                            </mat-select>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group col-md-4">
+                        
+                    </div>
+                    <div class="form-group col-md-4">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label class="font-bold">Created by*</mat-label>
+                            <input class="font-bold" matInput placeholder="Created by" value="{{user}}" formControlName="createdBy" type="text" name="createdBy" id="createdBy" readonly/>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <mat-form-field class="full-width" appearance="outline">
+                                <mat-label>Status*</mat-label>
+                                <input class="font-bold" matInput placeholder="statusOfDocument" formControlName="statusOfDocument" type="text" name="statusOfDocument" id="statusOfDocument" readonly/>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group col-md-4">
+                        
+                    </div>
+                    <div class="form-group col-md-4">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Created*</mat-label>
+                            <input class="font-bold" matInput placeholder="Created" formControlName="dateTimeCreated" type="text" name="dateTimeCreated" id="dateTimeCreated" readonly/>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Incident</mat-label>
+                            <mat-select formControlName="incident" name="incident" id="typeOfDincidentocument">
+                                <mat-option value="--">--</mat-option>
+                                <mat-option value="INC1">INC1</mat-option>
+                            </mat-select>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Type of work</mat-label>
+                            <mat-select formControlName="typeOfWork" name="typeOfWork" id="typeOfWork">
+                                <mat-option value="--">--</mat-option>
+                                <mat-option value="Equipment">EQUIPMENT</mat-option>
+                            </mat-select>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <mat-form-field class="full-width " appearance="outline" >
+                            <div class="col"  style="margin-top: -8px;">
+                                <mat-label class="labelBeforeSlide">Emergency work</mat-label>
+                                <mat-slide-toggle color="primary"></mat-slide-toggle>
+                                <input matInput #value hidden>
+                            </div>
+                                <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Start Date/Time</mat-label>
+                            <input matInput formControlName="startDateTime" type="date" name="startDateTime" placeholder="Start Date/Time" id="startDateTime">
+                            
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>
+                    
+                    <div class="form-group col-md-4">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>End Date/Time</mat-label>
+                            <input matInput formControlName="endDateTime" type="date"  name="endDateTime" placeholder="End Date/Time" id="endDateTime">
+                            
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <mat-form-field class="full-width" appearance="outline" >
+                            <mat-label>Phone No</mat-label>
+                            <input  matInput placeholder="phoneNo" formControlName="phoneNo" type="text" name="phoneNo" id="phoneNo"/>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <mat-form-field class="full-width" appearance="outline" >
+                            <mat-label>Address</mat-label>
+                            <input  matInput placeholder="address" formControlName="street" type="text" name="street" id="street"/>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                        
+                    </div>
+                    <div class="form-group col-md-6">
+                        <mat-form-field class="full-width" appearance="outline" >
+                            <mat-label>Company</mat-label>
+                            <input  matInput placeholder="Company" formControlName="company" type="text" name="company" id="company"/>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12" >
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Purpose*</mat-label>
+                            <input matInput placeholder="purpose" formControlName="purpose" type="text" name="purpose" id="purpose"/>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>    
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12" >
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Details*</mat-label>
+                            <input matInput placeholder="details" formControlName="details" type="text" name="details" id="details"/>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>    
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12" >
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Notes*</mat-label>
+                            <input matInput placeholder="notes" formControlName="notes" type="text" name="notes" id="notes"/>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                        </mat-form-field>
+                    </div>    
+                </div>
+                <div class="row">
+                    <div class="button-center-align">
+                    <button mat-flat-button color="primary">Create</button>
+                    <button mat-flat-button (click)=Cancel()>Cancel</button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

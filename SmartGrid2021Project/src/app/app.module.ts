@@ -44,6 +44,14 @@ import { MultimediaAttachmentsComponent } from './work-requests/add-work-request
 import { EquipmentComponent } from './work-requests/add-work-request/equipment/equipment.component';
 import { IncidentResolutionComponent } from './add-incident/incident-resolution/incident-resolution.component';
 import { IncidentCallsComponent } from './add-incident/incident-calls/incident-calls.component';
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatCommonModule, MatNativeDateModule } from '@angular/material/core'
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -89,8 +97,21 @@ import { IncidentCallsComponent } from './add-incident/incident-calls/incident-c
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatTableModule,
+    MatButtonToggleModule,
+    MatTabsModule,
+    MatIconModule, 
+    MatCommonModule,
+    MatSlideToggleModule,
   ],
+  exports:[MatDatepickerModule],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
