@@ -2,7 +2,7 @@
     <div class="row">
         
         <div class="col-md-2">
-            <a routerLink ='/AddIncident'>
+            <a routerLink =''>
                 <button  class="btn btn-default btn-block pull-left" ><i class="pe-7s-plus"></i> New</button>
             </a>
          </div>
@@ -12,19 +12,18 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Devices</h4>
+                    <h4 class="title">Calls</h4>
                     <div class="content">
                         <div class="mat-elevation-z8">
                             <div class="main-table">
                                     <app-mat-table class="main-table"
-                                    [tableData]="Devices"
+                                    [tableData]="Calls"
                                     [tableColumns]="WRTableColumns"
                                     [isFilterable]="true"
                                     [isPageable]="true"
                                     [paginationSizes]="[2,4,6]"
                                     [defaultPageSize]="4"
                                     [rowActionIcon]="'location_on'"
-                                    
                                     (rowAction)="showOnMap($event)">
                                     >
                                     </app-mat-table>

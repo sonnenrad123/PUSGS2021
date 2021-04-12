@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Resolution</h4>
+                    <div class="content">
+                        <form [formGroup]="resolutionForm" (ngSubmit)="onSubmit()">
+                            <div class="row">
+                                <label>Cause</label>
+
+                                      <select formControlName="cause" id="cause" #t (change)="onChange(t.value)" class="form-control">
+                                            <option *ngFor="let cause of causeTypes">
+                                                {{cause}}
+                                            </option>
+                                      </select>
+                            </div>
+                            <div class="row">
+                                <label>Subcause</label>
+
+                                      <select formControlName="subcause" id="subcause" class="form-control">
+                                            <option *ngFor="let subcause of subcauseTypes">
+                                                {{subcause}}
+                                            </option>
+                                      </select>
+                            </div>
+                            <div class="row">
+                                <label>Construction type</label>
+
+                                      <select formControlName="constructionType" id="constructionType" class="form-control">
+                                            <option *ngFor="let constructionType of constructionTypes">
+                                                {{constructionType}}
+                                            </option>
+                                      </select>
+                            </div>
+                            <div class="row">
+                                <label>Material</label>
+
+                                      <select formControlName="material" id="material" class="form-control">
+                                            <option *ngFor="let material of materialTypes">
+                                                {{material}}
+                                            </option>
+                                      </select>
+                            </div>
+                            <div class="row">
+                                
+                                <div class="col-md-3" style="float:right">
+                                    <div class="form-group">
+                                        <button class="btn btn-success" [disabled]="!resolutionForm.valid"  type="submit" style="margin-right: 10px;">Save</button>
+                                        <button class="btn btn-danger" (click)="onClear()" type="button">Clear</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

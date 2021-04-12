@@ -42,6 +42,8 @@ import { BasicInfoComponent } from './work-requests/add-work-request/basic-info/
 import { ChangesHistoryComponent } from './work-requests/add-work-request/changes-history/changes-history.component';
 import { MultimediaAttachmentsComponent } from './work-requests/add-work-request/multimedia-attachments/multimedia-attachments.component';
 import { EquipmentComponent } from './work-requests/add-work-request/equipment/equipment.component';
+import { IncidentResolutionComponent } from './add-incident/incident-resolution/incident-resolution.component';
+import { IncidentCallsComponent } from './add-incident/incident-calls/incident-calls.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { EquipmentComponent } from './work-requests/add-work-request/equipment/e
     ChangesHistoryComponent,
     MultimediaAttachmentsComponent,
     EquipmentComponent,
+    IncidentResolutionComponent,
+    IncidentCallsComponent,
     
   ],
   imports: [
