@@ -17,7 +17,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/map', title: 'Map', icon: 'pe-7s-map', class:''},
     { path: '/docs', title: 'Documents', icon:'pe-7s-folder', class:'', children:[
       {
-        path: '/workrequests', title: 'Work Requests', icon: 'pe-7s-note2', class: '', children:[]
+        path: '/WorkRequests', title: 'Work Requests', icon: 'pe-7s-note2', class: '', children:[]
       },
       {
         path: '/switchingplans', title: 'Switching Plans', icon: 'pe-7s-note2', class: '', children:[]

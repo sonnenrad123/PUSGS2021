@@ -8,6 +8,7 @@ import { MapComponent } from './map/map.component';
 import { RegisterComponent } from './register/register.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { TestComponent2Component } from './test-component2/test-component2.component';
+import { AddWorkRequestComponent } from './work-requests/add-work-request/add-work-request.component';
 import { WorkRequestsComponent } from './work-requests/work-requests.component';
 
 const routes: Routes = [
@@ -43,12 +44,20 @@ const routes: Routes = [
     ]
   },
   {
-    path:'workrequests',
+    path:'WorkRequests',
     component: GeneralLayoutComponent,
     children:[
       {path: '',component: WorkRequestsComponent},
     ]
   },
+  {
+    path:'createworkrequest',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: AddWorkRequestComponent},
+    ]
+  },
+  
   {
     path:'switchingplans',
     component: GeneralLayoutComponent,

@@ -37,6 +37,11 @@ import {MatSelectModule} from '@angular/material/select';
 import { FormsModule} from '@angular/forms';
 import { IncidentDevicesComponent } from './add-incident/incident-devices/incident-devices.component';
 import {MatIconModule} from '@angular/material/icon';
+import { AddWorkRequestComponent } from './work-requests/add-work-request/add-work-request.component';
+import { BasicInfoComponent } from './work-requests/add-work-request/basic-info/basic-info.component';
+import { ChangesHistoryComponent } from './work-requests/add-work-request/changes-history/changes-history.component';
+import { MultimediaAttachmentsComponent } from './work-requests/add-work-request/multimedia-attachments/multimedia-attachments.component';
+import { EquipmentComponent } from './work-requests/add-work-request/equipment/equipment.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +62,13 @@ import {MatIconModule} from '@angular/material/icon';
     MatTableComponent,
     DataPropertyGetterPipe,
     IncidentBasicInfoComponent,
-    IncidentDevicesComponent
+    IncidentDevicesComponent,
+    AddWorkRequestComponent,
+    BasicInfoComponent,
+    ChangesHistoryComponent,
+    MultimediaAttachmentsComponent,
+    EquipmentComponent,
+    
   ],
   imports: [
     BrowserModule,
