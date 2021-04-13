@@ -1,37 +1,29 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <p>add-work-request works!</p>
-            <div class="col-lg-3">
-            <mat-tab-group [@.disabled]="true" (selectedTabChange)="onIndexChanged($event)">
+            <mat-tab-group>
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <mat-icon>info</mat-icon>Basic info
                     </ng-template>
+                    <app-basic-info></app-basic-info>
                 </mat-tab>
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <mat-icon>history</mat-icon>History of state changes
                     </ng-template>
+                    <app-changes-history></app-changes-history>
                 </mat-tab>
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <mat-icon>perm_media</mat-icon>Multimedia attachments
                     </ng-template>
+                    <app-multimedia-attachments></app-multimedia-attachments>
                 </mat-tab>
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <mat-icon>important_devices</mat-icon>Equipment
                     </ng-template>
                 </mat-tab>
+                <app-equipment></app-equipment>
             </mat-tab-group>
-        </div>
-        <div class="col-lg-9 margin-top-custom">
-        <div  *ngIf="tab1Visible"><app-basic-info></app-basic-info></div>
-        <div  *ngIf="tab2Visible"><app-changes-history></app-changes-history></div>
-        <div  *ngIf="tab3Visible"><app-multimedia-attachments></app-multimedia-attachments></div>
-        <div  *ngIf="tab4Visible"><app-equipment></app-equipment></div>
-    </div>    
-    </div>
-    </div>
 </div>
+        

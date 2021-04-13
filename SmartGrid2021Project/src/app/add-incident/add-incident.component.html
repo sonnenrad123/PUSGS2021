@@ -1,58 +1,52 @@
 <div class="main-content">
-    
-    <div class="container-fluid">
-        <div class="col-lg-3">
-            <mat-tab-group mat-align-tabs="center" [@.disabled]="true"(selectedTabChange)="onIndexChanged($event)" >
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon>info</mat-icon>Basic Information
-                    </ng-template>
-                </mat-tab>
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon>devices</mat-icon>Devices
-                    </ng-template>
-                </mat-tab>
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon>more</mat-icon>Resolution
-                    </ng-template>
-                </mat-tab>
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon> call</mat-icon>Calls
-                    </ng-template>
-                </mat-tab>
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon>group</mat-icon>Crew
-                    </ng-template>
-                </mat-tab>
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon>perm_media</mat-icon>Multimedia attachments
-                    </ng-template>
-                </mat-tab>
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon>important_devices</mat-icon>Equipment
-                    </ng-template>
-                </mat-tab>
-                
-            </mat-tab-group>
-            
-        </div>
-        <div class="col-lg-9 margin-top-custom">
-            <app-incident-basic-info [ngClass]="{'hidden': toggledButton != 'BI'}"></app-incident-basic-info>
-            <app-incident-devices [ngClass]="{'hidden': toggledButton != 'Devices'}"></app-incident-devices>
-            <app-incident-resolution [ngClass]="{'hidden': toggledButton != 'Resolution'}" ></app-incident-resolution>
-            <app-incident-calls [ngClass]="{'hidden': toggledButton != 'Calls'}" ></app-incident-calls>
-        </div>
-    </div>
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>info</mat-icon>Basic Information
+            </ng-template>
+            <app-incident-basic-info></app-incident-basic-info>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>devices</mat-icon>Devices
+            </ng-template>
+            <app-incident-devices></app-incident-devices>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>more</mat-icon>Resolution
+            </ng-template>
+            <app-incident-resolution></app-incident-resolution>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon> call</mat-icon>Calls
+            </ng-template>
+            <app-incident-calls></app-incident-calls>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>group</mat-icon>Crew
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>perm_media</mat-icon>Multimedia attachments
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>important_devices</mat-icon>Equipment
+            </ng-template>
+        </mat-tab>
         
-           
-    
-    
-    
+    </mat-tab-group>
+
+
+   
+
+
+
 </div>
+
 

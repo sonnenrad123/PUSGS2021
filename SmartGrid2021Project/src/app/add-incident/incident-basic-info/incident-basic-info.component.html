@@ -7,66 +7,66 @@
                     <div class="content">
                         <form [formGroup]="basicInformationForm" (ngSubmit)="onSubmit()" >
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Incident ID (auto-generated)</label>
-                                        <input type="text" id="id" formControlName="id" class="form-control" readonly>
-                                        
-                                    </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Incident ID (auto-generated)</mat-label>
+                                        <input type="text" id="id" matInput formControlName="id" class="form-control" readonly>
+                                    </mat-form-field>
                                 </div>
-                                <div class="col-md-3" style="float:right">
-                                    <div class="form-group">
-                                        <label>Affected customers (Auto-set based on equipment)</label>
-                                        <input type="number" class="form-control" id="affectedCustomers" formControlName="affectedCustomers">
-                                        
-                                    </div>
+                                <div class="form-group col-md-4">
+                        
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Affected customers (Auto-set based on equipment)</mat-label>
+                                        <input type="number" matInput class="form-control" id="affectedCustomers" formControlName="affectedCustomers" readonly>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Type</mat-label>
+                                        <mat-select formControlName="incidentType" id="incidentType">
+                                            <mat-option *ngFor="let type of incidentTypes" [value]="type">{{type}}</mat-option>
+                                        </mat-select>
+                                        <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="form-group col-md-4">
                                     
                                 </div>
 
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                      <label>Type</label>
-
-                                      <select formControlName="incidentType" id="incidentType" class="form-control">
-                                            <option *ngFor="let type of incidentTypes">
-                                                {{type}}
-                                            </option>
-                                      </select>
-                                      <div class="text-warning" *ngIf="basicInformationForm.controls.incidentType.invalid">
-                                            Please select incident type.
-                                      </div>
-                                    </div>
-                                      
-                                </div>
-                                <div class="col-md-3" style="float:right">
-                                    <div class="form-group">
-                                        <label>Outage time</label>
-                                        <input type="datetime-local" class="form-control" id="outageTime" formControlName="outageTime">
-                                        <div class="text-warning" *ngIf="basicInformationForm.controls.outageTime.invalid">
-                                            Please input outage time.
-                                        </div>
-                                    </div>
+                                
+                                <div class="form-group col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Outage time</mat-label>
+                                        <input class="form-control" matInput formControlName="outageTime" type="date"  name="outageTime" placeholder="Outage Date/Time" id="outageTime">
+                                        
+                                        <mat-error *ngIf="basicInformationForm.controls.outageTime.invalid">Please input outage time.</mat-error>
+                                    </mat-form-field>
                                 </div>
 
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Priority (Auto-set based on equipment)</label>
-                                        <input type="number" class="form-control" id="priority" formControlName="priority" readonly>
-                                    </div>
+                                <div class="col-md-4">
+                                   
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Affected customers (Auto-set based on equipment)</mat-label>
+                                        <input type="number" matInput class="form-control" id="priority" formControlName="priority" readonly>
+                                    </mat-form-field>
                                 </div>
-                                <div class="col-md-3" style="float:right">
-                                    <div class="form-group">
-                                        <label>ETR</label>
-                                        <input type="datetime-local" class="form-control" id="etr" formControlName="etr">
-                                        <div class="text-warning" *ngIf="basicInformationForm.controls.etr.invalid">
-                                            Please input ETR.
-                                        </div>
-                                    </div>
+                                <div class="form-group col-md-4" style="float:right">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>ETR</mat-label>
+                                        <input class="form-control" matInput formControlName="etr" type="date"  name="etr" placeholder="ETR Date/Time" id="etr">
+                                        
+                                        <mat-error>Please input ETR.</mat-error>
+                                    </mat-form-field>
                                 </div>
+
 
                             </div>
                             <div class="row">
@@ -77,78 +77,70 @@
                                         
                                     </div>
                                 </div>
-                                <div class="col-md-3" style="float:right">
-                                    <div class="form-group">
-                                        <label>Calls</label>
-                                        <input type="number" class="form-control" id="calls" formControlName="calls" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : 
-                                        event.charCode >= 48 && event.charCode <= 57" min="1" placeholder="Number of calls">
-                                        <div class="text-warning" *ngIf="basicInformationForm.controls.calls.invalid">
-                                            Please enter number of received calls.
-                                        </div>
-                                    </div>
+                                <div class="col-md-4" style="float:right">
+                                     <mat-form-field class="full-width" appearance="outline">
+                                            <mat-label>Calls</mat-label>
+                                            <input type="number" class="form-control" matInput id="calls" formControlName="calls" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : 
+                                            event.charCode >= 48 && event.charCode <= 57" min="1" placeholder="Number of calls">
+                                            <mat-error *ngIf="basicInformationForm.controls.calls.invalid">Please enter number of calls</mat-error>
+                                        </mat-form-field>
+                                    
                                 </div>
 
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Status</label>
-                                        <label class="form-control">Dispatched</label>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Status</mat-label>
+                                        <input type="text" id="status" matInput formControlName="status" class="form-control" readonly>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4" style="float:right">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                           <mat-label>Voltage(kV)</mat-label>
+                                           <input type="number" matInput id="voltage" formControlName="voltage" class="form-control">
+                                           <mat-error *ngIf="basicInformationForm.controls.voltage.invalid">Please enter valid number of voltages</mat-error>
+                                       </mat-form-field>
+                                   
+                               </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>ETA</mat-label>
+                                        <input class="form-control" matInput formControlName="eta" type="date"  name="eta" placeholder="ETA Date/Time" id="eta">
                                         
-                                    </div>
+                                        <mat-error>Please input ETA.</mat-error>
+                                    </mat-form-field>
                                 </div>
-                                <div class="col-md-3" style="float:right">
-                                    <div class="form-group">
-                                        <label>Voltage(kV)</label>
-                                        <input type="number" class="form-control"  id="voltage" formControlName="voltage" placeholder="Number of volts" min="0" step="0.1">
-                                        <div class="text-warning" *ngIf="basicInformationForm.controls.voltage.invalid">
-                                            Please enter voltage value.
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>ETA</label>
-                                        <input type="datetime-local" class="form-control" id="eta" formControlName="eta">
-                                        <div class="text-warning" *ngIf="basicInformationForm.controls.eta.invalid">
-                                            Please input ETA.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3" style="float:right">
-                                    <div class="form-group">
-                                        <label>Scheduled time</label>
-                                        <input type="datetime-local" class="form-control" id="scheduledTime" formControlName="scheduledTime">
-                                        <div class="text-warning" *ngIf="basicInformationForm.controls.scheduledTime.invalid">
-                                            Please input scheduled time.
-                                        </div>
-                                    </div>
+                                
+                                <div class="form-group col-md-4" style="float:right">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Scheduled time</mat-label>
+                                        <input class="form-control" matInput formControlName="scheduledTime" type="date"  name="scheduledTime" placeholder="scheduledTime Date/Time" id="scheduledTime">
+                                        
+                                        <mat-error>Please input scheduled time.</mat-error>
+                                    </mat-form-field>
                                 </div>
                                 
 
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>ATA</label>
-                                        <input type="datetime-local" class="form-control" id="ata" formControlName="ata">
-                                        <div class="text-warning" *ngIf="basicInformationForm.controls.ata.invalid">
-                                            Please input ATA.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3" style="float:right">
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <input type="text" class="form-control" id="incidentDesc" formControlName="incidentDesc">
+                                <div class="form-group col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>ATA</mat-label>
+                                        <input class="form-control" matInput formControlName="ata" type="date"  name="ata" placeholder="ata Date/Time" id="ata">
                                         
-                                    </div>
-
+                                        <mat-error>Please input ATA.</mat-error>
+                                    </mat-form-field>
                                 </div>
-                                
+                                <div class="col-md-4" style="float: right;">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Description</mat-label>
+                                        <input type="text" id="incidentDesc" matInput formControlName="incidentDesc" class="form-control">
+                                    </mat-form-field>
+                                </div>
 
                             </div>
                             <div class="row">
@@ -161,16 +153,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                
-                                <div class="col-md-3" style="float:right">
-                                    <div class="form-group">
-                                        <button class="btn btn-success" [disabled]="!basicInformationForm.valid"  type="submit" style="margin-right: 10px;">Save</button>
-                                        <button class="btn btn-danger" (click)="onClear()" type="button">Clear</button>
+                                    <div class="button-center-align">
+                                        <button mat-flat-button type="submit" [disabled]="!basicInformationForm.valid" color="primary">Create</button>
+                                        <button mat-flat-button (click)=onClear()>Cancel</button>
                                     </div>
-                                </div>
+                                
 
                             </div>
-
+                            
                         </form>
                     </div>
                 </div>

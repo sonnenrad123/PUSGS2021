@@ -25,11 +25,12 @@ export class IncidentBasicInfoComponent implements OnInit {
       'etr':new FormControl(null,[Validators.required]),
       'confirmed':new FormControl(),
       'calls':new FormControl(null,[Validators.required,Validators.min(1)]),
-      'voltage':new FormControl(null,[Validators.required]),
+      'voltage':new FormControl(null,[Validators.required,Validators.min(0.1)]),
       'incidentDesc':new FormControl(""),
       'eta':new FormControl(null,[Validators.required]),
       'scheduledTime':new FormControl(null,[Validators.required]),
       'ata':new FormControl(null,[Validators.required]),
+      'status':new FormControl("Dispatched"),
       'dodeliSebi':new FormControl(null)
     });
   }
@@ -44,8 +45,8 @@ export class IncidentBasicInfoComponent implements OnInit {
       'etr':new FormControl(null,Validators.required),
       'confirmed':new FormControl(),
       'calls':new FormControl(null,[Validators.required,Validators.min(1)]),
-      'voltage':new FormControl(null,Validators.required),
-      
+      'voltage':new FormControl(null,[Validators.required,Validators.min(0)]),
+      'status':new FormControl("Dispatched"),
       'eta':new FormControl(null,Validators.required),
       'scheduledTime':new FormControl(null,Validators.required),
       'ata':new FormControl(null,Validators.required),
@@ -70,5 +71,6 @@ export class IncidentBasicInfoComponent implements OnInit {
     console.log("scheduledTime "+this.basicInformationForm.value.scheduledTime);
     console.log("ATA "+this.basicInformationForm.value.ata);
     console.log("I will solve "+this.basicInformationForm.value.dodeliSebi);
+    console.log("Status "+this.basicInformationForm.value.status);
   }
 }
