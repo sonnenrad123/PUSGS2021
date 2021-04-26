@@ -9,6 +9,10 @@ import { RegisterComponent } from './register/register.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { TestComponent2Component } from './test-component2/test-component2.component';
 import { AddWorkRequestComponent } from './work-requests/add-work-request/add-work-request.component';
+import { BasicInfoComponent } from './work-requests/add-work-request/basic-info/basic-info.component';
+import { ChangesHistoryComponent } from './work-requests/add-work-request/changes-history/changes-history.component';
+import { EquipmentComponent } from './work-requests/add-work-request/equipment/equipment.component';
+import { MultimediaAttachmentsComponent } from './work-requests/add-work-request/multimedia-attachments/multimedia-attachments.component';
 import { WorkRequestsComponent } from './work-requests/work-requests.component';
 
 const routes: Routes = [
@@ -54,9 +58,15 @@ const routes: Routes = [
     path:'createworkrequest',
     component: GeneralLayoutComponent,
     children:[
-      {path: '',component: AddWorkRequestComponent},
+      {path: '',component: AddWorkRequestComponent, children: [
+        {path: 'BasicInfo', component: BasicInfoComponent},
+        {path: 'ChangesHistory', component: ChangesHistoryComponent},
+        {path: 'MultimediaAttachments', component: MultimediaAttachmentsComponent},
+        {path: 'Equipment', component: EquipmentComponent},
+      ]},
     ]
   },
+  
   
   {
     path:'switchingplans',

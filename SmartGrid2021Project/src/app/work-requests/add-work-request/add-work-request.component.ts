@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-work-request',
@@ -7,39 +7,40 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
   styleUrls: ['./add-work-request.component.css']
 })
 export class AddWorkRequestComponent implements OnInit {
-  tab1Visible: boolean = true;
-  tab2Visible: boolean = false;
-  tab3Visible: boolean = false;
-  tab4Visible: boolean = false;
-  constructor() { }
+  activeLinkIndex = -1;
+  links = [];
+  
+  constructor(private router: Router) {
+
+    this.links = [
+      {
+        label: 'Basic Info',
+        link: './BasicInfo',
+        icon: 'info',
+        index: 0
+      },
+      {
+        label: 'Changes History',
+        link: './ChangesHistory',
+        icon: 'history',
+        index: 1
+      },
+      {
+        label: 'Multimedia Attachments',
+        link: './MultimediaAttachments',
+        icon: 'perm_media',
+        index: 2
+      },
+      {
+        label: 'Equipment',
+        link: './Equipment',
+        icon: 'important_devices',
+        index: 3
+      },
+    ];
+   }
 
   ngOnInit(): void {
-  }
-  onIndexChanged(event : MatTabChangeEvent){
-    if(event.index === 0){
-      this.tab1Visible = true;
-      this.tab2Visible = false;
-      this.tab3Visible = false;
-      this.tab4Visible = false;
-    }
-    else if(event.index === 1){
-      this.tab1Visible = false;
-      this.tab2Visible = true;
-      this.tab3Visible = false;
-      this.tab4Visible = false;
-    }
-    else if(event.index === 2){
-      this.tab1Visible = false;
-      this.tab2Visible = false;
-      this.tab3Visible = true;
-      this.tab4Visible = false;
-    }
-    else if(event.index === 3){
-      this.tab1Visible = false;
-      this.tab2Visible = false;
-      this.tab3Visible = false;
-      this.tab4Visible = true;
-    }
-
+    this.activeLinkIndex = this.links.indexOf(this.links.find(tab => tab.link === '.' + this.router.url));
   }
 }
