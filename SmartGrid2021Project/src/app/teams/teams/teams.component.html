@@ -1,0 +1,25 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <button class="btn btn-default btn-block" (click)="CreateNewTeam()" matTooltip="create new team"><i class="pe-7s-plus" ></i> New</button>
+             </div>
+        </div>
+        <div class="table-responsive-lg">
+            <table class="table custom-table">
+                <ng-container *ngFor="let team of teams">
+                    <tr>
+                        <td  [attr.rowspan]="team.teamMembers.length">{{team.id}}</td>
+                        <td [attr.rowspan]="team.teamMembers.length">{{team.teamName}}</td>
+                        <td>{{team.teamMembers[0]}}</td>
+                    </tr>
+                    <ng-container *ngFor="let member of team.teamMembers; let i=index"> 
+                        <tr *ngIf="i != 0" class="tr-border-none">
+                        <td class="custom-td">{{member}}</td>
+                        </tr>
+                    </ng-container>
+                </ng-container> 
+            </table>
+        </div>
+    </div>
+</div>

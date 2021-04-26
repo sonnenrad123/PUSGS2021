@@ -1,0 +1,13 @@
+.full-width{
+    width: 100%;
+}
+.custom-width-btn{
+    width: 100%;
+
+}
+.custom-div{
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 1rem;
+    height: 80%;
+}

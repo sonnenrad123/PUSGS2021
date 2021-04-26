@@ -52,6 +52,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DragAndDropImgDirective } from './utilities/drag-and-drop-input/drag-and-drop-img.directive';
+import { ProgressBarComponent } from './utilities/progress-bar/progress-bar/progress-bar.component';
+import { TeamsComponent } from './teams/teams/teams.component';
+import { AddNewTeamComponent } from './teams/add-new-team/add-new-team.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +84,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     EquipmentComponent,
     IncidentResolutionComponent,
     IncidentCallsComponent,
+    DragAndDropImgDirective,
+    ProgressBarComponent,
+    TeamsComponent,
+    AddNewTeamComponent,
     
   ],
   imports: [

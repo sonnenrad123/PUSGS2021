@@ -6,6 +6,8 @@ import { IncidentBrowserComponent } from './incident-browser/incident-browser.co
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
 import { MapComponent } from './map/map.component';
 import { RegisterComponent } from './register/register.component';
+import { AddNewTeamComponent } from './teams/add-new-team/add-new-team.component';
+import { TeamsComponent } from './teams/teams/teams.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { TestComponent2Component } from './test-component2/test-component2.component';
 import { AddWorkRequestComponent } from './work-requests/add-work-request/add-work-request.component';
@@ -66,8 +68,20 @@ const routes: Routes = [
       ]},
     ]
   },
-  
-  
+  {
+    path:'TeamsView',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: TeamsComponent},
+    ]
+  },
+  {
+    path:'CreateNewTeam',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: AddNewTeamComponent},
+    ]
+  },
   {
     path:'switchingplans',
     component: GeneralLayoutComponent,

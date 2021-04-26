@@ -28,7 +28,7 @@ export const ROUTES: RouteInfo[] = [
     ]},
     { path: '/NoRoute', title: 'Add network element',icon: 'pe-7s-network',class:''},
     { path:'/NoRoute', title:'Add consumer',icon:'pe-7s-add-user',class:''},
-    { path: '/NoRoute', title:'Add teams',icon:'pe-7s-users',class:''},
+    { path: '/TeamsView', title:'Add teams',icon:'pe-7s-users',class:''},
     
 
     { path: '/NoRoute', title: 'Notifications' , icon:'pe-7s-bell', class:'secondary'},

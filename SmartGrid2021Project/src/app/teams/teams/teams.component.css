@@ -1,0 +1,23 @@
+.custom-table{
+    margin: auto;
+    width: 100%;
+    height: 80%;
+    text-align: center;
+    border-bottom: 1px solid black;
+    
+}
+tr{
+    vertical-align: middle;
+    text-align: center;
+    border: black 1px solid;    
+    border-bottom: none;
+    height: 20%;
+}
+
+.tr-border-none{
+    border-top: none;
+}
+
+button{
+    margin-bottom: 2rem;
+}
