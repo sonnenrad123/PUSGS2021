@@ -56,6 +56,7 @@ import { DragAndDropImgDirective } from './utilities/drag-and-drop-input/drag-an
 import { ProgressBarComponent } from './utilities/progress-bar/progress-bar/progress-bar.component';
 import { TeamsComponent } from './teams/teams/teams.component';
 import { AddNewTeamComponent } from './teams/add-new-team/add-new-team.component';
+import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-multimedia-attachments/incident-multimedia-attachments.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { AddNewTeamComponent } from './teams/add-new-team/add-new-team.component
     ProgressBarComponent,
     TeamsComponent,
     AddNewTeamComponent,
+    IncidentMultimediaAttachmentsComponent,
     
   ],
   imports: [

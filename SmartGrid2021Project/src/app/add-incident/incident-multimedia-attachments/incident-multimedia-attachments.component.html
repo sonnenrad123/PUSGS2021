@@ -1,0 +1,31 @@
+<div class="main-content" >
+    <div class="container-fluid">
+        <div class="row">    
+            <div class="dropzone" appDragAndDropImg (fileDropped)="onFileDropped($event)">
+                <input type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event)">
+                <img src="../../../../assets/img/dndIcon.png" alt="DnDIcon">
+                <h3>Drag and drop file here</h3>
+                <h3>or</h3>
+                <label for="fileDropRef">Browse for file</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="files-list">
+                <div class="single-file" *ngFor="let file of files; let i = index">
+                  <img src="../../../../assets/img/ic-file.svg" width="45px" alt="file">
+                  <div class="info">
+                    <h4 class="name">
+                      {{ file?.name }}
+                    </h4>
+                    <p class="size">
+                      {{ formatBytes(file?.size) }}
+                    </p>
+                    <app-progress-bar [progress]="file?.progress"></app-progress-bar>
+                    
+                  </div>
+                  <img src="../../../../assets/img/ic-delete-file.svg" class="delete" width="20px" alt="file" (click)="deleteFile(i)">
+                </div>
+              </div>
+        </div>
+    </div>
+</div>

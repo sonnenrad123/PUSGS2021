@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-incident',
@@ -8,10 +9,53 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 })
 export class AddIncidentComponent implements OnInit {
   toggledButton:string;
-  constructor() { }
+  activeLinkIndex = 0;
+  links = [];
+  constructor(private router: Router) {
+    this.links = [
+      {
+        label: 'Basic Info',
+        link: './BasicInfo',
+        icon: 'info',
+        index: 0
+      },
+      {
+        label: 'Devices',
+        link: './Devices',
+        icon: 'devices',
+        index: 1
+      },
+      {
+        label: 'Resolution',
+        link: './Resolution',
+        icon: 'more',
+        index: 2
+      },
+      {
+        label: 'Calls',
+        link: './Calls',
+        icon: 'call',
+        index: 3
+      },
+      {
+        label: 'Crew',
+        link: './Crew',
+        icon: 'group',
+        index: 4
+      },
+      {
+        label: 'Multimedia attachments',
+        link: './MultimediaAttachments',
+        icon: 'perm_media',
+        index: 5
+      },
+    ];
+   }
 
   ngOnInit(): void {
     this.toggledButton = "BI";
+    this.activeLinkIndex = this.links.indexOf(this.links.find(tab => tab.link === '.' + this.router.url));
+    this.router.navigate(["AddIncident/BasicInfo"]);
   }
 
 

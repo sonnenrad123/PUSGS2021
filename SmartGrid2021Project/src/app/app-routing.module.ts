@@ -16,7 +16,11 @@ import { ChangesHistoryComponent } from './work-requests/add-work-request/change
 import { EquipmentComponent } from './work-requests/add-work-request/equipment/equipment.component';
 import { MultimediaAttachmentsComponent } from './work-requests/add-work-request/multimedia-attachments/multimedia-attachments.component';
 import { WorkRequestsComponent } from './work-requests/work-requests.component';
-
+import { IncidentBasicInfoComponent } from './add-incident/incident-basic-info/incident-basic-info.component';
+import { IncidentCallsComponent } from './add-incident/incident-calls/incident-calls.component';
+import {IncidentDevicesComponent} from './add-incident/incident-devices/incident-devices.component';
+import { IncidentResolutionComponent } from './add-incident/incident-resolution/incident-resolution.component';
+import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-multimedia-attachments/incident-multimedia-attachments.component';
 const routes: Routes = [
   {
     path:'',
@@ -46,14 +50,21 @@ const routes: Routes = [
     path:'AddIncident',
     component: GeneralLayoutComponent,
     children:[
-      {path: '',component: AddIncidentComponent},
+      {path: '',component: AddIncidentComponent, children:[
+        {path:'BasicInfo', component: IncidentBasicInfoComponent},
+        {path:'Devices', component: IncidentDevicesComponent},
+        {path:'Resolution', component: IncidentResolutionComponent},
+        {path:'Calls', component: IncidentCallsComponent},
+        {path: 'MultimediaAttachments', component: IncidentMultimediaAttachmentsComponent}
+      ]},
     ]
   },
   {
     path:'WorkRequests',
     component: GeneralLayoutComponent,
     children:[
-      {path: '',component: WorkRequestsComponent},
+      {path: '',component: WorkRequestsComponent
+      },
     ]
   },
   {

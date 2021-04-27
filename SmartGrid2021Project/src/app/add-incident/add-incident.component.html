@@ -1,4 +1,4 @@
-<div class="main-content">
+<!--div class="main-content">
     <mat-tab-group mat-align-tabs="center">
         <mat-tab>
             <ng-template mat-tab-label>
@@ -47,6 +47,13 @@
 
 
 
-</div>
-
+</div-->
+<nav mat-tab-nav-bar >
+    <a mat-tab-link *ngFor="let link of links" 
+    [routerLink]="link.link"
+    (click)="activeLinkIndex = link.index"
+    routerLinkActive #rla="routerLinkActive"
+    [active]="rla.isActive"><mat-icon>{{link.icon}}</mat-icon>{{link.label}}</a>
+</nav>
+<router-outlet></router-outlet>
 
