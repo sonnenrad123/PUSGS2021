@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-work-request.component.css']
 })
 export class AddWorkRequestComponent implements OnInit {
-  activeLinkIndex = -1;
+  activeLinkIndex = 0;
   links = [];
   
   constructor(private router: Router) {
@@ -42,5 +42,6 @@ export class AddWorkRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeLinkIndex = this.links.indexOf(this.links.find(tab => tab.link === '.' + this.router.url));
+    this.router.navigate(["createworkrequest/BasicInfo"]);
   }
 }
