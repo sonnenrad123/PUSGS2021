@@ -4,6 +4,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { TableColumn } from 'src/app/common/mat-table/table-column';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 export interface Call{
   callId:string;
@@ -19,6 +21,7 @@ export interface Call{
 })
 export class IncidentCallsComponent implements OnInit {
   WRTableColumns: TableColumn[];
+  NewCallToggle: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   AllCalls:Call[]=[
@@ -30,6 +33,7 @@ export class IncidentCallsComponent implements OnInit {
     {callId:"255 255 179",reason:"NotImplemented8",hazard:"notimplemented4",comment:""},
   ]
   Calls:Call[];
+  
 
   initializeColumns(): void{
     this.WRTableColumns = [
@@ -64,14 +68,21 @@ export class IncidentCallsComponent implements OnInit {
     
   }
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.Calls = this.AllCalls.slice();
     this.initializeColumns();
+    this.NewCallToggle = false;
   }
   showOnMap(row:any){
-    console.log(row.id);
+    console.log(row.callId);
   }
 
+  toggleNew(){
+    this.NewCallToggle = !this.NewCallToggle;
+    console.log('toggled');
+  }
+
+  
 }

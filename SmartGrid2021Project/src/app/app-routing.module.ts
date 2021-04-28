@@ -21,6 +21,7 @@ import { IncidentCallsComponent } from './add-incident/incident-calls/incident-c
 import {IncidentDevicesComponent} from './add-incident/incident-devices/incident-devices.component';
 import { IncidentResolutionComponent } from './add-incident/incident-resolution/incident-resolution.component';
 import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-multimedia-attachments/incident-multimedia-attachments.component';
+import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/incident-calls-new-call/incident-calls-new-call.component';
 const routes: Routes = [
   {
     path:'',
@@ -54,11 +55,14 @@ const routes: Routes = [
         {path:'BasicInfo', component: IncidentBasicInfoComponent},
         {path:'Devices', component: IncidentDevicesComponent},
         {path:'Resolution', component: IncidentResolutionComponent},
-        {path:'Calls', component: IncidentCallsComponent},
+        {path:'Calls', component: IncidentCallsComponent, children:[
+          {path:'AddNew', component:IncidentCallsNewCallComponent}
+        ]},
         {path: 'MultimediaAttachments', component: IncidentMultimediaAttachmentsComponent}
       ]},
     ]
   },
+  
   {
     path:'WorkRequests',
     component: GeneralLayoutComponent,

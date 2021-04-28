@@ -57,6 +57,7 @@ import { ProgressBarComponent } from './utilities/progress-bar/progress-bar/prog
 import { TeamsComponent } from './teams/teams/teams.component';
 import { AddNewTeamComponent } from './teams/add-new-team/add-new-team.component';
 import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-multimedia-attachments/incident-multimedia-attachments.component';
+import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/incident-calls-new-call/incident-calls-new-call.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-
     TeamsComponent,
     AddNewTeamComponent,
     IncidentMultimediaAttachmentsComponent,
+    IncidentCallsNewCallComponent,
     
   ],
   imports: [

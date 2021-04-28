@@ -42,6 +42,9 @@ export class AddWorkRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeLinkIndex = this.links.indexOf(this.links.find(tab => tab.link === '.' + this.router.url));
-    this.router.navigate(["createworkrequest/BasicInfo"]);
+    
+    if(this.router.url.endsWith('createworkrequest')){
+      this.router.navigate(["createworkrequest/BasicInfo"]);
+    }
   }
 }

@@ -55,7 +55,10 @@ export class AddIncidentComponent implements OnInit {
   ngOnInit(): void {
     this.toggledButton = "BI";
     this.activeLinkIndex = this.links.indexOf(this.links.find(tab => tab.link === '.' + this.router.url));
-    this.router.navigate(["AddIncident/BasicInfo"]);
+    
+    if(this.router.url.endsWith('AddIncident')){
+      this.router.navigate(["AddIncident/BasicInfo"]);
+    }
   }
 
 

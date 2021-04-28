@@ -1,0 +1,104 @@
+<div class="header">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">New call</h4>
+                            <div class="content">
+                                <form [formGroup]="addNewCallForm" (ngSubmit)="onSubmit()" >
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <mat-form-field class="full-width" appearance="outline">
+                                                <mat-label>Reason:</mat-label>
+                                                <mat-select formControlName="reason" id="reason">
+                                                    <mat-option *ngFor="let reason of callReasons" [value]="reason">{{reason}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <mat-form-field class="full-width" appearance="outline">
+                                                <mat-label>Comment:</mat-label>
+                                                <input type="text" id="comment" matInput formControlName="comment" class="form-control">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <mat-form-field class="full-width" appearance="outline">
+                                                <mat-label>Hazard:</mat-label>
+                                                <input type="text" id="hazard" matInput formControlName="hazard" class="form-control">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <mat-form-field class="full-width" appearance="outline">
+                                                <mat-label>Incident street name:</mat-label>
+                                                <input type="text" id="streetName" matInput formControlName="streetName" class="form-control" [readonly] = "anonymous == false">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <mat-form-field class="full-width" appearance="outline">
+                                                <mat-label>Incident street number:</mat-label>
+                                                <input type="text" id="streetNumber" matInput formControlName="streetNumber" class="form-control" [readonly] = "anonymous == false">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="anonymousCheck">I want to stay anonymous</label>
+                                                <input type="checkbox" id="anonymousCheck" (change)="toggleAnonymous()" formControlName="anonymousCheck" class="form-control" >
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="button-center-align">
+                                            <button mat-flat-button type="submit" [disabled]="!addNewCallForm.valid" color="primary">Create</button>
+                                            <button mat-flat-button (click)=onClear()>Cancel</button>
+                                        </div>
+                                    
+    
+                                </div>
+                                    <ng-container *ngIf="anonymous; else notanonymous">
+                                        
+                                    </ng-container>
+                                    
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #notanonymous>
+                        <div class="col-md-4">
+                            <br /><br /><br />
+                            <div class="card card-user">
+                                <div class="content">
+                                    <div class="author">
+                                        <h4 class="title"><br /><br /><br />Caller name: {{callerName}}<br />
+                                            <small>Caller id: {{callerID}}</small><br />
+                                            <small>Streen Name: {{callerStreetName}}</small><br />
+                                            <small>Street Number: {{callerStreetNumber}}</small><br />
+                                        </h4>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-simple" (click)="selectCustomer()"><i class="pe-7s-id"></i> Select customer</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
