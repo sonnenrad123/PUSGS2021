@@ -31,7 +31,7 @@ export interface Device{
 
 
 export class IncidentDevicesComponent implements OnInit {
-  WRTableColumns: TableColumn[];
+  displayedColumns: string[] = ['id','name','type','address','location','remove'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   AllDevices:Device[]=[
@@ -42,70 +42,42 @@ export class IncidentDevicesComponent implements OnInit {
     {id:"device8",name:"device2name",type:DeviceType.Disconnector,coordinates:"xyz",address:"AdresaDevice10"},
     {id:"device9",name:"device9name",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice11"},
   ]
-  Devices:Device[];
-  initializeColumns(): void{
-    this.WRTableColumns = [
-    {
-      name: 'ID',
-      dataKey: 'id',
-      isSortable: true,
-      position: 'left'
-    
-    },
-    {
-      name: 'NAME',
-      dataKey: 'name',
-      isSortable: true,
-      position: 'left'
-    },
-    {
-      name: 'TYPE',
-      dataKey: 'type',
-      isSortable: true,
-      position: 'left',
-      
-    },
-    {
-      name: 'COORDINATES',
-      dataKey: 'coordinates',
-      isSortable: true,
-      position: 'left',
-     
-    },
-    {
-      name: 'ADDRESS',
-      dataKey: 'address',
-      isSortable: true,
-      position: 'left',
-     
-    }
-    ];
-  }
+  dataSource: MatTableDataSource<Device>;
+  sortedData: Device[];
   
-  sortData(sortParameters: Sort) {
-    const keyName = sortParameters.active;
-    if (sortParameters.direction === 'asc') {
-      return this.Devices = this.Devices.sort((a,b) => {return compare(a[keyName],b[keyName],true)});
-    } 
-    else if (sortParameters.direction === 'desc') {
-      return this.Devices = this.Devices.sort((a,b) => {return compare(a[keyName],b[keyName], false)});
-    } else 
-    {
-      return this.Devices = this.AllDevices.slice();
-    }
-  }
 
   constructor() { }
 
   ngOnInit(): void {
-    this.Devices = this.AllDevices.slice();
-    this.initializeColumns();
+    this.dataSource = new MatTableDataSource(this.AllDevices);
+   
   }
-  showOnMap(row:any){
-    console.log(row.id);
+
+  ngAfterViewInit(){
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+
+  showLocation(row:any){
+    console.log('Show location for device with id: ' + row.id);
+  }
+  
+  removeDevice(row:any){
+    console.log('Delete device with id: ' + row.id);
   }
 }
 
-function compare(a: number | string, b: number | string, isAsc: boolean) {
+function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
