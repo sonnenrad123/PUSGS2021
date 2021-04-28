@@ -6,6 +6,7 @@ import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { TableColumn } from 'src/app/common/mat-table/table-column';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatTab } from '@angular/material/tabs';
 
 export interface Call{
   callId:string;
@@ -20,7 +21,7 @@ export interface Call{
   styleUrls: ['./incident-calls.component.css']
 })
 export class IncidentCallsComponent implements OnInit {
-  WRTableColumns: TableColumn[];
+  displayedColumns: string[] = ['callId','reason','hazard','comment'];
   NewCallToggle: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -32,49 +33,33 @@ export class IncidentCallsComponent implements OnInit {
     {callId:"255 255 199",reason:"NotImplemented4",hazard:"notimplemented6",comment:""},
     {callId:"255 255 179",reason:"NotImplemented8",hazard:"notimplemented4",comment:""},
   ]
-  Calls:Call[];
+  dataSource: MatTableDataSource<Call>;
+  sortedData: Call[];
   
 
-  initializeColumns(): void{
-    this.WRTableColumns = [
-    {
-      name: 'Call Id',
-      dataKey: 'callId',
-      isSortable: true,
-      position: 'left'
-    
-    },
-    {
-      name: 'Reason',
-      dataKey: 'reason',
-      isSortable: true,
-      position: 'left'
-    
-    },
-    {
-      name: 'Hazard',
-      dataKey: 'hazard',
-      isSortable: true,
-      position: 'left'
-    
-    },
-    {
-      name: 'Comment',
-      dataKey: 'comment',
-      isSortable: false,
-      position: 'left'
-    
-    }];
-    
+  constructor(private router: Router) {
+    this.dataSource = new MatTableDataSource(this.AllCalls);
   }
-
-  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.Calls = this.AllCalls.slice();
-    this.initializeColumns();
+    
     this.NewCallToggle = false;
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  ngAfterViewInit(){
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   showOnMap(row:any){
     console.log(row.callId);
   }
@@ -85,4 +70,10 @@ export class IncidentCallsComponent implements OnInit {
   }
 
   
+  
+  
+  
+}
+function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
