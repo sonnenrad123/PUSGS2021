@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-incident-resolution',
@@ -17,37 +17,47 @@ export class IncidentResolutionComponent implements OnInit {
   ngOnInit(): void {
     this.resolutionForm = new FormGroup({
       'cause': new FormControl('Weather'),
-      'subcause': new FormControl('Lighting'),
+      'subcause': new FormControl('Lighting',[Validators.required]),
       'constructionType': new FormControl('None'),
       'material': new FormControl('Unknown')
     });
+    let formValue = window.sessionStorage.getItem('resolutionForm');
+    
+    if(formValue!=null){
+      this.onChange(JSON.parse(formValue)['cause']);
+      this.resolutionForm.setValue(JSON.parse(formValue));
+      
+    }
   }
 
   onClear(){
     this.resolutionForm = new FormGroup({
       'cause': new FormControl('Weather'),
-      'subcause': new FormControl('Lighting'),
+      'subcause': new FormControl(),
       'constructionType': new FormControl('None'),
       'material': new FormControl('Unknown')
     });
+
+    window.sessionStorage.removeItem('resolutionForm');
   }
 
   onSubmit(){
-    console.log("Cause: "+this.resolutionForm.value.cause);
-    console.log("Subcause: "+this.resolutionForm.value.subcause);
-    console.log("contructionType "+this.resolutionForm.value.constructionType);
-    console.log("Material "+this.resolutionForm.value.material);
+    window.sessionStorage.setItem('resolutionForm',JSON.stringify(this.resolutionForm.value));
   }
   onChange(option:string){
     switch(option){
       case 'Weather':
         this.subcauseTypes = ['Lighting','Hurricane','Heavy rain'];
+        this.resolutionForm.controls['subcause'].setValue('Lighting');
+        
         break;
       case 'HumanFactor':
         this.subcauseTypes = ['Car crash', 'Destroying equipment', 'Bad usage'];
+        this.resolutionForm.controls['subcause'].setValue('Car crash');
         break;
       case 'EquipmentHazard':
         this.subcauseTypes = ['PrimaryEquipmentMalfunction','SecondaryEquipmentMalfunction','SoftwareMalfunction','HardwareMalfunction'];
+        this.resolutionForm.controls['subcause'].setValue('PrimaryEquipmentMalfunction');
         break;
     }
   }

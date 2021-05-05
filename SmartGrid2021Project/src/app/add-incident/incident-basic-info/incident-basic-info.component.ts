@@ -33,6 +33,12 @@ export class IncidentBasicInfoComponent implements OnInit {
       'status':new FormControl("Dispatched"),
       'dodeliSebi':new FormControl(null)
     });
+
+    let formValue = window.sessionStorage.getItem('basicInformationForm');
+    if(formValue!=null){
+      this.basicInformationForm.setValue(JSON.parse(formValue));
+    }
+
   }
   onClear() {
     
@@ -53,24 +59,10 @@ export class IncidentBasicInfoComponent implements OnInit {
       'dodeliSebi':new FormControl(null),
       'incidentDesc':new FormControl(""),
     });
-    
+    window.sessionStorage.removeItem('basicInformationForm');
   }
   onSubmit() {
-    console.log("ID "+this.basicInformationForm.value.id);
-    console.log("Affected cust: "+this.basicInformationForm.value.affectedCustomers);
-    
-    console.log("Type "+this.basicInformationForm.value.incidentType);
-    console.log("Outage time "+this.basicInformationForm.value.outageTime);
-    console.log("Priority "+this.basicInformationForm.value.priority);
-    console.log("ETR "+this.basicInformationForm.value.etr);
-    console.log("Confirmed "+this.basicInformationForm.value.confirmed);
-    console.log("Calls "+this.basicInformationForm.value.calls);
-    console.log("Voltage "+this.basicInformationForm.value.voltage);
-    console.log("Incident desc "+this.basicInformationForm.value.incidentDesc);
-    console.log("ETA "+this.basicInformationForm.value.eta);
-    console.log("scheduledTime "+this.basicInformationForm.value.scheduledTime);
-    console.log("ATA "+this.basicInformationForm.value.ata);
-    console.log("I will solve "+this.basicInformationForm.value.dodeliSebi);
-    console.log("Status "+this.basicInformationForm.value.status);
+    window.sessionStorage.setItem('basicInformationForm',JSON.stringify(this.basicInformationForm.value));
+
   }
 }

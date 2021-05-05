@@ -154,8 +154,8 @@
                             </div>
                             <div class="row">
                                     <div class="button-center-align">
-                                        <button mat-flat-button type="submit" [disabled]="!basicInformationForm.valid" color="primary">Create</button>
-                                        <button mat-flat-button (click)=onClear()>Cancel</button>
+                                        <button class="btn btn-success" [disabled]="!basicInformationForm.valid"  type="submit" style="margin-right: 10px;">Save</button>
+                                        <button type="button" class="btn btn-danger" (click)="onClear()" type="button">Clear</button>
                                     </div>
                                 
 

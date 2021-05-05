@@ -48,6 +48,12 @@
 
 
 </div-->
+<div class="title">
+    <h4 class="header">
+        Add new incident <button type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="submitIncident()" disabled="{{!buttonEnabled}}" style="left: 30px;" #si>Submit incident</button>
+    </h4>
+    
+</div>
 <nav mat-tab-nav-bar >
     <a mat-tab-link *ngFor="let link of links" 
     [routerLink]="link.link"
