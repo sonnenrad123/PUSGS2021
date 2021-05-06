@@ -22,6 +22,7 @@ import {IncidentDevicesComponent} from './add-incident/incident-devices/incident
 import { IncidentResolutionComponent } from './add-incident/incident-resolution/incident-resolution.component';
 import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-multimedia-attachments/incident-multimedia-attachments.component';
 import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/incident-calls-new-call/incident-calls-new-call.component';
+import { SafetyDocumentsComponent } from './safety-documents/safety-documents.component';
 const routes: Routes = [
   {
     path:'',
@@ -68,6 +69,15 @@ const routes: Routes = [
     component: GeneralLayoutComponent,
     children:[
       {path: '',component: WorkRequestsComponent
+      },
+    ]
+  },
+  {
+    path:'SafetyDocuments',
+    component: GeneralLayoutComponent,
+    children:[
+      {
+        path:'',component:SafetyDocumentsComponent
       },
     ]
   },

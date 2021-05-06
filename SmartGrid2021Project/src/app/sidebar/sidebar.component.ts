@@ -23,7 +23,7 @@ export const ROUTES: RouteInfo[] = [
         path: '/switchingplans', title: 'Switching Plans', icon: 'pe-7s-note2', class: '', children:[]
       },
       {
-        path: '/child3', title: 'Safety Documents', icon: 'pe-7s-note2', class: '', children:[]
+        path: '/SafetyDocuments', title: 'Safety Documents', icon: 'pe-7s-note2', class: '', children:[]
       }
     ]},
     { path: '/NoRoute', title: 'Add network element',icon: 'pe-7s-network',class:''},
@@ -34,8 +34,12 @@ export const ROUTES: RouteInfo[] = [
     { path: '/NoRoute', title: 'Notifications' , icon:'pe-7s-bell', class:'secondary'},
     { path: '/NoRoute', title:'Settings',icon:'pe-7s-tools',class:'secondary'},
 
-    { path: '/AddIncident', title:'Add incident',icon:'',class:'hidden'}
-  
+    //ispod su hidden rute da bi title funkcija radila
+
+    { path: '/AddIncident', title:'Add incident',icon:'',class:'hidden'},
+    { path: '/WorkRequests', title: 'Work Requests', icon: 'pe-7s-note2', class: 'hidden'},
+    { path: '/SafetyDocuments', title: 'Safety Documents', icon: 'pe-7s-note2', class: 'hidden'},
+    { path: '/switchingplans', title: 'Switching Plans', icon: 'pe-7s-note2', class: '' }
 ];
 
 

@@ -1,0 +1,18 @@
+<div class="main-content">
+    <div class="row">
+        
+        <div class="col-md-2">
+            <a routerLink ='/AddSafetyDocument'>
+                <button  class="btn btn-default btn-block pull-left" ><i class="pe-7s-plus"></i> New</button>
+            </a>
+         </div>
+         <div class="col-md-2">
+            <button class=" pull-left" (click)="showAllData()" [ngClass]="{'btn btn-info' : !toggleAll, 'btn btn-info btn-fill': toggleAll}">  All</button>
+            <button class=" pull-left" (click)="showMineData()" [ngClass]="{'btn btn-info' : !toggleMine, 'btn btn-info btn-fill': toggleMine}">Mine</button>
+         </div>
+         
+    </div>
+
+
+
+</div>

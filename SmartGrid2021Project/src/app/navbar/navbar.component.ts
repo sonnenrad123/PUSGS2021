@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   private toggleButton: any;
   private sidebarVisible: boolean;
   private listTitles: any[] = [];
+  private listCTitles: any[] = [];
   user!: firebase.default.User;
   location! : Location;
   constructor(location: Location,  private element: ElementRef, private afAuth: AngularFireAuth) { 
@@ -26,6 +27,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.listTitles = ROUTES.filter(listTitle => listTitle);
+    
+
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
 
@@ -44,7 +47,10 @@ export class NavbarComponent implements OnInit {
             return this.listTitles[item].title;
         }
     }
-    
+
+  
+
+    console.log()
   }
 
   getLocation(){

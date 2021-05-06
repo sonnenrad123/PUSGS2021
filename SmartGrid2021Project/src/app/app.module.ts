@@ -58,6 +58,7 @@ import { TeamsComponent } from './teams/teams/teams.component';
 import { AddNewTeamComponent } from './teams/add-new-team/add-new-team.component';
 import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-multimedia-attachments/incident-multimedia-attachments.component';
 import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/incident-calls-new-call/incident-calls-new-call.component';
+import { SafetyDocumentsComponent } from './safety-documents/safety-documents.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/inc
     AddNewTeamComponent,
     IncidentMultimediaAttachmentsComponent,
     IncidentCallsNewCallComponent,
+    SafetyDocumentsComponent,
     
   ],
   imports: [
