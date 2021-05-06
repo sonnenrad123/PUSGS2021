@@ -1,6 +1,9 @@
 
 
-
+.top-margin{
+  position: relative;
+  margin-top: 4rem;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
@@ -260,7 +263,7 @@
     min-height: 100vh;
     display: block;
     background-color: #f7f7f7;
-    padding: 173px 55px 55px 55px;
+    padding: 110px 55px 55px 55px;
   }
   
   .login100-form-title {
@@ -575,7 +578,7 @@
     width: 100%;
     height: 50px;
     border-radius: 10px;
-    background: #ea4336;
+    background: rgb(255, 91, 36);
   
     font-family: Montserrat-Bold;
     font-size: 12px;
