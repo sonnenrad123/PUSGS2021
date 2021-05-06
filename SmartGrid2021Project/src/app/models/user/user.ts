@@ -3,7 +3,7 @@ import { UserRole } from "../user-role/user-role.enum";
 export class User {
     username: string;
     password: string;
-    uEmail: string;
+    userEmail: string;
     firstname: string;
     lastname: string;
     birthday: Date;
@@ -19,7 +19,7 @@ export class User {
         this.password = password;
         this.firstname = firstName;
         this.lastname = lastName;
-        this.uEmail = email;
+        this.userEmail = email;
         this.birthday = date;
         this.address = address;
         this.roleOfUser = userRole;

@@ -18,9 +18,8 @@ import { InputImageComponent } from './utilities/input-image/input-image/input-i
 import { HomeComponent } from './home/home.component';
 
 import { LoginComponent } from './login/login.component';
-import { AngularFireModule } from '@angular/fire'
-import { AngularFireDatabaseModule } from '@angular/fire/database'
-import { AngularFireAuthModule } from '@angular/fire/auth'
+import {   SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+
 import { environment } from 'src/environments/environment';
 import { MapComponent } from './map/map.component';
 import { IncidentBrowserComponent } from './incident-browser/incident-browser.component';
@@ -59,6 +58,9 @@ import { AddNewTeamComponent } from './teams/add-new-team/add-new-team.component
 import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-multimedia-attachments/incident-multimedia-attachments.component';
 import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/incident-calls-new-call/incident-calls-new-call.component';
 import { SafetyDocumentsComponent } from './safety-documents/safety-documents.component';
+import { UserAccountService } from './services/user-account/user-account.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -105,9 +107,7 @@ import { SafetyDocumentsComponent } from './safety-documents/safety-documents.co
     ReactiveFormsModule,
     AngularMaterialModule,
     BrowserAnimationsModule, 
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
+   
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
@@ -124,9 +124,31 @@ import { SafetyDocumentsComponent } from './safety-documents/safety-documents.co
     MatIconModule, 
     MatCommonModule,
     MatSlideToggleModule,
+    HttpClientModule,
+    SocialLoginModule,
+    
   ],
   exports:[MatDatepickerModule],
-  providers: [],
+  providers: 
+  [
+    UserAccountService,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers:[
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('49694634675-du89shg1f2e67vk9ccr773gdq87sgp84.apps.googleusercontent.com')
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('611881103547596')
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    } ,
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

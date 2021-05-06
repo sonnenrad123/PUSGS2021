@@ -38,7 +38,7 @@
                                    <div class="form-group col-md-6">    
                                        <mat-form-field class="full-width" appearance="outline">
                                            <mat-label>Email*</mat-label>
-                                           <input matInput formControlName="uEmail" type="email" name="uEmail" id="uEmail"  placeholder="Ex. xyz@example.com"/>
+                                           <input matInput formControlName="userEmail" type="email" name="userEmail" id="userEmail"  placeholder="Ex. xyz@example.com"/>
                                            <mat-error *ngIf="form.invalid">{{getErrorMessageEmail()}}</mat-error>
                                        </mat-form-field>
                                    </div>
@@ -87,7 +87,7 @@
                                     
                                             <mat-form-field class="full-width" appearance="outline">
                                                 <mat-label>Birthday*</mat-label>
-                                                <input formControlName="birthday" type="date" name="birthday" id="birthday" matInput/>
+                                                <input formControlName="dateOfBirth" type="date" name="dateOfBirth" id="dateOfBirth" matInput/>
                                                 <mat-error *ngIf="form.invalid">{{getErrorMessageBirthday()}}</mat-error>
                                             </mat-form-field>
                         
@@ -101,7 +101,7 @@
                                             </mat-form-field>
                                             <mat-form-field *ngIf="form.get('roleOfUser')!.value === 'TEAM_MEMBER'" class="full-width" appearance="outline">
                                                <mat-label>Team*</mat-label>
-                                               <mat-select formControlName="teamOfUser">
+                                               <mat-select formControlName="userTeam">
                                                    <mat-option>--</mat-option>
                                                </mat-select>
                                                <mat-error *ngIf="form.invalid"></mat-error>
@@ -109,7 +109,7 @@
                                         </div>
                                     </div>
                                    <div class="col-md-6 image-placeholder">
-                                       <div class="form-group" matTooltip="Upload image">
+                                       <div class="form-group component-position" matTooltip="Upload image">
                                            <app-input-image></app-input-image>
                                        </div>
                                    </div>
@@ -123,7 +123,7 @@
                                 </div>
                             </form> 
                          
-                            <router-outlet></router-outlet>     
+                                
                          </div>
                      </div>
                 </div>

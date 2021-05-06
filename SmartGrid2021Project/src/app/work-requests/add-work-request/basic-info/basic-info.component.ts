@@ -1,5 +1,4 @@
 import { Component, NgModule, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -14,10 +13,10 @@ export class BasicInfoComponent implements OnInit {
   user: string;
   currentDate: Date = new Date();
 
-  constructor(private router: Router, private afAuth: AngularFireAuth) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.getCurrentUser();
+    
     
     this.basicInfoForm = new FormGroup({
       typeOfDocument: new FormControl(),
@@ -41,10 +40,7 @@ export class BasicInfoComponent implements OnInit {
     this.router.navigate(['WorkRequests']);
   }
 
-  getCurrentUser(){
-    this.afAuth.authState.subscribe(x => this.user = x.displayName);
-    return this.user;
-  }
+  
 
   
 }

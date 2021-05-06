@@ -34,3 +34,11 @@
     margin-bottom: 5rem;
     margin-top: 5px;
 }
+.parent{
+    text-align: center;
+}
+
+.component-position{
+    text-align: center;
+    margin-left: 4rem;
+}
