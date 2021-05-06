@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "HTTPS=true ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~11.2.7",
     "@angular/router": "~11.2.7",
     "angularfire2": "^5.4.2",
+    "angularx-social-login": "^3.5.6",
     "animate.css": "^4.1.1",
     "bootstrap": "^3.4.1",
     "bootstrap-notify": "^3.1.3",
