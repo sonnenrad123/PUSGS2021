@@ -10,7 +10,7 @@
                 
                     <mat-form-field class="input100" appearance="outline">
                         <mat-label>Email*</mat-label>
-                        <input matInput formControlName="email" type="email" name="email" id="email"  placeholder="Ex. xyz@example.com"/>
+                        <input matInput formControlName="userEmail" type="email" name="userEmail" id="userEmail"  placeholder="Ex. xyz@example.com"/>
                         <mat-error *ngIf="loginForm.invalid">{{getErrorMessageEmail()}}</mat-error>
                     </mat-form-field>
                     
@@ -46,14 +46,14 @@
 
                 <div class="login100-form-social">
                    
-                    <button (click)="loginWithGoogle()" class="btn btn-lg btn-google btn-block text-uppercase login100-form-btn-google" type="submit">
+                    <div (click)="loginWithGoogle()" type="button" class="btn btn-lg btn-google btn-block text-uppercase login100-form-btn-google" type="submit">
                         <i class="fa fa-google" aria-hidden="true"></i>
                         Continue with Google
-                    </button>
-                    <button (click)="loginWithFacebook()" class="btn btn-lg btn-facebook btn-block text-uppercase login100-form-btn-facebook" type="submit">
+                    </div>
+                    <div (click)="loginWithFacebook()" type="button"  class="btn btn-lg btn-facebook btn-block text-uppercase login100-form-btn-facebook" type="submit">
                         <i class="fa fa-facebook-square" aria-hidden="true"></i>
                         Continue with Facebook
-                    </button>
+                    </div>
             
                 </div>
             </form>

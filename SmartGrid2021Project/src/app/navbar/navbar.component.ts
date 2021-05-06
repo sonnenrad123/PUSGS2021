@@ -1,10 +1,9 @@
 import {Component, OnInit } from '@angular/core';
 import {Location} from '@angular/common';
 import {ROUTES} from "../../app/sidebar/sidebar.component";
-import { empty } from 'rxjs';
 import { ElementRef } from '@angular/core';
-import * as firebase from 'firebase';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { SocialAuthService } from 'angularx-social-login';
 
 @Component({
   selector: 'navbar-cmp',
@@ -15,13 +14,14 @@ export class NavbarComponent implements OnInit {
   private toggleButton: any;
   private sidebarVisible: boolean;
   private listTitles: any[] = [];
-  user!: firebase.default.User;
+  user!: string;
   location! : Location;
-  constructor(location: Location,  private element: ElementRef, private afAuth: AngularFireAuth) { 
+  constructor(location: Location,  private element: ElementRef, private router: Router, private oAuth: SocialAuthService) { 
 
     this.location = location;
     this.sidebarVisible = false;
-    afAuth.authState.subscribe(x => this.user = x);
+    //afAuth.authState.subscribe(x => this.user = x);
+    this.user = localStorage.getItem('user');
   }
 
   ngOnInit(): void {
@@ -53,6 +53,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logOut(){
-    this.afAuth.signOut();
+    this.oAuth.signOut();
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
   }
 }
