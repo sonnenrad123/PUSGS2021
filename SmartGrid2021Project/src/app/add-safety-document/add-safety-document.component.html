@@ -1,0 +1,14 @@
+<div class="title">
+    <h4 class="header">
+        Add new safety document <button type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="submitSafetyDocument()" disabled="{{!buttonEnabled}}" style="left: 30px;" #si>Submit safety document</button>
+    </h4>
+    
+</div>
+<nav mat-tab-nav-bar >
+    <a mat-tab-link *ngFor="let link of links" 
+    [routerLink]="link.link"
+    (click)="activeLinkIndex = link.index"
+    routerLinkActive #rla="routerLinkActive"
+    [active]="rla.isActive"><mat-icon>{{link.icon}}</mat-icon>{{link.label}}</a>
+</nav>
+<router-outlet></router-outlet>

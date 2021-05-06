@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">History of state changes</h4>
+                    <div class="content">
+                        <div class="content table-responsive table-full-width">
+                            <table class="table table-hover table-striped">
+                                  <thead>
+                                      <tr>
+                                          <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr *ngFor="let row of stateChanges">
+                                          <td>{{row.state}}</td>
+                                          <td>{{row.date}}</td>
+                                          <td>{{row.autor}}</td>
+                                      </tr>
+                                  </tbody>
+                            </table>
+  
+                      </div>
+                      <div class="row">
+                        <form [formGroup]="changeStateForm" (ngSubmit)="onSubmit()" >
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Select new state:</mat-label>
+                                        <mat-select formControlName="safetyDocumentState" id="safetyDocumentState">
+                                            <mat-option *ngFor="let state of safetyDocumentStates" [value]="state">{{state}}</mat-option>
+                                        </mat-select>
+                                        
+                                    </mat-form-field>
+                                    <button class="btn btn-success" [disabled]="!changeStateForm.valid"  type="submit" style="margin-right: 10px;">Save state</button>
+                                </div>
+                            </div>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

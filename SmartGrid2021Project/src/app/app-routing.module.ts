@@ -23,6 +23,13 @@ import { IncidentResolutionComponent } from './add-incident/incident-resolution/
 import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-multimedia-attachments/incident-multimedia-attachments.component';
 import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/incident-calls-new-call/incident-calls-new-call.component';
 import { SafetyDocumentsComponent } from './safety-documents/safety-documents.component';
+import { AddSafetyDocumentComponent } from './add-safety-document/add-safety-document.component';
+import { SafetyDocumentBasicInfoComponent } from './add-safety-document/safety-document-basic-info/safety-document-basic-info.component';
+import { SafetyDocumentStatesHistoryComponent } from './add-safety-document/safety-document-states-history/safety-document-states-history.component';
+import { SafetyDocumentMultimediaAttachmentsComponent } from './add-safety-document/safety-document-multimedia-attachments/safety-document-multimedia-attachments.component';
+import { SafetyDocumentEquipmentComponent } from './add-safety-document/safety-document-equipment/safety-document-equipment.component';
+import { SafetyDocumentChecklistComponent } from './add-safety-document/safety-document-checklist/safety-document-checklist.component';
+
 const routes: Routes = [
   {
     path:'',
@@ -63,7 +70,21 @@ const routes: Routes = [
       ]},
     ]
   },
-  
+  {
+    path:'AddSafetyDocument',
+    component: GeneralLayoutComponent,
+    children:[
+      {
+        path:'',component: AddSafetyDocumentComponent, children:[
+          {path:'BasicInfo', component: SafetyDocumentBasicInfoComponent},
+          {path:'StatesHistory', component: SafetyDocumentStatesHistoryComponent},
+          {path:'MultimediaAttachments', component:SafetyDocumentMultimediaAttachmentsComponent},
+          {path:'Equipment', component:SafetyDocumentEquipmentComponent},
+          {path:'Checklist', component:SafetyDocumentChecklistComponent}
+        ]
+      },
+    ]
+  },
   {
     path:'WorkRequests',
     component: GeneralLayoutComponent,

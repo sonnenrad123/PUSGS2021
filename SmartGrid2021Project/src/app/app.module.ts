@@ -60,6 +60,13 @@ import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/inc
 import { SafetyDocumentsComponent } from './safety-documents/safety-documents.component';
 import { UserAccountService } from './services/user-account/user-account.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AddSafetyDocumentComponent } from './add-safety-document/add-safety-document.component';
+import { SafetyDocumentBasicInfoComponent } from './add-safety-document/safety-document-basic-info/safety-document-basic-info.component';
+import { SafetyDocumentStatesHistoryComponent } from './add-safety-document/safety-document-states-history/safety-document-states-history.component';
+import { SafetyDocumentMultimediaAttachmentsComponent } from './add-safety-document/safety-document-multimedia-attachments/safety-document-multimedia-attachments.component';
+import { SafetyDocumentEquipmentComponent } from './add-safety-document/safety-document-equipment/safety-document-equipment.component';
+import { SafetyDocumentChecklistComponent } from './add-safety-document/safety-document-checklist/safety-document-checklist.component';
+
 
 
 @NgModule({
@@ -96,6 +103,13 @@ import { HttpClientModule } from '@angular/common/http';
     IncidentMultimediaAttachmentsComponent,
     IncidentCallsNewCallComponent,
     SafetyDocumentsComponent,
+    AddSafetyDocumentComponent,
+    SafetyDocumentBasicInfoComponent,
+    SafetyDocumentStatesHistoryComponent,
+    SafetyDocumentMultimediaAttachmentsComponent,
+    SafetyDocumentEquipmentComponent,
+    SafetyDocumentChecklistComponent
+    
     
   ],
   imports: [

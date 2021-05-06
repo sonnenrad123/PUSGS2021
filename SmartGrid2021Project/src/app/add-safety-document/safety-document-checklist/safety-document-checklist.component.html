@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Important questions</h4>
+                    <div class="content">
+                        <form [formGroup]="checklistForm" (ngSubmit)="onSubmit()" >
+                            <mat-slide-toggle  formControlName="workCompleted">All work operations completed?</mat-slide-toggle> <br/>
+                            <mat-slide-toggle formControlName="tagsRemoved">All tags removed?</mat-slide-toggle> <br/>
+                            <mat-slide-toggle formControlName="groundingRemoved">Grounding removed?</mat-slide-toggle> <br/>
+                            <mat-slide-toggle  formControlName="readyForService">Ready for service?</mat-slide-toggle> <br/>
+                            
+
+
+                            <div class="row" style="margin-top: 50px;">
+                                <div class="button-center-align">
+                                    <button class="btn btn-success"  type="submit" style="margin-right: 10px;">Save</button>
+                                    
+                                </div>
+                            
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
