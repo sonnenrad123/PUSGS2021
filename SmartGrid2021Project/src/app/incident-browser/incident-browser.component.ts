@@ -20,10 +20,10 @@ export interface Incident{
 })
 export class IncidentBrowserComponent implements OnInit {
   
+  displayedColumns: string[] = ['id','startDate','phoneNo','status','address']
+  dataSource: MatTableDataSource<Incident>;
   toggleAll: boolean;
   toggleMine: boolean;
-  WRTableColumns: TableColumn[];
-  Incidents: Incident[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
@@ -62,77 +62,40 @@ export class IncidentBrowserComponent implements OnInit {
   ]
 
 
-  initializeColumns(): void{
-    this.WRTableColumns = [
-    {
-      name: 'ID',
-      dataKey: 'id',
-      isSortable: true,
-      position: 'left',
-      isSticky: true
-      
-    },
-    {
-      name: 'START DATE',
-      dataKey: 'startDate',
-      isSortable: true,
-      position: 'left',
-      isSticky: true
-    },
-    {
-      name: 'PHONE NO.',
-      dataKey: 'phoneNo',
-      isSortable: true,
-      position: 'left',
-      
-    },
-    {
-      name: 'STATUS',
-      dataKey: 'status',
-      isSortable: true,
-      position: 'left',
-     
-    },
-    {
-      name: 'ADDRESS',
-      dataKey: 'address',
-      isSortable: true,
-      position: 'left',
-     
-    },
-    ];
-  }
-
-  
-
- 
-
   sortedData: Incident[];
   constructor() {
-
+    this.dataSource = new MatTableDataSource(this.incidents_examplesALL);
    }
 
   ngAfterViewInit(){
-    
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   } 
 
   ngOnInit(): void {
     this.toggleAll = true;
     this.toggleMine = false;
-    this.Incidents = this.incidents_examplesALL.slice();
-    this.initializeColumns();
+    
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
   
   
   showAllData(){
-    this.Incidents = this.incidents_examplesALL.slice();
+    this.dataSource.data = this.incidents_examplesALL;
     this.toggleAll = true;
     this.toggleMine = false;
 
   }
   showMineData(){
-    this.Incidents = this.incidents_examplesMINE.slice();
+    this.dataSource.data = this.incidents_examplesMINE;
     this.toggleAll = false;
     this.toggleMine = true;
   }
