@@ -64,7 +64,9 @@ export class LoginComponent {
     });
   }
 
- 
+  reportOutage(){
+    this.router.navigate(['/test']);
+  }
   getErrorMessageEmail(){
     const field = this.loginForm.get('userEmail');
     
