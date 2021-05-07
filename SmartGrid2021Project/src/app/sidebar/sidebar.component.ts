@@ -10,7 +10,7 @@ declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: '/Search', title:'Search', icon: 'pe-7s-search',class:''},
+    { path: '/SearchNetworkElements', title:'Search', icon: 'pe-7s-search',class:''},
     { path: '/NoRoute',title:'Dashboard',icon:'pe-7s-graph',class:''},
     { path: '/IncidentBrowser',title:'Incidents browser', icon: 'pe-7s-note2',class:''}, 
     
@@ -26,7 +26,7 @@ export const ROUTES: RouteInfo[] = [
         path: '/SafetyDocuments', title: 'Safety Documents', icon: 'pe-7s-note2', class: '', children:[]
       }
     ]},
-    { path: '/NoRoute', title: 'Add network element',icon: 'pe-7s-network',class:''},
+    { path: '/AddNetworkElement', title: 'Add network element',icon: 'pe-7s-network',class:''},
     { path:'/NoRoute', title:'Add consumer',icon:'pe-7s-add-user',class:''},
     { path: '/TeamsView', title:'Add teams',icon:'pe-7s-users',class:''},
     

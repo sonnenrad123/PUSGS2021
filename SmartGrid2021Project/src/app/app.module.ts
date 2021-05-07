@@ -66,6 +66,8 @@ import { SafetyDocumentStatesHistoryComponent } from './add-safety-document/safe
 import { SafetyDocumentMultimediaAttachmentsComponent } from './add-safety-document/safety-document-multimedia-attachments/safety-document-multimedia-attachments.component';
 import { SafetyDocumentEquipmentComponent } from './add-safety-document/safety-document-equipment/safety-document-equipment.component';
 import { SafetyDocumentChecklistComponent } from './add-safety-document/safety-document-checklist/safety-document-checklist.component';
+import { AddNetworkElementComponent } from './add-network-element/add-network-element.component';
+import { SearchNetworkElementsComponent } from './search-network-elements/search-network-elements.component';
 
 
 
@@ -108,7 +110,9 @@ import { SafetyDocumentChecklistComponent } from './add-safety-document/safety-d
     SafetyDocumentStatesHistoryComponent,
     SafetyDocumentMultimediaAttachmentsComponent,
     SafetyDocumentEquipmentComponent,
-    SafetyDocumentChecklistComponent
+    SafetyDocumentChecklistComponent,
+    AddNetworkElementComponent,
+    SearchNetworkElementsComponent
     
     
   ],

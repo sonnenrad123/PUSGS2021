@@ -1,0 +1,78 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-2">
+            <a routerLink ='/AddNetworkElement'>
+                <button  class="btn btn-default btn-block pull-left" ><i class="pe-7s-plus"></i> New network element</button>
+            </a>
+         </div>
+    </div>
+    
+    <div class="row" style="margin-top: 20px;">
+        <form>
+            <mat-form-field class="full-width" appearance="outline" style="left: 20px;">
+                <mat-label>Select type</mat-label>
+                <mat-select id="deviceType" name="deviceType" #selectedType>
+                    <mat-option *ngFor="let type of deviceTypes" [value]="type">{{type}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="full-width" appearance="outline" style="left: 50px;">
+                <mat-label>Select attribute</mat-label>
+                <mat-select id="deviceType" name="deviceType" #selectedAttribute>
+                    <mat-option *ngFor="let attribute of deviceAttributes" [value]="attribute">{{attribute}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field style="left: 80px">
+                <input #searchTerm matInput type="text" name="searchTerm" placeholder="Enter search term">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="button" (click)="doSearch(selectedType.value,selectedAttribute.value,searchTerm.value)" style="left: 100px;">Search
+            </button>
+            <button mat-raised-button color="primary" type="button" (click)="cancelSearch()" style="left: 120px;">Cancel
+            </button>
+        </form>
+         
+    </div>
+    
+    <div class="mat-elevation-z8">
+        <h4 >Search network elements</h4>
+        <div class="main-table">
+            <table mat-table  [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Device Id </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                 </ng-container>
+                 <ng-container matColumnDef="name" >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                 </ng-container>
+                 <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                    <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+                 </ng-container>
+                 <ng-container matColumnDef="coordinates">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Coordinates </th>
+                    <td mat-cell *matCellDef="let row"> {{row.coordinates}} </td>
+                 </ng-container>
+                 <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+                    <td mat-cell *matCellDef="let row"> {{row.address}} </td>
+                 </ng-container>
+                 <ng-container matColumnDef="location">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                    <td mat-cell *matCellDef="let row"> <button mat-button (click)="showLocation(row)"><mat-icon>location_on</mat-icon></button>	 </td>
+                 </ng-container>
+                 <ng-container matColumnDef="remove">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                    <td mat-cell *matCellDef="let row"> <button mat-button (click)="removeDevice(row)"><mat-icon>remove_circle</mat-icon></button>	 </td>
+                 </ng-container>
+                 
+
+                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+            </table>
+            <mat-paginator  [pageSize]="5" [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+        </div>
+                        
+    </div>
+</div>
+

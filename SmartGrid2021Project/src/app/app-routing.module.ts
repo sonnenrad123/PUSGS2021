@@ -29,6 +29,8 @@ import { SafetyDocumentStatesHistoryComponent } from './add-safety-document/safe
 import { SafetyDocumentMultimediaAttachmentsComponent } from './add-safety-document/safety-document-multimedia-attachments/safety-document-multimedia-attachments.component';
 import { SafetyDocumentEquipmentComponent } from './add-safety-document/safety-document-equipment/safety-document-equipment.component';
 import { SafetyDocumentChecklistComponent } from './add-safety-document/safety-document-checklist/safety-document-checklist.component';
+import { SearchNetworkElementsComponent } from './search-network-elements/search-network-elements.component';
+import { AddNetworkElementComponent } from './add-network-element/add-network-element.component';
 
 const routes: Routes = [
   {
@@ -100,6 +102,24 @@ const routes: Routes = [
       {
         path:'',component:SafetyDocumentsComponent
       },
+    ]
+  },
+  {
+    path:'SearchNetworkElements',
+    component: GeneralLayoutComponent,
+    children:[
+      {
+        path:'',component:SearchNetworkElementsComponent
+      },
+    ]
+  },
+  {
+    path:'AddNetworkElement',
+    component: GeneralLayoutComponent,
+    children:[
+      {
+        path:'',component:AddNetworkElementComponent
+      }
     ]
   },
   {
