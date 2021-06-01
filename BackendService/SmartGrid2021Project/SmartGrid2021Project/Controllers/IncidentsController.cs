@@ -25,17 +25,10 @@ namespace SmartGrid2021Project.Controllers
         [Route("GetIncidents")]
         public async Task<ActionResult<IEnumerable<Incident>>> GetIncidents()
         {
+
             return await _context.Incidents.ToListAsync();
         }
 
-        [HttpGet]
-        [Route("GetString")]
-        public async Task<ActionResult<String>> PostString(String incident)
-        {
-            string seadsadas = "";
-
-            return CreatedAtAction("GetString","VREDNOST");
-        }
 
         // GET: api/Incidents/5
         [HttpGet("{id}")]

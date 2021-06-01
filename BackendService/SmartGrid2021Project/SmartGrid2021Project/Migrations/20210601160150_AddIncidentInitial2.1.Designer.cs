@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartGrid2021Project.Models;
 
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20210601160150_AddIncidentInitial2.1")]
+    partial class AddIncidentInitial21
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,6 +273,9 @@ namespace SmartGrid2021Project.Migrations
 
                     b.Property<DateTime>("ETR")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("IdToShow")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IncidentDesc")
                         .HasColumnType("nvarchar(max)");

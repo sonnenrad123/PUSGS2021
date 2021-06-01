@@ -61,6 +61,7 @@ export class IncidentBrowserComponent implements OnInit {
     
   ]
 
+  data;any;
 
   sortedData: Incident[];
   constructor(private IncidentService: IncidentServiceService) {
@@ -75,7 +76,9 @@ export class IncidentBrowserComponent implements OnInit {
   ngOnInit(): void {
     this.toggleAll = true;
     this.toggleMine = false;
-    console.log(this.IncidentService.getString());
+    this.IncidentService.getIncidents().subscribe((data)=>{
+      console.log(data);
+    }) 
   }
 
   applyFilter(event: Event) {

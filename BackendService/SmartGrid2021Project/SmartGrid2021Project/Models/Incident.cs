@@ -14,23 +14,19 @@ namespace SmartGrid2021Project.Models
 
         public IncidentType IncidentType { get; set; }
         public int Priority { get; set; }
-        public bool Confirmed { get; set; } = false;
+        public bool Confirmed { get; set; }
         public IncidentStatus Status { get; set; }
         public string IncidentDesc { get; set; }
         public DateTime ETA { get; set; }
         public DateTime ETR { get; set; }
         public DateTime ATA { get; set; }
         public int AffectedCustomers { get; set; }
-        public DateTime OutageTime { get; set; } = DateTime.Now;
+        public DateTime OutageTime { get; set; }
         public int Calls { get; set; }
         public double Voltage { get; set; }
         public DateTime ScheduledTime { get; set; }
         public bool DodeliSebi { get; set; }
-        public string IdToShow
-        {
-            get { return string.Concat("INC", Id); }
-            set { IdToShow = string.Concat("INC", Id); }
-        }
+       
 
     }
 }

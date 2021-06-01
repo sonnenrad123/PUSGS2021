@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
+import {catchError} from 'rxjs/operators'; 
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +16,11 @@ export class IncidentServiceService {
     return this.http.get(this.BaseURI + 'incidents/GetIncidents');
   }
 
-  getString(){
-    return this.http.get(this.BaseURI + 'incidents/GetString');
-  }
+ 
 
   addIncident(formData){
     return this.http.post(this.BaseURI + 'incidents/PostIncident',formData);
   }
+
+  
 }
