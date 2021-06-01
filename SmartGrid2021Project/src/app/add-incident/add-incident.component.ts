@@ -3,7 +3,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 
 import { interval, Subscription } from 'rxjs';
-
+import {IncidentServiceService } from '../services/incident/incident-service.service';
 
 
 
@@ -26,7 +26,7 @@ export class AddIncidentComponent implements OnInit {
   intervalFormCheck: any;
   
 
-  constructor(private router: Router) {
+  constructor(private router: Router,private IncidentService: IncidentServiceService) {
     this.links = [
       {
         label: 'Basic Info',
@@ -118,6 +118,10 @@ export class AddIncidentComponent implements OnInit {
     if(basicInformationFormValue != null && resolutionFormValue != null){
       console.log(basicInformationFormValue);
       console.log(resolutionFormValue);
+
+      
+
+      this.IncidentService.addIncident(basicInformationFormValue);
     }
     else{
       this.triedToCrash = true;

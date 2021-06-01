@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace SmartGrid2021Project.Models
 {
-    public class AuthenticationContext : IdentityDbContext<AppUser>
+    public class GeneralDBContext: IdentityDbContext<AppUser>
     {
-        public AuthenticationContext(DbContextOptions options) : base(options)
+        public GeneralDBContext(DbContextOptions options):base(options)
         {
-
+            
         }
-
         public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Incident> Incidents { get; set; }
     }
 }

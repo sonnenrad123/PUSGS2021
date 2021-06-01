@@ -4,7 +4,7 @@ import { TableColumn } from '../common/mat-table/table-column';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
-
+import {IncidentServiceService } from '../services/incident/incident-service.service';
 export interface Incident{
   id:string;
   startDate:Date;
@@ -63,7 +63,7 @@ export class IncidentBrowserComponent implements OnInit {
 
 
   sortedData: Incident[];
-  constructor() {
+  constructor(private IncidentService: IncidentServiceService) {
     this.dataSource = new MatTableDataSource(this.incidents_examplesALL);
    }
 
@@ -75,7 +75,7 @@ export class IncidentBrowserComponent implements OnInit {
   ngOnInit(): void {
     this.toggleAll = true;
     this.toggleMine = false;
-    
+    console.log(this.IncidentService.getString());
   }
 
   applyFilter(event: Event) {

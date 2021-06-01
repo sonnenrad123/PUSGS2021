@@ -37,11 +37,11 @@ namespace SmartGrid2021Project
 
             services.AddControllers();
 
-            services.AddDbContext<AuthenticationContext>(options =>
+            services.AddDbContext<GeneralDBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             services.AddDefaultIdentity<AppUser>()
-                .AddEntityFrameworkStores<AuthenticationContext>();
+                .AddEntityFrameworkStores<GeneralDBContext>();
 
             services.Configure<IdentityOptions>(options =>
             {

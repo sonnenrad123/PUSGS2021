@@ -8,7 +8,7 @@ using SmartGrid2021Project.Models;
 
 namespace SmartGrid2021Project.Migrations
 {
-    [DbContext(typeof(AuthenticationContext))]
+    [DbContext(typeof(GeneralDBContext))]
     partial class AuthenticationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -242,6 +242,57 @@ namespace SmartGrid2021Project.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.Incident", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ATA")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AffectedCustomers")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Calls")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Confirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ETA")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IdToShow")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IncidentDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ScheduledTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Voltage")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Incidents");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

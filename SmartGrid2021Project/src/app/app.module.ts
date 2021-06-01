@@ -59,6 +59,7 @@ import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-
 import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/incident-calls-new-call/incident-calls-new-call.component';
 import { SafetyDocumentsComponent } from './safety-documents/safety-documents.component';
 import { UserAccountService } from './services/user-account/user-account.service';
+import {IncidentServiceService } from './services/incident/incident-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AddSafetyDocumentComponent } from './add-safety-document/add-safety-document.component';
 import { SafetyDocumentBasicInfoComponent } from './add-safety-document/safety-document-basic-info/safety-document-basic-info.component';
@@ -166,6 +167,7 @@ import { SearchNetworkElementsComponent } from './search-network-elements/search
         ]
       } as SocialAuthServiceConfig,
     } ,
+    
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

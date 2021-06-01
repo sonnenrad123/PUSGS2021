@@ -9,7 +9,7 @@ using SmartGrid2021Project.Models;
 
 namespace SmartGrid2021Project.Migrations
 {
-    [DbContext(typeof(AuthenticationContext))]
+    [DbContext(typeof(GeneralDBContext))]
     [Migration("20210428152943_Initial")]
     partial class Initial
     {
