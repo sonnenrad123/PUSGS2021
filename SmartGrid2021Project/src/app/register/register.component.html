@@ -103,6 +103,7 @@
                                                <mat-label>Team*</mat-label>
                                                <mat-select formControlName="userTeam">
                                                    <mat-option>--</mat-option>
+                                                   <mat-option *ngFor="let team of userTeams" value="{{team.teamID}}">{{team.teamName}}</mat-option>
                                                </mat-select>
                                                <mat-error *ngIf="form.invalid"></mat-error>
                                            </mat-form-field>
@@ -117,7 +118,7 @@
                                 </div>
                                 <div class="parent">
                                     <div class="custom-width-div" style="text-align: center; margin-top: 2rem;">          
-                                    <button class="custom-width-btn" mat-flat-button color="Primary" [disabled]="form.invalid">Register</button>
+                                    <button class="custom-width-btn" mat-flat-button color="Primary" [disabled]=form.invalid>Register</button>
                                     <a class="custom-width-btn" mat-stroked-button color="Accent" routerLink="/home">Cancel</a>
                                     </div>
                                 </div>

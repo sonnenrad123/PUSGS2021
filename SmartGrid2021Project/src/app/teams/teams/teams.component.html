@@ -9,7 +9,7 @@
             <table class="table custom-table">
                 <ng-container *ngFor="let team of teams">
                     <tr>
-                        <td  [attr.rowspan]="team.teamMembers.length">{{team.id}}</td>
+                        <td  [attr.rowspan]="team.teamMembers.length">{{team.teamID}}</td>
                         <td [attr.rowspan]="team.teamMembers.length">{{team.teamName}}</td>
                         <td>{{team.teamMembers[0]}}</td>
                     </tr>

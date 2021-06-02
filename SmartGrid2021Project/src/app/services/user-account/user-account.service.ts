@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 export class UserAccountService {
 
   constructor(private http:HttpClient, private router: Router) { }
-  readonly BaseURI = 'http://localhost:65390/api/';
+  readonly BaseURI = environment.apiUrl;
 
   register(formData){
     return this.http.post(this.BaseURI + 'account/Register', formData).subscribe(() => this.router.navigate(["/login"]));
