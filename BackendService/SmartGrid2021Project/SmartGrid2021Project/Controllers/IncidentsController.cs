@@ -22,7 +22,6 @@ namespace SmartGrid2021Project.Controllers
 
         // GET: api/Incidents
         [HttpGet]
-        [Route("GetIncidents")]
         public async Task<ActionResult<IEnumerable<Incident>>> GetIncidents()
         {
 
@@ -80,11 +79,17 @@ namespace SmartGrid2021Project.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        [Route("PostIncident")]
         public async Task<ActionResult<Incident>> PostIncident(Incident incident)
         {
-            _context.Incidents.Add(incident);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Incidents.Add(incident);
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+
+            }
 
             return CreatedAtAction("GetIncident", new { id = incident.Id }, incident);
         }

@@ -9,13 +9,13 @@ namespace SmartGrid2021Project.Models
 {
     public class Incident
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public IncidentType IncidentType { get; set; }
+        public string IncidentType { get; set; }
         public int Priority { get; set; }
         public bool Confirmed { get; set; }
-        public IncidentStatus Status { get; set; }
+        public string Status { get; set; }
         public string IncidentDesc { get; set; }
         public DateTime ETA { get; set; }
         public DateTime ETR { get; set; }
@@ -26,7 +26,11 @@ namespace SmartGrid2021Project.Models
         public double Voltage { get; set; }
         public DateTime ScheduledTime { get; set; }
         public bool DodeliSebi { get; set; }
-       
 
+        [NotMapped]
+        public string CustomId
+        {
+            get { return string.Concat("INC", Id); }
+        }
     }
 }

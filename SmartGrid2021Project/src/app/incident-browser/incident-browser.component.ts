@@ -5,6 +5,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {IncidentServiceService } from '../services/incident/incident-service.service';
+import { MatTab } from '@angular/material/tabs';
 export interface Incident{
   id:string;
   startDate:Date;
@@ -27,58 +28,24 @@ export class IncidentBrowserComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
-  incidents_examplesALL: Incident[] = [
-    {id: "11111", startDate: new Date() , phoneNo: "255-255-250",status: "AotImplemented", address: "Adressa neka neka"},
-    {id: "21111", startDate: new Date() , phoneNo: "255-255-252",status: "XotImplemented", address: "Cdressa neka neka"},
-    {id: "31111", startDate: new Date("2019-01-16") , phoneNo: "255-255-251",status: "DotImplemented", address: "Bdressa neka neka"},
-    {id: "41111", startDate: new Date("2020-01-16") , phoneNo: "255-255-253",status: "CtImplemented", address: "Ddressa neka neka"},
-    {id: "51111", startDate: new Date("2021-03-16") , phoneNo: "255-255-258",status: "NotImplemented", address: "Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test Scroll bar test" },
-    {id: "61111", startDate: new Date("2021-02-16") , phoneNo: "255-256-256",status: "YotImplemented", address: "Mdressa neka neka"},
-    {id: "71111", startDate: new Date("2021-04-16") , phoneNo: "255-258-256",status: "BotImplemented", address: "Rdressa neka neka"},
-    {id: "81111", startDate: new Date("2021-01-15") , phoneNo: "255-257-256",status: "EotImplemented", address: "Adressa neka neka"},
-    {id: "91111", startDate: new Date("2021-01-16"), phoneNo: "255-259-256",status: "NotImplemented", address: "Adressa neka neka"},
-    {id: "11111", startDate: new Date(), phoneNo: "255-255-250",status: "AotImplemented", address: "Adressa neka neka"},
-    {id: "21111", startDate: new Date() , phoneNo: "255-255-252",status: "XotImplemented", address: "Cdressa neka neka"},
-    {id: "31111", startDate: new Date("2019-01-16") , phoneNo: "255-255-251",status: "DotImplemented", address: "Bdressa neka neka"},
-    {id: "41111", startDate: new Date("2020-01-16") , phoneNo: "255-255-253",status: "CtImplemented", address: "Ddressa neka neka"},
-    {id: "51111", startDate: new Date("2021-03-16") , phoneNo: "255-255-258",status: "NotImplemented", address: "Ndressa neka neka"},
-    {id: "61111", startDate: new Date("2021-02-16") , phoneNo: "255-256-256",status: "YotImplemented", address: "Mdressa neka neka"},
-    {id: "71111", startDate: new Date("2021-04-16"), phoneNo: "255-258-256",status: "BotImplemented", address: "Rdressa neka neka"},
-    {id: "81111", startDate: new Date("2021-01-15") , phoneNo: "255-257-256",status: "EotImplemented", address: "Adressa neka neka"},
-    {id: "91111", startDate: new Date("2021-01-16") , phoneNo: "255-259-256",status: "NotImplemented", address: "Adressa neka neka"},
-  ]
-
-  incidents_examplesMINE: Incident[] = [
-    {id: "11111", startDate: new Date() , phoneNo: "255-255-250",status: "AotImplemented", address: "Adressa neka neka"},
-    {id: "21111", startDate: new Date() , phoneNo: "255-255-252",status: "XotImplemented", address: "Cdressa neka neka"},
-    {id: "31111", startDate: new Date("2019-01-16") , phoneNo: "255-255-251",status: "DotImplemented", address: "Bdressa neka neka"},
-    {id: "41111", startDate: new Date("2020-01-16") , phoneNo: "255-255-253",status: "CtImplemented", address: "Ddressa neka neka"},
-    {id: "51111", startDate: new Date("2021-03-16") , phoneNo: "255-255-258",status: "NotImplemented", address: "Ndressa neka neka"},
-    
-    {id: "71111", startDate: new Date("2021-04-16") , phoneNo: "255-258-256",status: "BotImplemented", address: "Rdressa neka neka"},
-    {id: "81111", startDate: new Date("2021-01-15") , phoneNo: "255-257-256",status: "EotImplemented", address: "Adressa neka neka"},
-    {id: "91111", startDate: new Date("2021-01-16") , phoneNo: "255-259-256",status: "NotImplemented", address: "Adressa neka neka"},
-    
-  ]
-
-  data;any;
+  responseData:any;
+  Incidents:Incident[];
 
   sortedData: Incident[];
   constructor(private IncidentService: IncidentServiceService) {
-    this.dataSource = new MatTableDataSource(this.incidents_examplesALL);
-   }
+
+  }
 
   ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+   // this.dataSource.paginator = this.paginator;
+   // this.dataSource.sort = this.sort;
   } 
 
   ngOnInit(): void {
     this.toggleAll = true;
     this.toggleMine = false;
-    this.IncidentService.getIncidents().subscribe((data)=>{
-      console.log(data);
-    }) 
+    this.readData();
+    
   }
 
   applyFilter(event: Event) {
@@ -92,16 +59,52 @@ export class IncidentBrowserComponent implements OnInit {
   
   
   showAllData(){
-    this.dataSource.data = this.incidents_examplesALL;
+    this.mapData();
     this.toggleAll = true;
     this.toggleMine = false;
 
   }
   showMineData(){
-    this.dataSource.data = this.incidents_examplesMINE;
+    
     this.toggleAll = false;
     this.toggleMine = true;
   }
+
+  readData(){
+      this.IncidentService.getIncidents().subscribe(
+        incidents => {
+          this.responseData = incidents;
+          console.log(incidents);
+          this.mapData();
+        },
+        error => {
+          console.log(error);
+        }
+      );
+      
+  }
+
+  mapData(){
+    
+    
+    var ss = JSON.stringify(this.responseData);
+    
+    this.Incidents = JSON.parse(ss).map(item => ({
+      id:item.customId,
+      startDate:item.outageTime, 
+      phoneNo:'TODO:Implement',
+      status:item.status,
+      address:'TODO:Implement'
+
+    }));
+    this.dataSource = new MatTableDataSource(this.Incidents);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+
+
+
 }
 
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {

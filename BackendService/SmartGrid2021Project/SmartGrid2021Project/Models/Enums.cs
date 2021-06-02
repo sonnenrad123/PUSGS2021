@@ -14,9 +14,9 @@ namespace SmartGrid2021Project.Models
     public enum IncidentType
     {
         [Display(Name ="Planned Work")]
-        PlannedWork,
+        Planned,
         [Display(Name = "Unplanned Work")]
-        UnplannedWork
+        Unplanned
     }
 
     public enum IncidentStatus

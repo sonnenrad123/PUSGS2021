@@ -10,7 +10,7 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Incident ID (auto-generated)</mat-label>
-                                        <input type="text" id="id" matInput formControlName="id" class="form-control" readonly>
+                                        <input type="text" id="idCustom" matInput formControlName="idCustom" class="form-control" readonly>
                                     </mat-form-field>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -29,7 +29,7 @@
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Type</mat-label>
                                         <mat-select formControlName="incidentType" id="incidentType">
-                                            <mat-option *ngFor="let type of incidentTypes" [value]="type">{{type}}</mat-option>
+                                            <mat-option *ngFor="let type of IncidentTypeKeys()" [value]="type">{{type}}</mat-option>
                                         </mat-select>
                                         <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
                                     </mat-form-field>
@@ -54,7 +54,7 @@
                                 <div class="col-md-4">
                                    
                                     <mat-form-field class="full-width" appearance="outline">
-                                        <mat-label>Affected customers (Auto-set based on equipment)</mat-label>
+                                        <mat-label>Prirority (Auto-set based on equipment)</mat-label>
                                         <input type="number" matInput class="form-control" id="priority" formControlName="priority" readonly>
                                     </mat-form-field>
                                 </div>

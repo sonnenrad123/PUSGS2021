@@ -26,6 +26,9 @@ export class AddIncidentComponent implements OnInit {
   intervalFormCheck: any;
   
 
+  
+
+
   constructor(private router: Router,private IncidentService: IncidentServiceService) {
     this.links = [
       {
@@ -119,9 +122,15 @@ export class AddIncidentComponent implements OnInit {
       console.log(basicInformationFormValue);
       console.log(resolutionFormValue);
 
-      
+      this.IncidentService.addIncident(basicInformationFormValue).subscribe(
+        response =>{
+          console.log(response);
 
-      this.IncidentService.addIncident(basicInformationFormValue);
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
     else{
       this.triedToCrash = true;
