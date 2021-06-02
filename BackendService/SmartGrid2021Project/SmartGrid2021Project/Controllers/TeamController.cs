@@ -13,8 +13,8 @@ namespace SmartGrid2021Project.Controllers
     [ApiController]
     public class TeamController : ControllerBase
     {
-        private readonly AuthenticationContext _context;
-        public TeamController(AuthenticationContext context)
+        private readonly GeneralDBContext _context;
+        public TeamController(GeneralDBContext context)
         {
             _context = context;
         }

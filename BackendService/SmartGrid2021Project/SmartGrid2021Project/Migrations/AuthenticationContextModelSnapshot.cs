@@ -163,14 +163,17 @@ namespace SmartGrid2021Project.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .HasColumnType("varchar(90)");
+                        .IsRequired()
+                        .HasColumnType("varchar(90)")
+                        .HasColumnName("User Address");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("Date");
+                        .HasColumnType("Date")
+                        .HasColumnName("Date of birth");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -181,11 +184,13 @@ namespace SmartGrid2021Project.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("First Name");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("Last Name");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -212,7 +217,8 @@ namespace SmartGrid2021Project.Migrations
 
                     b.Property<string>("RoleOfUser")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("User Role");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -221,15 +227,15 @@ namespace SmartGrid2021Project.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserImage")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("User Image");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("UserTeam")
-                        .HasColumnType("varchar(50)");
+                    b.Property<int?>("UserTeamId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -240,6 +246,8 @@ namespace SmartGrid2021Project.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("UserTeamId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -298,6 +306,24 @@ namespace SmartGrid2021Project.Migrations
                     b.ToTable("Incidents");
                 });
 
+            modelBuilder.Entity("SmartGrid2021Project.Models.Team", b =>
+                {
+                    b.Property<int>("teamID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Team ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("teamName")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("Team Name");
+
+                    b.HasKey("teamID");
+
+                    b.ToTable("Teams");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -347,6 +373,20 @@ namespace SmartGrid2021Project.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.AppUser", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.Team", "UserTeam")
+                        .WithMany("teamMembers")
+                        .HasForeignKey("UserTeamId");
+
+                    b.Navigation("UserTeam");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.Team", b =>
+                {
+                    b.Navigation("teamMembers");
                 });
 #pragma warning restore 612, 618
         }
