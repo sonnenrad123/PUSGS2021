@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Team } from '../models/team/team';
 import { UserRole } from '../models/user-role/user-role.enum';
 import { User } from '../models/user/user';
+import { TeamService } from '../services/teams/team.service';
 import { UserAccountService } from '../services/user-account/user-account.service';
 
 @Component({
@@ -15,26 +17,25 @@ export class RegisterComponent implements OnInit {
   title = "Registration page";
   data = false;
   message: string;
-
+  
+  userTeams: Team[] = [];
   userRoles = UserRole;
   form: FormGroup;
   userProfileImage : any;
-  usersDataBase : User[];
-  user: User = {firstname: '', lastname: '', userEmail: '', address: '', username: '', password:'', birthday: new Date(), roleOfUser: UserRole.DISPATCHER};
-  constructor(private router: Router, private userAccService: UserAccountService) 
+
+  constructor(private router: Router, private userAccService: UserAccountService, private teamService: TeamService) 
   {
     this.userProfileImage = "../../assets/img/sidebar-background.png";
-    this.usersDataBase = [
-      {firstname: 'Pera', lastname: 'Peric', userEmail: 'pera@yahoo.com', address: 'Alekse Santica 3', username: 'pera123', password:'perapera1', birthday: new Date(), roleOfUser: UserRole.DISPATCHER},
-      {firstname: 'Zika', lastname: 'Zikic', userEmail: 'zika@gmail.com', address: 'Mike Antica 6', username: 'zika123', password:'zikazika2', birthday: new Date(), roleOfUser: UserRole.WORKER_WITH_INSPECTION_RIGHTS},
-    ];
     
-    this.usersDataBase.push()
     this.form = new FormGroup({});
+    
   }
 
   ngOnInit(): void {
-    
+    this.teamService.getAllTeams().subscribe((data: any[]) => {
+      this.userTeams = data;
+    });
+
     this.form = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -53,6 +54,11 @@ export class RegisterComponent implements OnInit {
   RegisterMethod(){
     
     const user = this.form.value;
+    if(this.form.controls['roleOfUser'].value === 'TEAM_MEMBER'){
+      user.userTeam = this.userTeams.find(t => t.teamID == this.form.controls['userTeam'].value); 
+    }else{
+      user.userTeam = null;
+    }
     this.userAccService.register(user);
   }
 

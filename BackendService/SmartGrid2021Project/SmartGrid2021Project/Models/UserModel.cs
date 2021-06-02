@@ -15,7 +15,8 @@ namespace SmartGrid2021Project.Models
         public string UserImage { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string RoleOfUser { get; set; }
-        public string UserTeam { get; set; }
+        public Team UserTeam { get; set; }
+        public int UserTeamID { get; set; }
         public string Address { get; set; }
     }
 }

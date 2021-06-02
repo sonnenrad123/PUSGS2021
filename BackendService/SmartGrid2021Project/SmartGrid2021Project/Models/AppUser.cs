@@ -10,30 +10,35 @@ namespace SmartGrid2021Project.Models
 {
     public class AppUser : IdentityUser
     {
-        [Column(TypeName ="varchar(50)")]
-        [Required]
-        public string FirstName { get; set; }
         
-        [Column(TypeName = "varchar(50)")]
         [Required]
+        [Column("First Name", TypeName ="varchar(50)")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Column("Last Name", TypeName = "varchar(50)")]
         public string LastName { get; set; }
 
-        [Column(TypeName = "varchar(50)")]
-        [Required]
+        
+        [Column("User Image", TypeName = "varchar(50)")]
         public string UserImage { get; set; }
 
-        [Column(TypeName = "Date")]
         [Required]
+        [Column("Date of birth", TypeName = "Date")]
         public DateTime DateOfBirth { get; set; }
 
-        [Column(TypeName = "varchar(50)")]
         [Required]
+        [Column("User Role", TypeName = "varchar(50)")]
         public string RoleOfUser { get; set; }
 
-        [Column(TypeName = "varchar(50)")]
-        public string UserTeam { get; set; }
+        [ForeignKey("TeamId")]
+        public int? UserTeamId { get; set; }
 
-        [Column(TypeName = "varchar(90)")]
+        [Column("User Team")]
+        public virtual Team UserTeam { get; set; }
+
+        [Required]
+        [Column("User Address", TypeName = "varchar(90)")]
         public string Address { get; set; }
     }
 }

@@ -59,6 +59,7 @@ import { IncidentMultimediaAttachmentsComponent } from './add-incident/incident-
 import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/incident-calls-new-call/incident-calls-new-call.component';
 import { UserAccountService } from './services/user-account/user-account.service';
 import { HttpClientModule } from '@angular/common/http';
+import { TeamService } from './services/teams/team.service';
 
 
 @NgModule({
@@ -130,6 +131,7 @@ import { HttpClientModule } from '@angular/common/http';
   providers: 
   [
     UserAccountService,
+    TeamService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

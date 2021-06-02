@@ -63,20 +63,20 @@ namespace SmartGrid2021Project.Controllers
                     UserImage = "",
                     LastName = user.LastName,
                     FirstName = user.FirstName,
-                    Address = user.Address
-
+                    Address = user.Address,
+                    //UserTeamId = user.UserTeam != null ? user.UserTeam.teamID : 0  
                 };
 
                 var result = await userManager.CreateAsync(appUser, user.Password);
                 if (result.Succeeded)
                 {
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
-                    //var confirmationLink = Url.RouteUrl("ConfirmEmail", new { token, email = appUser.Email }, Request.Scheme);
                     EmailHelper emailHelper = new EmailHelper();
                      var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { token, email = appUser.Email }, Request.Scheme);
 
                     await emailHelper.SendEmailAsync(appUser.Email, "Successfully registered", confirmationLink);
 
+                    
                     return Ok(result);
                 }
 

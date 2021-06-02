@@ -1,3 +1,4 @@
+import { Team } from "../team/team";
 import { UserRole } from "../user-role/user-role.enum";
 
 export class User {
@@ -10,11 +11,11 @@ export class User {
     address: string;
     roleOfUser: UserRole;
     userImage?: string;
-    nameOfTeam?: string;
+    userTeam?: Team;
 
     constructor(username: string, password: string, email: string, firstName: string,
                 lastName: string, date: Date, address: string, userRole: UserRole, 
-                userImg: string = "../../../assets/img/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg", nameOfTeam?: string){
+                userImg: string = "../../../assets/img/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg", userTeam?: Team){
         this.username = username;
         this.password = password;
         this.firstname = firstName;
@@ -24,6 +25,6 @@ export class User {
         this.address = address;
         this.roleOfUser = userRole;
         this.userImage = userImg;
-        this.nameOfTeam = nameOfTeam;
+        this.userTeam = userTeam;
     }
 }

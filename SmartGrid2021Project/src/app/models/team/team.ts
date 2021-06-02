@@ -1,7 +1,9 @@
 import { User } from "../user/user";
 
 export class Team {
-    id: number;
+    teamID: number;
     teamName: string;
-    teamMembers: Array<string>;
+    teamMembers?: Array<User>;
+
+    
 }
