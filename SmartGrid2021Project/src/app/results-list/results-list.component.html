@@ -1,0 +1,12 @@
+<div id="results-list">
+    <div id="results">
+        <mat-menu>
+            <button mat-menu-item *ngFor="let result of results" (click)="selectResult(result)">
+                {{ result.displayName }}
+            </button>
+
+        </mat-menu>
+        
+     
+    </div>
+  </div>

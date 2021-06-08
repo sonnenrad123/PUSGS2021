@@ -26,11 +26,13 @@ namespace SmartGrid2021Project.Models
         public double Voltage { get; set; }
         public DateTime ScheduledTime { get; set; }
         public bool DodeliSebi { get; set; }
-
+        public ICollection<Device> Devices { get; set; }
         [NotMapped]
         public string CustomId
         {
             get { return string.Concat("INC", Id); }
         }
+        [NotMapped]
+        public int[] DeviceId { get; set; }
     }
 }

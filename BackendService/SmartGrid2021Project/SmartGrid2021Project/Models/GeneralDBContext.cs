@@ -16,5 +16,6 @@ namespace SmartGrid2021Project.Models
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Incident> Incidents { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<Device> Devices { get; set; }
     }
 }

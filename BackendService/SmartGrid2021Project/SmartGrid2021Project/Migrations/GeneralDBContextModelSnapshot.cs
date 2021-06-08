@@ -9,7 +9,7 @@ using SmartGrid2021Project.Models;
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    partial class GeneralDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -18,6 +18,21 @@ namespace SmartGrid2021Project.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("DeviceIncident", b =>
+                {
+                    b.Property<int>("DevicesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IncidentsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DevicesId", "IncidentsId");
+
+                    b.HasIndex("IncidentsId");
+
+                    b.ToTable("DeviceIncident");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -252,6 +267,28 @@ namespace SmartGrid2021Project.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("SmartGrid2021Project.Models.Device", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Coordinates")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Devices");
+                });
+
             modelBuilder.Entity("SmartGrid2021Project.Models.Incident", b =>
                 {
                     b.Property<int>("Id")
@@ -322,6 +359,21 @@ namespace SmartGrid2021Project.Migrations
                     b.HasKey("teamID");
 
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("DeviceIncident", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.Device", null)
+                        .WithMany()
+                        .HasForeignKey("DevicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartGrid2021Project.Models.Incident", null)
+                        .WithMany()
+                        .HasForeignKey("IncidentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

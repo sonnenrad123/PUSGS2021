@@ -69,7 +69,10 @@ import { SafetyDocumentEquipmentComponent } from './add-safety-document/safety-d
 import { SafetyDocumentChecklistComponent } from './add-safety-document/safety-document-checklist/safety-document-checklist.component';
 import { AddNetworkElementComponent } from './add-network-element/add-network-element.component';
 import { SearchNetworkElementsComponent } from './search-network-elements/search-network-elements.component';
-
+import { NominatimService} from '../app/services/nominatim/nominatim.service';
+import { GeocodingComponent } from './geocoding/geocoding.component';
+import { ResultsListComponent } from './results-list/results-list.component';
+import { MapPointFormComponent } from './map-point-form/map-point-form.component';
 
 
 @NgModule({
@@ -113,7 +116,10 @@ import { SearchNetworkElementsComponent } from './search-network-elements/search
     SafetyDocumentEquipmentComponent,
     SafetyDocumentChecklistComponent,
     AddNetworkElementComponent,
-    SearchNetworkElementsComponent
+    SearchNetworkElementsComponent,
+    GeocodingComponent,
+    ResultsListComponent,
+    MapPointFormComponent
     
     
   ],
@@ -167,6 +173,7 @@ import { SearchNetworkElementsComponent } from './search-network-elements/search
         ]
       } as SocialAuthServiceConfig,
     } ,
+    NominatimService
     
   ],
   bootstrap: [AppComponent],

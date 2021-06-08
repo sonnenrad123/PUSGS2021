@@ -5,12 +5,12 @@
                 <div class="header">
                     <h4 class="title">Informations about new network element</h4>
                     <div class="content">
-                        <form [formGroup]="newNetworkElementForm" (ngSubmit)="onSubmit()" >
+                        <form [formGroup]="newNetworkElementForm" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
                             <div class="row">
                                 <div class="col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
-                                        <mat-label>Incident ID (auto-generated)</mat-label>
-                                        <input type="text" id="id" matInput formControlName="id" class="form-control" readonly>
+                                        <mat-label>Device ID (auto-generated)</mat-label>
+                                        <input type="text" id="customId" matInput formControlName="id" class="form-control" readonly>
                                     </mat-form-field>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -37,27 +37,48 @@
                                 <div class="form-group col-md-4">
                         
                                 </div>
-                                <div class="col-md-4">
-                                    <mat-form-field class="full-width" appearance="outline">
-                                        <mat-label>Address</mat-label>
-                                        <input type="text" id="address" matInput formControlName="address" class="form-control">
-                                    </mat-form-field>
-                                </div>
+                               
+                                
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Coordinates</mat-label>
-                                        <input type="text" id="coordinates" matInput formControlName="coordinates" class="form-control">
+                                        <input type="text" id="coordinates" matInput formControlName="coordinates" class="form-control" readonly>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group col-md-4">
+                        
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Address</mat-label>
+                                        <input type="text" id="address" matInput formControlName="address" class="form-control" readonly>
                                     </mat-form-field>
                                 </div>
                             </div>
                             
                             <div class="row">
+                                <div class="form-group col-md-3">
+                        
+                                </div>
+                                <div class="form-group col-md-2">
+                        
+                                </div>
+                                <div class="col-md-5">
+                                    <app-geocoding (onSearch)="refreshSearchList($event)"></app-geocoding>
+                                    <app-results-list [results]="AddressResults" (locationSelected)="getAddress($event)"></app-results-list>
+                                
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
                                 <div class="form-group col-md-5">
 
                                 </div>
-                                <button type="submit" mat-raised-button color="primary"  [disabled]="!newNetworkElementForm.valid" style="left: 30px;">Submit</button>
+                                <button type="submit" mat-raised-button color="primary"  [disabled]="!newNetworkElementForm.valid" style="left: 7px;">Submit</button>
                             </div>
                         </form>
                     </div>
