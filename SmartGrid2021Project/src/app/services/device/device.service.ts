@@ -11,20 +11,20 @@ export class DeviceService {
   constructor(private http:HttpClient, private router: Router) { }
   readonly BaseURI = 'http://localhost:65390/api/devices';
 
-  getIncidents():Observable<any>{
+  getDevices():Observable<any>{
     return this.http.get(this.BaseURI);
   }
 
-  getIncident(id):Observable<any>{
-    return this.http.get('${this.BaseURI}/${id}');
+  getDevice(id):Observable<any>{
+    return this.http.get(this.BaseURI + '/'+id);
   }
 
-  addIncident(data){
+  addDevice(data){
     return this.http.post(this.BaseURI,data);
   }
   
-  deleteIncident(id): Observable<any> {
-    return this.http.delete('${this.BaseURI}/${id}');
+  deleteDevice(id): Observable<any> {
+    return this.http.delete(this.BaseURI + '/'+id);
   }
 
   getMaxDeviceID():Observable<any>{

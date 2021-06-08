@@ -16,7 +16,7 @@ export class IncidentServiceService {
   }
 
   getIncident(id):Observable<any>{
-    return this.http.get('${this.BaseURI}/${id}');
+    return this.http.get(this.BaseURI + '/'+id);
   }
 
   addIncident(data){
@@ -24,6 +24,6 @@ export class IncidentServiceService {
   }
   
   deleteIncident(id): Observable<any> {
-    return this.http.delete('${this.BaseURI}/${id}');
+    return this.http.delete(this.BaseURI + '/'+id);
   }
 }

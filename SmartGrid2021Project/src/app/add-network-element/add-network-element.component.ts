@@ -4,6 +4,7 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MapPoint } from '../models/map-point/map-point.model';
 import { NominatimResponse } from '../models/nominatim-response/nominatim-response.model';
 import {DeviceService} from '../services/device/device.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-network-element',
@@ -12,7 +13,7 @@ import {DeviceService} from '../services/device/device.service';
 })
 export class AddNetworkElementComponent implements OnInit {
   newNetworkElementForm: FormGroup;
-  constructor(private DeviceService:DeviceService) { }
+  constructor(private DeviceService:DeviceService,private _snackBar: MatSnackBar) { }
   generatedID:any;
   elementTypes: string[] = ['Breaker','Disconnector','LoadBreak','Fuse','Switch'];
 
@@ -37,10 +38,11 @@ export class AddNetworkElementComponent implements OnInit {
 
   onSubmit() {
     console.log(JSON.stringify(this.newNetworkElementForm.value));
-    this.DeviceService.addIncident(this.newNetworkElementForm.value).subscribe(
+    this.DeviceService.addDevice(this.newNetworkElementForm.value).subscribe(
       response =>{
         console.log(response);
         this.generateNewID();
+        this._snackBar.open('Device added!','Ok');
       },
       error => {
         console.log(error);

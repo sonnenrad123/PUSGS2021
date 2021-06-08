@@ -51,6 +51,13 @@ const routes: Routes = [
     ]
   },
   {
+    path:'map/:deviceId',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: MapComponent},
+    ]
+  },
+  {
     path:'IncidentBrowser',
     component: GeneralLayoutComponent,
     children:[

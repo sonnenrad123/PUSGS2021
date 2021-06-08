@@ -4,8 +4,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { TableColumn } from 'src/app/common/mat-table/table-column';
-import { matTabsAnimations } from '@angular/material/tabs';
-
+import { MatTab, matTabsAnimations } from '@angular/material/tabs';
+import { DeviceService} from '../services/device/device.service';
+import { Router } from '@angular/router';
 enum DeviceType{
   Breaker= "Breaker",
   Disconnector = "Disconnector",
@@ -38,14 +39,7 @@ export class SearchNetworkElementsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  AllDevices:Device[]=[
-    {id:"device1",name:"BRE1",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice1"},
-    {id:"device3",name:"SWI1",type:DeviceType.Switch,coordinates:"xyz",address:"AdresaDevice3"},
-    {id:"device6",name:"LOA1",type:DeviceType.LoadBreak,coordinates:"xyz",address:"AdresaDevice6"},
-    {id:"device2",name:"FUS1",type:DeviceType.Fuse,coordinates:"xyz",address:"AdresaDevice5"},
-    {id:"device8",name:"DIS1",type:DeviceType.Disconnector,coordinates:"xyz",address:"AdresaDevice10"},
-    {id:"device9",name:"BRE2",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice11"},
-  ]
+  AllDevices:Device[];
   
 
   filteredData: Device[];
@@ -53,20 +47,23 @@ export class SearchNetworkElementsComponent implements OnInit {
   dataSource: MatTableDataSource<Device>;
   sortedData: Device[];
   
+  responseData:any[];
+  Devices:Device[];
 
-  constructor() { }
+  constructor(private DeviceService:DeviceService,private RouterObject:Router) { }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.AllDevices);
+    this.readData();
   }
 
   ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    //this.dataSource.paginator = this.paginator;
+    //this.dataSource.sort = this.sort;
   }
 
   showLocation(row:any){
-    console.log('Show location for device with id: ' + row.id);
+    //console.log('Show location for device with id: ' + row.id);
+    this.RouterObject.navigate(["/map",row.id]);
   }
   
   removeDevice(row:any){
@@ -143,6 +140,25 @@ export class SearchNetworkElementsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+
+  readData(){
+    this.DeviceService.getDevices().subscribe(
+      incidents => {
+        this.responseData = incidents;
+        this.AllDevices = this.responseData;
+        console.log(incidents);
+        this.dataSource = new MatTableDataSource(this.responseData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    
+}
+
 }
 
 

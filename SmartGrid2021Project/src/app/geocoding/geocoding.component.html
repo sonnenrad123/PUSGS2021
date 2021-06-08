@@ -1,4 +1,4 @@
 <div class="form-group address-lookup">
     <input type="text" placeholder="Search address..."
-           (keyup)="addressLookup($any($event.target).value)" (click)="$event.stopPropagation()"/>
+           (keyup.enter)="addressLookup($any($event.target).value)" (click)="$event.stopPropagation()"/>
   </div>

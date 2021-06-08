@@ -75,7 +75,7 @@ import { ResultsListComponent } from './results-list/results-list.component';
 import { MapPointFormComponent } from './map-point-form/map-point-form.component';
 import { IncidentDevicesDialogComponent } from './incident-devices-dialog/incident-devices-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -153,7 +153,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatSlideToggleModule,
     HttpClientModule,
     SocialLoginModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
     
   ],
   exports:[MatDatepickerModule],
@@ -176,7 +177,7 @@ import {MatDialogModule} from "@angular/material/dialog";
         ]
       } as SocialAuthServiceConfig,
     } ,
-    NominatimService
+    NominatimService,
     
   ],
   bootstrap: [AppComponent],
