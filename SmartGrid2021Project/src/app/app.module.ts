@@ -73,7 +73,8 @@ import { NominatimService} from '../app/services/nominatim/nominatim.service';
 import { GeocodingComponent } from './geocoding/geocoding.component';
 import { ResultsListComponent } from './results-list/results-list.component';
 import { MapPointFormComponent } from './map-point-form/map-point-form.component';
-
+import { IncidentDevicesDialogComponent } from './incident-devices-dialog/incident-devices-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { MapPointFormComponent } from './map-point-form/map-point-form.component
     SearchNetworkElementsComponent,
     GeocodingComponent,
     ResultsListComponent,
-    MapPointFormComponent
+    MapPointFormComponent,
+    IncidentDevicesDialogComponent
     
     
   ],
@@ -151,6 +153,7 @@ import { MapPointFormComponent } from './map-point-form/map-point-form.component
     MatSlideToggleModule,
     HttpClientModule,
     SocialLoginModule,
+    MatDialogModule
     
   ],
   exports:[MatDatepickerModule],
@@ -177,6 +180,7 @@ import { MapPointFormComponent } from './map-point-form/map-point-form.component
     
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents: [IncidentDevicesDialogComponent]
 })
 export class AppModule { }

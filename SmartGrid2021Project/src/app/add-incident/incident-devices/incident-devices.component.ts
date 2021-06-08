@@ -4,6 +4,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { TableColumn } from 'src/app/common/mat-table/table-column';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import { IncidentDevicesDialogComponent } from 'src/app/incident-devices-dialog/incident-devices-dialog.component';
 
 enum DeviceType{
   Breaker= "Breaker",
@@ -46,7 +48,7 @@ export class IncidentDevicesComponent implements OnInit {
   sortedData: Device[];
   
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.AllDevices);
@@ -76,6 +78,22 @@ export class IncidentDevicesComponent implements OnInit {
   removeDevice(row:any){
     console.log('Delete device with id: ' + row.id);
   }
+
+  
+  devicesModalDialog(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '1000px';
+    dialogConfig.minHeight = '800px';
+    const dialogRef = this.dialog.open(IncidentDevicesDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => console.log("Dialog output:", data)
+    );
+  }
+
+
+
 }
 
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
