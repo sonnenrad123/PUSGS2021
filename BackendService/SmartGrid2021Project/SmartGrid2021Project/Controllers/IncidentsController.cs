@@ -83,6 +83,17 @@ namespace SmartGrid2021Project.Controllers
         {
             try
             {
+                incident.Devices = new List<Device>();
+                string[] deviceIds = incident.DeviceIds.Split(';');
+                foreach(string deviceid in deviceIds)
+                {
+                    if(int.TryParse(deviceid,out int id))
+                    {
+                        Device devtemp = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == id);
+                        incident.Devices.Add(devtemp);
+                    }
+                }
+
                 _context.Incidents.Add(incident);
                 await _context.SaveChangesAsync();
             }

@@ -87,9 +87,20 @@ export class AddIncidentComponent implements OnInit {
   ngAfterViewInit() {
     this.intervalFormCheck = setInterval(() => {
       console.log('Checking session storage for forms.');
-      if(window.sessionStorage.getItem('basicInformationForm') != null && window.sessionStorage.getItem('resolutionForm') != null){
-        this.buttonEnabled = true;
-        this.triedToCrash = false;
+      if(window.sessionStorage.getItem('basicInformationForm') != null && window.sessionStorage.getItem('resolutionForm') != null && window.sessionStorage.getItem('incidentSelectedDevices')){
+        var ret = JSON.parse(window.sessionStorage.getItem('incidentSelectedDevices'));
+        
+        
+        if(ret.length > 0){
+          this.buttonEnabled = true;
+          this.triedToCrash = false;
+        }
+        else{
+          this.buttonEnabled = false;
+          this.triedToCrash = false;
+        }
+        
+       
       }
       else{
         this.buttonEnabled = false;
@@ -102,6 +113,7 @@ export class AddIncidentComponent implements OnInit {
     clearInterval(this.intervalFormCheck);
     window.sessionStorage.removeItem('basicInformationForm');
     window.sessionStorage.removeItem('resolutionForm');
+    window.sessionStorage.removeItem('incidentSelectedDevices');
   }
 
 
@@ -117,15 +129,25 @@ export class AddIncidentComponent implements OnInit {
     console.log("Submit incident.");
     let basicInformationFormValue = JSON.parse(window.sessionStorage.getItem('basicInformationForm'));
     let resolutionFormValue = JSON.parse(window.sessionStorage.getItem('resolutionForm')) ;
+    let incidentSelectedDevicestemp = JSON.parse(window.sessionStorage.getItem('incidentSelectedDevices'));
     
-    if(basicInformationFormValue != null && resolutionFormValue != null){
+    let deviceIds = "";
+    incidentSelectedDevicestemp.forEach(device => {
+      deviceIds = deviceIds + ';' + device.id;
+    });
+
+    let mergedObjects = {...basicInformationFormValue,...resolutionFormValue,deviceIds};
+
+    if(basicInformationFormValue != null && resolutionFormValue != null && incidentSelectedDevicestemp!=null && incidentSelectedDevicestemp.length > 0){
       console.log(basicInformationFormValue);
       console.log(resolutionFormValue);
 
-      this.IncidentService.addIncident(basicInformationFormValue).subscribe(
+      this.IncidentService.addIncident(mergedObjects).subscribe(
         response =>{
           console.log(response);
-
+          window.sessionStorage.removeItem('basicInformationForm');
+          window.sessionStorage.removeItem('resolutionForm');
+          window.sessionStorage.removeItem('incidentSelectedDevices');
         },
         error => {
           console.log(error);

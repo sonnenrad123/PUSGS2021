@@ -78,6 +78,7 @@ namespace SmartGrid2021Project
                     ClockSkew = TimeSpan.Zero
                 };
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

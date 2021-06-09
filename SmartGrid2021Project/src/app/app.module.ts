@@ -182,6 +182,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [IncidentDevicesDialogComponent]
+  entryComponents: [IncidentDevicesDialogComponent,MapComponent]
 })
 export class AppModule { }

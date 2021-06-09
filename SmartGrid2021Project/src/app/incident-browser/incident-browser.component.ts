@@ -12,6 +12,17 @@ export interface Incident{
   phoneNo:string;
   status:string;
   address:string;
+  cause:string;
+  subcause:string;
+  constructionType:string;
+  description:string;
+  ETA:Date;
+  ATA:Date;
+  voltage:any;
+  calls:any;
+  material:string;
+  incidentType:string;
+
 }
 
 @Component({
@@ -21,7 +32,7 @@ export interface Incident{
 })
 export class IncidentBrowserComponent implements OnInit {
   
-  displayedColumns: string[] = ['id','startDate','phoneNo','status','address']
+  displayedColumns: string[] = ['id','startDate','phoneNo','status','address','incidentType','cause','subcause','constructionType','description','ETA','ATA','voltage','calls'];
   dataSource: MatTableDataSource<Incident>;
   toggleAll: boolean;
   toggleMine: boolean;
@@ -94,7 +105,16 @@ export class IncidentBrowserComponent implements OnInit {
       startDate:item.outageTime, 
       phoneNo:'TODO:Implement',
       status:item.status,
-      address:'TODO:Implement'
+      address:'TODO:Implement',
+      cause:item.cause,
+      subcause:item.subcause,
+      ETA:item.eta,
+      ATA:item.ata,
+      constructionType:item.constructionType,
+      description:item.incidentDesc,
+      voltage:item.voltage,
+      calls:item.calls,
+      incidentType:item.incidentType
 
     }));
     this.dataSource = new MatTableDataSource(this.Incidents);

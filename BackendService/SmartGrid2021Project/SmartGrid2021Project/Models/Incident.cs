@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SmartGrid2021Project.Models
@@ -26,6 +27,11 @@ namespace SmartGrid2021Project.Models
         public double Voltage { get; set; }
         public DateTime ScheduledTime { get; set; }
         public bool DodeliSebi { get; set; }
+        public string Cause { get; set; }
+        public string Subcause { get; set; }
+        public string ConstructionType { get; set; }
+        public string Material { get; set; }
+        [JsonIgnore]
         public ICollection<Device> Devices { get; set; }
         [NotMapped]
         public string CustomId
@@ -33,6 +39,6 @@ namespace SmartGrid2021Project.Models
             get { return string.Concat("INC", Id); }
         }
         [NotMapped]
-        public int[] DeviceId { get; set; }
+        public string DeviceIds { get; set; }
     }
 }

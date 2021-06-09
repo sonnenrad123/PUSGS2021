@@ -6,6 +6,7 @@ import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { TableColumn } from 'src/app/common/mat-table/table-column';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { IncidentDevicesDialogComponent } from 'src/app/incident-devices-dialog/incident-devices-dialog.component';
+import { Router } from '@angular/router';
 
 enum DeviceType{
   Breaker= "Breaker",
@@ -36,23 +37,23 @@ export class IncidentDevicesComponent implements OnInit {
   displayedColumns: string[] = ['id','name','type','address','location','remove'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  AllDevices:Device[]=[
-    {id:"device1",name:"device1name",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice1"},
-    {id:"device3",name:"device3name",type:DeviceType.Switch,coordinates:"xyz",address:"AdresaDevice3"},
-    {id:"device6",name:"device6name",type:DeviceType.Break,coordinates:"xyz",address:"AdresaDevice6"},
-    {id:"device2",name:"device4name",type:DeviceType.Fuse,coordinates:"xyz",address:"AdresaDevice5"},
-    {id:"device8",name:"device2name",type:DeviceType.Disconnector,coordinates:"xyz",address:"AdresaDevice10"},
-    {id:"device9",name:"device9name",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice11"},
-  ]
+  AllDevices:Device[]=[];
   dataSource: MatTableDataSource<Device>;
   sortedData: Device[];
   
+  responseData:any[];
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,private RouterObject: Router) { }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.AllDevices);
-   
+    if(window.sessionStorage.getItem('incidentSelectedDevices')!=null){
+      let data = JSON.parse(window.sessionStorage.getItem('incidentSelectedDevices'));
+      this.AllDevices = data;
+      this.dataSource = new MatTableDataSource(this.AllDevices);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   ngAfterViewInit(){
@@ -72,7 +73,8 @@ export class IncidentDevicesComponent implements OnInit {
 
 
   showLocation(row:any){
-    console.log('Show location for device with id: ' + row.id);
+    //console.log('Show location for device with id: ' + row.id);
+    this.RouterObject.navigate(["/map",row.id]);
   }
   
   removeDevice(row:any){
@@ -88,10 +90,19 @@ export class IncidentDevicesComponent implements OnInit {
     dialogConfig.minHeight = '800px';
     const dialogRef = this.dialog.open(IncidentDevicesDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
-      data => console.log("Dialog output:", data)
+      data => {
+        console.log("Dialog output:", data);
+        window.sessionStorage.setItem('incidentSelectedDevices',JSON.stringify(data));
+        this.AllDevices = data;
+        this.dataSource = new MatTableDataSource(this.AllDevices);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+      
     );
   }
-
+  
+  
 
 
 }

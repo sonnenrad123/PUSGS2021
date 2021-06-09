@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SmartGrid2021Project.Models
@@ -15,7 +16,8 @@ namespace SmartGrid2021Project.Models
         public string Name { get; set; }
         public string Address { get; set; }
         public string Coordinates { get; set; } //kasnije ce u daljim migracijama vrv biti menjano
-       public ICollection<Incident> Incidents { get; set; }
+        [JsonIgnore]
+        public ICollection<Incident> Incidents { get; set; }
         [NotMapped]
         public string CustomId
         {

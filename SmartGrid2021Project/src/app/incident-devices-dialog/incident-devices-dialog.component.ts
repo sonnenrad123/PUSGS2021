@@ -5,7 +5,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { TableColumn } from 'src/app/common/mat-table/table-column';
 import { matTabsAnimations } from '@angular/material/tabs';
-
+import {DeviceService} from '../services/device/device.service';
 import {MatDialogModule,MAT_DIALOG_DATA,MatDialogRef} from "@angular/material/dialog";
 
 enum DeviceType{
@@ -39,29 +39,24 @@ export class IncidentDevicesDialogComponent implements OnInit {
   selectedDevicesIds:any[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  AllDevices:Device[]=[
-    {id:"device1",name:"BRE1",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice1"},
-    {id:"device3",name:"SWI1",type:DeviceType.Switch,coordinates:"xyz",address:"AdresaDevice3"},
-    {id:"device6",name:"LOA1",type:DeviceType.LoadBreak,coordinates:"xyz",address:"AdresaDevice6"},
-    {id:"device2",name:"FUS1",type:DeviceType.Fuse,coordinates:"xyz",address:"AdresaDevice5"},
-    {id:"device8",name:"DIS1",type:DeviceType.Disconnector,coordinates:"xyz",address:"AdresaDevice10"},
-    {id:"device9",name:"BRE2",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice11"},
-  ]
+  AllDevices:Device[]=[];
 
   filteredData: Device[];
   searchData: Device[];
   dataSource: MatTableDataSource<Device>;
   sortedData: Device[];
   clickedRows = new Set<Device>();
-  constructor(private dialogRef: MatDialogRef<IncidentDevicesDialogComponent>) { }
+
+  responseData:any[];
+
+  constructor(private dialogRef: MatDialogRef<IncidentDevicesDialogComponent>,private DeviceService:DeviceService) { }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.AllDevices);
+    this.readData();
   }
 
   ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    
   }
 
   doSearch(deviceType:string,selectedAttribute:string,searchTerm:string){
@@ -135,7 +130,7 @@ export class IncidentDevicesDialogComponent implements OnInit {
   }
   AddDevice() {
     this.clickedRows.forEach(row => {
-      this.selectedDevicesIds.push(row.id);
+      this.selectedDevicesIds.push(row);
     });
     this.dialogRef.close(this.selectedDevicesIds);
   }
@@ -148,6 +143,23 @@ export class IncidentDevicesDialogComponent implements OnInit {
       this.clickedRows.add(row);
     }
   }    
+  
+  readData(){
+    this.DeviceService.getDevices().subscribe(
+      incidents => {
+        this.responseData = incidents;
+        this.AllDevices = this.responseData;
+        console.log(incidents);
+        this.dataSource = new MatTableDataSource(this.responseData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    
+}
 
   close() {
     this.dialogRef.close();
