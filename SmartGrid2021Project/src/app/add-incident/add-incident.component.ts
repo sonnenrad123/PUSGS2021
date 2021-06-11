@@ -114,7 +114,7 @@ export class AddIncidentComponent implements OnInit {
     window.sessionStorage.removeItem('basicInformationForm');
     window.sessionStorage.removeItem('resolutionForm');
     window.sessionStorage.removeItem('incidentSelectedDevices');
-    this._snackBar.open('Device added!','Ok');
+    
   }
 
 
@@ -149,6 +149,7 @@ export class AddIncidentComponent implements OnInit {
           window.sessionStorage.removeItem('basicInformationForm');
           window.sessionStorage.removeItem('resolutionForm');
           window.sessionStorage.removeItem('incidentSelectedDevices');
+          this._snackBar.open('Incident added!','Ok');
         },
         error => {
           console.log(error);

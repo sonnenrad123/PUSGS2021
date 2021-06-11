@@ -6,6 +6,8 @@ import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { TableColumn } from 'src/app/common/mat-table/table-column';
 import { MatTab, matTabsAnimations } from '@angular/material/tabs';
 import { DeviceService} from '../services/device/device.service';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import { DeviceLocationDialogComponent } from 'src/app/device-location-dialog/device-location-dialog.component';
 import { Router } from '@angular/router';
 enum DeviceType{
   Breaker= "Breaker",
@@ -50,7 +52,7 @@ export class SearchNetworkElementsComponent implements OnInit {
   responseData:any[];
   Devices:Device[];
 
-  constructor(private DeviceService:DeviceService,private RouterObject:Router) { }
+  constructor(private DeviceService:DeviceService,private RouterObject:Router,private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.readData();
@@ -63,9 +65,28 @@ export class SearchNetworkElementsComponent implements OnInit {
 
   showLocation(row:any){
     //console.log('Show location for device with id: ' + row.id);
-    this.RouterObject.navigate(["/map",row.id]);
+    //this.RouterObject.navigate(["/map",row.id]);
+    this.deviceLocationModalDialog(row);
   }
   
+  deviceLocationModalDialog(device:any){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '1000px';
+    dialogConfig.minHeight = '800px';
+    dialogConfig.data = device;
+    const dialogRef = this.dialog.open(DeviceLocationDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+      }
+      
+    );
+  }
+
+
+
+
   removeDevice(row:any){
     console.log('Delete device with id: ' + row.id);
   }

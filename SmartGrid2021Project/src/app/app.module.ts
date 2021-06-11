@@ -76,6 +76,7 @@ import { MapPointFormComponent } from './map-point-form/map-point-form.component
 import { IncidentDevicesDialogComponent } from './incident-devices-dialog/incident-devices-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { DeviceLocationDialogComponent } from './device-location-dialog/device-location-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -121,7 +122,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     GeocodingComponent,
     ResultsListComponent,
     MapPointFormComponent,
-    IncidentDevicesDialogComponent
+    IncidentDevicesDialogComponent,
+    DeviceLocationDialogComponent
     
     
   ],
@@ -182,6 +184,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [IncidentDevicesDialogComponent,MapComponent]
+  entryComponents: [IncidentDevicesDialogComponent,DeviceLocationDialogComponent]
 })
 export class AppModule { }
