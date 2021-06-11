@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { interval, Subscription } from 'rxjs';
 import {IncidentServiceService } from '../services/incident/incident-service.service';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class AddIncidentComponent implements OnInit {
   
 
 
-  constructor(private router: Router,private IncidentService: IncidentServiceService) {
+  constructor(private router: Router,private IncidentService: IncidentServiceService,private _snackBar: MatSnackBar) {
     this.links = [
       {
         label: 'Basic Info',
@@ -114,6 +114,7 @@ export class AddIncidentComponent implements OnInit {
     window.sessionStorage.removeItem('basicInformationForm');
     window.sessionStorage.removeItem('resolutionForm');
     window.sessionStorage.removeItem('incidentSelectedDevices');
+    this._snackBar.open('Device added!','Ok');
   }
 
 
