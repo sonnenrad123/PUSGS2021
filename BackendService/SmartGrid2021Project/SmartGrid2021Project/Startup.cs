@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -77,8 +79,14 @@ namespace SmartGrid2021Project
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
                 };
+            })
+            .AddFacebook(options =>
+            {
+                options.ClientId = "152655660256522";
+                options.ClientSecret = "44d5558c0c3aa650f1782cc4d14deebd";
             });
 
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

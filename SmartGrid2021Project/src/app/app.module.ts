@@ -174,7 +174,7 @@ import { DeviceLocationDialogComponent } from './device-location-dialog/device-l
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('611881103547596')
+            provider: new FacebookLoginProvider('152655660256522')
           }
         ]
       } as SocialAuthServiceConfig,

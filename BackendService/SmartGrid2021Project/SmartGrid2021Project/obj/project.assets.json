@@ -55,6 +55,24 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Authentication.AzureAD.UI/3.1.14": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.14",
+          "Microsoft.AspNetCore.Authentication.OpenIdConnect": "3.1.14"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.AzureAD.UI.Views.dll": {},
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.AzureAD.UI.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.AzureAD.UI.Views.dll": {},
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.AzureAD.UI.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.AspNetCore.Authentication.Cookies/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -81,6 +99,18 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.Core.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Authentication.Facebook/3.1.14": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Facebook.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Facebook.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.AspNetCore.Authentication.Google/3.1.14": {
         "type": "package",
         "compile": {
@@ -103,6 +133,21 @@
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Microsoft.AspNetCore.Authentication.OpenIdConnect/3.1.14": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "5.5.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
@@ -3322,6 +3367,22 @@
         "microsoft.aspnetcore.authentication.abstractions.nuspec"
       ]
     },
+    "Microsoft.AspNetCore.Authentication.AzureAD.UI/3.1.14": {
+      "sha512": "HWOMj/4r+X4d/yNqKjZzqAN9Ey8o6+lLaz9jmRmF1kLHkCVh1d/sdb84Nf4c1XWFWoacQzwd7K5tiHarrE8HhA==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authentication.azuread.ui/3.1.14",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.AzureAD.UI.Views.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.AzureAD.UI.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.AzureAD.UI.xml",
+        "microsoft.aspnetcore.authentication.azuread.ui.3.1.14.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.azuread.ui.nuspec"
+      ]
+    },
     "Microsoft.AspNetCore.Authentication.Cookies/2.2.0": {
       "sha512": "Iar9VFlBHkZGdSG9ZUTmn6Q8Qg+6CtW5G/TyJI2F8B432TOH+nZlkU7O0W0byow6xsxqOYeTviSHz4cCJ3amfQ==",
       "type": "package",
@@ -3346,6 +3407,21 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.Core.xml",
         "microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.authentication.core.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Authentication.Facebook/3.1.14": {
+      "sha512": "IgLFCO7FWLwxgt2z/rE/EGlES3085N1ixRRhcHuKtJPMXR8qSbCuMEB5Ec+hqc5upGbOviVestkGA7SdWH0R0A==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authentication.facebook/3.1.14",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Facebook.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Facebook.xml",
+        "microsoft.aspnetcore.authentication.facebook.3.1.14.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.facebook.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Authentication.Google/3.1.14": {
@@ -3376,6 +3452,21 @@
         "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.xml",
         "microsoft.aspnetcore.authentication.jwtbearer.3.1.14.nupkg.sha512",
         "microsoft.aspnetcore.authentication.jwtbearer.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Authentication.OpenIdConnect/3.1.14": {
+      "sha512": "5UjjgzV4/ohhsFT7EH/gDjwNr6tpmgpmKo42W9aHEQ4fY6tUreTc4LLzu1l4zxEskxoz7x8Y2SbEOHBjriOotA==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authentication.openidconnect/3.1.14",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.OpenIdConnect.xml",
+        "microsoft.aspnetcore.authentication.openidconnect.3.1.14.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.openidconnect.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Cors/2.2.0": {
@@ -10089,6 +10180,8 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "MailKit >= 2.11.1",
+      "Microsoft.AspNetCore.Authentication.AzureAD.UI >= 3.1.14",
+      "Microsoft.AspNetCore.Authentication.Facebook >= 3.1.14",
       "Microsoft.AspNetCore.Authentication.Google >= 3.1.14",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 3.1.14",
       "Microsoft.AspNetCore.Cors >= 2.2.0",
@@ -10104,19 +10197,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\juzni\\.nuget\\packages\\": {}
+    "C:\\Users\\mlade\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projekti2020-2021\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
+      "projectUniqueName": "E:\\WebAppProjekat\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
       "projectName": "SmartGrid2021Project",
-      "projectPath": "D:\\Projekti2020-2021\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
-      "packagesPath": "C:\\Users\\juzni\\.nuget\\packages\\",
-      "outputPath": "D:\\Projekti2020-2021\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\obj\\",
+      "projectPath": "E:\\WebAppProjekat\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
+      "packagesPath": "C:\\Users\\mlade\\.nuget\\packages\\",
+      "outputPath": "E:\\WebAppProjekat\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\juzni\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mlade\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10128,6 +10226,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -10139,10 +10238,19 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "MailKit": {
             "target": "Package",
             "version": "[2.11.1, )"
+          },
+          "Microsoft.AspNetCore.Authentication.AzureAD.UI": {
+            "target": "Package",
+            "version": "[3.1.14, )"
+          },
+          "Microsoft.AspNetCore.Authentication.Facebook": {
+            "target": "Package",
+            "version": "[3.1.14, )"
           },
           "Microsoft.AspNetCore.Authentication.Google": {
             "target": "Package",
@@ -10213,7 +10321,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.204\\RuntimeIdentifierGraph.json"
       }
     }
   }
