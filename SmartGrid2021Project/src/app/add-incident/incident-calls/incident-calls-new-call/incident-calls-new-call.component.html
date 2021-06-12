@@ -37,16 +37,8 @@
                                     <div class="row">
                                         <div class="col-md-11">
                                             <mat-form-field class="full-width" appearance="outline">
-                                                <mat-label>Incident street name:</mat-label>
-                                                <input type="text" id="streetName" matInput formControlName="streetName" class="form-control" [readonly] = "anonymous == false">
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-11">
-                                            <mat-form-field class="full-width" appearance="outline">
-                                                <mat-label>Incident street number:</mat-label>
-                                                <input type="text" id="streetNumber" matInput formControlName="streetNumber" class="form-control" [readonly] = "anonymous == false">
+                                                <mat-label>Incident address:</mat-label>
+                                                <input type="text" id="address" matInput formControlName="address" class="form-control" [readonly] = "anonymous == false">
                                             </mat-form-field>
                                         </div>
                                     </div>
@@ -84,8 +76,7 @@
                                     <div class="author">
                                         <h4 class="title"><br /><br /><br />Caller name: {{callerName}}<br />
                                             <small>Caller id: {{callerID}}</small><br />
-                                            <small>Streen Name: {{callerStreetName}}</small><br />
-                                            <small>Street Number: {{callerStreetNumber}}</small><br />
+                                            <small>Caller address: {{callerAddress}}</small><br />
                                         </h4>
                                     </div>
                                 </div>

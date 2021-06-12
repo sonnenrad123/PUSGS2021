@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SmartGrid2021Project.Models
@@ -40,5 +41,7 @@ namespace SmartGrid2021Project.Models
         [Required]
         [Column("User Address", TypeName = "varchar(90)")]
         public string Address { get; set; }
+        [JsonIgnore]
+        public ICollection<Call> Calls { get; set; }
     }
 }
