@@ -77,6 +77,7 @@ import { IncidentDevicesDialogComponent } from './incident-devices-dialog/incide
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { DeviceLocationDialogComponent } from './device-location-dialog/device-location-dialog.component';
+import { AllUsersComponent } from './admin-access/all-users/all-users/all-users.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,7 +124,8 @@ import { DeviceLocationDialogComponent } from './device-location-dialog/device-l
     ResultsListComponent,
     MapPointFormComponent,
     IncidentDevicesDialogComponent,
-    DeviceLocationDialogComponent
+    DeviceLocationDialogComponent,
+    AllUsersComponent
     
     
   ],

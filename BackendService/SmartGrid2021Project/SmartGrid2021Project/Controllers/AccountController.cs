@@ -39,13 +39,13 @@ namespace SmartGrid2021Project.Controllers
         }
 
         [HttpGet]
-
-        public async Task<IQueryable<AppUser>> GetAllUsers()
+        [Route("GetAllUsers")]
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers()
         {
 
             return await Task.Run(() =>
             {
-                return userManager.Users;
+                return userManager.Users.ToList();
             });
         }
 
@@ -252,6 +252,55 @@ namespace SmartGrid2021Project.Controllers
             var facebookApiTokenInfo = JsonConvert.DeserializeObject<FacebookApiTokenInfo>(response);
 
             return true;
+        }
+
+        [HttpGet("{username}")]
+        [Route("AllowLogin")]
+        public async Task<IActionResult> AllowUserLogin([FromQuery] string username)
+        {
+            try {
+                _context.AppUsers.FirstOrDefault(_ => _.UserName == username).AccountAllowed = true;
+                _context.SaveChanges();
+                return Ok();
+            }catch(Exception e)
+            {
+
+            }
+            return NotFound();
+        }
+
+        [HttpGet("{username}")]
+        [Route("BlockLogin")]
+        public async Task<IActionResult> BlockUserLogin([FromQuery] string username)
+        {
+            try
+            {
+                _context.AppUsers.FirstOrDefault(_ => _.UserName == username).AccountAllowed = false;
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+            }
+            return NotFound();
+        }
+
+        [HttpDelete("{username}")]
+        [Route("DeleteUser")]
+        public async Task<IActionResult> DeleteUser([FromQuery] string username)
+        {
+            try
+            {
+                _context.Users.Remove(_context.AppUsers.FirstOrDefault(_ => _.UserName == username));
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+            }
+            return NotFound();
         }
     }
 }

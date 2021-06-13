@@ -12,6 +12,7 @@ export class User {
     roleOfUser: UserRole;
     userImage?: string;
     userTeam?: Team;
+    accountAllowed: boolean;
 
     constructor(username: string, password: string, email: string, firstName: string,
                 lastName: string, date: Date, address: string, userRole: UserRole, 
@@ -26,5 +27,6 @@ export class User {
         this.roleOfUser = userRole;
         this.userImage = userImg;
         this.userTeam = userTeam;
+        this.accountAllowed = false;
     }
 }

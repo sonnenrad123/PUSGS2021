@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user/user';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -25,5 +26,20 @@ export class UserAccountService {
 
   faceboookSocialLogin(formData){
     return this.http.post(this.BaseURI + 'account/FacebookSocialLogin', formData);
+  }
+
+  getAllUsers(){
+    return this.http.get<User[]>(environment.apiUrl+ 'account/GetAllUsers');
+  }
+
+  deleteUser(username){
+    return this.http.delete(environment.apiUrl+ 'account/DeleteUser?username='+username)
+  }
+
+  allowLogin(username){
+    return this.http.get(this.BaseURI + 'account/AllowLogin?username='+username);
+  }
+  blockLogin(username){
+    return this.http.get(this.BaseURI + 'account/BlockLogin?username='+username);
   }
 }

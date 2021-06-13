@@ -33,7 +33,7 @@ export const ROUTES: RouteInfo[] = [
 
     { path: '/NoRoute', title: 'Notifications' , icon:'pe-7s-bell', class:'secondary'},
     { path: '/NoRoute', title:'Settings',icon:'pe-7s-tools',class:'secondary'},
-
+    { path: '/AllUsers', title: 'All Users', icon:'pe-7s-uses', class: 'secondary'},
     //ispod su hidden rute da bi title funkcija radila
 
     { path: '/AddIncident', title:'Add incident',icon:'',class:'hidden'},

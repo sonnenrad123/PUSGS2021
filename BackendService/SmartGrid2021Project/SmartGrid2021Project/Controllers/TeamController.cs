@@ -29,8 +29,7 @@ namespace SmartGrid2021Project.Controllers
         [Route("GetAllTeamMembers")]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetAllTeamMembers()
         {
-            //return await _context.AppUsers.Where(_ => _.RoleOfUser.Equals("TEAM_MEMBER") && _.AccountAllowed && _.UserTeam == null).ToListAsync();
-            return await _context.AppUsers.Where(_ => _.RoleOfUser.Equals("TEAM_MEMBER") && _.UserTeam == null).ToListAsync();
+            return await _context.AppUsers.Where(_ => _.RoleOfUser.Equals("TEAM_MEMBER") && _.AccountAllowed && _.UserTeam == null).ToListAsync();
         }
 
         [HttpPost]

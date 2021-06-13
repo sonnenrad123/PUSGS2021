@@ -8,7 +8,7 @@ namespace SmartGrid2021Project.Models
 {
    public enum UserRole
     {
-        Worker, Dispatcher, TeamMember
+        Worker, Dispatcher, TeamMember, Admin, User
     }
 
     public enum IncidentType
