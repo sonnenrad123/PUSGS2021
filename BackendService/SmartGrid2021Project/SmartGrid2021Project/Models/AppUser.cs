@@ -21,7 +21,7 @@ namespace SmartGrid2021Project.Models
         public string LastName { get; set; }
 
         
-        [Column("User Image", TypeName = "varchar(50)")]
+        [Column("User Image", TypeName = "nvarchar(MAX)")]
         public string UserImage { get; set; }
 
         [Required]
@@ -43,5 +43,8 @@ namespace SmartGrid2021Project.Models
         public string Address { get; set; }
         [JsonIgnore]
         public ICollection<Call> Calls { get; set; }
+
+        [Required]
+        public bool AccountAllowed { get; set; }
     }
 }

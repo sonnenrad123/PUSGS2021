@@ -20,5 +20,10 @@ namespace SmartGrid2021Project.Models
         public string teamName { get; set; }
 
         public virtual ICollection<AppUser> teamMembers { get; set; }
+
+        public Team()
+        {
+            this.teamMembers = new HashSet<AppUser>();
+        }
     }
 }

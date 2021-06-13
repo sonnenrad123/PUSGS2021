@@ -10,7 +10,7 @@ using SmartGrid2021Project.Models;
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    [Migration("20210612144712_Initial")]
+    [Migration("20210613075909_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -178,6 +178,9 @@ namespace SmartGrid2021Project.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<bool>("AccountAllowed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Address")
                         .IsRequired()

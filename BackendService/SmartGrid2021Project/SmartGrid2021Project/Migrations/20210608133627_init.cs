@@ -127,7 +127,7 @@ namespace SmartGrid2021Project.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(name: "First Name", type: "varchar(50)", nullable: false),
                     LastName = table.Column<string>(name: "Last Name", type: "varchar(50)", nullable: false),
-                    UserImage = table.Column<string>(name: "User Image", type: "varchar(50)", nullable: true),
+                    UserImage = table.Column<string>(name: "User Image", type: "nvarchar(max)", nullable: true),
                     Dateofbirth = table.Column<DateTime>(name: "Date of birth", type: "Date", nullable: false),
                     UserRole = table.Column<string>(name: "User Role", type: "varchar(50)", nullable: false),
                     UserTeamId = table.Column<int>(type: "int", nullable: true),
@@ -155,7 +155,7 @@ namespace SmartGrid2021Project.Migrations
                         column: x => x.UserTeamId,
                         principalTable: "Teams",
                         principalColumn: "Team ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

@@ -15,11 +15,11 @@ export class TeamsComponent implements OnInit {
 
   ngOnInit(): void {
     this.RetrieveAllTeams();
+    
   }
   
-  RetrieveAllTeams() : any{
-    this.teams = this.teamService.getAllTeams();
-  
+  RetrieveAllTeams(){
+    this.teamService.getAllTeams().subscribe(_ => this.teams = JSON.parse(JSON.stringify(_)));
   }
 
   CreateNewTeam(){

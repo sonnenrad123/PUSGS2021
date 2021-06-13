@@ -37,7 +37,7 @@ namespace SmartGrid2021Project
         {
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddDbContext<GeneralDBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));

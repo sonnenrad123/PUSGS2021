@@ -5,21 +5,14 @@
                 <button class="btn btn-default btn-block" (click)="CreateNewTeam()" matTooltip="create new team"><i class="pe-7s-plus" ></i> New</button>
              </div>
         </div>
-        <div class="table-responsive-lg">
-            <table class="table custom-table">
-                <ng-container *ngFor="let team of teams">
-                    <tr>
-                        <td  [attr.rowspan]="team.teamMembers.length">{{team.teamID}}</td>
-                        <td [attr.rowspan]="team.teamMembers.length">{{team.teamName}}</td>
-                        <td>{{team.teamMembers[0]}}</td>
-                    </tr>
-                    <ng-container *ngFor="let member of team.teamMembers; let i=index"> 
-                        <tr *ngIf="i != 0" class="tr-border-none">
-                        <td class="custom-td">{{member}}</td>
-                        </tr>
-                    </ng-container>
-                </ng-container> 
-            </table>
+        <div class="row cus-position"><h4><b>Available teams:</b></h4></div>
+        <div class="row" *ngFor="let team of teams" style=" border-bottom: 2px black solid; margin-top: 1rem;">
+            <div class="col-6 cus-position">ID: {{team.teamID}}</div>
+            <div class="col-6 cus-position">Team name: {{team.teamName}}</div>
+            <div class="col-12 cus-position">Team members:</div>
+            <div class="row cus-position1" *ngFor="let member of team.teamMembers; let i=index">
+                {{i+1+". "+member.firstName+" "+member.lastName+" ["+member.id+"]"}}
+            </div>
         </div>
     </div>
 </div>

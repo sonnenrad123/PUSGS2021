@@ -6,6 +6,7 @@ import { UserRole } from '../models/user-role/user-role.enum';
 import { User } from '../models/user/user';
 import { TeamService } from '../services/teams/team.service';
 import { UserAccountService } from '../services/user-account/user-account.service';
+import { toBase64 } from '../utilities/utils';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,8 @@ export class RegisterComponent implements OnInit {
   title = "Registration page";
   data = false;
   message: string;
-  
+  newItemEvent: string = "https://content.hostgator.com/img/weebly_image_sample.png";
+
   userTeams: Team[] = [];
   userRoles = UserRole;
   form: FormGroup;
@@ -46,7 +48,8 @@ export class RegisterComponent implements OnInit {
       userEmail:  new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
       dateOfBirth: new FormControl('', [Validators.required]),
       roleOfUser: new FormControl('', [Validators.required]),
-      userTeam: new FormControl('')
+      userTeam: new FormControl(''),
+      userImage: new FormControl('')
     });
    
   }
@@ -59,7 +62,12 @@ export class RegisterComponent implements OnInit {
     }else{
       user.userTeam = null;
     }
+    console.log(user);
     this.userAccService.register(user);
+  }
+  
+  uploadImage($event:any){
+    this.form.controls['userImage'].setValue($event);
   }
 
   onPasswordChange() {

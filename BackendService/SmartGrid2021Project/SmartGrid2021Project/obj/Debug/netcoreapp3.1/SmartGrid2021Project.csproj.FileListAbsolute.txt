@@ -348,3 +348,6 @@ E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Pro
 E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.AzureAD.UI.dll
 E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Facebook.dll
 E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll

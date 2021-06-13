@@ -2,6 +2,9 @@
     <div class="container-fluid">
         <div class="row">
             <form [formGroup]="newTeamFormControl" (submit)="CreateNewTeam()">
+                
+                   
+                
                 <div class="row">
                     <div class="form-group col-md-8">
                         <mat-form-field class="full-width" appearance="outline">
@@ -17,6 +20,15 @@
                         <a class="custom-width-btn" mat-stroked-button color="Accent" routerLink="/TeamsView">Cancel</a>
                     </div>
                 </div>
+                <div class="row">
+                <div class="form-group col-md-8">
+                    <mat-select matInput placeholder="Available team members" formControlName="teamMembers" multiple>
+                        
+                    <mat-option *ngFor="let member of teamMemberss" [value]="member">{{member | json}}</mat-option>
+                    </mat-select>
+                </div>
+                </div>
+
             </form>
         </div>
     </div>

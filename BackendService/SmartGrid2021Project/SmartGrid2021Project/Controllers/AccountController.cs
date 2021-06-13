@@ -25,14 +25,17 @@ namespace SmartGrid2021Project.Controllers
         private  UserManager<AppUser> userManager;
         private  SignInManager<AppUser> signInManager;
         private readonly ApplicationSettings appSettings;
+        private readonly GeneralDBContext _context;
 
         public AccountController(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            IOptions<ApplicationSettings> appSettings)
+            IOptions<ApplicationSettings> appSettings,
+            GeneralDBContext dBContext)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.appSettings = appSettings.Value;
+            this._context = dBContext;
         }
 
         [HttpGet]
@@ -51,35 +54,60 @@ namespace SmartGrid2021Project.Controllers
         //POST : /api/Account/Register
         public async Task<IActionResult> RegisterApplicationUser(UserModel user)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var appUser = new AppUser()
+                if (ModelState.IsValid)
                 {
-                    UserName = user.Username,
-                    Email = user.UserEmail,
-                    DateOfBirth = user.DateOfBirth,
-                    UserTeam = user.UserTeam,
-                    RoleOfUser = user.RoleOfUser.ToString(),
-                    UserImage = "",
-                    LastName = user.LastName,
-                    FirstName = user.FirstName,
-                    Address = user.Address,
-                    //UserTeamId = user.UserTeam != null ? user.UserTeam.teamID : 0  
-                };
+                    AppUser appUser;
+                    if (user.UserTeam == null) {
+                         appUser = new AppUser()
+                        {
+                            UserName = user.Username,
+                            Email = user.UserEmail,
+                            DateOfBirth = user.DateOfBirth,
+                            UserTeam = user.UserTeam,
+                            RoleOfUser = user.RoleOfUser.ToString(),
+                            UserImage = user.UserImage,
+                            LastName = user.LastName,
+                            FirstName = user.FirstName,
+                            Address = user.Address,
+                            AccountAllowed = false,
+                        };
+                    }
+                    else
+                    {
+                        appUser = new AppUser()
+                        {
+                            UserName = user.Username,
+                            Email = user.UserEmail,
+                            DateOfBirth = user.DateOfBirth,
+                            RoleOfUser = user.RoleOfUser.ToString(),
+                            UserImage = user.UserImage,
+                            LastName = user.LastName,
+                            FirstName = user.FirstName,
+                            Address = user.Address,
+                            AccountAllowed = false,
+                        };
+                        _context.Teams.FirstOrDefault(_ => _.teamID == user.UserTeam.teamID).teamMembers.Add(appUser);
+                    }
+                    var result = await userManager.CreateAsync(appUser, user.Password);
+                    if (result.Succeeded)
+                    {
+                        var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
+                        EmailHelper emailHelper = new EmailHelper();
+                        var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { token, email = appUser.Email }, Request.Scheme);
+                        
 
-                var result = await userManager.CreateAsync(appUser, user.Password);
-                if (result.Succeeded)
-                {
-                    var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
-                    EmailHelper emailHelper = new EmailHelper();
-                     var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { token, email = appUser.Email }, Request.Scheme);
+                        await emailHelper.SendEmailAsync(appUser.Email, "Successfully registered. Your account must be allowed by admin!", confirmationLink);
 
-                    await emailHelper.SendEmailAsync(appUser.Email, "Successfully registered", confirmationLink);
 
-                    
-                    return Ok(result);
+                        return Ok(result);
+                    }
+
                 }
-
+            }catch(Exception e)
+            {
+                
             }
             throw new Exception();
         }
@@ -103,7 +131,7 @@ namespace SmartGrid2021Project.Controllers
         public async Task<IActionResult> Login(UserLoginCredentials model)
         {
             var user = await userManager.FindByEmailAsync(model.UserEmail);
-            if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
+            if (user != null && await userManager.CheckPasswordAsync(user, model.Password) && user.AccountAllowed == true)
             {
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
@@ -143,7 +171,7 @@ namespace SmartGrid2021Project.Controllers
                 var token = tokenHandler.WriteToken(securityToken);
                 return Ok(new { token });
             }
-
+            
             return Ok();
         }
 
