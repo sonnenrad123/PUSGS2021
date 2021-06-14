@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NominatimResponse } from '../models/nominatim-response/nominatim-response.model';
 import { Team } from '../models/team/team';
 import { UserRole } from '../models/user-role/user-role.enum';
 import { User } from '../models/user/user';
+import { NominatimService } from '../services/nominatim/nominatim.service';
 import { TeamService } from '../services/teams/team.service';
 import { UserAccountService } from '../services/user-account/user-account.service';
 import { toBase64 } from '../utilities/utils';
@@ -14,6 +16,11 @@ import { toBase64 } from '../utilities/utils';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  
+  @Output() onSearch = new EventEmitter();
+  @Output() locationSelect = new EventEmitter();
+  searchResults: NominatimResponse[] = [];
+  addressInvalid:boolean = false;
 
   title = "Registration page";
   data = false;
@@ -25,7 +32,7 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   userProfileImage : any;
 
-  constructor(private router: Router, private userAccService: UserAccountService, private teamService: TeamService) 
+  constructor(private router: Router, private userAccService: UserAccountService, private teamService: TeamService,private nominatimService: NominatimService) 
   {
     this.userProfileImage = "../../assets/img/sidebar-background.png";
     
@@ -56,6 +63,20 @@ export class RegisterComponent implements OnInit {
   
   RegisterMethod(){
     
+    let address = this.form.controls['address'].value;
+    let found = false;
+      this.searchResults.forEach(result => {
+        if(result.displayName == address){
+          found = true;
+        }
+      });
+      if(found == false){
+        this.addressInvalid = true;
+        return;
+      }
+      this.addressInvalid = false;
+
+
     const user = this.form.value;
     if(this.form.controls['roleOfUser'].value === 'TEAM_MEMBER'){
       user.userTeam = this.userTeams.find(t => t.teamID == this.form.controls['userTeam'].value); 
@@ -129,6 +150,15 @@ export class RegisterComponent implements OnInit {
     if(field !== null){
       if(field.hasError('required')){
         return 'The address field is required';
+      }
+      let found = false;
+      this.searchResults.forEach(result => {
+        if(result.displayName == field.value){
+          found = true;
+        }
+      });
+      if(found == false){
+        return 'The address field is not valid';
       }
     }
     return '';
@@ -204,4 +234,32 @@ export class RegisterComponent implements OnInit {
     }
     return '';
   }
+  addressLookup(address: string) {
+    if (address.length > 3) {
+      this.nominatimService.addressLookup(address).subscribe(results => {
+        this.searchResults = results;
+      });
+    } else {
+      this.searchResults = [];
+    }
+    this.onSearch.emit(this.searchResults);
+  }
+  getAddress(result: NominatimResponse){
+    this.form.controls['address'].setValue(result.displayName);
+  }
+  validateAddress(address:any){
+    let found = false;
+    this.searchResults.forEach(result => {
+      if(result.displayName == address){
+        found = true;
+      }
+    });
+    if(found == false){
+      this.addressInvalid = true;
+      return;
+    }
+    this.addressInvalid = false;
+  }
 }
+
+

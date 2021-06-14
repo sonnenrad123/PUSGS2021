@@ -24,7 +24,7 @@
                             
                             <h2 class="position-h2">{{title}}</h2>
                             
-                            <form (submit)="RegisterMethod()" [formGroup]="form"> 
+                            <form (submit)="RegisterMethod()" [formGroup]="form" (keydown.enter)="$event.preventDefault()"> 
                                 <div class="row">
                                    <div class="form-group col-md-6">
                                        <mat-form-field class="full-width" appearance="outline">
@@ -81,8 +81,10 @@
                                         <div class="form-group">
                                             <mat-form-field class="full-width"  appearance="outline">
                                                 <mat-label>Address*</mat-label>
-                                                <input matInput placeholder="Address" formControlName="address" type="text" name="address" id="address" />
+                                                <input matInput (change)="validateAddress($any($event.target).value)" (click)="$event.stopPropagation()" (keyup.enter)="addressLookup($any($event.target).value)" placeholder="Search address" formControlName="address" type="text" name="address" id="address" />
+                                                <app-results-list [results]="searchResults" (locationSelected)="getAddress($event)"></app-results-list>
                                                 <mat-error *ngIf="form.invalid">{{getErrorMessageAddress()}}</mat-error>
+                                                <div *ngIf="addressInvalid" style="color: red;">Address is not valid.</div>
                                             </mat-form-field>
                                     
                                             <mat-form-field class="full-width" appearance="outline">
