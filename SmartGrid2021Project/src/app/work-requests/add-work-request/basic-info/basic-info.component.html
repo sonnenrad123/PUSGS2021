@@ -7,10 +7,10 @@
                         <mat-form-field class="full-width" appearance="outline">
                             <mat-label>Type of document*</mat-label>
                             <mat-select formControlName="typeOfDocument" name="typeOfDocument" id="typeOfDocument">
-                                <mat-option value="PlannedWork">Planned work</mat-option>
-                                <mat-option value="UnplannedWork">Unplanned work</mat-option>
+                                <mat-option value="PLANNED_WORK">Planned work</mat-option>
+                                <mat-option value="UNPLANNED_WORK">Unplanned work</mat-option>
                             </mat-select>
-                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                            <mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageTypeOfDoc()}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="form-group col-md-4">
@@ -68,8 +68,8 @@
                         <mat-form-field class="full-width " appearance="outline" >
                             <div class="col"  style="margin-top: -8px;">
                                 <mat-label class="labelBeforeSlide">Emergency work</mat-label>
-                                <mat-slide-toggle color="primary"></mat-slide-toggle>
-                                <input matInput #value hidden>
+                                <mat-slide-toggle color="primary" formControlName="emergencyWork"></mat-slide-toggle>
+                                <input matInput #value hidden >
                             </div>
                                 <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
                         </mat-form-field>
@@ -98,7 +98,7 @@
                         <mat-form-field class="full-width" appearance="outline" >
                             <mat-label>Phone No</mat-label>
                             <input  matInput placeholder="phoneNo" formControlName="phoneNo" type="text" name="phoneNo" id="phoneNo"/>
-                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                            <mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessagePhoneNo()}}</mat-error>
                         </mat-form-field>
                         
                     </div>
@@ -108,7 +108,7 @@
                         <mat-form-field class="full-width" appearance="outline" >
                             <mat-label>Address</mat-label>
                             <input  matInput placeholder="address" formControlName="street" type="text" name="street" id="street"/>
-                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                            <mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageAddress()}}</mat-error>
                         </mat-form-field>
                         
                     </div>
@@ -116,7 +116,7 @@
                         <mat-form-field class="full-width" appearance="outline" >
                             <mat-label>Company</mat-label>
                             <input  matInput placeholder="Company" formControlName="company" type="text" name="company" id="company"/>
-                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                            <mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageCompany()}}</mat-error>
                         </mat-form-field>
                         
                     </div>
@@ -150,7 +150,7 @@
                 </div>
                 <div class="row">
                     <div class="button-center-align">
-                    <button mat-flat-button color="primary">Create</button>
+                    <button mat-flat-button color="primary" (click)=SaveWRBasicInfo()>Save</button>
                     <button mat-flat-button (click)=Cancel()>Cancel</button>
                 </div>
                 </div>
