@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+export interface Call{
+  reason:string;
+  comment:string;
+  hazard:string;
+  address:string;
+  
+}
+
 @Component({
   selector: 'app-incident-calls-new-call',
   templateUrl: './incident-calls-new-call.component.html',
