@@ -7,8 +7,8 @@
                         <mat-form-field class="full-width" appearance="outline">
                             <mat-label>Type of document*</mat-label>
                             <mat-select formControlName="typeOfDocument" name="typeOfDocument" id="typeOfDocument">
-                                <mat-option value="PLANNED_WORK">Planned work</mat-option>
-                                <mat-option value="UNPLANNED_WORK">Unplanned work</mat-option>
+                                <mat-option value="PLANNED_WORK">PLANNED_WORK</mat-option>
+                                <mat-option value="UNPLANNED_WORK">UNPLANNED_WORK</mat-option>
                             </mat-select>
                             <mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageTypeOfDoc()}}</mat-error>
                         </mat-form-field>
@@ -55,14 +55,14 @@
                         </mat-form-field>
                     </div>
                     <div class="form-group col-md-4">
-                        <mat-form-field class="full-width" appearance="outline">
+                        <!--mat-form-field class="full-width" appearance="outline">
                             <mat-label>Type of work</mat-label>
                             <mat-select formControlName="typeOfWork" name="typeOfWork" id="typeOfWork">
                                 <mat-option value="--">--</mat-option>
                                 <mat-option value="Equipment">EQUIPMENT</mat-option>
                             </mat-select>
-                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
-                        </mat-form-field>
+                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error>
+                        </mat-form-field-->
                     </div>
                     <div class="form-group col-md-4">
                         <mat-form-field class="full-width " appearance="outline" >
@@ -79,19 +79,19 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <mat-form-field class="full-width" appearance="outline">
-                            <mat-label>Start Date/Time</mat-label>
-                            <input matInput formControlName="startDateTime" type="date" name="startDateTime" placeholder="Start Date/Time" id="startDateTime">
+                            <mat-label>Start Date</mat-label>
+                            <input matInput formControlName="startDateTime" (change)="onDateChanged()" type="date" name="startDateTime" placeholder="Start Date/Time" id="startDateTime">
                             
-                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                            <mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageStartDateTime()}}</mat-error>
                         </mat-form-field>
                     </div>
                     
                     <div class="form-group col-md-4">
                         <mat-form-field class="full-width" appearance="outline">
-                            <mat-label>End Date/Time</mat-label>
-                            <input matInput formControlName="endDateTime" type="date"  name="endDateTime" placeholder="End Date/Time" id="endDateTime">
+                            <mat-label>End Date</mat-label>
+                            <input matInput (change)="onEndDateChanged()" formControlName="endDateTime" type="date"  name="endDateTime" placeholder="End Date/Time" id="endDateTime">
                             
-                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                            <mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageEndDateTime()}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="form-group col-md-4">
@@ -126,7 +126,7 @@
                         <mat-form-field class="full-width" appearance="outline">
                             <mat-label>Purpose*</mat-label>
                             <input matInput placeholder="purpose" formControlName="purpose" type="text" name="purpose" id="purpose"/>
-                            <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                            <mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessagePurpose()}}</mat-error>
                         </mat-form-field>
                     </div>    
                 </div>
@@ -150,7 +150,7 @@
                 </div>
                 <div class="row">
                     <div class="button-center-align">
-                    <button mat-flat-button color="primary" (click)=SaveWRBasicInfo()>Save</button>
+                    <button mat-flat-button color="primary" (click)=SaveWRBasicInfo() [disabled]="basicInfoForm.invalid">Save</button>
                     <button mat-flat-button (click)=Cancel()>Cancel</button>
                 </div>
                 </div>

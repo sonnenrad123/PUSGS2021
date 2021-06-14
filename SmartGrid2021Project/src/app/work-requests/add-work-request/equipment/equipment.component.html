@@ -1,7 +1,43 @@
 <div class="main-content" >
     <div class="container-fluid">
         <div class="row">
-            <p>equipment works!</p>
+            <div class="col-md-6">
+        <div class="example-container">
+            <h3><b>All equipment</b></h3>
+          
+            <div
+              cdkDropList
+              #todoList="cdkDropList"
+              [cdkDropListData]="allEquipment"
+              [cdkDropListConnectedTo]="[doneList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let item of allEquipment" cdkDrag>{{"["+item.id+"] "+item.name+" "+item.type}}<div style="margin-left: 2rem;">{{item.address}}</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="example-container">
+            <h3><b>Equipment for work request:</b></h3>
+          
+            <div
+              cdkDropList
+              #doneList="cdkDropList"
+              [cdkDropListData]="done"
+              [cdkDropListConnectedTo]="[todoList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let item of done" cdkDrag>{{"["+item.id+"] "+item.name+" "+item.type}}<div style="margin-left: 2rem;">{{item.address}}</div></div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="button-center-align">
+                
+                <button mat-flat-button color="primary" (click)=SaveChanges() [disabled]="canEnable">Save</button>
+                <button mat-flat-button (click)=Cancel()>Cancel</button>
+            </div>
         </div>
     </div>
 </div>

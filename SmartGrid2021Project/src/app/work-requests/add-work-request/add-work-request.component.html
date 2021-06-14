@@ -32,5 +32,8 @@
     (click)="activeLinkIndex = link.index"
     routerLinkActive #rla="routerLinkActive"
     [active]="rla.isActive"><mat-icon>{{link.icon}}</mat-icon>{{link.label}}</a>
+    <div class="col-lg-3"></div>
+    <button mat-flat-button color="primary" class="submit-button" (click)="SubmitWR()">Submit</button>
 </nav>
+
 <router-outlet></router-outlet>        

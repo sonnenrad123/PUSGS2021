@@ -3,20 +3,19 @@ import { WorkRequestDocumentType } from "../work-reques-doc-typet/work-request-d
 import { WrDocumentStatus } from "../wr-document-status/wr-document-status.enum";
 
 export class WorkRequestBasicInfo {
-    WRDocumentType: WorkRequestDocumentType;
-    WRDocumentStatus: WrDocumentStatus;
-    WRDocumentCreatedBy: string;
-    WRDocumentDate: Date;
-    WRDocumentRelatedIncident: Incident;
-    WRDocumentTypeOfWork: string;
-    WRDocumentEmergWork: boolean;
-    WRDocStartDate: Date;
-    WRDocEndDate: Date;
-    WrDocPhoneNo: number;
-    WRDocAddress: string;
-    WRDocCompany: string;
-    WRDocPurpose: string;
-    WRDocDetails: string;
-    WRDocNotes: string;
+    typeOfDocument: WorkRequestDocumentType;
+    statusOfDocument: WrDocumentStatus;
+    createdBy: string;
+    dateTimeCreated: Date;
+    incident: Incident;
+    emergencyWork: boolean;
+    startDateTime: Date;
+    endDateTime: Date;
+    phoneNo: number;
+    street: string;
+    company: string;
+    purpose: string;
+    details: string;
+    notes: string;
 }
 
