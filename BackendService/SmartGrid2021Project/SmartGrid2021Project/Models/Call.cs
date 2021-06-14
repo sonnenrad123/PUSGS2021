@@ -15,6 +15,7 @@ namespace SmartGrid2021Project.Models
         public string Reason { get; set; }
         public string Comment { get; set; }
         public string Hazard { get; set; }
+        public string Address { get; set; }
         public AppUser Caller { get; set; }
         [NotMapped]
         public string CallerEmail { get; set; }

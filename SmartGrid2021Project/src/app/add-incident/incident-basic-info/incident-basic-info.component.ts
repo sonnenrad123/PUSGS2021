@@ -33,8 +33,9 @@ export class IncidentBasicInfoComponent implements OnInit {
       'eta':new FormControl(null,[Validators.required]),
       'scheduledTime':new FormControl(null,[Validators.required]),
       'ata':new FormControl(null,[Validators.required]),
-      'status':new FormControl("Dispatched"),
-      'dodeliSebi':new FormControl(true)
+      'status':new FormControl("Draft"),
+      'dodeliSebi':new FormControl(true),
+      'phoneNo':new FormControl("",Validators.required)
     });
 
     let formValue = window.sessionStorage.getItem('basicInformationForm');
@@ -55,12 +56,13 @@ export class IncidentBasicInfoComponent implements OnInit {
       'confirmed':new FormControl(),
       'calls':new FormControl(null,[Validators.required,Validators.min(1)]),
       'voltage':new FormControl(null,[Validators.required,Validators.min(0)]),
-      'status':new FormControl("Dispatched"),
+      'status':new FormControl("Draft"),
       'eta':new FormControl(null,Validators.required),
       'scheduledTime':new FormControl(null,Validators.required),
       'ata':new FormControl(null,Validators.required),
       'dodeliSebi':new FormControl(true),
       'incidentDesc':new FormControl(""),
+      'phoneNo':new FormControl("",Validators.required)
     });
     window.sessionStorage.removeItem('basicInformationForm');
   }

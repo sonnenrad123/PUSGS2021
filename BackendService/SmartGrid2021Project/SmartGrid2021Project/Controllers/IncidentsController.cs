@@ -24,8 +24,10 @@ namespace SmartGrid2021Project.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Incident>>> GetIncidents()
         {
-
-            return await _context.Incidents.ToListAsync();
+           return await _context.Incidents
+                .Include(incident => incident.Devices)
+                .Include(incident => incident.User)
+                .ToListAsync();
         }
 
 
@@ -93,7 +95,8 @@ namespace SmartGrid2021Project.Controllers
                         incident.Devices.Add(devtemp);
                     }
                 }
-
+                AppUser creator = await _context.AppUsers.FirstOrDefaultAsync((x) => x.Email == incident.CreatorEmail);
+                incident.User = creator;
                 _context.Incidents.Add(incident);
                 await _context.SaveChangesAsync();
             }

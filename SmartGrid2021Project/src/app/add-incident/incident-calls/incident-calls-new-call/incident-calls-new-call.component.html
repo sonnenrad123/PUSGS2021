@@ -7,7 +7,7 @@
                         <div class="header">
                             <h4 class="title">New call</h4>
                             <div class="content">
-                                <form [formGroup]="addNewCallForm" (ngSubmit)="onSubmit()" >
+                                <form [formGroup]="addNewCallForm" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()" >
                                     <div class="row">
                                         <div class="col-md-11">
                                             <mat-form-field class="full-width" appearance="outline">
@@ -38,7 +38,9 @@
                                         <div class="col-md-11">
                                             <mat-form-field class="full-width" appearance="outline">
                                                 <mat-label>Incident address:</mat-label>
-                                                <input type="text" id="address" matInput formControlName="address" class="form-control" [readonly] = "anonymous == false">
+                                                <input type="text" (change)="validateAddress($any($event.target).value)" (focus)="validateAddress($any($event.target).value)" (click)="$event.stopPropagation()" (keyup.enter)="addressLookup($any($event.target).value)" id="address" matInput formControlName="address" class="form-control" [readonly] = "anonymous == false">
+                                                <app-results-list [results]="searchResults" (locationSelected)="getAddress($event)"></app-results-list>
+                                                <div *ngIf="addressInvalid" style="color: red;">Address is not valid.</div>
                                             </mat-form-field>
                                         </div>
                                     </div>
@@ -53,7 +55,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="button-center-align">
-                                            <button mat-flat-button type="submit" [disabled]="!addNewCallForm.valid" color="primary">Create</button>
+                                            <button mat-flat-button type="submit" [disabled]="!addNewCallForm.valid || addressInvalid" color="primary">Create</button>
                                             <button mat-flat-button (click)=onClear()>Cancel</button>
                                         </div>
                                     

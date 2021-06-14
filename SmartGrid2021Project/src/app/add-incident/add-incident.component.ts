@@ -137,7 +137,10 @@ export class AddIncidentComponent implements OnInit {
       deviceIds = deviceIds + ';' + device.id;
     });
 
-    let mergedObjects = {...basicInformationFormValue,...resolutionFormValue,deviceIds};
+    let creatorEmail = localStorage.getItem('user');
+
+
+    let mergedObjects = {...basicInformationFormValue,...resolutionFormValue,deviceIds,creatorEmail};
 
     if(basicInformationFormValue != null && resolutionFormValue != null && incidentSelectedDevicestemp!=null && incidentSelectedDevicestemp.length > 0){
       console.log(basicInformationFormValue);

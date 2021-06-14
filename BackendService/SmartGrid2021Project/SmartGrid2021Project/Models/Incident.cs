@@ -31,6 +31,9 @@ namespace SmartGrid2021Project.Models
         public string Subcause { get; set; }
         public string ConstructionType { get; set; }
         public string Material { get; set; }
+        public string phoneNo { get; set; }
+        [JsonIgnore]
+        public AppUser User { get; set; }
         [JsonIgnore]
         public ICollection<Device> Devices { get; set; }
         [NotMapped]
@@ -40,5 +43,7 @@ namespace SmartGrid2021Project.Models
         }
         [NotMapped]
         public string DeviceIds { get; set; }
+        [NotMapped]
+        public string CreatorEmail { get; set; }
     }
 }

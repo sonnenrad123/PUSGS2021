@@ -39,7 +39,7 @@ namespace SmartGrid2021Project.Models
         public virtual Team UserTeam { get; set; }
 
         [Required]
-        [Column("User Address", TypeName = "varchar(90)")]
+        [Column("User Address")]
         public string Address { get; set; }
         [JsonIgnore]
         public ICollection<Call> Calls { get; set; }

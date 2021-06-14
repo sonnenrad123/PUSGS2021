@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NominatimResponse } from 'src/app/models/nominatim-response/nominatim-response.model';
+import { NominatimService } from 'src/app/services/nominatim/nominatim.service';
+import {CallService} from '../../../services/call/call.service'
 export interface Call{
   reason:string;
   comment:string;
   hazard:string;
   address:string;
-  
+  callerEmail:string;
 }
 
 @Component({
@@ -15,13 +18,19 @@ export interface Call{
   styleUrls: ['./incident-calls-new-call.component.css']
 })
 export class IncidentCallsNewCallComponent implements OnInit {
+
+  @Output() onSearch = new EventEmitter();
+  @Output() locationSelect = new EventEmitter();
+  searchResults: NominatimResponse[] = [];
+  addressInvalid:boolean = false;
+
   addNewCallForm: FormGroup;
   anonymous: boolean = false;
   callerName: string = "Please select customer";
   callerID: string = "Please select customer";
   callerAddress: string = "Please select customer";
   callReasons: any = ['No power','There is breakdown','Flickering lights','Power on again','Partial power supply','Problems with voltage'];
-  constructor() { }
+  constructor(private nominatimService: NominatimService,private CallService:CallService,private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     
@@ -35,11 +44,15 @@ export class IncidentCallsNewCallComponent implements OnInit {
     
   }
   onSubmit(){
-    console.log(this.addNewCallForm.value.reason);
-    console.log(this.addNewCallForm.value.comment);
-    console.log(this.addNewCallForm.value.hazard);
-    console.log(this.addNewCallForm.value.streetName);
-    console.log(this.addNewCallForm.value.streetNumber);
+    this.CallService.addCall(this.addNewCallForm.value).subscribe(
+      response =>{
+        console.log(response);
+        this._snackBar.open('Call added!','Ok');
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
   toggleAnonymous(){
     this.anonymous = this.addNewCallForm.get('anonymousCheck').value;
@@ -56,6 +69,37 @@ export class IncidentCallsNewCallComponent implements OnInit {
       this.callerAddress = "Please select customer";
     }
   }
+
+
+  addressLookup(address: string) {
+    if (address.length > 3) {
+      this.nominatimService.addressLookup(address).subscribe(results => {
+        this.searchResults = results;
+      });
+    } else {
+      this.searchResults = [];
+    }
+    this.onSearch.emit(this.searchResults);
+  }
+  getAddress(result: NominatimResponse){
+    this.addNewCallForm.controls['address'].setValue(result.displayName);
+  }
+  validateAddress(address:any){
+    let found = false;
+    this.searchResults.forEach(result => {
+      if(result.displayName == address){
+        found = true;
+      }
+    });
+    if(found == false){
+      this.addressInvalid = true;
+      return;
+    }
+    this.addressInvalid = false;
+  }
+
+
+
   selectCustomer(){
     this.callerAddress= "Zakucana vrednost. Implementirati prilikom izrade backenda";
     this.callerID = "131213";
@@ -74,4 +118,8 @@ export class IncidentCallsNewCallComponent implements OnInit {
     this.callerName = "Please select customer";
     this.callerAddress= "Please select customer";
   }
+
+  
+
+  
 }

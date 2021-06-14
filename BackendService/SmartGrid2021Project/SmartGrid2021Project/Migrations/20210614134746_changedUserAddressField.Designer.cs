@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartGrid2021Project.Models;
 
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    partial class GeneralDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210614134746_changedUserAddressField")]
+    partial class changedUserAddressField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,9 +279,6 @@ namespace SmartGrid2021Project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CallerId")
                         .HasColumnType("nvarchar(450)");
 
@@ -379,18 +378,10 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<string>("Subcause")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<double>("Voltage")
                         .HasColumnType("float");
 
-                    b.Property<string>("phoneNo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Incidents");
                 });
@@ -495,15 +486,6 @@ namespace SmartGrid2021Project.Migrations
                         .HasForeignKey("CallerId");
 
                     b.Navigation("Caller");
-                });
-
-            modelBuilder.Entity("SmartGrid2021Project.Models.Incident", b =>
-                {
-                    b.HasOne("SmartGrid2021Project.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.AppUser", b =>

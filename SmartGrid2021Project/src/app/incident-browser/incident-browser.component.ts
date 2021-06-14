@@ -6,6 +6,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {IncidentServiceService } from '../services/incident/incident-service.service';
 import { MatTab } from '@angular/material/tabs';
+import { V4MAPPED } from 'node:dns';
 export interface Incident{
   id:string;
   startDate:Date;
@@ -22,7 +23,7 @@ export interface Incident{
   calls:any;
   material:string;
   incidentType:string;
-
+  creatorEmail:string;
 }
 
 @Component({
@@ -76,7 +77,7 @@ export class IncidentBrowserComponent implements OnInit {
 
   }
   showMineData(){
-    
+    this.mapMineData();
     this.toggleAll = false;
     this.toggleMine = true;
   }
@@ -94,7 +95,7 @@ export class IncidentBrowserComponent implements OnInit {
       );
       
   }
-
+    
   mapData(){
     
     
@@ -103,9 +104,9 @@ export class IncidentBrowserComponent implements OnInit {
     this.Incidents = JSON.parse(ss).map(item => ({
       id:item.customId,
       startDate:item.outageTime, 
-      phoneNo:'TODO:Implement',
+      phoneNo:item.phoneNo,
       status:item.status,
-      address:'TODO:Implement',
+      address:item.devices[0].address,
       cause:item.cause,
       subcause:item.subcause,
       ETA:item.eta,
@@ -114,16 +115,21 @@ export class IncidentBrowserComponent implements OnInit {
       description:item.incidentDesc,
       voltage:item.voltage,
       calls:item.calls,
-      incidentType:item.incidentType
-
+      incidentType:item.incidentType,
+      creatorEmail:item.user.email
     }));
     this.dataSource = new MatTableDataSource(this.Incidents);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-
-
+  mapMineData(){
+    let userEmail = localStorage.getItem('user');
+    this.Incidents = this.Incidents.filter(x => x.creatorEmail == userEmail);
+    this.dataSource = new MatTableDataSource(this.Incidents);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
 }
 

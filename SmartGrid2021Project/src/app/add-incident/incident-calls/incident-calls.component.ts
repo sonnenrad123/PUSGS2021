@@ -25,14 +25,7 @@ export class IncidentCallsComponent implements OnInit {
   NewCallToggle: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  AllCalls:Call[]=[
-    {callId:"255 255 139",reason:"NotImplemented2",hazard:"notimplemented3",comment:""},
-    {callId:"255 255 129",reason:"NotImplemented1",hazard:"notimplemented2",comment:"SomeComment"},
-    {callId:"255 255 119",reason:"NotImplemented3",hazard:"notimplemented1",comment:"SomeComment"},
-    {callId:"255 255 159",reason:"NotImplemented5",hazard:"notimplemented7",comment:"SomeComment"},
-    {callId:"255 255 199",reason:"NotImplemented4",hazard:"notimplemented6",comment:""},
-    {callId:"255 255 179",reason:"NotImplemented8",hazard:"notimplemented4",comment:""},
-  ]
+  AllCalls:Call[]=[]
   dataSource: MatTableDataSource<Call>;
   sortedData: Call[];
   
