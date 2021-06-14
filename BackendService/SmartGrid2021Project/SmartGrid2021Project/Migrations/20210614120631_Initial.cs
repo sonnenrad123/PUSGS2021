@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SmartGrid2021Project.Migrations
 {
-    public partial class init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,11 @@ namespace SmartGrid2021Project.Migrations
                     Calls = table.Column<int>(type: "int", nullable: false),
                     Voltage = table.Column<double>(type: "float", nullable: false),
                     ScheduledTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DodeliSebi = table.Column<bool>(type: "bit", nullable: false)
+                    DodeliSebi = table.Column<bool>(type: "bit", nullable: false),
+                    Cause = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Subcause = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConstructionType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Material = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -127,11 +131,12 @@ namespace SmartGrid2021Project.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(name: "First Name", type: "varchar(50)", nullable: false),
                     LastName = table.Column<string>(name: "Last Name", type: "varchar(50)", nullable: false),
-                    UserImage = table.Column<string>(name: "User Image", type: "nvarchar(max)", nullable: true),
+                    UserImage = table.Column<string>(name: "User Image", type: "nvarchar(MAX)", nullable: true),
                     Dateofbirth = table.Column<DateTime>(name: "Date of birth", type: "Date", nullable: false),
                     UserRole = table.Column<string>(name: "User Role", type: "varchar(50)", nullable: false),
                     UserTeamId = table.Column<int>(type: "int", nullable: true),
                     UserAddress = table.Column<string>(name: "User Address", type: "varchar(90)", nullable: false),
+                    AccountAllowed = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -155,7 +160,7 @@ namespace SmartGrid2021Project.Migrations
                         column: x => x.UserTeamId,
                         principalTable: "Teams",
                         principalColumn: "Team ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,6 +248,28 @@ namespace SmartGrid2021Project.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Call",
+                columns: table => new
+                {
+                    CallId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Hazard = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CallerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Call", x => x.CallId);
+                    table.ForeignKey(
+                        name: "FK_Call_AspNetUsers_CallerId",
+                        column: x => x.CallerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -288,6 +315,11 @@ namespace SmartGrid2021Project.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Call_CallerId",
+                table: "Call",
+                column: "CallerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DeviceIncident_IncidentsId",
                 table: "DeviceIncident",
                 column: "IncidentsId");
@@ -309,6 +341,9 @@ namespace SmartGrid2021Project.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Call");
 
             migrationBuilder.DropTable(
                 name: "DeviceIncident");

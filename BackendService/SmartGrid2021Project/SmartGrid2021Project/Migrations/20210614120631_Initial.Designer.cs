@@ -10,8 +10,8 @@ using SmartGrid2021Project.Models;
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    [Migration("20210609103420_IncidentAddedResolutionFields")]
-    partial class IncidentAddedResolutionFields
+    [Migration("20210614120631_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -179,6 +179,9 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<bool>("AccountAllowed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("varchar(90)")
@@ -244,7 +247,7 @@ namespace SmartGrid2021Project.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserImage")
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("nvarchar(MAX)")
                         .HasColumnName("User Image");
 
                     b.Property<string>("UserName")
@@ -267,6 +270,32 @@ namespace SmartGrid2021Project.Migrations
                     b.HasIndex("UserTeamId");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.Call", b =>
+                {
+                    b.Property<int>("CallId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CallerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hazard")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CallId");
+
+                    b.HasIndex("CallerId");
+
+                    b.ToTable("Call");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.Device", b =>
@@ -448,6 +477,20 @@ namespace SmartGrid2021Project.Migrations
                         .HasForeignKey("UserTeamId");
 
                     b.Navigation("UserTeam");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.Call", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.AppUser", "Caller")
+                        .WithMany("Calls")
+                        .HasForeignKey("CallerId");
+
+                    b.Navigation("Caller");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.AppUser", b =>
+                {
+                    b.Navigation("Calls");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.Team", b =>
