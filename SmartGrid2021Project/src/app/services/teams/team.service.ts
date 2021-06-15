@@ -24,4 +24,8 @@ export class TeamService {
   createNewTeam(formData){
     return this.httpClient.post(environment.apiUrl + 'Team/CreateNewTeam', formData);
   }
+
+  deleteTeam(id){
+    return this.httpClient.delete(environment.apiUrl + 'Team/DeleteTeam?id='+id);
+  }
 }

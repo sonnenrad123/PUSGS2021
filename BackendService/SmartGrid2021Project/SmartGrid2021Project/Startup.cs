@@ -79,8 +79,11 @@ namespace SmartGrid2021Project
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
                 };
-            })
-            .AddFacebook(options =>
+            }).AddGoogle(options =>
+            {
+                options.ClientId = "49694634675-du89shg1f2e67vk9ccr773gdq87sgp84.apps.googleusercontent.com";
+                options.ClientSecret = "tkcBliTz77B8tK2Zw838YbIo";
+            }).AddFacebook(options =>
             {
                 options.ClientId = "152655660256522";
                 options.ClientSecret = "44d5558c0c3aa650f1782cc4d14deebd";

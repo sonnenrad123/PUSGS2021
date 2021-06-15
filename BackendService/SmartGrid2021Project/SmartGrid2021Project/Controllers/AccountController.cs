@@ -155,8 +155,11 @@ namespace SmartGrid2021Project.Controllers
         [HttpPost]
         [Route("GoogleSocialLogin")]
         // POST: api/<controller>/Login
-        public async Task<IActionResult> GoogleSocialLogin(AuthenticateRequest loginModel)
+        public async Task<IActionResult> GoogleSocialLogin([FromBody] AuthenticateRequest loginModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.Values.SelectMany(it => it.Errors).Select(it => it.ErrorMessage));
+
             var test = appSettings.JWT_Secret;
             if (VerifyToken(loginModel.IdToken))
             {

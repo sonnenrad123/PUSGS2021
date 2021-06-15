@@ -25,11 +25,48 @@ namespace SmartGrid2021Project.Controllers
             return await _context.Teams.Include(_ => _.teamMembers).ToListAsync();
         }
 
+        [HttpGet("{id:int}")]
+        [Route("GetTeam")]
+        public async Task<ActionResult<Team>> GetTeam([FromQuery] int id)
+        {
+            return await _context.Teams.FirstOrDefaultAsync(_ => _.teamID == id);
+        }
+
+        [HttpPost("{id:int}")]
+        [Route("UpdateTeam")]
+        public async Task<ActionResult> UpdateTeam([FromQuery] Team team)
+        {
+            
+            if (_context.Teams.FirstOrDefault(_ => _.teamID == team.teamID) != null)
+            {
+                //_context.Teams.FirstOrDefault(_ => _.teamID == team.teamID) = team;
+                return Ok();
+            }
+            return NotFound();
+        }
+
         [HttpGet]
         [Route("GetAllTeamMembers")]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetAllTeamMembers()
         {
             return await _context.AppUsers.Where(_ => _.RoleOfUser.Equals("TEAM_MEMBER") && _.AccountAllowed && _.UserTeam == null).ToListAsync();
+        }
+
+        [HttpDelete("{id:int}")]
+        [Route("DeleteTeam")]
+        public async Task<IActionResult> DeleteTeam([FromQuery] int id)
+        {
+            try
+            {
+                _context.Teams.Remove(_context.Teams.FirstOrDefault(_ => _.teamID == id));
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+            }
+            return NotFound();
         }
 
         [HttpPost]
