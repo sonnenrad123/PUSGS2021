@@ -11,10 +11,10 @@
   }
 
   .img-size{
-      width: 200px;
+      width: 100%;
       margin-bottom: 1rem;
-      margin-left: 20%;
-      height: 200px;
+      margin-left: auto;
+      height: auto;
       object-fit: scale-down;
       background-size: cover;
       display: inline-block;

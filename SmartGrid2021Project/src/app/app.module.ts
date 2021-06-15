@@ -78,7 +78,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { DeviceLocationDialogComponent } from './device-location-dialog/device-location-dialog.component';
 import { AllUsersComponent } from './admin-access/all-users/all-users/all-users.component';
-import { DragDropModule } from '@angular/cdk/drag-drop'
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TeamDisplayComponent } from './teams/team-display/team-display/team-display.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -126,7 +127,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop'
     MapPointFormComponent,
     IncidentDevicesDialogComponent,
     DeviceLocationDialogComponent,
-    AllUsersComponent
+    AllUsersComponent,
+    TeamDisplayComponent
     
     
   ],

@@ -11,15 +11,15 @@
   }
 
   .img-size{
-      width: 200px;
-      margin-bottom: 1rem;
-      margin-left: 20%;
-      height: 200px;
-      object-fit: scale-down;
-      background-size: cover;
-      display: inline-block;
-      
-  }
+    width: 100%;
+    margin-bottom: 1rem;
+    margin-left: auto;
+    height: auto;
+    object-fit: scale-down;
+    background-size: cover;
+    display: inline-block;
+    
+}
   .example-card {
     min-width: 100%;
     margin: 40px;

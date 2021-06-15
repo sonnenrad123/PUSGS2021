@@ -28,4 +28,20 @@ export class TeamService {
   deleteTeam(id){
     return this.httpClient.delete(environment.apiUrl + 'Team/DeleteTeam?id='+id);
   }
+
+  getTeam(id){
+    return this.httpClient.get<Team>(environment.apiUrl + 'Team/GetTeam?id='+id);
+  }
+
+  GetAllTeamMembersForUpdate(){
+    return this.httpClient.get<User[]>(environment.apiUrl + 'Team/GetAllTeamMembersForUpdate');
+  }
+
+  GetAllTeamMembersForTeamUpdate(id){
+    return this.httpClient.get<User[]>(environment.apiUrl + 'Team/GetAllTeamMembersForTeamUpdate?id='+id);
+  }
+
+  UpdateTeam(dataForm){
+    return this.httpClient.post(environment.apiUrl+'Team/UpdateTeam', dataForm);
+  }
 }

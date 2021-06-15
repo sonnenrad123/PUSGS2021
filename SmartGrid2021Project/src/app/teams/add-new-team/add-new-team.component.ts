@@ -15,7 +15,7 @@ import { TeamService } from 'src/app/services/teams/team.service';
 export class AddNewTeamComponent implements OnInit {
   newTeamFormControl: FormGroup;
   public static teamID: number = 0;
-  teamMemberss: Array<User>;
+  teamMemberss: Array<any>;
   constructor(private teamService: TeamService, private router: Router, private snackBar: MatSnackBar) { 
     this.newTeamFormControl = new FormGroup({
       teamID : new FormControl(''),
@@ -27,7 +27,15 @@ export class AddNewTeamComponent implements OnInit {
   ngOnInit(): void {
     this.teamService.getAllTeamMembers().subscribe(_ => this.teamMemberss = _);
   }
-  
+  getErrorMessageTeamName(){
+    const field = this.newTeamFormControl.get('teamName');
+    if(field !== null){
+      if(field.hasError('required')){
+        return 'The teamName field is required';
+      }
+    }
+    return '';
+  }
   CreateNewTeam(){
     AddNewTeamComponent.teamID++; 
     this.newTeamFormControl.controls['teamID'].setValue(AddNewTeamComponent.teamID);
