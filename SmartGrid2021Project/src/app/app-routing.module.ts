@@ -32,6 +32,7 @@ import { SafetyDocumentChecklistComponent } from './add-safety-document/safety-d
 import { SearchNetworkElementsComponent } from './search-network-elements/search-network-elements.component';
 import { AddNetworkElementComponent } from './add-network-element/add-network-element.component';
 import { AllUsersComponent } from './admin-access/all-users/all-users/all-users.component';
+import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
 
 const routes: Routes = [
   {
@@ -83,7 +84,8 @@ const routes: Routes = [
         {path:'Calls', component: IncidentCallsComponent, children:[
           {path:'AddNew', component:IncidentCallsNewCallComponent}
         ]},
-        {path: 'MultimediaAttachments', component: IncidentMultimediaAttachmentsComponent}
+        {path: 'MultimediaAttachments', component: IncidentMultimediaAttachmentsComponent},
+        {path:'Crew',component:IncidentCrewComponent},
       ]},
     ]
   },

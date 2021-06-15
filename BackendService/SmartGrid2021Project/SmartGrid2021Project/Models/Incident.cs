@@ -36,6 +36,8 @@ namespace SmartGrid2021Project.Models
         public AppUser User { get; set; }
         [JsonIgnore]
         public ICollection<Device> Devices { get; set; }
+        [JsonIgnore]
+        public Team IncidentCrew { get; set; }
         [NotMapped]
         public string CustomId
         {
@@ -45,5 +47,7 @@ namespace SmartGrid2021Project.Models
         public string DeviceIds { get; set; }
         [NotMapped]
         public string CreatorEmail { get; set; }
+        [NotMapped]
+        public int CrewId { get; set; }
     }
 }

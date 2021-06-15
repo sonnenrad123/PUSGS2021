@@ -96,6 +96,8 @@ namespace SmartGrid2021Project.Controllers
                     }
                 }
                 AppUser creator = await _context.AppUsers.FirstOrDefaultAsync((x) => x.Email == incident.CreatorEmail);
+                Team incidentCrew = await _context.Teams.FirstOrDefaultAsync((x) => x.teamID == incident.CrewId);
+                incident.IncidentCrew = incidentCrew;
                 incident.User = creator;
                 _context.Incidents.Add(incident);
                 await _context.SaveChangesAsync();

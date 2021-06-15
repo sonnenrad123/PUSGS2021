@@ -1,0 +1,26 @@
+<div class="main-content">
+    <h4 >Select crew to solve incident</h4>
+    <div class="row" >
+            
+        <mat-form-field>
+            
+            <mat-label> <i class="pe-7s-filter"></i>Filter</mat-label>
+            
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+            
+        </mat-form-field>
+      </div>
+    
+    
+    <div class="row">
+        <mat-selection-list #teamsList [multiple]="false">
+          <mat-list-option *ngFor="let team of teams" [ngValue]="team" (click)="getTeam($event)">
+            {{team.teamID}}-Team name: {{team.teamName}}   
+          </mat-list-option>
+        </mat-selection-list>
+    </div>
+    <div *ngIf="selectedCrew!=null">
+      Selected crew id: {{selectedCrew}}
+    </div> 
+</div>
+

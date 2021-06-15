@@ -78,7 +78,10 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { DeviceLocationDialogComponent } from './device-location-dialog/device-location-dialog.component';
 import { AllUsersComponent } from './admin-access/all-users/all-users/all-users.component';
-import { DragDropModule } from '@angular/cdk/drag-drop'
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SelectCallerDialogComponent } from './add-incident/incident-calls/incident-calls-new-call/select-caller-dialog/select-caller-dialog.component'
+import {MatList, MatListModule} from '@angular/material/list';
+import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -126,7 +129,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop'
     MapPointFormComponent,
     IncidentDevicesDialogComponent,
     DeviceLocationDialogComponent,
-    AllUsersComponent
+    AllUsersComponent,
+    SelectCallerDialogComponent,
+    IncidentCrewComponent,
+
     
     
   ],
@@ -160,7 +166,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop'
     SocialLoginModule,
     MatDialogModule,
     MatSnackBarModule,
-    DragDropModule
+    DragDropModule,
+    MatListModule
     
   ],
   exports:[MatDatepickerModule],
@@ -188,6 +195,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop'
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [IncidentDevicesDialogComponent,DeviceLocationDialogComponent]
+  entryComponents: [IncidentDevicesDialogComponent,DeviceLocationDialogComponent,SelectCallerDialogComponent]
 })
 export class AppModule { }

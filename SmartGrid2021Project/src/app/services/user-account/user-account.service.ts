@@ -31,7 +31,9 @@ export class UserAccountService {
   getAllUsers(){
     return this.http.get<User[]>(environment.apiUrl+ 'account/GetAllUsers');
   }
-
+  getAllCustomers(){
+    return this.http.get<User[]>(environment.apiUrl+ 'account/GetAllCustomers');
+  }
   deleteUser(username){
     return this.http.delete(environment.apiUrl+ 'account/DeleteUser?username='+username)
   }

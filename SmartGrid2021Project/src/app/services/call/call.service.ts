@@ -26,7 +26,7 @@ export class CallService {
     return this.http.delete(this.BaseURI + '/'+id);
   }
 
-  getCallsWithProvidedAddresses(data):Observable<any>{
-    return this.http.get(this.BaseURI + '/GetCallsWithAddresses');
+  getCallsWithProvidedDevices(data):Observable<any>{
+    return this.http.get(this.BaseURI + '/GetCallsForAddresses/'+data);
   }
 }

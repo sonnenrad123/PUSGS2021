@@ -7,7 +7,7 @@ import { TableColumn } from 'src/app/common/mat-table/table-column';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatTab } from '@angular/material/tabs';
-
+import { CallService } from 'src/app/services/call/call.service';
 export interface Call{
   callId:string;
   reason:string;
@@ -30,13 +30,22 @@ export class IncidentCallsComponent implements OnInit {
   sortedData: Call[];
   
 
-  constructor(private router: Router) {
+  constructor(private router: Router,private CallService:CallService) {
     this.dataSource = new MatTableDataSource(this.AllCalls);
   }
 
   ngOnInit(): void {
-    
+    let incidentSelectedDevicestemp = JSON.parse(window.sessionStorage.getItem('incidentSelectedDevices'));
     this.NewCallToggle = false;
+    if(incidentSelectedDevicestemp!=null){
+      if(incidentSelectedDevicestemp.length > 0){
+        let deviceIds = "";
+        incidentSelectedDevicestemp.forEach(device => {
+          deviceIds = deviceIds + ';' + device.id;
+        });
+        this.readData(deviceIds);
+      }
+    } 
   }
 
   applyFilter(event: Event) {
@@ -63,7 +72,21 @@ export class IncidentCallsComponent implements OnInit {
   }
 
   
-  
+  readData(DeviceIds:any){
+      this.CallService.getCallsWithProvidedDevices(DeviceIds).subscribe(
+        calls => {
+          this.AllCalls = calls;
+          //console.log(incidents);
+          this.dataSource = new MatTableDataSource(this.AllCalls);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+      
+  }
   
   
 }

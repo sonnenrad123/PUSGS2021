@@ -28,7 +28,33 @@ namespace SmartGrid2021Project.Controllers
                         .Include(call => call.Caller)
                         .ToListAsync();
         }
+        [HttpGet]
+        [Route("GetCallsForAddresses/{addresses}")]
+        public async Task<ActionResult<IEnumerable<Call>>> GetCallsForAddresses(string addresses)
+        {
+            List<Call> allcalls = _context.Calls.ToList();
+            List<Device> alldevices = _context.Devices.ToList();
+            List<Call> retList = new List<Call>();
+            string[] deviceid_strings = addresses.Split(';');
+            List<string> deviceaddresses = new List<string>();
 
+            foreach(Device d in alldevices)
+            {
+                if (deviceid_strings.Contains(d.Id.ToString()))
+                {
+                    deviceaddresses.Add(d.Address);
+                }
+            }
+
+            foreach(Call c in allcalls)
+            {
+                if (deviceaddresses.Contains(c.Address))
+                {
+                    retList.Add(c);
+                }
+            }
+            return retList;
+        }
         // GET: api/Calls/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Call>> GetCall(int id)
@@ -81,7 +107,16 @@ namespace SmartGrid2021Project.Controllers
         [HttpPost]
         public async Task<ActionResult<Call>> PostCall(Call call)
         {
-            _context.Calls.Add(call);
+            if(call.CallerEmail == "")
+            {
+                _context.Calls.Add(call);
+            }
+            else
+            {
+                AppUser caller = _context.AppUsers.FirstOrDefault((x) => x.Email == call.CallerEmail);
+                call.Caller = caller;
+                _context.Calls.Add(call);
+            }
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCall", new { id = call.CallId }, call);

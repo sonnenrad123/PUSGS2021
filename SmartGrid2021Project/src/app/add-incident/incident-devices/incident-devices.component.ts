@@ -6,6 +6,7 @@ import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { TableColumn } from 'src/app/common/mat-table/table-column';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { IncidentDevicesDialogComponent } from 'src/app/incident-devices-dialog/incident-devices-dialog.component';
+import { DeviceLocationDialogComponent } from 'src/app/device-location-dialog/device-location-dialog.component';
 import { Router } from '@angular/router';
 
 enum DeviceType{
@@ -43,7 +44,7 @@ export class IncidentDevicesComponent implements OnInit {
   
   responseData:any[];
 
-  constructor(private dialog: MatDialog,private RouterObject: Router) { }
+  constructor(private dialog: MatDialog,private RouterObject: Router,private dialog2: MatDialog) { }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.AllDevices);
@@ -74,11 +75,22 @@ export class IncidentDevicesComponent implements OnInit {
 
   showLocation(row:any){
     //console.log('Show location for device with id: ' + row.id);
-    this.RouterObject.navigate(["/map",row.id]);
+    //this.RouterObject.navigate(["/map",row.id]);
+    this.deviceLocationModalDialog(row);
   }
   
   removeDevice(row:any){
-    console.log('Delete device with id: ' + row.id);
+    let incidentSelectedDevicestemp = JSON.parse(window.sessionStorage.getItem('incidentSelectedDevices'));
+    incidentSelectedDevicestemp.forEach((device,index) => {
+      if(device.id == row.id){
+        incidentSelectedDevicestemp.splice(index,1);
+      }
+    });
+    window.sessionStorage.setItem('incidentSelectedDevices',JSON.stringify(incidentSelectedDevicestemp));
+    this.AllDevices = incidentSelectedDevicestemp;
+    this.dataSource = new MatTableDataSource(this.AllDevices);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   
@@ -101,7 +113,20 @@ export class IncidentDevicesComponent implements OnInit {
       
     );
   }
-  
+  deviceLocationModalDialog(device:any){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '1000px';
+    dialogConfig.minHeight = '800px';
+    dialogConfig.data = device;
+    const dialogRef2 = this.dialog.open(DeviceLocationDialogComponent, dialogConfig);
+    dialogRef2.afterClosed().subscribe(
+      data => {
+      }
+      
+    );
+  }
   
 
 

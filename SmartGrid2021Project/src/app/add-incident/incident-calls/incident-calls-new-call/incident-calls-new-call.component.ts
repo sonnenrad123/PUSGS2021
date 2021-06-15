@@ -1,9 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NominatimResponse } from 'src/app/models/nominatim-response/nominatim-response.model';
 import { NominatimService } from 'src/app/services/nominatim/nominatim.service';
 import {CallService} from '../../../services/call/call.service'
+import {SelectCallerDialogComponent} from '../incident-calls-new-call/select-caller-dialog/select-caller-dialog.component';
 export interface Call{
   reason:string;
   comment:string;
@@ -30,7 +32,7 @@ export class IncidentCallsNewCallComponent implements OnInit {
   callerID: string = "Please select customer";
   callerAddress: string = "Please select customer";
   callReasons: any = ['No power','There is breakdown','Flickering lights','Power on again','Partial power supply','Problems with voltage'];
-  constructor(private nominatimService: NominatimService,private CallService:CallService,private _snackBar: MatSnackBar) { }
+  constructor(private nominatimService: NominatimService,private CallService:CallService,private _snackBar: MatSnackBar,private dialog: MatDialog) { }
 
   ngOnInit(): void {
     
@@ -39,6 +41,7 @@ export class IncidentCallsNewCallComponent implements OnInit {
       'comment': new FormControl(''),
       'hazard': new FormControl('',Validators.required),
       'address': new FormControl('', Validators.required),
+      'callerEmail': new FormControl(''),
       'anonymousCheck': new FormControl(false)
     });
     
@@ -58,12 +61,14 @@ export class IncidentCallsNewCallComponent implements OnInit {
     this.anonymous = this.addNewCallForm.get('anonymousCheck').value;
     if(this.anonymous){
       this.addNewCallForm.controls["address"].setValue("");
+      this.addNewCallForm.controls["callerEmail"].setValue("");
       this.callerID = "Please select customer";
       this.callerName = "Please select customer";
       this.callerAddress= "Please select customer";
     }
     else{
       this.addNewCallForm.controls["address"].setValue("");
+      this.addNewCallForm.controls["callerEmail"].setValue("");
       this.callerID = "Please select customer";
       this.callerName = "Please select customer";
       this.callerAddress = "Please select customer";
@@ -101,10 +106,28 @@ export class IncidentCallsNewCallComponent implements OnInit {
 
 
   selectCustomer(){
-    this.callerAddress= "Zakucana vrednost. Implementirati prilikom izrade backenda";
-    this.callerID = "131213";
-    this.callerName = "Ivan Gajic";
-    this.addNewCallForm.controls["address"].setValue(this.callerAddress);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '1000px';
+    dialogConfig.minHeight = '800px';
+    const dialogRef = this.dialog.open(SelectCallerDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+        data => {console.log("Dialog output:", data);
+        this.callerAddress= data.address;
+        this.callerID = data.userName;
+        this.callerName = data.firstName + " " + data.lastName;
+        this.addNewCallForm.controls["address"].setValue(this.callerAddress);
+        this.addNewCallForm.controls["callerEmail"].setValue(data.email);
+        this.addressInvalid = false;
+        }
+        
+        
+        
+    );
+
+    
   }
   onClear(){
     this.addNewCallForm = new FormGroup({

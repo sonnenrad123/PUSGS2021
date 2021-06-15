@@ -87,7 +87,7 @@ export class AddIncidentComponent implements OnInit {
   ngAfterViewInit() {
     this.intervalFormCheck = setInterval(() => {
       console.log('Checking session storage for forms.');
-      if(window.sessionStorage.getItem('basicInformationForm') != null && window.sessionStorage.getItem('resolutionForm') != null && window.sessionStorage.getItem('incidentSelectedDevices')){
+      if(window.sessionStorage.getItem('basicInformationForm') != null && window.sessionStorage.getItem('resolutionForm') != null && window.sessionStorage.getItem('incidentSelectedDevices')!=null && window.sessionStorage.getItem('incidentCrewId')!=null){
         var ret = JSON.parse(window.sessionStorage.getItem('incidentSelectedDevices'));
         
         
@@ -114,7 +114,7 @@ export class AddIncidentComponent implements OnInit {
     window.sessionStorage.removeItem('basicInformationForm');
     window.sessionStorage.removeItem('resolutionForm');
     window.sessionStorage.removeItem('incidentSelectedDevices');
-    
+    window.sessionStorage.removeItem('incidentCrewId');
   }
 
 
@@ -131,7 +131,7 @@ export class AddIncidentComponent implements OnInit {
     let basicInformationFormValue = JSON.parse(window.sessionStorage.getItem('basicInformationForm'));
     let resolutionFormValue = JSON.parse(window.sessionStorage.getItem('resolutionForm')) ;
     let incidentSelectedDevicestemp = JSON.parse(window.sessionStorage.getItem('incidentSelectedDevices'));
-    
+    let crewId = JSON.parse(window.sessionStorage.getItem('incidentCrewId'));
     let deviceIds = "";
     incidentSelectedDevicestemp.forEach(device => {
       deviceIds = deviceIds + ';' + device.id;
@@ -140,7 +140,7 @@ export class AddIncidentComponent implements OnInit {
     let creatorEmail = localStorage.getItem('user');
 
 
-    let mergedObjects = {...basicInformationFormValue,...resolutionFormValue,deviceIds,creatorEmail};
+    let mergedObjects = {...basicInformationFormValue,...resolutionFormValue,deviceIds,creatorEmail,crewId};
 
     if(basicInformationFormValue != null && resolutionFormValue != null && incidentSelectedDevicestemp!=null && incidentSelectedDevicestemp.length > 0){
       console.log(basicInformationFormValue);
@@ -152,6 +152,7 @@ export class AddIncidentComponent implements OnInit {
           window.sessionStorage.removeItem('basicInformationForm');
           window.sessionStorage.removeItem('resolutionForm');
           window.sessionStorage.removeItem('incidentSelectedDevices');
+          window.sessionStorage.removeItem('incidentCrewId');
           this._snackBar.open('Incident added!','Ok');
         },
         error => {

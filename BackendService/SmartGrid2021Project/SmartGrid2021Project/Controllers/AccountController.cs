@@ -49,6 +49,19 @@ namespace SmartGrid2021Project.Controllers
             });
         }
 
+
+
+        [HttpGet]
+        [Route("GetAllCustomers")]
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetAllCustomers()
+        {
+            return await Task.Run(() =>
+            {
+                return userManager.Users.Where((x) => x.RoleOfUser == "User").ToList();
+            });
+
+        }
+
         [HttpPost]
         [Route("Register")]
         //POST : /api/Account/Register
