@@ -1,7 +1,29 @@
 <div class="main-content" >
     <div class="container-fluid">
         <div class="row">
-            <p>Changes works</p>
+            <form [formGroup]="Form">
+            <div class="form-group col-md-4">
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>State of document*</mat-label>
+                    <mat-select formControlName="WRCurrentState" name="WRCurrentState" id="WRCurrentState">
+                        <mat-option value="APPROVED">APPROVE</mat-option>
+                        <mat-option value="DENIED">DENY</mat-option>
+                        <mat-option value="CANCELED">CANCEL</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="Form.invalid">{{getErrorMessageWRCurrentState()}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="button-center-align">
+                    <div class="col-md-3" ></div>
+                    <button mat-flat-button color="primary" (click)=SaveChanges() [disabled]="Form.invalid">Save</button>
+                    <button mat-flat-button (click)=Cancel()>Cancel</button>
+                </div>
+            </div>
+        </form>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><b>Work request changes history:</b></div>
         </div>
     </div>
 </div>

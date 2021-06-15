@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { WorkRequestsService } from 'src/app/services/work-request/work-requests.service';
 
 @Component({
   selector: 'app-add-work-request',
@@ -9,8 +10,9 @@ import { Router } from '@angular/router';
 export class AddWorkRequestComponent implements OnInit {
   activeLinkIndex = 0;
   links = [];
+  disabled: boolean;
   
-  constructor(private router: Router) {
+  constructor(private router: Router, private wrService:WorkRequestsService) {
 
     this.links = [
       {
@@ -46,5 +48,15 @@ export class AddWorkRequestComponent implements OnInit {
     if(this.router.url.endsWith('createworkrequest')){
       this.router.navigate(["createworkrequest/BasicInfo"]);
     }
+  }
+
+  SubmitWR(){
+    this.wrService.CreateNewWR().subscribe(
+      (data)=>{
+        this.router.navigate(['WorkRequests']);
+     },
+     (err) =>{
+       console.log(err);
+     } );
   }
 }
