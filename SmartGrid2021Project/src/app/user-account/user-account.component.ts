@@ -41,7 +41,7 @@ export class UserAccountComponent implements OnInit {
       userEmail:  new FormControl(this.testUser.userEmail, [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
       birthday: new FormControl(this.testUser.birthday, [Validators.required]),
       roleOfUser: new FormControl(this.testUser.roleOfUser.toString(), [Validators.required]),
-      teamOfUser: new FormControl(this.testUser.nameOfTeam),
+      teamOfUser: new FormControl(this.testUser.userTeam),
       userImage: new FormControl(this.testUser.userImage)
     })
   }

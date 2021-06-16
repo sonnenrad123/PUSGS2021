@@ -10289,19 +10289,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\juzni\\.nuget\\packages\\": {}
+    "C:\\Users\\Radin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projekti2020-2021\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
+      "projectUniqueName": "D:\\GitHub\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
       "projectName": "SmartGrid2021Project",
-      "projectPath": "D:\\Projekti2020-2021\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
-      "packagesPath": "C:\\Users\\juzni\\.nuget\\packages\\",
-      "outputPath": "D:\\Projekti2020-2021\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\obj\\",
+      "projectPath": "D:\\GitHub\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
+      "packagesPath": "C:\\Users\\Radin\\.nuget\\packages\\",
+      "outputPath": "D:\\GitHub\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\juzni\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Radin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10313,6 +10313,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -10324,6 +10325,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "MailKit": {
             "target": "Package",
@@ -10414,7 +10416,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   }

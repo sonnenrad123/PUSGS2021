@@ -10,8 +10,8 @@ using SmartGrid2021Project.Models;
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    [Migration("20210616102345_Init")]
-    partial class Init
+    [Migration("20210616151500_DatabasePUSGS")]
+    partial class DatabasePUSGS
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

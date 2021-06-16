@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SmartGrid2021Project.Migrations
 {
-    public partial class Init : Migration
+    public partial class DatabasePUSGS : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
