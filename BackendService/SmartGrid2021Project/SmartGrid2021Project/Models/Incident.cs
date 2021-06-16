@@ -49,5 +49,12 @@ namespace SmartGrid2021Project.Models
         public string CreatorEmail { get; set; }
         [NotMapped]
         public int CrewId { get; set; }
+
+        public virtual ICollection<WorkRequest> WorkRequests { get; set; }
+
+        public Incident()
+        {
+            WorkRequests = new HashSet<WorkRequest>();
+        }
     }
 }

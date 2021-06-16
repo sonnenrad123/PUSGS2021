@@ -46,5 +46,12 @@ namespace SmartGrid2021Project.Models
 
         [Required]
         public bool AccountAllowed { get; set; }
+
+        public virtual ICollection<WorkRequest> UserWorkRequests { get; set; }
+
+        public AppUser()
+        {
+            UserWorkRequests = new HashSet<WorkRequest>();
+        }
     }
 }

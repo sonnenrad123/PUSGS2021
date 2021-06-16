@@ -24,4 +24,9 @@ namespace SmartGrid2021Project.Models
         Dispatched,Draft,Submited
     }
 
+    public enum WrDocumentStatus
+    {
+        Draft, Canceled, Denied, Approved
+    }
+
 }

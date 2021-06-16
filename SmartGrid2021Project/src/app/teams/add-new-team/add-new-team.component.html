@@ -10,7 +10,7 @@
                         <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Team name*</mat-label>
                                 <input matInput placeholder="teamName" formControlName="teamName" type="text" name="teamName" id="teamName" />
-                            <!--mat-error *ngIf="form.invalid">{{getErrorMessageUsername()}}</mat-error-->
+                            <mat-error *ngIf="newTeamFormControl.invalid">{{getErrorMessageTeamName()}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="form-group col-md-2 custom-div">
@@ -24,7 +24,7 @@
                 <div class="form-group col-md-8">
                     <mat-select matInput placeholder="Available team members" formControlName="teamMembers" multiple>
                         
-                    <mat-option *ngFor="let member of teamMemberss" [value]="member">{{member | json}}</mat-option>
+                    <mat-option *ngFor="let member of teamMemberss" [value]="member">{{"["+member.userName+"] "+member.firstName+" "+member.lastName}}</mat-option>
                     </mat-select>
                 </div>
                 </div>
