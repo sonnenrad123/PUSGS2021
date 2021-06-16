@@ -23,5 +23,11 @@ namespace SmartGrid2021Project.Models
         {
             get { return string.Concat("DEV", Id); }
         }
+
+        [ForeignKey("WorkReqId")]
+        public int? WorkRequestId { get; set; }
+
+        [Column("WorkRequest")]
+        public virtual WorkRequest WorkRequest { get; set; }
     }
 }

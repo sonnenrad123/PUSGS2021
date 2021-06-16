@@ -40,5 +40,12 @@ namespace SmartGrid2021Project.Models
         }
         [NotMapped]
         public string DeviceIds { get; set; }
+
+        public virtual ICollection<WorkRequest> WorkRequests { get; set; }
+
+        public Incident()
+        {
+            WorkRequests = new HashSet<WorkRequest>();
+        }
     }
 }

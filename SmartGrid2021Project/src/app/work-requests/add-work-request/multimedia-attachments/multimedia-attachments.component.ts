@@ -18,7 +18,14 @@ export class MultimediaAttachmentsComponent implements OnInit {
   ngOnInit(): void {
     if(WorkRequestsService.wrAttachments !== undefined){
       this.images = WorkRequestsService.wrAttachments as any;
-      this.files = WorkRequestsService.wrAttachments as any;
+      
+      /*(WorkRequestsService.wrAttachments as []).forEach(_ => {
+        fetch(_).then(res => res.blob()).then(blob => {
+          const file = new File([blob], "Attachment", {type: "image/png"});
+          this.files.push(file);
+        });
+        console.log(this.files);
+      })*/
     }
   }
 
@@ -39,14 +46,12 @@ export class MultimediaAttachmentsComponent implements OnInit {
    */
   prepareFilesList(files: Array<any>) {
     for (const item of files) {
-      //if(item.target.files.length > 0){
         const file: File = item;
         toBase64(file).then((value:any) => this.imageBase64 = value.toString()).then(_ =>  {
           item.toBase64 = this.imageBase64;
           this.images.push(this.imageBase64);
         });
         
-     // }
       item.progress = 0;
      
       this.files.push(item);
@@ -97,6 +102,7 @@ export class MultimediaAttachmentsComponent implements OnInit {
   }
 
   SaveChanges(){
-    this.wrService.SaveWRAttachments(this.files);
+    this.wrService.SaveWRAttachments(this.images);
+    //console.log(this.images);
   }
 }
