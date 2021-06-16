@@ -68,6 +68,7 @@ import { SafetyDocumentEquipmentComponent } from './add-safety-document/safety-d
 import { SafetyDocumentChecklistComponent } from './add-safety-document/safety-document-checklist/safety-document-checklist.component';
 import { AddNetworkElementComponent } from './add-network-element/add-network-element.component';
 import { SearchNetworkElementsComponent } from './search-network-elements/search-network-elements.component';
+import { UserAccountComponent } from './user-account/user-account.component';
 
 
 
@@ -112,7 +113,8 @@ import { SearchNetworkElementsComponent } from './search-network-elements/search
     SafetyDocumentEquipmentComponent,
     SafetyDocumentChecklistComponent,
     AddNetworkElementComponent,
-    SearchNetworkElementsComponent
+    SearchNetworkElementsComponent,
+    UserAccountComponent
     
     
   ],

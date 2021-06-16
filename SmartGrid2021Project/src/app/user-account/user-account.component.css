@@ -1,0 +1,36 @@
+.full-width{
+    width: 100%;
+}
+
+.image-placeholder{
+    width: 200px; 
+    height: 200px; 
+    margin-top: 3px;
+    object-fit: fill;
+}
+
+.custom-width-btn{
+    width: 30%;
+    display: inline-block;    
+    margin: auto;
+    border: lightblue 1px solid;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.custom-width-div{
+    width: 42%;
+    display: inline-block;    
+    margin-left: 12px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.parent{
+    text-align: center;
+}
+
+.position-h2{
+    margin-bottom: 5rem;
+    margin-top: 5px;
+}

@@ -31,6 +31,7 @@ import { SafetyDocumentEquipmentComponent } from './add-safety-document/safety-d
 import { SafetyDocumentChecklistComponent } from './add-safety-document/safety-document-checklist/safety-document-checklist.component';
 import { SearchNetworkElementsComponent } from './search-network-elements/search-network-elements.component';
 import { AddNetworkElementComponent } from './add-network-element/add-network-element.component';
+import { UserAccountComponent } from './user-account/user-account.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,14 @@ const routes: Routes = [
     children:[
       {path: '',component: MapComponent},
     ]
+  },
+  {
+    path:'UserAccount',
+    component: GeneralLayoutComponent,
+    children:
+    [{
+      path: '', component: UserAccountComponent,
+    },]
   },
   {
     path:'IncidentBrowser',
