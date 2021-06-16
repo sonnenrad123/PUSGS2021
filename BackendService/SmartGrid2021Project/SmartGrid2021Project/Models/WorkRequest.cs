@@ -36,14 +36,14 @@ namespace SmartGrid2021Project.Models
 
         [Column("Address", TypeName = "nvarchar(MAX)")]
         public string Street { get; set; }
-        
+        /*
         [ForeignKey("Id")]
         [Column("IncidentId")]
         public int? IncidentId { get; set; }
 
         [Column("Incident")]
         public virtual Incident Incident { get; set; }
-
+        */
         [Required]
         [Column("StartDate", TypeName = "Date")]
         public DateTime StartDateTime { get; set; }
@@ -65,18 +65,18 @@ namespace SmartGrid2021Project.Models
 
         [Required]
         [Column("TypeOfDocument", TypeName = "Int")]
-        public IncidentType TypeOfDocument { get; set; }
+        public TypeOfDocument TypeOfDocument { get; set; }
 
         [Required]
         [Column("DocumentStatus", TypeName = "int")]
         public WrDocumentStatus StatusOfDocument { get; set; }
-
+        /*
         [ForeignKey("AppUserId")]
         public int? AppUserId { get; set; }
 
         [Column("AppUser")]
         public virtual AppUser AppUser { get; set; }
-
+        */
         public virtual ICollection<Device> Equipment { get; set; }
         public virtual ICollection<Attachment> Attachments { get; set; }
         public virtual ICollection<WRStateChange> StateChangesHistory { get; set; }

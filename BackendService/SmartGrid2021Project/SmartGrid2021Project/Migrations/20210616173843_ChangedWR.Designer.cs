@@ -10,15 +10,15 @@ using SmartGrid2021Project.Models;
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    [Migration("20210614140540_AddedUserFieldIntoIncident")]
-    partial class AddedUserFieldIntoIncident
+    [Migration("20210616173843_ChangedWR")]
+    partial class ChangedWR
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DeviceIncident", b =>
@@ -272,12 +272,56 @@ namespace SmartGrid2021Project.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("SmartGrid2021Project.Models.Attachment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(MAX)")
+                        .HasColumnName("DataSrc");
+
+                    b.Property<int>("Progress")
+                        .HasColumnType("int")
+                        .HasColumnName("Progress");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int")
+                        .HasColumnName("Size");
+
+                    b.Property<string>("ToBase64")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(MAX)")
+                        .HasColumnName("Base64Representation");
+
+                    b.Property<int?>("WorkRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(MAX)")
+                        .HasColumnName("Type");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkRequestId");
+
+                    b.ToTable("Attachments");
+                });
+
             modelBuilder.Entity("SmartGrid2021Project.Models.Call", b =>
                 {
                     b.Property<int>("CallId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CallerId")
                         .HasColumnType("nvarchar(450)");
@@ -315,7 +359,12 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WorkRequestId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WorkRequestId");
 
                     b.ToTable("Devices");
                 });
@@ -354,6 +403,9 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<DateTime>("ETR")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("IncidentCrewteamID")
+                        .HasColumnType("int");
+
                     b.Property<string>("IncidentDesc")
                         .HasColumnType("nvarchar(max)");
 
@@ -384,7 +436,12 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<double>("Voltage")
                         .HasColumnType("float");
 
+                    b.Property<string>("phoneNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IncidentCrewteamID");
 
                     b.HasIndex("UserId");
 
@@ -407,6 +464,122 @@ namespace SmartGrid2021Project.Migrations
                     b.HasKey("teamID");
 
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.WRStateChange", b =>
+                {
+                    b.Property<int>("WRSC_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ChangedByUser")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ChangedByUser");
+
+                    b.Property<DateTime>("ChangedOn")
+                        .HasColumnType("Date")
+                        .HasColumnName("DateModified");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModifiedByUserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("WRCurrentState")
+                        .HasColumnType("int")
+                        .HasColumnName("CurrentStatus");
+
+                    b.Property<int?>("WorkRequestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WRSC_Id");
+
+                    b.HasIndex("ModifiedByUserId1");
+
+                    b.HasIndex("WorkRequestId");
+
+                    b.ToTable("WRStateChange");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.WorkRequest", b =>
+                {
+                    b.Property<int>("WR_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("varchar(60)")
+                        .HasColumnName("Company");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("varchar(60)")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("Date")
+                        .HasColumnName("CreatedOnDate");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(MAX)")
+                        .HasColumnName("Details");
+
+                    b.Property<bool>("EmergencyWork")
+                        .HasColumnType("Bit")
+                        .HasColumnName("IsEmergencyWork");
+
+                    b.Property<DateTime>("EndDateTime")
+                        .HasColumnType("Date")
+                        .HasColumnName("EndDate");
+
+                    b.Property<int?>("IncidentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(MAX)")
+                        .HasColumnName("Notes");
+
+                    b.Property<int>("PhoneNo")
+                        .HasColumnType("Int")
+                        .HasColumnName("PhoneNo");
+
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(MAX)")
+                        .HasColumnName("Purpose");
+
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("Date")
+                        .HasColumnName("StartDate");
+
+                    b.Property<int>("StatusOfDocument")
+                        .HasColumnType("int")
+                        .HasColumnName("DocumentStatus");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(MAX)")
+                        .HasColumnName("Address");
+
+                    b.Property<int>("TypeOfDocument")
+                        .HasColumnType("Int")
+                        .HasColumnName("TypeOfDocument");
+
+                    b.HasKey("WR_id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("IncidentId");
+
+                    b.ToTable("WorkRequests");
                 });
 
             modelBuilder.Entity("DeviceIncident", b =>
@@ -484,6 +657,15 @@ namespace SmartGrid2021Project.Migrations
                     b.Navigation("UserTeam");
                 });
 
+            modelBuilder.Entity("SmartGrid2021Project.Models.Attachment", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.WorkRequest", "WorkRequest")
+                        .WithMany("Attachments")
+                        .HasForeignKey("WorkRequestId");
+
+                    b.Navigation("WorkRequest");
+                });
+
             modelBuilder.Entity("SmartGrid2021Project.Models.Call", b =>
                 {
                     b.HasOne("SmartGrid2021Project.Models.AppUser", "Caller")
@@ -493,23 +675,80 @@ namespace SmartGrid2021Project.Migrations
                     b.Navigation("Caller");
                 });
 
+            modelBuilder.Entity("SmartGrid2021Project.Models.Device", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.WorkRequest", "WorkRequest")
+                        .WithMany("Equipment")
+                        .HasForeignKey("WorkRequestId");
+
+                    b.Navigation("WorkRequest");
+                });
+
             modelBuilder.Entity("SmartGrid2021Project.Models.Incident", b =>
                 {
+                    b.HasOne("SmartGrid2021Project.Models.Team", "IncidentCrew")
+                        .WithMany()
+                        .HasForeignKey("IncidentCrewteamID");
+
                     b.HasOne("SmartGrid2021Project.Models.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
+                    b.Navigation("IncidentCrew");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.WRStateChange", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.AppUser", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId1");
+
+                    b.HasOne("SmartGrid2021Project.Models.WorkRequest", "WorkRequest")
+                        .WithMany("StateChangesHistory")
+                        .HasForeignKey("WorkRequestId");
+
+                    b.Navigation("ModifiedByUser");
+
+                    b.Navigation("WorkRequest");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.WorkRequest", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.AppUser", null)
+                        .WithMany("UserWorkRequests")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("SmartGrid2021Project.Models.Incident", null)
+                        .WithMany("WorkRequests")
+                        .HasForeignKey("IncidentId");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.AppUser", b =>
                 {
                     b.Navigation("Calls");
+
+                    b.Navigation("UserWorkRequests");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.Incident", b =>
+                {
+                    b.Navigation("WorkRequests");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.Team", b =>
                 {
                     b.Navigation("teamMembers");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.WorkRequest", b =>
+                {
+                    b.Navigation("Attachments");
+
+                    b.Navigation("Equipment");
+
+                    b.Navigation("StateChangesHistory");
                 });
 #pragma warning restore 612, 618
         }

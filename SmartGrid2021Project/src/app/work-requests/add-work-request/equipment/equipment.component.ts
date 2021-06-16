@@ -12,7 +12,7 @@ import { WorkRequestsService } from 'src/app/services/work-request/work-requests
 export class EquipmentComponent implements OnInit {
 
   allEquipment: any[];
-  canEnable: boolean = true;
+  allEquipmentCopy: any[];
   done = [
     
   ];
@@ -22,11 +22,23 @@ export class EquipmentComponent implements OnInit {
     this.deviceService.getDevices().subscribe(
       (data) => {
         this.allEquipment = data;
+        this.allEquipmentCopy = data;
+
         //console.log(data);
-        if(WorkRequestsService.wrEquipment !== undefined){
-          this.done = WorkRequestsService.wrEquipment as any;
-          this.allEquipment = this.allEquipment.filter(item1 => !!this.done.find(item2 => item1.id !== item2.id));
-        }  
+        if(window.sessionStorage.getItem('WREquCurrValue') !== null){
+          this.done = JSON.parse(window.sessionStorage.getItem('WREquCurrValue'));
+          if(this.done.length !== this.allEquipment.length && this.done.length > 0){
+          this.allEquipment = this.allEquipment.filter(item1 => !!this.done.find(item2 => item1.id.toString() !== item2.id.toString()));
+          }
+          else{
+            this.allEquipment = new Array<any>();
+          }
+          
+          if(this.done.length === 0)
+          {
+            this.allEquipment = this.allEquipmentCopy;
+          }
+       }
         
       },
       err =>{
@@ -49,8 +61,9 @@ export class EquipmentComponent implements OnInit {
   }
 
   SaveChanges(){
-    this.wrService.SaveWREquipment(this.done);
-    //this.canEnable = true;
+    window.sessionStorage.removeItem('WREquCurrValue');
+    window.sessionStorage.setItem('WREquCurrValue', JSON.stringify(this.done));
+
   }
 
   Cancel(){

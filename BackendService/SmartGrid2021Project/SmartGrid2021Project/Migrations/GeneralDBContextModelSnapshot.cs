@@ -16,7 +16,7 @@ namespace SmartGrid2021Project.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DeviceIncident", b =>
@@ -272,26 +272,39 @@ namespace SmartGrid2021Project.Migrations
 
             modelBuilder.Entity("SmartGrid2021Project.Models.Attachment", b =>
                 {
-                    b.Property<int>("Att_Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Base64")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(MAX)")
-                        .HasColumnName("Base64Representation");
-
-                    b.Property<string>("Source")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(MAX)")
                         .HasColumnName("DataSrc");
 
+                    b.Property<int>("Progress")
+                        .HasColumnType("int")
+                        .HasColumnName("Progress");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int")
+                        .HasColumnName("Size");
+
+                    b.Property<string>("ToBase64")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(MAX)")
+                        .HasColumnName("Base64Representation");
+
                     b.Property<int?>("WorkRequestId")
                         .HasColumnType("int");
 
-                    b.HasKey("Att_Id");
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(MAX)")
+                        .HasColumnName("Type");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("WorkRequestId");
 
@@ -459,8 +472,9 @@ namespace SmartGrid2021Project.Migrations
                         .HasColumnName("ID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ChangedByUserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("ChangedByUser")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ChangedByUser");
 
                     b.Property<DateTime>("ChangedOn")
                         .HasColumnType("Date")
@@ -468,6 +482,9 @@ namespace SmartGrid2021Project.Migrations
 
                     b.Property<int?>("ModifiedByUserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ModifiedByUserId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("WRCurrentState")
                         .HasColumnType("int")
@@ -478,11 +495,11 @@ namespace SmartGrid2021Project.Migrations
 
                     b.HasKey("WRSC_Id");
 
-                    b.HasIndex("ChangedByUserId");
+                    b.HasIndex("ModifiedByUserId1");
 
                     b.HasIndex("WorkRequestId");
 
-                    b.ToTable("WRStateChange");
+                    b.ToTable("WRStateChanges");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.WorkRequest", b =>
@@ -493,10 +510,7 @@ namespace SmartGrid2021Project.Migrations
                         .HasColumnName("ID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("AppUserId1")
+                    b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Company")
@@ -526,8 +540,7 @@ namespace SmartGrid2021Project.Migrations
                         .HasColumnName("EndDate");
 
                     b.Property<int?>("IncidentId")
-                        .HasColumnType("int")
-                        .HasColumnName("IncidentId");
+                        .HasColumnType("int");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(MAX)")
@@ -560,7 +573,7 @@ namespace SmartGrid2021Project.Migrations
 
                     b.HasKey("WR_id");
 
-                    b.HasIndex("AppUserId1");
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("IncidentId");
 
@@ -669,34 +682,45 @@ namespace SmartGrid2021Project.Migrations
                     b.Navigation("WorkRequest");
                 });
 
+            modelBuilder.Entity("SmartGrid2021Project.Models.Incident", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.Team", "IncidentCrew")
+                        .WithMany()
+                        .HasForeignKey("IncidentCrewteamID");
+
+                    b.HasOne("SmartGrid2021Project.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("IncidentCrew");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SmartGrid2021Project.Models.WRStateChange", b =>
                 {
-                    b.HasOne("SmartGrid2021Project.Models.AppUser", "ChangedByUser")
+                    b.HasOne("SmartGrid2021Project.Models.AppUser", "ModifiedByUser")
                         .WithMany()
-                        .HasForeignKey("ChangedByUserId");
+                        .HasForeignKey("ModifiedByUserId1");
 
                     b.HasOne("SmartGrid2021Project.Models.WorkRequest", "WorkRequest")
                         .WithMany("StateChangesHistory")
                         .HasForeignKey("WorkRequestId");
 
-                    b.Navigation("ChangedByUser");
+                    b.Navigation("ModifiedByUser");
 
                     b.Navigation("WorkRequest");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.WorkRequest", b =>
                 {
-                    b.HasOne("SmartGrid2021Project.Models.AppUser", "AppUser")
+                    b.HasOne("SmartGrid2021Project.Models.AppUser", null)
                         .WithMany("UserWorkRequests")
-                        .HasForeignKey("AppUserId1");
+                        .HasForeignKey("AppUserId");
 
-                    b.HasOne("SmartGrid2021Project.Models.Incident", "Incident")
+                    b.HasOne("SmartGrid2021Project.Models.Incident", null)
                         .WithMany("WorkRequests")
                         .HasForeignKey("IncidentId");
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Incident");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.AppUser", b =>

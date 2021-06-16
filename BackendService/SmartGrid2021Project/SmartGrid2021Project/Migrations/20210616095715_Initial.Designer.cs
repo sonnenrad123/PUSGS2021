@@ -10,7 +10,7 @@ using SmartGrid2021Project.Models;
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    [Migration("20210616092517_Initial")]
+    [Migration("20210616095715_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace SmartGrid2021Project.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DeviceIncident", b =>
@@ -184,7 +184,7 @@ namespace SmartGrid2021Project.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("varchar(90)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("User Address");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -307,6 +307,9 @@ namespace SmartGrid2021Project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CallerId")
                         .HasColumnType("nvarchar(450)");
 
@@ -323,7 +326,7 @@ namespace SmartGrid2021Project.Migrations
 
                     b.HasIndex("CallerId");
 
-                    b.ToTable("Call");
+                    b.ToTable("Calls");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.Device", b =>
@@ -387,6 +390,9 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<DateTime>("ETR")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("IncidentCrewteamID")
+                        .HasColumnType("int");
+
                     b.Property<string>("IncidentDesc")
                         .HasColumnType("nvarchar(max)");
 
@@ -411,10 +417,20 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<string>("Subcause")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<double>("Voltage")
                         .HasColumnType("float");
 
+                    b.Property<string>("phoneNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IncidentCrewteamID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Incidents");
                 });
@@ -653,6 +669,21 @@ namespace SmartGrid2021Project.Migrations
                         .HasForeignKey("WorkRequestId");
 
                     b.Navigation("WorkRequest");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.Incident", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.Team", "IncidentCrew")
+                        .WithMany()
+                        .HasForeignKey("IncidentCrewteamID");
+
+                    b.HasOne("SmartGrid2021Project.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("IncidentCrew");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.WRStateChange", b =>

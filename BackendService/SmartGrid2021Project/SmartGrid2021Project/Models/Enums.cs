@@ -19,6 +19,14 @@ namespace SmartGrid2021Project.Models
         Unplanned
     }
 
+    public enum TypeOfDocument
+    {
+        [Display(Name = "Planned Work")]
+        Planned_work,
+        [Display(Name = "Unplanned Work")]
+        Unplanned_work
+    }
+
     public enum IncidentStatus
     {
         Dispatched,Draft,Submited

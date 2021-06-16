@@ -39,36 +39,18 @@ export class BasicInfoComponent implements OnInit {
       street: new FormControl('', Validators.required)
     });
     this.basicInfoForm.controls['createdBy'].setValue(this.user);
-    if(WorkRequestsService.wrBasicInfo !== undefined){
-      this.basicInfoForm.setValue({
-        typeOfDocument: WorkRequestsService.wrBasicInfo.typeOfDocument,
-        statusOfDocument: WorkRequestsService.wrBasicInfo.statusOfDocument,
-        incident: WorkRequestsService.wrBasicInfo.incident,
-        emergencyWork: WorkRequestsService.wrBasicInfo.emergencyWork,
-        //typeOfWork: new FormControl(''),
-        company: WorkRequestsService.wrBasicInfo.company,
-        startDateTime: WorkRequestsService.wrBasicInfo.startDateTime,
-        endDateTime: WorkRequestsService.wrBasicInfo.endDateTime,
-        createdBy: WorkRequestsService.wrBasicInfo.createdBy,
-        purpose: WorkRequestsService.wrBasicInfo.purpose,
-        details: WorkRequestsService.wrBasicInfo.details,
-        notes:   WorkRequestsService.wrBasicInfo.notes,
-        phoneNo: WorkRequestsService.wrBasicInfo.phoneNo,
-        dateTimeCreated: WorkRequestsService.wrBasicInfo.dateTimeCreated,
-        street: WorkRequestsService.wrBasicInfo.street
-      });
-    }
     
+    if(window.sessionStorage.getItem('WRBICurrValue') !== null){
+      this.basicInfoForm.patchValue(JSON.parse(window.sessionStorage.getItem('WRBICurrValue')));
+    }
 
   }
   Cancel(){
     this.router.navigate(['WorkRequests']);
   }
   SaveWRBasicInfo(){
-    if(this.basicInfoForm.controls['emergencyWork'].value === null){
-      this.basicInfoForm.controls['emergencyWork'].setValue(false);
-    }
-      this.workReqService.SaveWorkInfo(this.basicInfoForm.value);
+    window.sessionStorage.removeItem('WRBICurrValue');
+    window.sessionStorage.setItem('WRBICurrValue', JSON.stringify(this.basicInfoForm.value));
   }
   
   getErrorMessageTypeOfDoc(){

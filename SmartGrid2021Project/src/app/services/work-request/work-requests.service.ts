@@ -1,52 +1,45 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { WorkRequestDocumentType } from 'src/app/models/work-reques-doc-typet/work-request-document-type.enum';
 import { WorkRequest } from 'src/app/models/work-request/work-request';
-import { WorkRequestAttachments } from 'src/app/models/work-request/work-request-attachments';
-import { WorkRequestBasicInfo } from 'src/app/models/work-request/work-request-basic-info';
-import { WorkRequestEquipment } from 'src/app/models/work-request/work-request-equipment';
-import { WorkRequestStateChangesHistory } from 'src/app/models/work-request/work-request-state-changes-history';
+
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkRequestsService {
-  static wrBasicInfo: WorkRequestBasicInfo;
-  static wrStateChanged: WorkRequestStateChangesHistory;
-  static wrAttachments: WorkRequestAttachments;
-  static wrEquipment: WorkRequestEquipment;
-  workRequest: WorkRequest;    
+  
+   
 
   constructor(private http:HttpClient) { }
 
 
-  public SaveWorkInfo(data){
-    WorkRequestsService.wrBasicInfo = data;
-  }
-
-  public SaveStateChanging(data){
-    WorkRequestsService.wrStateChanged = data;
-  }
-
-  public SaveWRAttachments(data){
-    WorkRequestsService.wrAttachments = data;
-  }
-
-  public SaveWREquipment(data){
-    WorkRequestsService.wrEquipment = data;
-  }
-
   public CreateNewWR(){
-      this.workRequest = new WorkRequest(WorkRequestsService.wrBasicInfo,
-                                         WorkRequestsService.wrStateChanged,
-                                         WorkRequestsService.wrAttachments,
-                                         WorkRequestsService.wrEquipment);
-                                         console.log(this.workRequest);
-      WorkRequestsService.wrBasicInfo = undefined;
-      WorkRequestsService.wrStateChanged = undefined;
-      WorkRequestsService.wrAttachments = undefined;
-      WorkRequestsService.wrEquipment = undefined;
-
-      return this.http.post(environment.apiUrl + "WorkRequests/CreateNewWR", this.workRequest);
+      let bInfo = JSON.parse(window.sessionStorage.getItem('WRBICurrValue'));
+      let wr: WorkRequest = {equipment: JSON.parse(window.sessionStorage.getItem('WREquCurrValue')),
+                             attachments: JSON.parse(window.sessionStorage.getItem('WRMAttCurrValue')),
+                             stateChangesHistory: JSON.parse(window.sessionStorage.getItem('WRCHCurrValue')),
+                             company: bInfo.company,
+                             createdBy: bInfo.createdBy,
+                             dateTimeCreated: bInfo.dateTimeCreated,
+                             emergencyWork: bInfo.emergencyWork === "" ? false : true,
+                             endDateTime: bInfo.endDateTime,
+                             phoneNo: bInfo.phoneNo,
+                             purpose: bInfo.purpose,
+                             startDateTime: bInfo.startDateTime,
+                             statusOfDocument: bInfo.statusOfDocument,
+                             street: bInfo.street,
+                             typeOfDocument: bInfo.typeOfDocument === "PLANNED_WORK" ? WorkRequestDocumentType.PLANNED_WORK: WorkRequestDocumentType.UNPLANNED_WORK,
+                             details: bInfo.details,
+                             incident: bInfo.incident,
+                             notes: bInfo.notes
+                            };
+      console.log(wr);
+      window.sessionStorage.removeItem('WRBICurrValue');
+      window.sessionStorage.removeItem('WRCHCurrValue');
+      window.sessionStorage.removeItem('WRMAttCurrValue');
+      window.sessionStorage.removeItem('WREquCurrValue');
+      return this.http.post(environment.apiUrl + "WorkRequest/CreateNewWorkRequest", wr);
   }
 }

@@ -22,36 +22,6 @@ namespace SmartGrid2021Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Incidents",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IncidentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Priority = table.Column<int>(type: "int", nullable: false),
-                    Confirmed = table.Column<bool>(type: "bit", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IncidentDesc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ETA = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ETR = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ATA = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AffectedCustomers = table.Column<int>(type: "int", nullable: false),
-                    OutageTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Calls = table.Column<int>(type: "int", nullable: false),
-                    Voltage = table.Column<double>(type: "float", nullable: false),
-                    ScheduledTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DodeliSebi = table.Column<bool>(type: "bit", nullable: false),
-                    Cause = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Subcause = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConstructionType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Material = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Incidents", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
                 {
@@ -96,7 +66,7 @@ namespace SmartGrid2021Project.Migrations
                     Dateofbirth = table.Column<DateTime>(name: "Date of birth", type: "Date", nullable: false),
                     UserRole = table.Column<string>(name: "User Role", type: "varchar(50)", nullable: false),
                     UserTeamId = table.Column<int>(type: "int", nullable: true),
-                    UserAddress = table.Column<string>(name: "User Address", type: "varchar(90)", nullable: false),
+                    UserAddress = table.Column<string>(name: "User Address", type: "nvarchar(max)", nullable: false),
                     AccountAllowed = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -210,7 +180,7 @@ namespace SmartGrid2021Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Call",
+                name: "Calls",
                 columns: table => new
                 {
                     CallId = table.Column<int>(type: "int", nullable: false)
@@ -218,16 +188,62 @@ namespace SmartGrid2021Project.Migrations
                     Reason = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Hazard = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CallerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Call", x => x.CallId);
+                    table.PrimaryKey("PK_Calls", x => x.CallId);
                     table.ForeignKey(
-                        name: "FK_Call_AspNetUsers_CallerId",
+                        name: "FK_Calls_AspNetUsers_CallerId",
                         column: x => x.CallerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Incidents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IncidentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Priority = table.Column<int>(type: "int", nullable: false),
+                    Confirmed = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IncidentDesc = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ETA = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ETR = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ATA = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AffectedCustomers = table.Column<int>(type: "int", nullable: false),
+                    OutageTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Calls = table.Column<int>(type: "int", nullable: false),
+                    Voltage = table.Column<double>(type: "float", nullable: false),
+                    ScheduledTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DodeliSebi = table.Column<bool>(type: "bit", nullable: false),
+                    Cause = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Subcause = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConstructionType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Material = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    phoneNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IncidentCrewteamID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Incidents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Incidents_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Incidents_Teams_IncidentCrewteamID",
+                        column: x => x.IncidentCrewteamID,
+                        principalTable: "Teams",
+                        principalColumn: "Team ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -417,8 +433,8 @@ namespace SmartGrid2021Project.Migrations
                 column: "WorkRequestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Call_CallerId",
-                table: "Call",
+                name: "IX_Calls_CallerId",
+                table: "Calls",
                 column: "CallerId");
 
             migrationBuilder.CreateIndex(
@@ -430,6 +446,16 @@ namespace SmartGrid2021Project.Migrations
                 name: "IX_Devices_WorkRequestId",
                 table: "Devices",
                 column: "WorkRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Incidents_IncidentCrewteamID",
+                table: "Incidents",
+                column: "IncidentCrewteamID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Incidents_UserId",
+                table: "Incidents",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkRequests_AppUserId1",
@@ -473,7 +499,7 @@ namespace SmartGrid2021Project.Migrations
                 name: "Attachments");
 
             migrationBuilder.DropTable(
-                name: "Call");
+                name: "Calls");
 
             migrationBuilder.DropTable(
                 name: "DeviceIncident");
@@ -491,10 +517,10 @@ namespace SmartGrid2021Project.Migrations
                 name: "WorkRequests");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Incidents");
 
             migrationBuilder.DropTable(
-                name: "Incidents");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Teams");
