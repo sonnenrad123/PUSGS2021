@@ -669,6 +669,21 @@ namespace SmartGrid2021Project.Migrations
                     b.Navigation("WorkRequest");
                 });
 
+            modelBuilder.Entity("SmartGrid2021Project.Models.Incident", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.Team", "IncidentCrew")
+                        .WithMany()
+                        .HasForeignKey("IncidentCrewteamID");
+
+                    b.HasOne("SmartGrid2021Project.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("IncidentCrew");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SmartGrid2021Project.Models.WRStateChange", b =>
                 {
                     b.HasOne("SmartGrid2021Project.Models.AppUser", "ChangedByUser")
