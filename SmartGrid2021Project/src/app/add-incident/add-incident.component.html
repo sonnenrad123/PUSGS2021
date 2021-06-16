@@ -48,9 +48,15 @@
 
 
 </div-->
-<div class="title">
+<div class="title" *ngIf="modifyModeActivated == false">
     <h4 class="header">
         Add new incident <button type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="submitIncident()" disabled="{{!buttonEnabled}}" style="left: 30px;" #si>Submit incident</button>
+    </h4>
+    
+</div>
+<div class="title" *ngIf="modifyModeActivated == true">
+    <h4 class="header">
+        View and modify incident <button type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="modifyIncident()" disabled="{{!modifyModeActivated}}" style="left: 30px;" #si>Modify incident</button>
     </h4>
     
 </div>

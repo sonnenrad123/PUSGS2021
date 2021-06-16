@@ -28,6 +28,16 @@ export class IncidentResolutionComponent implements OnInit {
       this.resolutionForm.setValue(JSON.parse(formValue));
       
     }
+
+    let  modifyModeActivated = window.sessionStorage.getItem('modifyModeActivated');
+    if(modifyModeActivated){
+      let incidentObject = JSON.parse(window.sessionStorage.getItem('ModifyIncidentObject'));
+      this.onChange(incidentObject.cause);
+      this.resolutionForm.patchValue(incidentObject);
+      window.sessionStorage.setItem('resolutionForm',JSON.stringify(this.resolutionForm.value));
+    }
+
+
   }
 
   onClear(){

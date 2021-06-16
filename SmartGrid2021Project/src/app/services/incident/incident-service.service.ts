@@ -26,4 +26,8 @@ export class IncidentServiceService {
   deleteIncident(id): Observable<any> {
     return this.http.delete(this.BaseURI + '/'+id);
   }
+
+  update(id, data): Observable<any> {
+    return this.http.put(this.BaseURI+'/'+id, data);
+  }
 }

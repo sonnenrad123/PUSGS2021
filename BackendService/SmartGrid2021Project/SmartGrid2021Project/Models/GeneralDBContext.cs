@@ -18,5 +18,6 @@ namespace SmartGrid2021Project.Models
         public DbSet<Team> Teams { get; set; }
         public DbSet<Device> Devices { get; set; }
         public DbSet<Call> Calls { get; set; }
+        
     }
 }

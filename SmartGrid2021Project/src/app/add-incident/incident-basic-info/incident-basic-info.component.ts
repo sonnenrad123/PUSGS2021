@@ -20,7 +20,7 @@ export class IncidentBasicInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.basicInformationForm = new FormGroup({
-      'idCustom': new FormControl('INC'),
+      'customId': new FormControl('INC'),
       'affectedCustomers': new FormControl(10),
       'incidentType':new FormControl('Planned',[Validators.required]),
       'outageTime':new FormControl(null,[Validators.required]),
@@ -47,7 +47,7 @@ export class IncidentBasicInfoComponent implements OnInit {
   onClear() {
     
     this.basicInformationForm = new FormGroup({
-      'idCustom': new FormControl(),
+      'customId': new FormControl(),
       'affectedCustomers': new FormControl(10),
       'incidentType':new FormControl('Planned',Validators.required),
       'outageTime':new FormControl(null,Validators.required),

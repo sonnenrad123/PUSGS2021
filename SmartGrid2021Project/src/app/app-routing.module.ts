@@ -90,6 +90,22 @@ const routes: Routes = [
     ]
   },
   {
+    path:'AddIncident/:incidentId',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: AddIncidentComponent, children:[
+        {path:'BasicInfo', component: IncidentBasicInfoComponent},
+        {path:'Devices', component: IncidentDevicesComponent},
+        {path:'Resolution', component: IncidentResolutionComponent},
+        {path:'Calls', component: IncidentCallsComponent, children:[
+          {path:'AddNew', component:IncidentCallsNewCallComponent}
+        ]},
+        {path: 'MultimediaAttachments', component: IncidentMultimediaAttachmentsComponent},
+        {path:'Crew',component:IncidentCrewComponent},
+      ]},
+    ]
+  },
+  {
     path:'AddSafetyDocument',
     component: GeneralLayoutComponent,
     children:[

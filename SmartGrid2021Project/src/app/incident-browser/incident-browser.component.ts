@@ -7,6 +7,7 @@ import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {IncidentServiceService } from '../services/incident/incident-service.service';
 import { MatTab } from '@angular/material/tabs';
 import { V4MAPPED } from 'node:dns';
+import { Router } from '@angular/router';
 export interface Incident{
   id:string;
   startDate:Date;
@@ -44,7 +45,7 @@ export class IncidentBrowserComponent implements OnInit {
   Incidents:Incident[];
 
   sortedData: Incident[];
-  constructor(private IncidentService: IncidentServiceService) {
+  constructor(private IncidentService: IncidentServiceService,private router:Router) {
 
   }
 
@@ -131,6 +132,11 @@ export class IncidentBrowserComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+
+  getIncident(row){
+    var id = row.id.replace('INC','');
+    this.router.navigate(["AddIncident/"+id]);
+  }
 }
 
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {

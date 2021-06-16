@@ -27,6 +27,7 @@ namespace SmartGrid2021Project.Controllers
            return await _context.Incidents
                 .Include(incident => incident.Devices)
                 .Include(incident => incident.User)
+                .Include(incident => incident.IncidentCrew)
                 .ToListAsync();
         }
 
@@ -35,7 +36,11 @@ namespace SmartGrid2021Project.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Incident>> GetIncident(int id)
         {
-            var incident = await _context.Incidents.FindAsync(id);
+            var incident = await _context.Incidents
+                                .Include(incident => incident.Devices)
+                                .Include(incident => incident.User)
+                                .Include(incident => incident.IncidentCrew)
+                                  .FirstOrDefaultAsync((x) => x.Id == id);
 
             if (incident == null)
             {
@@ -56,12 +61,32 @@ namespace SmartGrid2021Project.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(incident).State = EntityState.Modified;
+            incident.Devices = new List<Device>();
+            string[] deviceIds = incident.DeviceIds.Split(';');
+            foreach (string deviceid in deviceIds)
+            {
+                if (int.TryParse(deviceid, out int idd))
+                {
+                    Device devtemp = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == idd);
+                    incident.Devices.Add(devtemp);
+                }
+            }
+           // AppUser creator = await _context.AppUsers.FirstOrDefaultAsync((x) => x.Id == incident.id);
+            Team incidentCrew = await _context.Teams.FirstOrDefaultAsync((x) => x.teamID == incident.CrewId);
+            incident.IncidentCrew = incidentCrew;
+            // incident.User = creator;
 
+            _context.Database.ExecuteSqlRaw(string.Format("delete from DeviceIncident where IncidentsId = {0}", incident.Id));
+           
+
+
+            _context.Entry(incident).State = EntityState.Modified;
+           
             try
             {
                 await _context.SaveChangesAsync();
             }
+            
             catch (DbUpdateConcurrencyException)
             {
                 if (!IncidentExists(id))
@@ -72,6 +97,10 @@ namespace SmartGrid2021Project.Controllers
                 {
                     throw;
                 }
+            }
+            catch(Exception e)
+            {
+
             }
 
             return NoContent();
