@@ -83,6 +83,10 @@ import { SelectCallerDialogComponent } from './add-incident/incident-calls/incid
 import {MatList, MatListModule} from '@angular/material/list';
 import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
 import { TeamDisplayComponent } from './teams/team-display/team-display/team-display.component'
+import { UserAccountComponent } from './user-account/user-account.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -134,7 +138,8 @@ import { TeamDisplayComponent } from './teams/team-display/team-display/team-dis
     SelectCallerDialogComponent,
     IncidentCrewComponent,
 
-    TeamDisplayComponent
+    TeamDisplayComponent,
+    UserAccountComponent
     
     
   ],

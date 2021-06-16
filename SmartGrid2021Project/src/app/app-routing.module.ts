@@ -33,6 +33,7 @@ import { SearchNetworkElementsComponent } from './search-network-elements/search
 import { AddNetworkElementComponent } from './add-network-element/add-network-element.component';
 import { AllUsersComponent } from './admin-access/all-users/all-users/all-users.component';
 import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
+import { UserAccountComponent } from './user-account/user-account.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,16 @@ const routes: Routes = [
     children:[
       {path: '',component: MapComponent},
     ]
+    
+  },
+
+  {
+    path:'UserAccount',
+    component: GeneralLayoutComponent,
+    children:
+    [{
+      path: '', component: UserAccountComponent,
+    },]
   },
   {
     path:'IncidentBrowser',
