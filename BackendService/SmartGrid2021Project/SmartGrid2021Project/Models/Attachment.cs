@@ -36,10 +36,12 @@ namespace SmartGrid2021Project.Models
         public string ToBase64 { get; set; }
 
 
-        [ForeignKey("WorkReqId")]
-        public int? WorkRequestId { get; set; }
+        public virtual ICollection<WorkRequest> WorkRequests { get; set; }
 
-        [Column("WorkRequest")]
-        public virtual WorkRequest WorkRequest { get; set; }
+        public Attachment()
+        {
+            WorkRequests = new HashSet<WorkRequest>();
+        }
+
     }
 }

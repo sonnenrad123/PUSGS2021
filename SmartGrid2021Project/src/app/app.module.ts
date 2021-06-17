@@ -82,7 +82,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SelectCallerDialogComponent } from './add-incident/incident-calls/incident-calls-new-call/select-caller-dialog/select-caller-dialog.component'
 import {MatList, MatListModule} from '@angular/material/list';
 import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
-import { TeamDisplayComponent } from './teams/team-display/team-display/team-display.component'
+import { TeamDisplayComponent } from './teams/team-display/team-display/team-display.component';
+import { AvailableIncidentsDisplayComponent } from './incidents/available-incidents-display/available-incidents-display.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -134,7 +135,9 @@ import { TeamDisplayComponent } from './teams/team-display/team-display/team-dis
     SelectCallerDialogComponent,
     IncidentCrewComponent,
 
-    TeamDisplayComponent
+    TeamDisplayComponent,
+
+    AvailableIncidentsDisplayComponent
     
     
   ],

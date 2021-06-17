@@ -11,7 +11,8 @@ namespace SmartGrid2021Project.Models
 {
     public class AppUser : IdentityUser
     {
-        
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         [Required]
         [Column("First Name", TypeName ="varchar(50)")]
         public string FirstName { get; set; }

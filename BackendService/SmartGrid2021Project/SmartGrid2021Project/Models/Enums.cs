@@ -34,7 +34,14 @@ namespace SmartGrid2021Project.Models
 
     public enum WrDocumentStatus
     {
-        Draft, Canceled, Denied, Approved
+        [Display(Name = "Draft")]
+        Draft,
+        [Display(Name = "Canceled")]
+        Canceled,
+        [Display(Name = "Denied")]
+        Denied,
+        [Display(Name = "Approved")]
+        Approved
     }
 
 }

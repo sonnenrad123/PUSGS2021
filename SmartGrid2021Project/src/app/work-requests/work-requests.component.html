@@ -11,7 +11,7 @@
              </div>
              
         </div>
-        <div class="row">
+        <div class="row" *ngIf="toggleMy">
             <div class="main-table">
                     <app-mat-table class="main-table"
                 [tableData]="workRequests"
@@ -20,6 +20,22 @@
                 [isPageable]="true"
                 [paginationSizes]="[2,4,6]"
                 [defaultPageSize]="4"
+                [rowActionIcon]="'launch'"
+                (rowAction) = "openWR($event)"
+                >
+                </app-mat-table>
+            </div>    
+        </div>
+        <div class="row" *ngIf="toggleAll">
+            <div class="main-table">
+                    <app-mat-table class="main-table"
+                [tableData]="workRequests"
+                [tableColumns]="WRTableColumns"
+                [isFilterable]="true"
+                [isPageable]="true"
+                [paginationSizes]="[2,4,6]"
+                [defaultPageSize]="4"
+                
                 >
                 </app-mat-table>
             </div>    

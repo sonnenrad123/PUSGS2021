@@ -152,6 +152,18 @@ const routes: Routes = [
     ]
   },
   {
+    path:'createworkrequest/:id',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: AddWorkRequestComponent, children: [
+        {path: 'BasicInfo', component: BasicInfoComponent},
+        {path: 'ChangesHistory', component: ChangesHistoryComponent},
+        {path: 'MultimediaAttachments', component: MultimediaAttachmentsComponent},
+        {path: 'Equipment', component: EquipmentComponent},
+      ]},
+    ]
+  },
+  {
     path:'TeamsView',
     component: GeneralLayoutComponent,
     children:[

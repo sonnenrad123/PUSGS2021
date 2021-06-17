@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { TableColumn } from '../common/mat-table/table-column';
 import { WorkRequest } from '../models/work-request/work-request';
 import { WrDocumentStatus } from '../models/wr-document-status/wr-document-status.enum';
+import { WorkRequestsService } from '../services/work-request/work-requests.service';
+import { AddWorkRequestComponent } from './add-work-request/add-work-request.component';
 
 @Component({
   selector: 'app-work-requests',
@@ -18,9 +20,9 @@ export class WorkRequestsComponent implements OnInit {
   WRTableColumns: TableColumn[];
   
   workRequests: WorkRequest[];
+  workReqFromServer: Array<any> = new Array<any>();
 
-
-  constructor(private router: Router) { 
+  constructor(private router: Router, private wrService: WorkRequestsService) { 
   }
   
 
@@ -28,77 +30,86 @@ export class WorkRequestsComponent implements OnInit {
     this.toggleAll = true;
     this.toggleMy = false;
     this.initializeColumns();
-    this.workRequests = this.getAllWorkRequests();
+    this.wrService.getAllWRs().subscribe(
+      (data) => {
+        //console.log(data);
+        this.workRequests = data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    
   }
-
+  openWR($event){
+    this.router.navigate(['createworkrequest/BasicInfo'], {queryParams: {wr: $event.wR_id}});
+  }
   showAllWorkRequests(){
     this.toggleAll = true;
     this.toggleMy = false;
-    this.workRequests = this.getAllWorkRequests();
+    this.wrService.getAllWRs().subscribe(
+      (data) => {
+        //console.log(data);
+        this.workRequests = data;
+      },
+      (err) => {
+        console.log(err);
+      }
+      );
+    
   }
   showMyWorkRequests(){
     this.toggleAll = false;
     this.toggleMy = true;
-    this.workRequests = this.getMyWorkRequests();
+    this.wrService.getAllWRs().subscribe(
+      (data) => {
+        console.log(data);
+        this.workRequests = data.filter(item1 => item1.createdBy.toString() === localStorage.getItem('user').toString());
+      },
+      (err) => {
+        console.log(err);
+      }
+      );
   }
   
   CreateNewWR(){
     this.router.navigate(['/createworkrequest']);
   }
-  getAllWorkRequests(): any[]{
-    return [
-      {id:'WR 1', start_date:new Date(), phone_no:'351-661-3252', status: WrDocumentStatus.DRAFT, address:'Some address 1'},
-      {id:'WR 2', start_date:new Date("2020-04-16"), phone_no:'251-661-5362', status: WrDocumentStatus.DRAFT, address:'Some address 2'},
-      {id:'WR 3', start_date:new Date("2020-02-16"), phone_no:'351-661-3252', status: WrDocumentStatus.DRAFT, address:'Some address 3'},
-      {id:'WR 4', start_date:new Date("2021-01-02"), phone_no:'251-661-5362', status: WrDocumentStatus.DRAFT, address:'Some address 4'},
-      {id:'WR 5', start_date:new Date("2021-01-01"), phone_no:'352-758-3154', status: WrDocumentStatus.DRAFT, address:'Some address address address address address address address address address address address address address address address address address address 5'},
-      {id:'WR 6', start_date:new Date(), phone_no:'351-661-1234', status: WrDocumentStatus.DRAFT, address:'Some address 6'},
-    ];
-  }
-
-  getMyWorkRequests(): any[]{
-    return [
-      {id:'MY WR 1', start_date:new Date(), phone_no:'351-661-3252', status: WrDocumentStatus.DRAFT, address:'Some address 1'},
-      {id:'MY WR 2', start_date:new Date("2020-04-16"), phone_no:'251-661-5362', status: WrDocumentStatus.DRAFT, address:'Some address 2'},
-      {id:'MY WR 5', start_date:new Date("2021-01-01"), phone_no:'352-758-3154', status: WrDocumentStatus.DRAFT, address:'Some address address address address address address address address address address address address address address address address address address 5'},
-      {id:'MY WR 6', start_date:new Date(), phone_no:'351-661-1234', status: WrDocumentStatus.DRAFT, address:'Some address 6'},
-    ];
-  }
-
+  
   initializeColumns(): void{
     this.WRTableColumns = [
     {
       name: 'ID',
-      dataKey: 'id',
+      dataKey: 'customId',
       isSortable: true,
       position: 'left',
       isSticky: true
     },
     {
       name: 'START DATE',
-      dataKey: 'start_date',
+      dataKey: 'startDateTime',
       isSortable: true,
       position: 'left',
       isSticky: true
     },
     {
       name: 'PHONE NO.',
-      dataKey: 'phone_no',
+      dataKey: 'phoneNo',
       isSortable: true,
       position: 'left'
     },
     {
       name: 'STATUS',
-      dataKey: 'status',
+      dataKey: 'statusOfDocument',
       isSortable: true,
       position: 'left'
     },
     {
       name: 'ADDRESS',
-      dataKey: 'address',
+      dataKey: 'street',
       isSortable: true,
       position: 'left'
-    },
+    }
   ];
   }
 }

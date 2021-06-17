@@ -1,4 +1,4 @@
 export enum WorkRequestDocumentType {
-    PLANNED_WORK = "PLANNE DWORK",
-    UNPLANNED_WORK = "UNPLANNED WORK"
+    PLANNED_WORK = "PLANNED_WORK",
+    UNPLANNED_WORK = "UNPLANNED_WORK"
 }

@@ -29,8 +29,8 @@ namespace SmartGrid2021Project.Models
         public DateTime ChangedOn { get; set; }
 
         [Required]
-        [Column("CurrentStatus", TypeName ="int")]
-        public WrDocumentStatus WRCurrentState { get; set; }
+        [Column("CurrentStatus", TypeName ="varchar(30)")]
+        public string WRCurrentState { get; set; }
 
 
         [ForeignKey("WorkReqId")]

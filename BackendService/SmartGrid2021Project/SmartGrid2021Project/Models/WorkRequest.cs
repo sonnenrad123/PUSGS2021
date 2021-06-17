@@ -16,6 +16,12 @@ namespace SmartGrid2021Project.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WR_id { get; set; }
 
+        [NotMapped]
+        public string CustomId
+        {
+            get { return string.Concat("WR", WR_id); }
+        }
+
         [Required]
         [Column("CreatedBy", TypeName = "varchar(60)")]
         public string CreatedBy { get; set; }
@@ -36,14 +42,14 @@ namespace SmartGrid2021Project.Models
 
         [Column("Address", TypeName = "nvarchar(MAX)")]
         public string Street { get; set; }
-        /*
+        
         [ForeignKey("Id")]
         [Column("IncidentId")]
         public int? IncidentId { get; set; }
 
         [Column("Incident")]
         public virtual Incident Incident { get; set; }
-        */
+        
         [Required]
         [Column("StartDate", TypeName = "Date")]
         public DateTime StartDateTime { get; set; }
@@ -64,19 +70,19 @@ namespace SmartGrid2021Project.Models
         public int PhoneNo { get; set; }
 
         [Required]
-        [Column("TypeOfDocument", TypeName = "Int")]
-        public TypeOfDocument TypeOfDocument { get; set; }
+        [Column("TypeOfDocument", TypeName = "varchar(30)")]
+        public string TypeOfDocument { get; set; }
 
         [Required]
-        [Column("DocumentStatus", TypeName = "int")]
-        public WrDocumentStatus StatusOfDocument { get; set; }
-        /*
+        [Column("DocumentStatus", TypeName = "varchar(30)")]
+        public string StatusOfDocument { get; set; }
+        
         [ForeignKey("AppUserId")]
         public int? AppUserId { get; set; }
 
         [Column("AppUser")]
         public virtual AppUser AppUser { get; set; }
-        */
+        
         public virtual ICollection<Device> Equipment { get; set; }
         public virtual ICollection<Attachment> Attachments { get; set; }
         public virtual ICollection<WRStateChange> StateChangesHistory { get; set; }

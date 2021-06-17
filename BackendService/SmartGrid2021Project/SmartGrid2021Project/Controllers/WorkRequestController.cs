@@ -24,7 +24,7 @@ namespace SmartGrid2021Project.Controllers
         public async Task<ActionResult<IEnumerable<WorkRequest>>> GetAllWorkRequests()
         {
             try {
-                return await _context.WorkRequests/*.Include(_ => _.AppUser)*/
+                return await _context.WorkRequests.Include(_ => _.AppUser)
                                                   .Include(_ => _.Attachments)
                                                   .Include(_ => _.Equipment)
                                                   .Include(_ => _.StateChangesHistory)
@@ -40,7 +40,7 @@ namespace SmartGrid2021Project.Controllers
         [Route("GetWorkRequest")]
         public async Task<ActionResult<WorkRequest>> GetWorkRequest([FromQuery]int id)
         {
-            return await _context.WorkRequests.Where(_ => _.WR_id == id)/*.Include(_ => _.AppUser)*/
+            return await _context.WorkRequests.Where(_ => _.WR_id == id).Include(_ => _.AppUser)
                                                .Include(_ => _.Attachments)
                                                .Include(_ => _.Equipment)
                                                .Include(_ => _.StateChangesHistory)
@@ -57,12 +57,11 @@ namespace SmartGrid2021Project.Controllers
             try
             {
                 
-                var fromDb = _context.WorkRequests.Where(_ => _.WR_id == wr.WR_id).SingleOrDefault();
-                if (fromDb == null)
+                var workRequestfromDb = _context.WorkRequests.Where(_ => _.WR_id == wr.WR_id).SingleOrDefault();
+                if (workRequestfromDb == null)
                 {
-                    WorkRequest workRequest = new WorkRequest()
+                    workRequestfromDb = new WorkRequest()
                     {
-                        //Attachments = wr.Attachments,
                         TypeOfDocument = wr.TypeOfDocument,
                         Street = wr.Street,
                         Company = wr.Company,
@@ -71,57 +70,81 @@ namespace SmartGrid2021Project.Controllers
                         Details = wr.Details,
                         EmergencyWork = wr.EmergencyWork,
                         EndDateTime = wr.EndDateTime,
-                        //Equipment = wr.Equipment,
                         Notes = wr.Notes,
                         PhoneNo = wr.PhoneNo,
                         Purpose = wr.Purpose,
                         StartDateTime = wr.StartDateTime,
-                        //StateChangesHistory = wr.StateChangesHistory,
                         StatusOfDocument = wr.StatusOfDocument,
-                           
-                    };
                         
-                    _context.WorkRequests.Add(workRequest);
-                    if(wr.Equipment.Count > 0)
-                    {
-                        foreach(Device d in wr.Equipment)
-                        {
-                            _context.Devices.Where(_ => _.Id == d.Id).SingleOrDefault().WorkRequestId = workRequest.WR_id;
-                            _context.Devices.Where(_ => _.Id == d.Id).SingleOrDefault().WorkRequest = workRequest;
-                        }
-                    }
+                    };
 
+                    _context.WorkRequests.Add(workRequestfromDb);
+                }
+
+                if(!String.IsNullOrWhiteSpace(wr.CreatedBy))
+                {
+                    var appUser = _context.AppUsers.Where(_ => _.Email.Equals(wr.CreatedBy)).SingleOrDefault();
+                    if(appUser != null)
+                    {
+                        workRequestfromDb.AppUserId = appUser.Id;
+                        workRequestfromDb.AppUser = appUser;
+                    }
+                }
+
+                if(wr.Incident != null)
+                {
+                    workRequestfromDb.IncidentId = wr.Incident.Id;
+                    var inc = _context.Incidents.FirstOrDefault(_ => _.Id == wr.Incident.Id);
+                    if(inc != null)
+                    {
+                        workRequestfromDb.Incident = inc;
+                        _context.SaveChanges();
+                    }
+                }
+
+                if (wr.Attachments != null)
+                {
                     if (wr.Attachments.Count > 0)
                     {
                         foreach (Attachment d in wr.Attachments)
                         {
-                            _context.Attachments.Add(d);
-                            _context.SaveChanges();
+                            workRequestfromDb.Attachments.Add(d);
                         }
-                            foreach (Attachment d in wr.Attachments)
-                        {
-                            _context.Attachments.Where(_ => _.Id == d.Id).SingleOrDefault().WorkRequestId = workRequest.WR_id;
-                            _context.Attachments.Where(_ => _.Id == d.Id).SingleOrDefault().WorkRequest = workRequest;
-                        }
-                    }
 
-                    if (wr.StateChangesHistory.Count > 0)
+                    }
+                }
+
+
+                if (wr.StateChangesHistory.Count > 0)
+                {
+                    workRequestfromDb.StateChangesHistory.Add(wr.StateChangesHistory.First());
+                }
+
+
+                if (wr.Equipment != null)
+                {
+                    if (wr.Equipment.Count > 0)
                     {
-                        foreach (WRStateChange d in wr.StateChangesHistory)
+                        foreach (Device d in wr.Equipment)
                         {
-                            _context.WRStateChange.Add(d);
-                            _context.SaveChanges();
-                        }
-                            foreach (WRStateChange d in wr.StateChangesHistory)
-                        {
-                            _context.WRStateChange.Where(_ => _.WRSC_Id == d.WRSC_Id).SingleOrDefault().WorkRequestId = workRequest.WR_id;
-                            _context.WRStateChange.Where(_ => _.WRSC_Id == d.WRSC_Id).SingleOrDefault().WorkRequest = workRequest;
+                            var fromDbDevice = _context.Devices.Where(_ => _.Id == d.Id).SingleOrDefault();
+                            if (fromDbDevice != null)
+                            {
+                                workRequestfromDb.Equipment.Add(fromDbDevice);
+                                
+                            }
+                            else
+                            {
+                                workRequestfromDb.Equipment.Add(d);
+                            }
                         }
                     }
-
-                    await _context.SaveChangesAsync();
-                    return Ok();
-                    }
+                }
+                
+                
+                await _context.SaveChangesAsync();
+                return Ok();
+                    
                 
             }catch(Exception e)
             {

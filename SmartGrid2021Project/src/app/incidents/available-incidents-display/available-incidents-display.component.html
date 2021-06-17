@@ -1,0 +1,35 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row cus-position"><h4><b>Available teams:</b></h4></div>
+        <div >
+            <mat-button-toggle-group fxLayoutGap="1em" fxLayout="row"  >
+                <mat-button-toggle *ngFor="let incident of allIncidents"
+                                    value="{{incident}}"
+                                    (change)="this.onChange(incident)"
+                                    [checked]="this.currentValue === incident.id">
+                    <mat-card class="custom-card" fxFlex fxLayoutAlign="center" >
+                    <img mat-card-image class="img-size" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_rrfGSntJXnOgqQVv6F1zWreZ90CCg9pKPypT6DxeDou8Js-BFEFZfBu0vyPDp3sc7Xs&usqp=CAU" alt="Photo of team">
+                    <div style="margin-left: 1rem;">
+                        <mat-card-header> 
+                            <mat-card-title ><h5><b>ID: </b>{{incident.id}}</h5></mat-card-title>
+                            <mat-card-title><h5><b>Type: </b>{{incident.type}}</h5></mat-card-title>
+                            <mat-card-subtitle ><h5><b>Start Date: </b>{{incident.startDate}}</h5></mat-card-subtitle>
+                            <mat-card-subtitle ><h5><b>Address: </b>{{incident.address}}</h5></mat-card-subtitle>
+                        </mat-card-header>
+                    </div>  
+                    </mat-card>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions>
+    <b>Checked id: {{this.currentValue}}</b>
+</mat-dialog-actions>
+<mat-dialog-actions>
+    <button class="mat-raised-button mat-primary"(click)="Save()" >Save changes</button>
+</mat-dialog-actions>
+
+<mat-dialog-actions>
+<button class="mat-raised-button"(click)="Close()">Close</button>
+</mat-dialog-actions>

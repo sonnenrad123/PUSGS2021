@@ -106,6 +106,9 @@ export class RegisterComponent implements OnInit {
   get passwordconfirmation(): AbstractControl {
     return this.form.controls['passwordconfirmation'];
   }
+  get Address(): AbstractControl {
+    return this.form.controls['address'];
+  }
 
   userRolesKeys(): Array<string>{
     var keys = Object.keys(this.userRoles);
@@ -151,14 +154,8 @@ export class RegisterComponent implements OnInit {
       if(field.hasError('required')){
         return 'The address field is required';
       }
-      let found = false;
-      this.searchResults.forEach(result => {
-        if(result.displayName == field.value){
-          found = true;
-        }
-      });
-      if(found == false){
-        return 'The address field is not valid';
+      if(field.hasError('formatViolation')){
+        return 'Incorrect address format! Press ENTER for searching...'
       }
     }
     return '';
@@ -247,7 +244,8 @@ export class RegisterComponent implements OnInit {
   getAddress(result: NominatimResponse){
     this.form.controls['address'].setValue(result.displayName);
   }
-  validateAddress(address:any){
+  onAddressChanged(){
+    let address = this.form.controls['address'].value;
     let found = false;
     this.searchResults.forEach(result => {
       if(result.displayName == address){
@@ -256,9 +254,12 @@ export class RegisterComponent implements OnInit {
     });
     if(found == false){
       this.addressInvalid = true;
+      this.Address.setErrors({formatViolation: true});
       return;
-    }
+    }else{
     this.addressInvalid = false;
+    this.Address.setErrors(null);
+    }
   }
 }
 
