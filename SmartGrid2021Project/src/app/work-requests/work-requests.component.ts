@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Sort } from '@angular/material/sort';
+import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TableColumn } from '../common/mat-table/table-column';
@@ -17,43 +19,69 @@ export class WorkRequestsComponent implements OnInit {
   toggleAll: boolean;
   toggleMy: boolean;
   toggleOptions: Array<string> = ["All", "My"];
-  WRTableColumns: TableColumn[];
+
+  displayedColumns: string[] = ['customId','startDateTime','phoneNo','statusOfDocument','street'];
+  dataSource: MatTableDataSource<WorkRequest>;
+  totalAmountOfRecords;
+  currentPage = 1;
+  pageSize = 5;
+  isLoading = true;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   
   workRequests: WorkRequest[];
-  workReqFromServer: Array<any> = new Array<any>();
-
+  
   constructor(private router: Router, private wrService: WorkRequestsService) { 
   }
   
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.toggleAll = true;
     this.toggleMy = false;
-    this.initializeColumns();
-    this.wrService.getAllWRs().subscribe(
-      (data) => {
-        //console.log(data);
-        this.workRequests = data;
+    this.loadWRs();  
+  }
+ 
+  loadWRs(){
+    this.wrService.getAllWRs(this.currentPage, this.pageSize).subscribe(
+      (response: HttpResponse<WorkRequest[]>) => {
+        //console.log(response);
+        this.workRequests = response.body;
+        this.totalAmountOfRecords = response.headers.get("totalAmountOfRecords");
+        this.dataSource = new MatTableDataSource(this.workRequests);
+        //this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.isLoading = false;
       },
       (err) => {
         console.log(err);
+        this.isLoading = false;
+
       }
-    );
-    
+      );
   }
+
   openWR($event){
     this.router.navigate(['createworkrequest/BasicInfo'], {queryParams: {wr: $event.wR_id}});
   }
   showAllWorkRequests(){
     this.toggleAll = true;
     this.toggleMy = false;
-    this.wrService.getAllWRs().subscribe(
-      (data) => {
-        //console.log(data);
-        this.workRequests = data;
+    this.wrService.getAllWRs(this.currentPage, this.pageSize).subscribe(
+      (response: HttpResponse<WorkRequest[]>) => {
+        //console.log(response.body);
+        this.workRequests = response.body;
+        this.totalAmountOfRecords = response.headers.get("totalAmountOfRecords");
+        this.dataSource = new MatTableDataSource(this.workRequests);
+        this.isLoading = false;
+        
+
       },
       (err) => {
         console.log(err);
+        this.isLoading = false;
+
       }
       );
     
@@ -61,13 +89,19 @@ export class WorkRequestsComponent implements OnInit {
   showMyWorkRequests(){
     this.toggleAll = false;
     this.toggleMy = true;
-    this.wrService.getAllWRs().subscribe(
-      (data) => {
-        console.log(data);
-        this.workRequests = data.filter(item1 => item1.createdBy.toString() === localStorage.getItem('user').toString());
+    this.wrService.getAllWRs(this.currentPage, this.pageSize).subscribe(
+      (response: HttpResponse<WorkRequest[]>) => {
+        //console.log(response);
+        this.workRequests = response.body;
+        this.workRequests = this.workRequests.filter(item1 => item1.createdBy.toString() === localStorage.getItem('user').toString());
+        this.totalAmountOfRecords = response.headers.get("totalAmountOfRecords");
+        this.dataSource = new MatTableDataSource(this.workRequests);
+        this.isLoading = false;
+
       },
       (err) => {
         console.log(err);
+        this.isLoading = false;
       }
       );
   }
@@ -75,42 +109,23 @@ export class WorkRequestsComponent implements OnInit {
   CreateNewWR(){
     this.router.navigate(['/createworkrequest']);
   }
-  
-  initializeColumns(): void{
-    this.WRTableColumns = [
-    {
-      name: 'ID',
-      dataKey: 'customId',
-      isSortable: true,
-      position: 'left',
-      isSticky: true
-    },
-    {
-      name: 'START DATE',
-      dataKey: 'startDateTime',
-      isSortable: true,
-      position: 'left',
-      isSticky: true
-    },
-    {
-      name: 'PHONE NO.',
-      dataKey: 'phoneNo',
-      isSortable: true,
-      position: 'left'
-    },
-    {
-      name: 'STATUS',
-      dataKey: 'statusOfDocument',
-      isSortable: true,
-      position: 'left'
-    },
-    {
-      name: 'ADDRESS',
-      dataKey: 'street',
-      isSortable: true,
-      position: 'left'
-    }
-  ];
-  }
-}
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  updatePagination(event: PageEvent){
+    this.currentPage = event.pageIndex+1;
+    this.pageSize = event.pageSize;
+    this.loadWRs();
+  }
+
+  
+}
+function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}

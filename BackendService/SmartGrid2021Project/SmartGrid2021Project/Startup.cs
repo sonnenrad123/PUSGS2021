@@ -58,7 +58,6 @@ namespace SmartGrid2021Project
                 options.SignIn.RequireConfirmedEmail = true;
             });
 
-            services.AddCors();
 
             services.AddTransient<IEmailSender, EmailHelper>();
 
@@ -67,7 +66,8 @@ namespace SmartGrid2021Project
             services.AddAuthentication(x =>
             {
                 x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
+            })
+              .AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = false;
@@ -77,7 +77,8 @@ namespace SmartGrid2021Project
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateLifetime = true,
                 };
             }).AddGoogle(options =>
             {
@@ -89,6 +90,15 @@ namespace SmartGrid2021Project
                 options.ClientSecret = "44d5558c0c3aa650f1782cc4d14deebd";
             });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsAdmin", policy => policy.RequireClaim("roleOfUser", "ADMINISTRATOR"));
+                options.AddPolicy("IsDispatcher", policy => policy.RequireClaim("roleOfUser", "DISPATCHER"));
+                options.AddPolicy("IsTeamMember", policy => policy.RequireClaim("roleOfUser", "TEAM_MEMBER"));
+                options.AddPolicy("IsWorker", policy => policy.RequireClaim("roleOfUser", "WORKER"));
+                options.AddPolicy("IsCustomer", policy => policy.RequireClaim("roleOfUser", "USER"));
+                
+            });
            
         }
 
@@ -118,9 +128,10 @@ namespace SmartGrid2021Project
              .AllowAnyHeader()
              .AllowAnyMethod()
              .AllowAnyOrigin()
+             .WithExposedHeaders(new string[] { "totalAmountOfRecords" })
              );
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseAuthentication();
             

@@ -60,7 +60,7 @@ import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/inc
 import { SafetyDocumentsComponent } from './safety-documents/safety-documents.component';
 import { UserAccountService } from './services/user-account/user-account.service';
 import {IncidentServiceService } from './services/incident/incident-service.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddSafetyDocumentComponent } from './add-safety-document/add-safety-document.component';
 import { SafetyDocumentBasicInfoComponent } from './add-safety-document/safety-document-basic-info/safety-document-basic-info.component';
 import { SafetyDocumentStatesHistoryComponent } from './add-safety-document/safety-document-states-history/safety-document-states-history.component';
@@ -84,6 +84,9 @@ import {MatList, MatListModule} from '@angular/material/list';
 import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
 import { TeamDisplayComponent } from './teams/team-display/team-display/team-display.component';
 import { AvailableIncidentsDisplayComponent } from './incidents/available-incidents-display/available-incidents-display.component'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SecureViewComponent } from './security/secure-view/secure-view.component'
+import { JwtInterceptorService } from './security/jwt-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -137,7 +140,9 @@ import { AvailableIncidentsDisplayComponent } from './incidents/available-incide
 
     TeamDisplayComponent,
 
-    AvailableIncidentsDisplayComponent
+    AvailableIncidentsDisplayComponent,
+
+    SecureViewComponent
     
     
   ],
@@ -172,8 +177,8 @@ import { AvailableIncidentsDisplayComponent } from './incidents/available-incide
     MatDialogModule,
     MatSnackBarModule,
     DragDropModule,
-    MatListModule
-    
+    MatListModule,
+    MatProgressSpinnerModule
   ],
   exports:[MatDatepickerModule],
   providers: 
@@ -196,7 +201,11 @@ import { AvailableIncidentsDisplayComponent } from './incidents/available-incide
       } as SocialAuthServiceConfig,
     } ,
     NominatimService,
-    
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

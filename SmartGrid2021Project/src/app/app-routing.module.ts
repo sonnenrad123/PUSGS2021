@@ -33,6 +33,7 @@ import { SearchNetworkElementsComponent } from './search-network-elements/search
 import { AddNetworkElementComponent } from './add-network-element/add-network-element.component';
 import { AllUsersComponent } from './admin-access/all-users/all-users/all-users.component';
 import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
+import { IsAdminGuard } from './guards/is-admin.guard';
 
 const routes: Routes = [
   {
@@ -56,7 +57,7 @@ const routes: Routes = [
     path:'AllUsers',
     component:GeneralLayoutComponent,
     children:[
-      {path:'', component:AllUsersComponent},
+      {path:'', component:AllUsersComponent, canActivate:[IsAdminGuard]},
     ]
   },
   {

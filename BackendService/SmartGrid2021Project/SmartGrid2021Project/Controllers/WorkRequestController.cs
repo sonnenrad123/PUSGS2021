@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SmartGrid2021Project.Helpers;
 using SmartGrid2021Project.Models;
 using System;
 using System.Collections.Generic;
@@ -21,14 +22,18 @@ namespace SmartGrid2021Project.Controllers
 
         [HttpGet]
         [Route("GetAllWorkRequests")]
-        public async Task<ActionResult<IEnumerable<WorkRequest>>> GetAllWorkRequests()
+        public async Task<ActionResult<IEnumerable<WorkRequest>>> GetAllWorkRequests([FromQuery]PaginationDTO paginationDTO)
         {
+
             try {
-                return await _context.WorkRequests.Include(_ => _.AppUser)
-                                                  .Include(_ => _.Attachments)
-                                                  .Include(_ => _.Equipment)
-                                                  .Include(_ => _.StateChangesHistory)
-                                                  .ToListAsync();
+                var queryable = _context.WorkRequests.Include(_ => _.AppUser)
+                                                     .Include(_ => _.Attachments)
+                                                     .Include(_ => _.Equipment)
+                                                     .Include(_ => _.StateChangesHistory).AsQueryable();
+                await HttpContext.InsertParametersPaginationInHeader(queryable);
+                var wrs = await queryable.OrderBy(_ => _.WR_id).Paginate(paginationDTO).ToListAsync();
+                return wrs;
+                                                  
             }catch(Exception e)
             {
 

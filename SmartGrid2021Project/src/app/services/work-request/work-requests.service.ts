@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { env } from 'node:process';
 import { format } from 'ol/coordinate';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { WRStateChange } from 'src/app/models/common/wrstate-change';
 import { WorkRequestDocumentState } from 'src/app/models/work-reques-doc-state/work-request-document-state.enum';
 import { WorkRequestDocumentType } from 'src/app/models/work-reques-doc-typet/work-request-document-type.enum';
@@ -19,13 +20,28 @@ export class WorkRequestsService {
 
   constructor(private http:HttpClient) { }
   
-  public get(id){
+  /*public get(id){
     return this.http.get<WorkRequest>(environment.apiUrl + 'WorkRequest/GetWorkRequest?id='+id);
   }
-
-  public getAllWRs(){
-    return this.http.get<Array<WorkRequest>>(environment.apiUrl+'WorkRequest/GetAllWorkRequests');
+*/
+  public getAllWRs(page: number, recordsPerPage:number): Observable<any>{
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('recordsPerPage', recordsPerPage.toString());
+    return this.http.get<WorkRequest[]>(environment.apiUrl+'WorkRequest/GetAllWorkRequests', {observe: 'response', params});
   }
+  
+  /*public getAllWRs(filter= '', sortOrder= 'asc', pageNumber = 0, pageSize = 3){
+    return this.http.get<Array<WorkRequest>>(environment.apiUrl+'WorkRequest/GetAllWorkRequests', {
+           params: new HttpParams()
+             .set('filter', filter)
+             .set('sortOrder', sortOrder)
+             .set('pageNumber', pageNumber.toString())
+             .set('pageSize', pageSize.toString())
+          }).pipe(
+              map(res => res["payload"])
+            );
+  }*/
 
   public CreateNewWR(){
       let bInfo = JSON.parse(window.sessionStorage.getItem('WRBICurrValue'));

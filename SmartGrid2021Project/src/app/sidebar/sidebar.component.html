@@ -20,6 +20,7 @@
                     <span *ngIf="menuItem.children && menuItem.children.length > 0" class="fa fa-caret-down"></span>
                 </p>
             </a>
+            
             <ng-container *ngIf="menuItem.children && menuItem.children.length > 0 && showSubMenu">
                 <ul class="dropdown-content" >
                    <li routerLinkActive="active" *ngFor="let childmenu of menuItem.children" class="{{menuItem.class}} nav-item" style="list-style-type: none;">

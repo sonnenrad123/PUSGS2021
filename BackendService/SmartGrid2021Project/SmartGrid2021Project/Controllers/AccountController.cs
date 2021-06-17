@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +23,8 @@ namespace SmartGrid2021Project.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
+
     public class AccountController : ControllerBase
     {
         private  UserManager<AppUser> userManager;
@@ -38,8 +43,10 @@ namespace SmartGrid2021Project.Controllers
             this._context = dBContext;
         }
 
+       
         [HttpGet]
         [Route("GetAllUsers")]
+
         public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers()
         {
 
@@ -63,9 +70,10 @@ namespace SmartGrid2021Project.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Register")]
         //POST : /api/Account/Register
-        public async Task<IActionResult> RegisterApplicationUser(UserModel user)
+        public async Task<ActionResult<AuthenticationResponse>> RegisterApplicationUser([FromBody]UserModel user)
         {
             try
             {
@@ -114,7 +122,11 @@ namespace SmartGrid2021Project.Controllers
                         await emailHelper.SendEmailAsync(appUser.Email, "Successfully registered. Your account must be allowed by admin!", confirmationLink);
 
 
-                        return Ok(result);
+                        return await BuildToken(appUser);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Errors);
                     }
 
                 }
@@ -125,8 +137,32 @@ namespace SmartGrid2021Project.Controllers
             throw new Exception();
         }
 
+        private async Task<AuthenticationResponse> BuildToken(AppUser userModel)
+        {
+            var claims = new List<Claim>()
+            {
+                new Claim("email", userModel.Email)
+                
+            };
 
+            var user = await userManager.FindByEmailAsync(userModel.Email);
+            var claimDb = await userManager.GetClaimsAsync(user);
+            claims.AddRange(claimDb);
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.JWT_Secret));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var expiration = DateTime.UtcNow.AddDays(1);
+            var token = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expiration, signingCredentials: creds);
+
+            return new AuthenticationResponse() {
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Expiration = expiration
+            };
+        }
         [Route("ConfirmEmail")]
+        [AllowAnonymous]
+
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
             var user = await userManager.FindByEmailAsync(email);
@@ -140,26 +176,16 @@ namespace SmartGrid2021Project.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Login")]
-        public async Task<IActionResult> Login(UserLoginCredentials model)
+        public async Task<ActionResult<AuthenticationResponse>> Login([FromBody]UserLoginCredentials model)
         {
             var user = await userManager.FindByEmailAsync(model.UserEmail);
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password) && user.AccountAllowed == true)
             {
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim("UserID", user.Id.ToString()),
-                        new Claim("Roles", "admin")
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(1),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                var token = tokenHandler.WriteToken(securityToken);
-                return Ok(new { token });
+
+                var appUser = _context.AppUsers.FirstOrDefault(_ => _.Email.Equals(model.UserEmail));
+                return await BuildToken(appUser);
             }
             else
                 return BadRequest(new { message = "Username or password is incorrect." });
@@ -167,6 +193,7 @@ namespace SmartGrid2021Project.Controllers
 
         [HttpPost]
         [Route("GoogleSocialLogin")]
+        [AllowAnonymous]
         // POST: api/<controller>/Login
         public async Task<IActionResult> GoogleSocialLogin([FromBody] AuthenticateRequest loginModel)
         {
@@ -193,6 +220,7 @@ namespace SmartGrid2021Project.Controllers
 
         [HttpPost]
         [Route("FacebookSocialLogin")]
+        [AllowAnonymous]
         // POST: api/<controller>/Login
         public async Task<IActionResult> FacebookSocialLogin(AuthenticateRequest loginModel)
         {
