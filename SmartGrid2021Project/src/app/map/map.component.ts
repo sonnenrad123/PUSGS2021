@@ -7,6 +7,7 @@ import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import OSM from 'ol/source/OSM';
 import * as olProj from 'ol/proj';
+import * as ol from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import Layer from 'ol/layer/Layer';
 import Feature from 'ol/Feature';
@@ -19,6 +20,12 @@ import { fromLonLat } from 'ol/proj';
 
 import Vector from 'ol/layer/Vector';
 import { toSize } from 'ol/size';
+import { IncidentServiceService } from '../services/incident/incident-service.service';
+import { Overlay } from '@angular/cdk/overlay';
+import OverlayPositioning from 'ol/OverlayPositioning';
+import { Incident } from '../incident-browser/incident-browser.component';
+import Stroke from 'ol/style/Stroke';
+import Fill from 'ol/style/Fill';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -34,7 +41,8 @@ export class MapComponent implements OnInit {
   name:any;
   mapPoint: MapPoint;
   lastLayer:any;
-  constructor(private route: ActivatedRoute,private DeviceService:DeviceService) { }
+  allIncidents: any[] = [];
+  constructor(private route: ActivatedRoute,private DeviceService:DeviceService, private incidentService: IncidentServiceService) { }
   
   ngOnInit(): void {
     this.map = new Map({
@@ -50,21 +58,32 @@ export class MapComponent implements OnInit {
       })
     });
     var layer = new VectorLayer({
+    
       source: new VectorSource({
-        features:[
-          new Feature({
-            geometry: new Point(olProj.fromLonLat([19.833549, 45.267136]))
-          })
-        ]
-      }),
-      style: new Style({
-        image: new Icon({
-          src: 'https://openlayers.org/en/latest/examples/data/icon.png'
-        })
-      })
-    });
+        features:[ new Feature({ geometry: new Point(olProj.fromLonLat([19.833549, 45.267136])) })]}),
+      
+        style: new Style({image: new Icon({src: 'https://openlayers.org/en/latest/examples/data/icon.png' })})
+      });
     this.lastLayer = layer;
     this.map.addLayer(layer);
+
+    this.incidentService.getIncidents().subscribe(
+      (data) => {
+        console.log(data);
+        this.allIncidents = data;
+        for(var j = 0; j < this.allIncidents.length; j++){
+          
+            var latLon : string[] = this.allIncidents[j].devices[0].coordinates.split(' ');
+            
+            
+            
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    
     this.deviceId  = this.route.snapshot.paramMap.get('deviceId');
     if(this.deviceId != null){//ako zelimo da prikazemo lokaciju elementa mreze
       this.readDevice();
@@ -72,13 +91,8 @@ export class MapComponent implements OnInit {
     }
     else{
       //inace drugo nesto
+
     }
-
-
-
-
-
-    
   }
   
 
@@ -137,7 +151,9 @@ export class MapComponent implements OnInit {
           src: '../../assets/img/map-marker-icon.png',
           
         })
+         
       })
+      
     });
     this.map.addLayer(layer);
     this.lastLayer = layer;

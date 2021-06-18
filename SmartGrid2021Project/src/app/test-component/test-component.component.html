@@ -1,48 +1,161 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Striped Table with Hover</h4>
-                        <p class="category">Here is a subtitle for this table</p>
-                    </div>
-                    <div class="content table-responsive table-full-width">
-                          <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let row of tableData1.dataRows">
-                                        <td *ngFor="let cell of row">{{cell}}</td>
-                                    </tr>
-                                </tbody>
-                          </table>
+            <div fxLayoutGap="1em" fxLayout="row">
+                <div class="col-md-3">
+                    <mat-card class="custom-card" fxFlex fxLayoutAlign="center">
+                    <div style="margin-left: 1rem;">
+                        <mat-card-header> 
+                            <div class="">
+                                <mat-card-title ><h5><b>MY INCIDENTS</b>
+                                    <div style="float: right; margin-right: 1rem;">
+                                        <mat-icon>warning</mat-icon>
+                                        <sup><b>{{INCCount}}</b></sup>
+                                    </div>
+                                    </h5>
+                                </mat-card-title>   
+                            </div>    
+                            </mat-card-header>
+                            <mat-card-content class="card-content" >
+                                <p>
+                                <b>{{INCDraftsCount}}</b>Drafts
+                                </p>
+                                <p><b>{{INCCanceledCount}}</b>Canceled</p>
+                                <p><b>{{INCExecCount}}</b>Executing</p>
+                                <p><b>{{INCCompCount}}</b>Completed</p>
+                            </mat-card-content>
+                        </div>
+                    </mat-card>
+                </div>
+                <div class="col-md-3">
+                    <mat-card class="custom-card" fxFlex fxLayoutAlign="center">
+                        <div style="margin-left: 1rem;">
+                            <mat-card-header> 
+                                <div class="">
+                                    <mat-card-title ><h5><b>MY WORK REQUESTS</b>
+                                        <div style="float: right; margin-right: 1rem;">
+                                            <mat-icon>description</mat-icon>
+                                            <sup><b>{{WPCompCount}}</b></sup>
+                                        </div>
+                                        </h5>
+                                    </mat-card-title>   
+                                </div>    
+                                </mat-card-header>
+                                <mat-card-content class="card-content" >
+                                    <p>
+                                    <b>{{WPDraftsCount}}</b>Drafts
+                                    </p>
+                                    <p><b>{{WPCanceledCount}}</b>Canceled</p>
+                                    <p><b>{{WPExecCount}}</b>Executing</p>
+                                    <p><b>{{WPCompCount}}</b>Completed</p>
+                                </mat-card-content>
+                        </div>
+                    </mat-card>
+                </div>    
+                <div class="col-md-3">
 
-                    </div>
+                <mat-card class="custom-card" fxFlex fxLayoutAlign="center">
+                    <div style="margin-left: 1rem;">
+                            <mat-card-header> 
+                            <div class="">
+                                <mat-card-title ><h5><b>MY SWITCHING PLANS</b>
+                                    <div style="float: right; margin-right: 1rem;">
+                                        <mat-icon>description</mat-icon>
+                                        <sup><b>{{SDCount}}</b></sup>
+                                    </div>
+                                    </h5>
+                                </mat-card-title>   
+                            </div>    
+                            </mat-card-header>
+                        
+                            <mat-card-content class="card-content" >
+                                <p>
+                                <b>{{SDDraftsCount}}</b>Drafts
+                                </p>
+                                <p><b>{{SDCanceledCount}}</b>Canceled</p>
+                                <p><b>{{SDExecCount}}</b>Executing</p>
+                                <p><b>{{SDCompCount}}</b>Completed</p>
+                            </mat-card-content>
+                        </div>
+                    </mat-card>
+            </div>
+                    <div class="col-md-3">
+
+                    <mat-card class="custom-card" fxFlex fxLayoutAlign="center">
+                    <div style="margin-left: 1rem;">
+                        <mat-card-header> 
+                            <div class="">
+                                <mat-card-title ><h5><b>MY SAFETY DOCUMENTS</b>
+                                    <div style="float: right; margin-right: 1rem;">
+                                        <mat-icon>description</mat-icon>
+                                        <sup><b>{{SDCount}}</b></sup>
+                                    </div>
+                                    </h5>
+                                </mat-card-title>   
+                            </div>    
+                            </mat-card-header>
+                            <mat-card-content class="card-content" >
+                                <p>
+                                <b>{{SDDraftsCount}}</b>Drafts
+                                </p>
+                                <p><b>{{SDCanceledCount}}</b>Canceled</p>
+                                <p><b>{{SDExecCount}}</b>Executing</p>
+                                <p><b>{{SDCompCount}}</b>Completed</p>
+                            </mat-card-content>
+                        </div>
+                    </mat-card>
                 </div>
             </div>
-            <div class="col-md-12">
-                <div class="card card-plain">
-                    <div class="header">
-                        <h4 class="title">Table on Plain Background</h4>
-                        <p class="category">Here is a subtitle for this table</p>
-                    </div>
-                    <div class="content table-responsive table-full-width">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let row of tableData2.dataRows">
-                                    <td *ngFor="let cell of row">{{cell}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <div class="row" style="margin-right: 2px;">
+                <div fxLayoutGap="1em" fxLayout="row">
+                <div class="col-md-6">
+                    <mat-card class="custom-card" fxFlex fxLayoutAlign="center" style="margin-left: 15px;">
+                        <div style="margin-left: 1rem;">
+                            <mat-card-header> 
+                                <div class="">
+                                    <mat-card-title style="text-align: center;"><h5><b>INCIDENTS</b> </h5></mat-card-title>   
+                                </div>    
+                                </mat-card-header>
+                                <mat-card-content class="card-content" >
+                                    <div style="display: block;">
+                                        <canvas baseChart width="400" height="400"
+                                          [datasets]="lineChartData"
+                                          [labels]="lineChartLabels"
+                                          [options]="lineChartOptions"
+                                          [colors]="lineChartColors"
+                                          [legend]="lineChartLegend"
+                                          [chartType]="lineChartType"
+                                          [plugins]="lineChartPlugins">
+                                        </canvas>
+                                      </div>
+                                </mat-card-content>
+                            </div>
+                        </mat-card>
+                    
+                </div>
+                <div class="col-md-6 fillRemaining flex-grow-1">
+                    <mat-card class="custom-card fillRemaining" fxFlex fxLayoutAlign="center" style="margin-left: 10px; margin-right: 5px;">
+                        <div style="margin-left: 1rem;">
+                            <mat-card-header> 
+                                <div class="">
+                                    <mat-card-title style="text-align: center;"><h5><b>MY DOCUMENTS</b> </h5></mat-card-title>   
+                                </div>    
+                                </mat-card-header>
+                                <mat-card-content class="card-content" >
+                                    <div class="content-middle">
+                                        <canvas baseChart style="margin-top: 50px; margin-bottom: 10px;"
+                                            [data]="pieChartData" 
+                                            [labels]="pieChartLabels" 
+                                            [chartType]="pieChartType"
+                                            [options]="pieChartOptions"
+                                            [plugins]="pieChartPlugins"
+                                            [legend]="pieChartLegend">
+                                        </canvas>
+                                     </div>
+                                </mat-card-content>
+                            </div>
+                        </mat-card>
+                    
                     </div>
                 </div>
             </div>
