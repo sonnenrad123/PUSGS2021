@@ -22,6 +22,38 @@ namespace SmartGrid2021Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Attachments",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DataSrc = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    Size = table.Column<int>(type: "int", nullable: false),
+                    Progress = table.Column<int>(type: "int", nullable: false),
+                    Base64Representation = table.Column<string>(type: "nvarchar(MAX)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attachments", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Devices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Coordinates = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Devices", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
                 {
@@ -60,6 +92,8 @@ namespace SmartGrid2021Project.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IdNum = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(name: "First Name", type: "varchar(50)", nullable: false),
                     LastName = table.Column<string>(name: "Last Name", type: "varchar(50)", nullable: false),
                     UserImage = table.Column<string>(name: "User Image", type: "nvarchar(MAX)", nullable: true),
@@ -248,118 +282,6 @@ namespace SmartGrid2021Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WorkRequests",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<string>(type: "varchar(60)", nullable: false),
-                    Company = table.Column<string>(type: "varchar(60)", nullable: false),
-                    Purpose = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
-                    Details = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
-                    IncidentId = table.Column<int>(type: "int", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "Date", nullable: false),
-                    CreatedOnDate = table.Column<DateTime>(type: "Date", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "Date", nullable: false),
-                    IsEmergencyWork = table.Column<bool>(type: "Bit", nullable: false),
-                    PhoneNo = table.Column<int>(type: "Int", nullable: false),
-                    TypeOfDocument = table.Column<int>(type: "Int", nullable: false),
-                    DocumentStatus = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: true),
-                    AppUserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WorkRequests", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_WorkRequests_AspNetUsers_AppUserId1",
-                        column: x => x.AppUserId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_WorkRequests_Incidents_IncidentId",
-                        column: x => x.IncidentId,
-                        principalTable: "Incidents",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Attachments",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DataSrc = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
-                    Base64Representation = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
-                    WorkRequestId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Attachments", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Attachments_WorkRequests_WorkRequestId",
-                        column: x => x.WorkRequestId,
-                        principalTable: "WorkRequests",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Devices",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Coordinates = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WorkRequestId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Devices", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Devices_WorkRequests_WorkRequestId",
-                        column: x => x.WorkRequestId,
-                        principalTable: "WorkRequests",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WRStateChange",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ModifiedByUserId = table.Column<int>(type: "int", nullable: true),
-                    ChangedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DateModified = table.Column<DateTime>(type: "Date", nullable: false),
-                    CurrentStatus = table.Column<int>(type: "int", nullable: false),
-                    WorkRequestId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WRStateChange", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_WRStateChange_AspNetUsers_ChangedByUserId",
-                        column: x => x.ChangedByUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_WRStateChange_WorkRequests_WorkRequestId",
-                        column: x => x.WorkRequestId,
-                        principalTable: "WorkRequests",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DeviceIncident",
                 columns: table => new
                 {
@@ -381,6 +303,124 @@ namespace SmartGrid2021Project.Migrations
                         principalTable: "Incidents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkRequests",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedBy = table.Column<string>(type: "varchar(60)", nullable: false),
+                    Company = table.Column<string>(type: "varchar(60)", nullable: false),
+                    Purpose = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    Details = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    IncidentId = table.Column<int>(type: "int", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "Date", nullable: false),
+                    CreatedOnDate = table.Column<DateTime>(type: "Date", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "Date", nullable: false),
+                    IsEmergencyWork = table.Column<bool>(type: "Bit", nullable: false),
+                    PhoneNo = table.Column<int>(type: "Int", nullable: false),
+                    TypeOfDocument = table.Column<string>(type: "varchar(30)", nullable: false),
+                    DocumentStatus = table.Column<string>(type: "varchar(30)", nullable: false),
+                    AppUserId = table.Column<int>(type: "int", nullable: true),
+                    AppUserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkRequests", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_WorkRequests_AspNetUsers_AppUserId1",
+                        column: x => x.AppUserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WorkRequests_Incidents_IncidentId",
+                        column: x => x.IncidentId,
+                        principalTable: "Incidents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AttachmentWorkRequest",
+                columns: table => new
+                {
+                    AttachmentsId = table.Column<int>(type: "int", nullable: false),
+                    WorkRequestsWR_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AttachmentWorkRequest", x => new { x.AttachmentsId, x.WorkRequestsWR_id });
+                    table.ForeignKey(
+                        name: "FK_AttachmentWorkRequest_Attachments_AttachmentsId",
+                        column: x => x.AttachmentsId,
+                        principalTable: "Attachments",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AttachmentWorkRequest_WorkRequests_WorkRequestsWR_id",
+                        column: x => x.WorkRequestsWR_id,
+                        principalTable: "WorkRequests",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeviceWorkRequest",
+                columns: table => new
+                {
+                    EquipmentId = table.Column<int>(type: "int", nullable: false),
+                    WorkRequestsWR_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeviceWorkRequest", x => new { x.EquipmentId, x.WorkRequestsWR_id });
+                    table.ForeignKey(
+                        name: "FK_DeviceWorkRequest_Devices_EquipmentId",
+                        column: x => x.EquipmentId,
+                        principalTable: "Devices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DeviceWorkRequest_WorkRequests_WorkRequestsWR_id",
+                        column: x => x.WorkRequestsWR_id,
+                        principalTable: "WorkRequests",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WRStateChanges",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ModifiedByUserId = table.Column<int>(type: "int", nullable: true),
+                    ChangedByUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByUserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "Date", nullable: false),
+                    CurrentStatus = table.Column<string>(type: "varchar(30)", nullable: false),
+                    WorkRequestId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WRStateChanges", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_WRStateChanges_AspNetUsers_ModifiedByUserId1",
+                        column: x => x.ModifiedByUserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WRStateChanges_WorkRequests_WorkRequestId",
+                        column: x => x.WorkRequestId,
+                        principalTable: "WorkRequests",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -428,9 +468,9 @@ namespace SmartGrid2021Project.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attachments_WorkRequestId",
-                table: "Attachments",
-                column: "WorkRequestId");
+                name: "IX_AttachmentWorkRequest_WorkRequestsWR_id",
+                table: "AttachmentWorkRequest",
+                column: "WorkRequestsWR_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Calls_CallerId",
@@ -443,9 +483,9 @@ namespace SmartGrid2021Project.Migrations
                 column: "IncidentsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_WorkRequestId",
-                table: "Devices",
-                column: "WorkRequestId");
+                name: "IX_DeviceWorkRequest_WorkRequestsWR_id",
+                table: "DeviceWorkRequest",
+                column: "WorkRequestsWR_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Incidents_IncidentCrewteamID",
@@ -468,13 +508,13 @@ namespace SmartGrid2021Project.Migrations
                 column: "IncidentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WRStateChange_ChangedByUserId",
-                table: "WRStateChange",
-                column: "ChangedByUserId");
+                name: "IX_WRStateChanges_ModifiedByUserId1",
+                table: "WRStateChanges",
+                column: "ModifiedByUserId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WRStateChange_WorkRequestId",
-                table: "WRStateChange",
+                name: "IX_WRStateChanges_WorkRequestId",
+                table: "WRStateChanges",
                 column: "WorkRequestId");
         }
 
@@ -496,7 +536,7 @@ namespace SmartGrid2021Project.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Attachments");
+                name: "AttachmentWorkRequest");
 
             migrationBuilder.DropTable(
                 name: "Calls");
@@ -505,10 +545,16 @@ namespace SmartGrid2021Project.Migrations
                 name: "DeviceIncident");
 
             migrationBuilder.DropTable(
-                name: "WRStateChange");
+                name: "DeviceWorkRequest");
+
+            migrationBuilder.DropTable(
+                name: "WRStateChanges");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Attachments");
 
             migrationBuilder.DropTable(
                 name: "Devices");

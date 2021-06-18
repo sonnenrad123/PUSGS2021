@@ -202,7 +202,6 @@ namespace SmartGrid2021Project.Migrations
             modelBuilder.Entity("SmartGrid2021Project.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
@@ -235,6 +234,12 @@ namespace SmartGrid2021Project.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)")
                         .HasColumnName("First Name");
+
+                    b.Property<int>("IdNum")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("IdNum")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("LastName")
                         .IsRequired()

@@ -91,7 +91,7 @@ namespace SmartGrid2021Project.Controllers
                     var appUser = _context.AppUsers.Where(_ => _.Email.Equals(wr.CreatedBy)).SingleOrDefault();
                     if(appUser != null)
                     {
-                        workRequestfromDb.AppUserId = appUser.Id;
+                        workRequestfromDb.AppUserId = appUser.IdNum;
                         workRequestfromDb.AppUser = appUser;
                     }
                 }

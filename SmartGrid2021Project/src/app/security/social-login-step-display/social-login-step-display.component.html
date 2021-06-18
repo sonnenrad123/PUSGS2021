@@ -1,0 +1,63 @@
+
+    <div class="main-content" style="padding-top: 15px;">
+        <div class="container-fluid" >
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="background-color: lightgray; margin-bottom: 1rem;">
+                       <b>Plesase confirm some important informations: </b>
+                    </div>
+                     <div class="card">
+                        
+                         <div class="main-content" style="background-color: lightgray;"> 
+                            
+                            <form (submit)="Continue()" [formGroup]="form" (keydown.enter)="$event.preventDefault()"> 
+                                
+                                <div class="row">
+                                   <div class="col-md-12 form-group">
+                                       <mat-form-field class="full-width" appearance="outline">
+                                           <mat-label>Password*</mat-label>
+                                           <input formControlName="password" type="password" name="password" id="password" matInput/>
+                                           <mat-error *ngIf="form.invalid">{{getErrorMessagePassword()}}</mat-error>
+                                       </mat-form-field>
+                                   </div>  
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <mat-form-field class="full-width"  appearance="outline">
+                                                <mat-label>Address*</mat-label>
+                                                <input matInput (change)="onAddressChanged()" (click)="$event.stopPropagation()" (keyup.enter)="addressLookup($any($event.target).value)" placeholder="Search address" formControlName="address" type="text" name="address" id="address" />
+                                                <app-results-list [results]="searchResults" (locationSelected)="getAddress($event)"></app-results-list>
+                                                <mat-error *ngIf="form.invalid">{{getErrorMessageAddress()}}</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <mat-form-field class="full-width" appearance="outline">
+                                                <mat-label>Birthday*</mat-label>
+                                                <input formControlName="dateOfBirth" type="date" name="dateOfBirth" id="dateOfBirth" matInput/>
+                                                <mat-error *ngIf="form.invalid">{{getErrorMessageBirthday()}}</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="parent">
+                                    <div class="custom-width-div" style="text-align: center; margin-top: 2rem;">          
+                                    <button class="custom-width-btn" mat-flat-button color="Primary" [disabled]=form.invalid>Continue</button>
+                                    <button type="button" class="custom-width-btn" mat-flat-button color="Primary" (click)="Cancel()">Cancel</button>
+                                    </div>
+                                </div>
+                            </form> 
+                         
+                                
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    

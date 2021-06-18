@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { UserAccountService } from '../services/user-account/user-account.service';
 import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login'
 import { AuthenticationResponse } from '../models/common/authentication-response';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SocialLoginStepDisplayComponent } from '../security/social-login-step-display/social-login-step-display.component';
+import { FbSocialLoginStepDisplayComponent } from '../security/fb-social-login-step-display/fb-social-login-step-display.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +18,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   socialProvider = "google";
 
-  constructor(private router: Router, private userService: UserAccountService, public OAuth: SocialAuthService) {
+  constructor(private router: Router, private userService: UserAccountService, public OAuth: SocialAuthService, private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.loginForm = new FormGroup({
       userEmail:  new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)])
@@ -30,7 +34,7 @@ export class LoginComponent {
       },
       err => {
         if (err.status == 400)
-          alert('Incorrect username or password.');
+          this.snackBar.open('Incorrect user email or password!', 'Ok');
         else
           console.log(err);
       }
@@ -41,28 +45,65 @@ export class LoginComponent {
   loginWithGoogle(){
     let socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
     
-    this.OAuth.signIn(socialPlatformProvider).then(socialusers => {
-      
-      this.userService.googleSocialLogin(socialusers).subscribe((res: any) =>{
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('user', socialusers.name)
-        this.router.navigate(['/test']);
-      });
-      
-    });
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '500px';
+    dialogConfig.minHeight = '350px';
+    const dialogRef = this.dialog.open(SocialLoginStepDisplayComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if(data !== undefined){
+          
+        this.OAuth.signIn(socialPlatformProvider).then(socialusers => {
+          var merged = Object.assign(socialusers, data);
+          
+          this.userService.googleSocialLogin(merged).subscribe((res: any) =>{
+            //console.log(res);
+            localStorage.setItem('token', res.token);
+            localStorage.setItem('user', socialusers.email)
+            this.snackBar.open('Successfully registered with Google! Please wait to account be allowed by admin!', 'Ok');
+
+            this.router.navigate(['/home']);
+          });
+          
+        });
+      }
+    }
+    );
+    
+    
   }
 
   loginWithFacebook(){
-    let socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    
 
-    this.OAuth.signIn(socialPlatformProvider).then(socialusers => {
-      
-      this.userService.faceboookSocialLogin(socialusers).subscribe((res: any) =>{
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('user', socialusers.name)
-        this.router.navigate(['/test']);
-      })
-    });
+    let socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '500px';
+    dialogConfig.minHeight = '350px';
+    const dialogRef = this.dialog.open(FbSocialLoginStepDisplayComponent, dialogConfig);
+    
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+          if(data !== undefined){
+            this.OAuth.signIn(socialPlatformProvider).then(socialusers => {
+              var merged = Object.assign(data, socialusers);
+              this.userService.faceboookSocialLogin(merged).subscribe((res: any) =>{
+                localStorage.setItem('token', res.token);
+                localStorage.setItem('user', socialusers.email);
+                this.snackBar.open('Successfully registered with Facebook! Please wait to account be allowed by admin!', 'Ok');
+
+                this.router.navigate(['/home']);
+              })
+            });
+          
+          }
+      }
+    );
+    
   }
 
   reportOutage(){

@@ -18,6 +18,9 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
+using Microsoft.AspNetCore.Authentication.Facebook;
+using System.Globalization;
 
 namespace SmartGrid2021Project.Controllers
 {
@@ -31,7 +34,9 @@ namespace SmartGrid2021Project.Controllers
         private  SignInManager<AppUser> signInManager;
         private readonly ApplicationSettings appSettings;
         private readonly GeneralDBContext _context;
-
+        private const string GoogleApiTokenInfoUrl = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={0}";
+        private const string FacebookUserInfoUrl = "https://graph.facebook.com/v11.0/me?fields=id%2Cname%2Cfirst_name%2Clast_name%2Cemail%2Cbirthday%2Cpicture&access_token={0}";
+        private static int idName = 1;
         public AccountController(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             IOptions<ApplicationSettings> appSettings,
@@ -79,6 +84,13 @@ namespace SmartGrid2021Project.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    //da li vec postoji registrovan
+                    var userFromDb =  _context.AppUsers.SingleOrDefault(_ => _.Email == user.UserEmail);
+                    if(userFromDb != null)
+                    {
+                        //TODO
+                        
+                    }
                     AppUser appUser;
                     if (user.UserTeam == null) {
                          appUser = new AppUser()
@@ -111,7 +123,19 @@ namespace SmartGrid2021Project.Controllers
                         };
                         _context.Teams.FirstOrDefault(_ => _.teamID == user.UserTeam.teamID).teamMembers.Add(appUser);
                     }
-                    var result = await userManager.CreateAsync(appUser, user.Password);
+
+                    await _context.UserClaims.AddAsync(
+                        new IdentityUserClaim<string>()
+                        {
+                            ClaimType = "roleOfUser",
+                            ClaimValue = appUser.RoleOfUser,
+                            UserId = appUser.Id
+                        });
+
+                    try
+                    {
+                        var result = await userManager.CreateAsync(appUser, user.Password);
+                    
                     if (result.Succeeded)
                     {
                         var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
@@ -121,6 +145,8 @@ namespace SmartGrid2021Project.Controllers
 
                         await emailHelper.SendEmailAsync(appUser.Email, "Successfully registered. Your account must be allowed by admin!", confirmationLink);
 
+                       
+                        
 
                         return await BuildToken(appUser);
                     }
@@ -128,7 +154,10 @@ namespace SmartGrid2021Project.Controllers
                     {
                         return BadRequest(result.Errors);
                     }
+                    }
+                    catch (Exception e){
 
+                    }
                 }
             }catch(Exception e)
             {
@@ -195,59 +224,92 @@ namespace SmartGrid2021Project.Controllers
         [Route("GoogleSocialLogin")]
         [AllowAnonymous]
         // POST: api/<controller>/Login
-        public async Task<IActionResult> GoogleSocialLogin([FromBody] AuthenticateRequest loginModel)
+        public async Task<ActionResult<AuthenticationResponse>> GoogleSocialLogin([FromBody] AuthenticateRequest loginModel)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(it => it.Errors).Select(it => it.ErrorMessage));
 
-            var test = appSettings.JWT_Secret;
-            if (VerifyToken(loginModel.IdToken))
+            
+            UserModel validateUser = VerifyToken(loginModel);
+            if (validateUser != null)
             {
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Expires = DateTime.UtcNow.AddMinutes(5),
-                    //Key min: 16 characters
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                var token = tokenHandler.WriteToken(securityToken);
-                return Ok(new { token });
+                return await RegisterApplicationUser(validateUser);
+                
             }
             
-            return Ok();
+            return NoContent();
         }
+        
 
         [HttpPost]
         [Route("FacebookSocialLogin")]
         [AllowAnonymous]
         // POST: api/<controller>/Login
-        public async Task<IActionResult> FacebookSocialLogin(AuthenticateRequest loginModel)
+        public async Task<ActionResult<AuthenticationResponse>> FacebookSocialLogin([FromBody]AuthenticateRequest loginModel)
         {
-            var test = appSettings.JWT_Secret;
-            if (VerifyFacebookToken(loginModel.authToken))
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.Values.SelectMany(it => it.Errors).Select(it => it.ErrorMessage));
+            UserModel uModel = VerifyFacebookToken(loginModel);
+            if(uModel != null)
             {
-                var tokenDescriptor = new SecurityTokenDescriptor
+                return await RegisterApplicationUser(uModel); 
+            }
+
+            return NoContent();
+        }
+        
+        public UserModel VerifyToken(AuthenticateRequest providerToken)
+        {
+            var httpClient = new HttpClient();
+            var requestUri = new Uri(string.Format(GoogleApiTokenInfoUrl, providerToken.IdToken));
+
+            HttpResponseMessage httpResponseMessage;
+
+            try
+            {
+                httpResponseMessage = httpClient.GetAsync(requestUri).Result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+            if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
+            {
+                return null;
+            }
+
+            var response = httpResponseMessage.Content.ReadAsStringAsync().Result;
+            try
+            {
+                var googleApiTokenInfo = JsonConvert.DeserializeObject<GoogleApiTokenInfo>(response);
+
+                UserModel var = new UserModel()
                 {
-                    Expires = DateTime.UtcNow.AddMinutes(5),
-                    //Key min: 16 characters
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
+                    FirstName = googleApiTokenInfo.name.Split(' ')[0],
+                    LastName = googleApiTokenInfo.name.Split(' ')[1],
+                    UserImage = googleApiTokenInfo.picture,
+                    RoleOfUser = "USER",
+                    UserEmail = googleApiTokenInfo.email,
+                    Username = googleApiTokenInfo.email,
+                    DateOfBirth = providerToken.DateOfBirth,
+                    Address = providerToken.Address,
+                    Password = providerToken.Password
                 };
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                var token = tokenHandler.WriteToken(securityToken);
-                return Ok(new { token });
+                idName++;
+                return var;
             }
+            catch(Exception e)
+            {
 
-            return Ok();
+            }
+            return null;
         }
-        private const string GoogleApiTokenInfoUrl = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={0}";
-        private const string FacebookApiTokenInfoUrl = "https://graph.facebook.com/me?access_token={0}&fields=id,name,birthday,email,first_name,last_name";
 
-        public bool VerifyToken(string providerToken)
+        public UserModel VerifyFacebookToken(AuthenticateRequest providerToken)
         {
             var httpClient = new HttpClient();
-            var requestUri = new Uri(string.Format(GoogleApiTokenInfoUrl, providerToken));
+            var requestUri = new Uri(string.Format(FacebookUserInfoUrl, providerToken.authToken));
 
             HttpResponseMessage httpResponseMessage;
 
@@ -257,45 +319,39 @@ namespace SmartGrid2021Project.Controllers
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
             }
 
             if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
             {
-                return false;
+                return null;
             }
 
             var response = httpResponseMessage.Content.ReadAsStringAsync().Result;
-            var googleApiTokenInfo = JsonConvert.DeserializeObject<GoogleApiTokenInfo>(response);
-
-            return true;
-        }
-
-        public bool VerifyFacebookToken(string providerToken)
-        {
-            var httpClient = new HttpClient();
-            var requestUri = new Uri(string.Format(FacebookApiTokenInfoUrl, providerToken));
-
-            HttpResponseMessage httpResponseMessage;
-
             try
             {
-                httpResponseMessage = httpClient.GetAsync(requestUri).Result;
+                var facebookApiTokenInfo = JsonConvert.DeserializeObject<FacebookApiTokenInfo>(response);
+                UserModel var = new UserModel()
+                {
+                    FirstName = facebookApiTokenInfo.name.Split(' ')[0],
+                    LastName = facebookApiTokenInfo.name.Split(' ')[1],
+                    UserImage = facebookApiTokenInfo.picture.data.URL,
+                    RoleOfUser = "USER",
+                    UserEmail = facebookApiTokenInfo.email,
+                    Username = facebookApiTokenInfo.email,
+                    DateOfBirth = DateTime.Parse(facebookApiTokenInfo.birthday, CultureInfo.InvariantCulture),
+                    Address = providerToken.Address,
+                    Password = providerToken.Password
+                };
+                idName++;
+                return var;
+
             }
-            catch (Exception ex)
+            catch(Exception e)
             {
-                return false;
+
             }
-
-            if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
-            {
-                return false;
-            }
-
-            var response = httpResponseMessage.Content.ReadAsStringAsync().Result;
-            var facebookApiTokenInfo = JsonConvert.DeserializeObject<FacebookApiTokenInfo>(response);
-
-            return true;
+            return null;
         }
 
         [HttpGet("{username}")]

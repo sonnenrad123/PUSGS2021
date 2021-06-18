@@ -1,0 +1,44 @@
+.full-width{
+    width: 100%;
+}
+
+.custom-width-col{
+    width: 39%;
+    margin-right: 5px;
+}
+
+.image-placeholder{
+    width: 400px; 
+    height: 200px; 
+    margin-left: 2rem; 
+    margin-top: 4px;
+    object-fit: fill;
+}
+
+.custom-width-btn{
+    width: 40%;
+    display: inline-block;    
+    margin: auto;
+    border: lightblue 1px solid;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.custom-width-div{
+    width: 100%;
+    display: inline-block;    
+    margin: auto;
+}
+
+.position-h2{
+    margin-bottom: 5rem;
+    margin-top: 5px;
+}
+.parent{
+    text-align: center;
+}
+
+.component-position{
+    text-align: center;
+    margin-left: 4rem;
+}

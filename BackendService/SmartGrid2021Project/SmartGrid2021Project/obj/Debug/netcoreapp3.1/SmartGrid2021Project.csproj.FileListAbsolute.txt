@@ -358,3 +358,11 @@ E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Pro
 E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\SmartGrid2021Project.pdb
 E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\SmartGrid2021Project.genruntimeconfig.cache
 E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\SmartGrid2021Project.csprojAssemblyReference.cache
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Google.Apis.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Google.Apis.Auth.PlatformServices.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Google.Apis.Auth.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Google.Apis.Core.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Google.Apis.PeopleService.v1.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\CloudrailSI.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\OpenSSL.PrivateKeyDecoder.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\OpenSSL.X509Certificate2.Provider.dll

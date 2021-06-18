@@ -2,6 +2,71 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "Facebook.Api/1.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.3",
+          "OpenSSL.X509Certificate2.Provider": "1.2.0"
+        },
+        "compile": {
+          "lib/CloudrailSI.dll": {}
+        },
+        "runtime": {
+          "lib/CloudrailSI.dll": {}
+        }
+      },
+      "Google.Apis/1.52.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.52.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.dll": {}
+        }
+      },
+      "Google.Apis.Auth/1.52.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.52.0",
+          "Google.Apis.Core": "1.52.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {}
+        }
+      },
+      "Google.Apis.Core/1.52.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Core.dll": {}
+        }
+      },
+      "Google.Apis.PeopleService.v1/1.52.0.2357": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.52.0",
+          "Google.Apis.Auth": "1.52.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.PeopleService.v1.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.PeopleService.v1.dll": {}
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -1491,6 +1556,27 @@
         },
         "runtime": {
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
+        }
+      },
+      "OpenSSL.PrivateKeyDecoder/1.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/OpenSSL.PrivateKeyDecoder.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/OpenSSL.PrivateKeyDecoder.dll": {}
+        }
+      },
+      "OpenSSL.X509Certificate2.Provider/1.2.0": {
+        "type": "package",
+        "dependencies": {
+          "OpenSSL.PrivateKeyDecoder": "1.2.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/OpenSSL.X509Certificate2.Provider.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/OpenSSL.X509Certificate2.Provider.dll": {}
         }
       },
       "Portable.BouncyCastle/1.8.10": {
@@ -3337,6 +3423,120 @@
     }
   },
   "libraries": {
+    "Facebook.Api/1.0.5": {
+      "sha512": "iqD7PxSY0M8ya5rrXpfnP9pt5usBdDfcXrcqf/BlDSLBwBYk7gai4uoAEUIR9AC9TfeGOZueVz/LL6ItxmeVXA==",
+      "type": "package",
+      "path": "facebook.api/1.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "facebook.api.1.0.5.nupkg.sha512",
+        "facebook.api.nuspec",
+        "lib/CloudrailSI.dll"
+      ]
+    },
+    "Google.Apis/1.52.0": {
+      "sha512": "5YWTBzHuNUiYIUoIBkCGYMokyYuaOuAn+w96lIJ2WNqeiAurKq3ZLqZ86fYae32PDWHZa+itFYc9O1iVfYi5dQ==",
+      "type": "package",
+      "path": "google.apis/1.52.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.1.52.0.nupkg.sha512",
+        "google.apis.nuspec",
+        "lib/net45/Google.Apis.PlatformServices.dll",
+        "lib/net45/Google.Apis.dll",
+        "lib/net45/Google.Apis.pdb",
+        "lib/net45/Google.Apis.xml",
+        "lib/netstandard1.3/Google.Apis.dll",
+        "lib/netstandard1.3/Google.Apis.pdb",
+        "lib/netstandard1.3/Google.Apis.xml",
+        "lib/netstandard2.0/Google.Apis.dll",
+        "lib/netstandard2.0/Google.Apis.pdb",
+        "lib/netstandard2.0/Google.Apis.xml"
+      ]
+    },
+    "Google.Apis.Auth/1.52.0": {
+      "sha512": "T7JKjq4zmk8b4lrOn+kyatgDQdLytoV+i6Fw4agyWlm4Q+bbZbu3DcCz+UuliEtXHbShgHD1PWfiMJoQGuPEog==",
+      "type": "package",
+      "path": "google.apis.auth/1.52.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.auth.1.52.0.nupkg.sha512",
+        "google.apis.auth.nuspec",
+        "lib/net45/Google.Apis.Auth.PlatformServices.dll",
+        "lib/net45/Google.Apis.Auth.dll",
+        "lib/net45/Google.Apis.Auth.pdb",
+        "lib/net45/Google.Apis.Auth.xml",
+        "lib/net461/Google.Apis.Auth.PlatformServices.dll",
+        "lib/net461/Google.Apis.Auth.dll",
+        "lib/net461/Google.Apis.Auth.pdb",
+        "lib/net461/Google.Apis.Auth.xml",
+        "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll",
+        "lib/netstandard1.3/Google.Apis.Auth.dll",
+        "lib/netstandard1.3/Google.Apis.Auth.pdb",
+        "lib/netstandard1.3/Google.Apis.Auth.xml",
+        "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll",
+        "lib/netstandard2.0/Google.Apis.Auth.dll",
+        "lib/netstandard2.0/Google.Apis.Auth.pdb",
+        "lib/netstandard2.0/Google.Apis.Auth.xml"
+      ]
+    },
+    "Google.Apis.Core/1.52.0": {
+      "sha512": "cgQpnZ9IC5SBNsAFTXHKUMB8bOkBWPLtXcLgwSYkV8oL0FfUdHwrDzH5qrf/mFB9fQIPgJyV6tdUwf2hu1UJ+A==",
+      "type": "package",
+      "path": "google.apis.core/1.52.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.core.1.52.0.nupkg.sha512",
+        "google.apis.core.nuspec",
+        "lib/net45/Google.Apis.Core.dll",
+        "lib/net45/Google.Apis.Core.pdb",
+        "lib/net45/Google.Apis.Core.xml",
+        "lib/netstandard1.3/Google.Apis.Core.dll",
+        "lib/netstandard1.3/Google.Apis.Core.pdb",
+        "lib/netstandard1.3/Google.Apis.Core.xml",
+        "lib/netstandard2.0/Google.Apis.Core.dll",
+        "lib/netstandard2.0/Google.Apis.Core.pdb",
+        "lib/netstandard2.0/Google.Apis.Core.xml"
+      ]
+    },
+    "Google.Apis.PeopleService.v1/1.52.0.2357": {
+      "sha512": "IQUVIxJr9uua7zz6WpHxFskKIATcSrii9wLNFlilpU7FF9Qtkd2zDu73ksVy62SyUaAI2wcrnvt05TyJH3jw5Q==",
+      "type": "package",
+      "path": "google.apis.peopleservice.v1/1.52.0.2357",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.peopleservice.v1.1.52.0.2357.nupkg.sha512",
+        "google.apis.peopleservice.v1.nuspec",
+        "lib/net40/Google.Apis.PeopleService.v1.dll",
+        "lib/net40/Google.Apis.PeopleService.v1.pdb",
+        "lib/net40/Google.Apis.PeopleService.v1.xml",
+        "lib/net45/Google.Apis.PeopleService.v1.dll",
+        "lib/net45/Google.Apis.PeopleService.v1.pdb",
+        "lib/net45/Google.Apis.PeopleService.v1.xml",
+        "lib/netstandard1.0/Google.Apis.PeopleService.v1.dll",
+        "lib/netstandard1.0/Google.Apis.PeopleService.v1.pdb",
+        "lib/netstandard1.0/Google.Apis.PeopleService.v1.xml",
+        "lib/netstandard1.3/Google.Apis.PeopleService.v1.dll",
+        "lib/netstandard1.3/Google.Apis.PeopleService.v1.pdb",
+        "lib/netstandard1.3/Google.Apis.PeopleService.v1.xml",
+        "lib/netstandard2.0/Google.Apis.PeopleService.v1.dll",
+        "lib/netstandard2.0/Google.Apis.PeopleService.v1.pdb",
+        "lib/netstandard2.0/Google.Apis.PeopleService.v1.xml"
+      ]
+    },
     "Humanizer.Core/2.8.26": {
       "sha512": "OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
       "type": "package",
@@ -5541,6 +5741,48 @@
         "lib/netstandard1.6/NuGet.Frameworks.xml",
         "nuget.frameworks.4.7.0.nupkg.sha512",
         "nuget.frameworks.nuspec"
+      ]
+    },
+    "OpenSSL.PrivateKeyDecoder/1.2.0": {
+      "sha512": "2+NGfjqjpIyXEVtsEg5ML7E6bzPGiw6RtH0a7rUhtAEBWWo/d/7uI/TKtHW+/EPO4E/0Gpz4ozG2ETqOAhpmVw==",
+      "type": "package",
+      "path": "openssl.privatekeydecoder/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/OpenSSL.PrivateKeyDecoder.dll",
+        "lib/net20/OpenSSL.PrivateKeyDecoder.xml",
+        "lib/net35/OpenSSL.PrivateKeyDecoder.dll",
+        "lib/net35/OpenSSL.PrivateKeyDecoder.xml",
+        "lib/net45/OpenSSL.PrivateKeyDecoder.dll",
+        "lib/net45/OpenSSL.PrivateKeyDecoder.xml",
+        "lib/netstandard1.3/OpenSSL.PrivateKeyDecoder.dll",
+        "lib/netstandard1.3/OpenSSL.PrivateKeyDecoder.xml",
+        "lib/netstandard2.0/OpenSSL.PrivateKeyDecoder.dll",
+        "lib/netstandard2.0/OpenSSL.PrivateKeyDecoder.xml",
+        "openssl.privatekeydecoder.1.2.0.nupkg.sha512",
+        "openssl.privatekeydecoder.nuspec"
+      ]
+    },
+    "OpenSSL.X509Certificate2.Provider/1.2.0": {
+      "sha512": "mXoKvCxJHgzIIxvC3VQ1QZC4KeyLUDuxIVD2DAzEJG7aLOC+zvlE0QsNG1tNbp/1eoI0u0RHnM8UL/y88vdiRQ==",
+      "type": "package",
+      "path": "openssl.x509certificate2.provider/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/OpenSSL.X509Certificate2.Provider.dll",
+        "lib/net20/OpenSSL.X509Certificate2.Provider.xml",
+        "lib/net35/OpenSSL.X509Certificate2.Provider.dll",
+        "lib/net35/OpenSSL.X509Certificate2.Provider.xml",
+        "lib/net45/OpenSSL.X509Certificate2.Provider.dll",
+        "lib/net45/OpenSSL.X509Certificate2.Provider.xml",
+        "lib/netstandard1.3/OpenSSL.X509Certificate2.Provider.dll",
+        "lib/netstandard1.3/OpenSSL.X509Certificate2.Provider.xml",
+        "lib/netstandard2.0/OpenSSL.X509Certificate2.Provider.dll",
+        "lib/netstandard2.0/OpenSSL.X509Certificate2.Provider.xml",
+        "openssl.x509certificate2.provider.1.2.0.nupkg.sha512",
+        "openssl.x509certificate2.provider.nuspec"
       ]
     },
     "Portable.BouncyCastle/1.8.10": {
@@ -10269,6 +10511,9 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Facebook.Api >= 1.0.5",
+      "Google.Apis.Auth >= 1.52.0",
+      "Google.Apis.PeopleService.v1 >= 1.52.0.2357",
       "MailKit >= 2.11.1",
       "Microsoft.AspNetCore.Authentication.AzureAD.UI >= 3.1.14",
       "Microsoft.AspNetCore.Authentication.Facebook >= 3.1.14",
@@ -10333,6 +10578,18 @@
       "netcoreapp3.1": {
         "targetAlias": "netcoreapp3.1",
         "dependencies": {
+          "Facebook.Api": {
+            "target": "Package",
+            "version": "[1.0.5, )"
+          },
+          "Google.Apis.Auth": {
+            "target": "Package",
+            "version": "[1.52.0, )"
+          },
+          "Google.Apis.PeopleService.v1": {
+            "target": "Package",
+            "version": "[1.52.0.2357, )"
+          },
           "MailKit": {
             "target": "Package",
             "version": "[2.11.1, )"
@@ -10429,5 +10686,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.204\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Facebook.Api 1.0.5' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Facebook.Api",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }
