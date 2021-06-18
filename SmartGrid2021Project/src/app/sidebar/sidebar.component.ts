@@ -20,7 +20,7 @@ export const ROUTES: RouteInfo[] = [
         path: '/WorkRequests', title: 'Work Requests', icon: 'pe-7s-note2', class: '', children:[]
       },
       {
-        path: '/switchingplans', title: 'Switching Plans', icon: 'pe-7s-note2', class: '', children:[]
+        path: '/SwitchingPlans', title: 'Switching Plans', icon: 'pe-7s-note2', class: '', children:[]
       },
       {
         path: '/SafetyDocuments', title: 'Safety Documents', icon: 'pe-7s-note2', class: '', children:[]
@@ -36,10 +36,17 @@ export const ROUTES: RouteInfo[] = [
     { path: '/AllUsers', title: 'All Users', icon:'pe-7s-uses', class: 'secondary'},
     //ispod su hidden rute da bi title funkcija radila
 
+    
     { path: '/AddIncident', title:'Add incident',icon:'',class:'hidden'},
-    { path: '/WorkRequests', title: 'Work Requests', icon: 'pe-7s-note2', class: 'hidden'},
-    { path: '/SafetyDocuments', title: 'Safety Documents', icon: 'pe-7s-note2', class: 'hidden'},
-    { path: '/switchingplans', title: 'Switching Plans', icon: 'pe-7s-note2', class: '' }
+    { path: '/WorkRequests', title: 'Work requests', icon: 'pe-7s-note2', class: 'hidden'},
+    { path: '/SafetyDocuments', title: 'Safety documents', icon: 'pe-7s-note2', class: 'hidden'},
+    { path: '/SwitchingPlans', title: 'Switching plans', icon: 'pe-7s-note2', class: 'hidden' },
+    { path: '/AddSwitchingPlan/BasicInfo', title:'Add switching plan',icon:'',class:'hidden'},
+    { path: '/AddSwitchingPlan/StateChanged', title:'Add switching plan',icon:'',class:'hidden'},
+    { path: '/AddSwitchingPlan/Attachments', title:'Add switching plan',icon:'',class:'hidden'},
+    { path: '/AddSwitchingPlan/Equipment', title:'Add switching plan',icon:'',class:'hidden'},
+    { path: '/AddSwitchingPlan/WorkInstructions', title:'Add switching plan',icon:'',class:'hidden'},
+    { path: '/UserAccount', title:'User account',icon:'',class:'hidden'}
 ];
 
 

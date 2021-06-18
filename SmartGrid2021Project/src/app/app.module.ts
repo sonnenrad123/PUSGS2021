@@ -84,6 +84,13 @@ import {MatList, MatListModule} from '@angular/material/list';
 import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
 import { TeamDisplayComponent } from './teams/team-display/team-display/team-display.component'
 import { UserAccountComponent } from './user-account/user-account.component';
+import { SwitchingPlansComponent } from './switching-plans/switching-plans.component';
+import { AddSwitchingPlanComponent } from './add-switching-plan/add-switching-plan.component';
+import { AddPlanBasicComponent } from './add-switching-plan/add-plan-basic/add-plan-basic.component';
+import { AddPlanStateChangeHistoryComponent } from './add-switching-plan/add-plan-state-change-history/add-plan-state-change-history.component';
+import { AddPlanEquipmentComponent } from './add-switching-plan/add-plan-equipment/add-plan-equipment.component';
+import { AddPlanAttachmentsComponent } from './add-switching-plan/add-plan-attachments/add-plan-attachments.component';
+import { AddPlanWorkInstructionsComponent } from './add-switching-plan/add-plan-work-instructions/add-plan-work-instructions.component';
 
 
 
@@ -139,7 +146,14 @@ import { UserAccountComponent } from './user-account/user-account.component';
     IncidentCrewComponent,
 
     TeamDisplayComponent,
-    UserAccountComponent
+    UserAccountComponent,
+    SwitchingPlansComponent,
+    AddSwitchingPlanComponent,
+    AddPlanBasicComponent,
+    AddPlanStateChangeHistoryComponent,
+    AddPlanEquipmentComponent,
+    AddPlanAttachmentsComponent,
+    AddPlanWorkInstructionsComponent
     
     
   ],

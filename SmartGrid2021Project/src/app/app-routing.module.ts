@@ -34,6 +34,13 @@ import { AddNetworkElementComponent } from './add-network-element/add-network-el
 import { AllUsersComponent } from './admin-access/all-users/all-users/all-users.component';
 import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
 import { UserAccountComponent } from './user-account/user-account.component';
+import { SwitchingPlansComponent } from './switching-plans/switching-plans.component';
+import { AddPlanBasicComponent } from './add-switching-plan/add-plan-basic/add-plan-basic.component';
+import { AddPlanEquipmentComponent } from './add-switching-plan/add-plan-equipment/add-plan-equipment.component';
+import { AddPlanStateChangeHistoryComponent } from './add-switching-plan/add-plan-state-change-history/add-plan-state-change-history.component';
+import { AddPlanAttachmentsComponent } from './add-switching-plan/add-plan-attachments/add-plan-attachments.component';
+import { AddPlanWorkInstructionsComponent } from './add-switching-plan/add-plan-work-instructions/add-plan-work-instructions.component';
+import { AddSwitchingPlanComponent } from './add-switching-plan/add-switching-plan.component';
 
 const routes: Routes = [
   {
@@ -115,6 +122,30 @@ const routes: Routes = [
       },
     ]
   },
+
+  {
+    path:'AddSwitchingPlan',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: AddSwitchingPlanComponent, children:[
+        {path:'BasicInfo', component: AddPlanBasicComponent},
+        {path:'Equipment', component: AddPlanEquipmentComponent},
+        {path:'StateChanged', component: AddPlanStateChangeHistoryComponent},
+        {path: 'Attachments', component: AddPlanAttachmentsComponent},
+        {path:'WorkInstructions', component: AddPlanWorkInstructionsComponent, children:[
+          {path:'AddNew', component:AddPlanWorkInstructionsComponent}
+        ]},
+      ]},
+    ]
+  },
+
+  {path: 'SwitchingPlans',
+  component : GeneralLayoutComponent,
+  children:[
+    {path: '', component: SwitchingPlansComponent},
+  ]
+  },
+
   {
     path:'WorkRequests',
     component: GeneralLayoutComponent,

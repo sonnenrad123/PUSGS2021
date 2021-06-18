@@ -12,7 +12,7 @@ import { UserAccountService } from '../services/user-account/user-account.servic
 })
 export class UserAccountComponent implements OnInit {
 
-  title = "User account"
+  title = "";
   
   //user created for testing purpouses
   testUser : User;
