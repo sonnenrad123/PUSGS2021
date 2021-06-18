@@ -4,6 +4,10 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { TableColumn } from 'src/app/common/mat-table/table-column';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import { IncidentDevicesDialogComponent } from 'src/app/incident-devices-dialog/incident-devices-dialog.component';
+import { DeviceLocationDialogComponent } from 'src/app/device-location-dialog/device-location-dialog.component';
+import { Router } from '@angular/router';
 
 enum DeviceType{
   Breaker= "Breaker",
@@ -31,22 +35,23 @@ export class SafetyDocumentEquipmentComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  AllDevices:Device[]=[
-    {id:"device1",name:"device1name",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice1"},
-    {id:"device3",name:"device3name",type:DeviceType.Switch,coordinates:"xyz",address:"AdresaDevice3"},
-    {id:"device6",name:"device6name",type:DeviceType.Break,coordinates:"xyz",address:"AdresaDevice6"},
-    {id:"device2",name:"device4name",type:DeviceType.Fuse,coordinates:"xyz",address:"AdresaDevice5"},
-    {id:"device8",name:"device2name",type:DeviceType.Disconnector,coordinates:"xyz",address:"AdresaDevice10"},
-    {id:"device9",name:"device9name",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice11"},
-  ]
+  AllDevices:Device[]=[]
 
   dataSource: MatTableDataSource<Device>;
   sortedData: Device[];
 
-  constructor() { }
+  responseData:any[];
+  constructor(private dialog: MatDialog,private RouterObject: Router,private dialog2: MatDialog) { }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.AllDevices);
+    if(window.sessionStorage.getItem('safetyDocumentSelectedDevices')!=null){
+      let data = JSON.parse(window.sessionStorage.getItem('safetyDocumentSelectedDevices'));
+      this.AllDevices = data;
+      this.dataSource = new MatTableDataSource(this.AllDevices);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   ngAfterViewInit(){
@@ -64,15 +69,56 @@ export class SafetyDocumentEquipmentComponent implements OnInit {
   }
 
   showLocation(row:any){
-    console.log('Show location for device with id: ' + row.id);
+    this.deviceLocationModalDialog(row);
   }
   
   removeDevice(row:any){
-    console.log('Delete device with id: ' + row.id);
+    let safetyDocumentSelectedDevicestemp = JSON.parse(window.sessionStorage.getItem('safetyDocumentSelectedDevices'));
+    safetyDocumentSelectedDevicestemp.forEach((device,index) => {
+      if(device.id == row.id){
+        safetyDocumentSelectedDevicestemp.splice(index,1);
+      }
+    });
+    window.sessionStorage.setItem('safetyDocumentSelectedDevices',JSON.stringify(safetyDocumentSelectedDevicestemp));
+    this.AllDevices = safetyDocumentSelectedDevicestemp;
+    this.dataSource = new MatTableDataSource(this.AllDevices);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  
-
+  devicesModalDialog(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '1000px';
+    dialogConfig.minHeight = '800px';
+    const dialogRef = this.dialog.open(IncidentDevicesDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        console.log("Dialog output:", data);
+        window.sessionStorage.setItem('safetyDocumentSelectedDevices',JSON.stringify(data));
+        this.AllDevices = data;
+        this.dataSource = new MatTableDataSource(this.AllDevices);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+      
+    );
+  }
+  deviceLocationModalDialog(device:any){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '1000px';
+    dialogConfig.minHeight = '800px';
+    dialogConfig.data = device;
+    const dialogRef2 = this.dialog.open(DeviceLocationDialogComponent, dialogConfig);
+    dialogRef2.afterClosed().subscribe(
+      data => {
+      }
+      
+    );
+  }
 }
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

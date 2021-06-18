@@ -25,6 +25,8 @@ namespace SmartGrid2021Project.Models
         }
 
         public virtual ICollection<WorkRequest> WorkRequests { get; set; }
+        public virtual ICollection<SafetyDocument> SafetyDocuments { get; set; }
+        
 
         public Device()
         {

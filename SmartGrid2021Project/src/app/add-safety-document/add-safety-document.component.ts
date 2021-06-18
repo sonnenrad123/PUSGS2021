@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { SafetyDocumentService } from '../services/safety-documents/safety-document.service';
 
 @Component({
   selector: 'app-add-safety-document',
@@ -16,7 +18,7 @@ export class AddSafetyDocumentComponent implements OnInit {
   intervalFormCheck: any;
 
 
-  constructor(private router: Router) { 
+  constructor(private router: Router,private safetyDocService:SafetyDocumentService,private _snackBar: MatSnackBar) { 
     this.links = [
       {
         label: 'Basic Info',
@@ -87,10 +89,29 @@ submitSafetyDocument(){
   console.log("Submit safety document.");
   let basicInformationFormValue = JSON.parse(window.sessionStorage.getItem('AddSafetyDocumentBasicInformationForm'));
   let checkListFormValue = JSON.parse(window.sessionStorage.getItem('AddSafetyDocumentChecklist'))
-  
+  let creatorEmail = localStorage.getItem('user');
+
+  let safetyDocumentSelectedDevicestemp = JSON.parse(window.sessionStorage.getItem('safetyDocumentSelectedDevices'));
+  let deviceIds = "";
+    safetyDocumentSelectedDevicestemp.forEach(device => {
+      deviceIds = deviceIds + ';' + device.id;
+    });
+
+
   if(basicInformationFormValue != null && checkListFormValue != null){
-    console.log(window.sessionStorage.getItem('AddSafetyDocumentBasicInformationForm'));
-    console.log(window.sessionStorage.getItem('AddSafetyDocumentChecklist'));
+    let mergedObjects = {...basicInformationFormValue,...checkListFormValue,creatorEmail,deviceIds};
+    this.safetyDocService.addSafetyDocument(mergedObjects).subscribe(
+      response =>{
+        console.log(response);
+        window.sessionStorage.removeItem('AddSafetyDocumentBasicInformationForm');
+         window.sessionStorage.removeItem('AddSafetyDocumentChecklist');
+         window.sessionStorage.removeItem('safetyDocumentSelectedDevices');
+        this._snackBar.open('Safety document added!','Ok');
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
   else{
     this.triedToCrash = true;

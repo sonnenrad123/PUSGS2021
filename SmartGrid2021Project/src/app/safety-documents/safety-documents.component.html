@@ -27,10 +27,42 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
                     <td mat-cell *matCellDef="let row"> {{row.id}} </td>
                  </ng-container>
-                 <ng-container matColumnDef="startDate" sticky>
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
-                    <td mat-cell *matCellDef="let row"> {{row.startDate | date: "dd.MMM.yyyy"}} </td>
+                 <ng-container matColumnDef="type">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                  <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+               </ng-container>
+               <ng-container matColumnDef="safetyDocType">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> SafetyDoc Type </th>
+                  <td mat-cell *matCellDef="let row"> {{row.safetyDocType}} </td>
+               </ng-container>
+                 <ng-container matColumnDef="dateTimeCreated" sticky>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date/time created </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dateTimeCreated}} </td>
                  </ng-container>
+                 <ng-container matColumnDef="details" sticky>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Details </th>
+                  <td mat-cell *matCellDef="let row"> {{row.details}} </td>
+               </ng-container>
+               <ng-container matColumnDef="notes" sticky>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Notes </th>
+                  <td mat-cell *matCellDef="let row"> {{row.notes}} </td>
+               </ng-container>
+               <ng-container matColumnDef="workCompleted" sticky>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> WorkCompleted </th>
+                  <td mat-cell *matCellDef="let row"> {{row.workCompleted}} </td>
+               </ng-container>
+               <ng-container matColumnDef="tagsRemoved" sticky>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> TagsRemoved </th>
+                  <td mat-cell *matCellDef="let row"> {{row.tagsRemoved}} </td>
+               </ng-container>
+               <ng-container matColumnDef="groundingRemoved" sticky>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> GroundingRemoved </th>
+                  <td mat-cell *matCellDef="let row"> {{row.groundingRemoved}} </td>
+               </ng-container>
+               <ng-container matColumnDef="readyForService" sticky>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> ReadyForService</th>
+                  <td mat-cell *matCellDef="let row"> {{row.readyForService}} </td>
+               </ng-container>
                  <ng-container matColumnDef="phoneNo">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone No. </th>
                     <td mat-cell *matCellDef="let row"> {{row.phoneNo}} </td>
@@ -39,10 +71,7 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
                     <td mat-cell *matCellDef="let row"> {{row.status}} </td>
                  </ng-container>
-                 <ng-container matColumnDef="address">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
-                    <td mat-cell *matCellDef="let row"> {{row.address}} </td>
-                 </ng-container>
+                 
 
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
