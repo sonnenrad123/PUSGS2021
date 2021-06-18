@@ -1,5 +1,6 @@
 export enum WorkRequestDocumentState {
-    APPROVED = "APPROVED",
+    DRAFT = "DRAFT",
+    CANCELED = "CANCELED",
     DENIED = "DENIED",
-    CANCELED = "CANCELED"
+    APPROVED = "APPROVED"
 }

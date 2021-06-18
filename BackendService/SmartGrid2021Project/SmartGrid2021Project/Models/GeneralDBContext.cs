@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,5 +19,8 @@ namespace SmartGrid2021Project.Models
         public DbSet<Device> Devices { get; set; }
         public DbSet<Call> Calls { get; set; }
         
+        public DbSet<WorkRequest> WorkRequests { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<WRStateChange> WRStateChange { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Attachment } from 'src/app/models/common/attachment';
 import { WorkRequestsService } from 'src/app/services/work-request/work-requests.service';
 import { toBase64 } from 'src/app/utilities/utils';
 
@@ -13,20 +14,18 @@ export class MultimediaAttachmentsComponent implements OnInit {
   URL: string = "";
   imageBase64: string = "";
   images: string[] = [];
+  wrAttachments: Array<Attachment> = new Array<Attachment>();
+  attachment: Attachment = {id : 0, type : '', progress:0, toBase64:'', name:'', size:0};
+
   constructor(private wrService: WorkRequestsService, private router:Router) { }
 
   ngOnInit(): void {
-    if(WorkRequestsService.wrAttachments !== undefined){
-      this.images = WorkRequestsService.wrAttachments as any;
-      
-      /*(WorkRequestsService.wrAttachments as []).forEach(_ => {
-        fetch(_).then(res => res.blob()).then(blob => {
-          const file = new File([blob], "Attachment", {type: "image/png"});
-          this.files.push(file);
-        });
+    //window.sessionStorage.removeItem('WRMAttCurrValue');
+    if(window.sessionStorage.getItem('WRMAttCurrValue') !== null){      
+        this.files = JSON.parse(window.sessionStorage.getItem('WRMAttCurrValue')) as Array<any>; 
         console.log(this.files);
-      })*/
     }
+    
   }
 
   onFileDropped($event){
@@ -47,14 +46,19 @@ export class MultimediaAttachmentsComponent implements OnInit {
   prepareFilesList(files: Array<any>) {
     for (const item of files) {
         const file: File = item;
+        this.attachment = {id: 0, toBase64 : item.toBase64, name : file.name, progress:100, size: file.size, type: file.type};
+
         toBase64(file).then((value:any) => this.imageBase64 = value.toString()).then(_ =>  {
           item.toBase64 = this.imageBase64;
           this.images.push(this.imageBase64);
+          this.attachment.toBase64 = this.imageBase64;
+
         });
         
       item.progress = 0;
-     
       this.files.push(item);
+      
+      this.wrAttachments.push(this.attachment);
     }
     
     this.uploadFilesSimulator(0);
@@ -102,7 +106,7 @@ export class MultimediaAttachmentsComponent implements OnInit {
   }
 
   SaveChanges(){
-    this.wrService.SaveWRAttachments(this.images);
-    //console.log(this.images);
+    window.sessionStorage.removeItem('WRMAttCurrValue');
+    window.sessionStorage.setItem('WRMAttCurrValue', JSON.stringify(this.wrAttachments));
   }
 }

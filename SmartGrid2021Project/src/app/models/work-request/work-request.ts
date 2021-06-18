@@ -1,19 +1,28 @@
+import { Incident } from "src/app/incident-browser/incident-browser.component";
+import { Device } from "src/app/incident-devices-dialog/incident-devices-dialog.component";
+import { Attachment } from "../common/attachment";
+import { WRStateChange } from "../common/wrstate-change";
+import { WorkRequestDocumentType } from "../work-reques-doc-typet/work-request-document-type.enum";
 import { WrDocumentStatus } from "../wr-document-status/wr-document-status.enum";
-import { WorkRequestAttachments } from "./work-request-attachments";
-import { WorkRequestBasicInfo } from "./work-request-basic-info";
-import { WorkRequestEquipment } from "./work-request-equipment";
-import { WorkRequestStateChangesHistory } from "./work-request-state-changes-history";
+
 
 export class WorkRequest {
-    basicInfo: WorkRequestBasicInfo;
-    stateHistory: WorkRequestStateChangesHistory;
-    attachments: WorkRequestAttachments;
-    equipment: WorkRequestEquipment;
-
-    constructor(wrin: WorkRequestBasicInfo, his: WorkRequestStateChangesHistory, att: WorkRequestAttachments, equ: WorkRequestEquipment){
-        this.basicInfo = wrin;
-        this.stateHistory = his;
-        this.attachments = att;
-        this.equipment = equ;
-    }
+    typeOfDocument: WorkRequestDocumentType;
+    statusOfDocument: WrDocumentStatus;
+    createdBy: string;
+    dateTimeCreated: Date;
+    incident?: Incident;
+    emergencyWork: boolean;
+    startDateTime: Date;
+    endDateTime: Date;
+    phoneNo: number;
+    street: string;
+    company: string;
+    purpose: string;
+    details?: string;
+    notes?: string;
+    stateChangesHistory: Array<WRStateChange> = [];
+    attachments: Array<Attachment> = [];
+    equipment: Array<Device> = [];
+    
 }

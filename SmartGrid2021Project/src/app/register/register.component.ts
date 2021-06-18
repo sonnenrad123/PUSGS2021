@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationResponse } from '../models/common/authentication-response';
 import { NominatimResponse } from '../models/nominatim-response/nominatim-response.model';
 import { Team } from '../models/team/team';
 import { UserRole } from '../models/user-role/user-role.enum';
@@ -63,28 +64,22 @@ export class RegisterComponent implements OnInit {
   
   RegisterMethod(){
     
-    let address = this.form.controls['address'].value;
-    let found = false;
-      this.searchResults.forEach(result => {
-        if(result.displayName == address){
-          found = true;
-        }
-      });
-      if(found == false){
-        this.addressInvalid = true;
-        return;
-      }
-      this.addressInvalid = false;
-
-
     const user = this.form.value;
     if(this.form.controls['roleOfUser'].value === 'TEAM_MEMBER'){
       user.userTeam = this.userTeams.find(t => t.teamID == this.form.controls['userTeam'].value); 
     }else{
       user.userTeam = null;
     }
-    console.log(user);
-    this.userAccService.register(user);
+    //console.log(user);
+    this.userAccService.register(user).subscribe(
+      (data) => {
+        //console.log(data);
+        this.userAccService.saveToken(data as AuthenticationResponse);
+        this.router.navigate(["/login"])
+      },
+      (err) => {
+        console.log(err);
+      });
   }
   
   uploadImage($event:any){
@@ -105,6 +100,9 @@ export class RegisterComponent implements OnInit {
   
   get passwordconfirmation(): AbstractControl {
     return this.form.controls['passwordconfirmation'];
+  }
+  get Address(): AbstractControl {
+    return this.form.controls['address'];
   }
 
   userRolesKeys(): Array<string>{
@@ -151,14 +149,8 @@ export class RegisterComponent implements OnInit {
       if(field.hasError('required')){
         return 'The address field is required';
       }
-      let found = false;
-      this.searchResults.forEach(result => {
-        if(result.displayName == field.value){
-          found = true;
-        }
-      });
-      if(found == false){
-        return 'The address field is not valid';
+      if(field.hasError('formatViolation')){
+        return 'Incorrect address format! Press ENTER for searching...'
       }
     }
     return '';
@@ -247,7 +239,8 @@ export class RegisterComponent implements OnInit {
   getAddress(result: NominatimResponse){
     this.form.controls['address'].setValue(result.displayName);
   }
-  validateAddress(address:any){
+  onAddressChanged(){
+    let address = this.form.controls['address'].value;
     let found = false;
     this.searchResults.forEach(result => {
       if(result.displayName == address){
@@ -256,9 +249,12 @@ export class RegisterComponent implements OnInit {
     });
     if(found == false){
       this.addressInvalid = true;
+      this.Address.setErrors({formatViolation: true});
       return;
-    }
+    }else{
     this.addressInvalid = false;
+    this.Address.setErrors(null);
+    }
   }
 }
 

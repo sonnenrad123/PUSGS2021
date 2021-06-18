@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmartGrid2021Project.Models
 {
+    [Table("WRStateChanges")]
     public class WRStateChange
     {
         [Required]
@@ -17,16 +18,19 @@ namespace SmartGrid2021Project.Models
         [ForeignKey("ModifiedByUserId")]
         public int? ModifiedByUserId { get; set; }
 
+        [Column("ChangedByUser")]
+        public  string ChangedByUser { get; set; }
+
         [Column("ModifiedByUser")]        
-        public virtual AppUser ChangedByUser { get; set; }
+        public virtual AppUser ModifiedByUser { get; set; }
 
         [Required]
         [Column("DateModified", TypeName ="Date")]
         public DateTime ChangedOn { get; set; }
 
         [Required]
-        [Column("CurrentStatus", TypeName ="int")]
-        public WrDocumentStatus WRCurrentState { get; set; }
+        [Column("CurrentStatus", TypeName ="varchar(30)")]
+        public string WRCurrentState { get; set; }
 
 
         [ForeignKey("WorkReqId")]

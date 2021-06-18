@@ -6,9 +6,8 @@
                 <mat-form-field class="full-width" appearance="outline">
                     <mat-label>State of document*</mat-label>
                     <mat-select formControlName="WRCurrentState" name="WRCurrentState" id="WRCurrentState">
-                        <mat-option value="APPROVED">APPROVE</mat-option>
-                        <mat-option value="DENIED">DENY</mat-option>
-                        <mat-option value="CANCELED">CANCEL</mat-option>
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let status of WRDocStatusKeys()" value="{{status}}">{{status}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="Form.invalid">{{getErrorMessageWRCurrentState()}}</mat-error>
                 </mat-form-field>

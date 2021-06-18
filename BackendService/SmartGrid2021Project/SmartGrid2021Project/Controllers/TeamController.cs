@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartGrid2021Project.Models;
@@ -11,6 +14,7 @@ namespace SmartGrid2021Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
     public class TeamController : ControllerBase
     {
         private readonly GeneralDBContext _context;

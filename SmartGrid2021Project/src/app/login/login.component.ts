@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserAccountService } from '../services/user-account/user-account.service';
 import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login'
+import { AuthenticationResponse } from '../models/common/authentication-response';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent {
   login(){
     this.userService.login(this.loginForm.value).subscribe(
       (res: any) => {
-        localStorage.setItem('token', res.token);
+        this.userService.saveToken(res as AuthenticationResponse);
         localStorage.setItem('user', this.loginForm.get('userEmail').value);
         this.router.navigateByUrl('/test');
       },

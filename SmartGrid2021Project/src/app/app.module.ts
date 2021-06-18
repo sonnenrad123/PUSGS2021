@@ -60,7 +60,7 @@ import { IncidentCallsNewCallComponent } from './add-incident/incident-calls/inc
 import { SafetyDocumentsComponent } from './safety-documents/safety-documents.component';
 import { UserAccountService } from './services/user-account/user-account.service';
 import {IncidentServiceService } from './services/incident/incident-service.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddSafetyDocumentComponent } from './add-safety-document/add-safety-document.component';
 import { SafetyDocumentBasicInfoComponent } from './add-safety-document/safety-document-basic-info/safety-document-basic-info.component';
 import { SafetyDocumentStatesHistoryComponent } from './add-safety-document/safety-document-states-history/safety-document-states-history.component';
@@ -82,7 +82,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SelectCallerDialogComponent } from './add-incident/incident-calls/incident-calls-new-call/select-caller-dialog/select-caller-dialog.component'
 import {MatList, MatListModule} from '@angular/material/list';
 import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
-import { TeamDisplayComponent } from './teams/team-display/team-display/team-display.component'
+import { TeamDisplayComponent } from './teams/team-display/team-display/team-display.component';
+import { AvailableIncidentsDisplayComponent } from './incidents/available-incidents-display/available-incidents-display.component'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SecureViewComponent } from './security/secure-view/secure-view.component'
+import { JwtInterceptorService } from './security/jwt-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -134,7 +138,11 @@ import { TeamDisplayComponent } from './teams/team-display/team-display/team-dis
     SelectCallerDialogComponent,
     IncidentCrewComponent,
 
-    TeamDisplayComponent
+    TeamDisplayComponent,
+
+    AvailableIncidentsDisplayComponent,
+
+    SecureViewComponent
     
     
   ],
@@ -169,8 +177,8 @@ import { TeamDisplayComponent } from './teams/team-display/team-display/team-dis
     MatDialogModule,
     MatSnackBarModule,
     DragDropModule,
-    MatListModule
-    
+    MatListModule,
+    MatProgressSpinnerModule
   ],
   exports:[MatDatepickerModule],
   providers: 
@@ -193,7 +201,11 @@ import { TeamDisplayComponent } from './teams/team-display/team-display/team-dis
       } as SocialAuthServiceConfig,
     } ,
     NominatimService,
-    
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

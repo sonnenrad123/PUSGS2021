@@ -4,6 +4,7 @@ import {ROUTES} from "../../app/sidebar/sidebar.component";
 import { ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
+import { UserAccountService } from '../services/user-account/user-account.service';
 
 @Component({
   selector: 'navbar-cmp',
@@ -17,12 +18,12 @@ export class NavbarComponent implements OnInit {
   private listCTitles: any[] = [];
   user!: string;
   location! : Location;
-  constructor(location: Location,  private element: ElementRef, private router: Router, private oAuth: SocialAuthService) { 
+  constructor(location: Location,  private element: ElementRef, private router: Router, private oAuth: SocialAuthService, private userService: UserAccountService) { 
 
     this.location = location;
     this.sidebarVisible = false;
     //afAuth.authState.subscribe(x => this.user = x);
-    this.user = localStorage.getItem('user');
+    this.user = this.userService.getFieldFromJWT('email');
   }
 
   ngOnInit(): void {
@@ -61,6 +62,7 @@ export class NavbarComponent implements OnInit {
   logOut(){
     this.oAuth.signOut();
     localStorage.removeItem('user');
+    this.userService.logout();
     this.router.navigate(['/login']);
   }
 }

@@ -2,6 +2,8 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { WRStateChange } from 'src/app/models/common/wrstate-change';
+import { WorkRequestDocumentState } from 'src/app/models/work-reques-doc-state/work-request-document-state.enum';
 import { WorkRequestsService } from 'src/app/services/work-request/work-requests.service';
 
 @Component({
@@ -11,7 +13,7 @@ import { WorkRequestsService } from 'src/app/services/work-request/work-requests
 })
 export class ChangesHistoryComponent implements OnInit {
   Form : FormGroup;
-
+  documentStatus = WorkRequestDocumentState;
   constructor(private wrService: WorkRequestsService, private router:Router) { }
 
   ngOnInit(): void {
@@ -23,18 +25,17 @@ export class ChangesHistoryComponent implements OnInit {
 
     this.Form.controls['changedByUser'].setValue(localStorage.getItem('user'));
     this.Form.controls['changedOn'].setValue(formatDate(new Date(), "yyyy-MM-dd", "en_US"));
-
-    if(WorkRequestsService.wrStateChanged !== undefined){
-      this.Form.setValue({
-        changedByUser: WorkRequestsService.wrStateChanged.changedByUser,
-        changedOn: WorkRequestsService.wrStateChanged.changedOn,
-        WRCurrentState: WorkRequestsService.wrStateChanged.WRCurrentState
-      });
+    if(window.sessionStorage.getItem('WRCHCurrValue') !== null){
+      this.Form.patchValue(JSON.parse(window.sessionStorage.getItem('WRCHCurrValue')));
     }
   }
-
+  WRDocStatusKeys(): Array<string>{
+    var keys = Object.keys(this.documentStatus);
+    return keys;
+  }
   SaveChanges(){
-    this.wrService.SaveStateChanging(this.Form.value);
+    window.sessionStorage.removeItem('WRCHCurrValue');
+    window.sessionStorage.setItem('WRCHCurrValue', JSON.stringify(this.Form.value));
   }
   getErrorMessageWRCurrentState(){
     const field = this.Form.get('WRCurrentState');

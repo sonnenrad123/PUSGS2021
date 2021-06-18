@@ -19,6 +19,14 @@ namespace SmartGrid2021Project.Models
         Unplanned
     }
 
+    public enum TypeOfDocument
+    {
+        [Display(Name = "Planned Work")]
+        Planned_work,
+        [Display(Name = "Unplanned Work")]
+        Unplanned_work
+    }
+
     public enum IncidentStatus
     {
         Dispatched,Draft,Submited
@@ -26,7 +34,14 @@ namespace SmartGrid2021Project.Models
 
     public enum WrDocumentStatus
     {
-        Draft, Canceled, Denied, Approved
+        [Display(Name = "Draft")]
+        Draft,
+        [Display(Name = "Canceled")]
+        Canceled,
+        [Display(Name = "Denied")]
+        Denied,
+        [Display(Name = "Approved")]
+        Approved
     }
 
 }
