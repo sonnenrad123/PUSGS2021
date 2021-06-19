@@ -26,6 +26,7 @@ import OverlayPositioning from 'ol/OverlayPositioning';
 import { Incident } from '../incident-browser/incident-browser.component';
 import Stroke from 'ol/style/Stroke';
 import Fill from 'ol/style/Fill';
+import { MapService } from '../services/map/map.service';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -42,7 +43,8 @@ export class MapComponent implements OnInit {
   mapPoint: MapPoint;
   lastLayer:any;
   allIncidents: any[] = [];
-  constructor(private route: ActivatedRoute,private DeviceService:DeviceService, private incidentService: IncidentServiceService) { }
+  
+  constructor(private route: ActivatedRoute,private DeviceService:DeviceService, private mapService: MapService, private incService: IncidentServiceService) { }
   
   ngOnInit(): void {
     this.map = new Map({
@@ -66,18 +68,93 @@ export class MapComponent implements OnInit {
       });
     this.lastLayer = layer;
     this.map.addLayer(layer);
+    
+  
 
-    this.incidentService.getIncidents().subscribe(
+    this.map.on("click", (evt) => {
+      var feature = this.map.forEachFeatureAtPixel(evt.pixel, function(feature){
+        return feature;
+      });
+      if(feature){
+            //console.log((feature as Feature).get('IncID'));
+            this.incService.getIncident((feature as Feature).get('IncID')). subscribe(
+              (data) => {
+                console.log(data);
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+      }
+    });
+    var markerLayer = new VectorLayer({
+    
+      source: new VectorSource({
+        features:
+        []
+        }),
+      
+        style: new Style(
+          {
+            image: new Icon(
+              {
+                src: '../../assets/img/outline_report_problem_black_24dp.png', 
+                 
+              }
+              )
+            }
+          )
+      });
+      //Layer for sw plan markers
+      var markerTeamLayer = new VectorLayer({
+    
+        source: new VectorSource({
+          features:
+          []
+          }),
+        
+          style: new Style(
+            {
+              image: new Icon(
+                {
+                  src: '../../assets/img/images.png', 
+                   
+                }
+                )
+              }
+            )
+      });
+      var features: Array<Feature> = new Array<Feature>();
+      
+      this.map.addLayer(markerLayer);
+    this.mapService.getIncidentsForMap().subscribe(
       (data) => {
         console.log(data);
         this.allIncidents = data;
         for(var j = 0; j < this.allIncidents.length; j++){
           
             var latLon : string[] = this.allIncidents[j].devices[0].coordinates.split(' ');
+            var newFeat = new Feature({
+              geometry: new Point(olProj.fromLonLat([Number(latLon[4]), Number(latLon[1])]))
+            });
+            newFeat.set('IncID' , this.allIncidents[j].id.toString())
             
-            
-            
+            features.push(newFeat);
         }
+        markerLayer.setSource(new VectorSource({features}));
+        features = new Array<Feature>();
+      /*
+      //For switching plans
+        for(var j = 0; j < this.allIncidents.length; j++){
+          
+          var latLon : string[] = this.allIncidents[j].devices[0].coordinates.split(' ');
+          var newFeat = new Feature({
+            geometry: new Point(olProj.fromLonLat([Number(latLon[4])+0.100016, Number(latLon[1])-0.000009]))
+          })
+          features.push(newFeat);
+      }
+      markerTeamLayer.setSource(new VectorSource({features}));
+      this.map.addLayer(markerTeamLayer);*/
       },
       (err) => {
         console.log(err);

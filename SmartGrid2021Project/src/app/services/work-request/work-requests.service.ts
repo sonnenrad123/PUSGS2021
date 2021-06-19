@@ -24,10 +24,11 @@ export class WorkRequestsService {
     return this.http.get<WorkRequest>(environment.apiUrl + 'WorkRequest/GetWorkRequest?id='+id);
   }
 */
-  public getAllWRs(page: number, recordsPerPage:number): Observable<any>{
+  public getAllWRs(page: number = 0, recordsPerPage:number = 5, filterValue:string = ''): Observable<any>{
     let params = new HttpParams();
     params = params.append('page', page.toString());
     params = params.append('recordsPerPage', recordsPerPage.toString());
+    params = params.append('filterValue', filterValue.toString());
     return this.http.get<WorkRequest[]>(environment.apiUrl+'WorkRequest/GetAllWorkRequests', {observe: 'response', params});
   }
   

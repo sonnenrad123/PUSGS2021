@@ -25,13 +25,14 @@ export class WorkRequestsComponent implements OnInit {
   totalAmountOfRecords;
   currentPage = 1;
   pageSize = 5;
+  filterValue = 'gogo';
   isLoading = true;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
   workRequests: WorkRequest[];
-  
+  workRequestsCopy: WorkRequest[];
   constructor(private router: Router, private wrService: WorkRequestsService) { 
   }
   
@@ -44,10 +45,11 @@ export class WorkRequestsComponent implements OnInit {
   }
  
   loadWRs(){
-    this.wrService.getAllWRs(this.currentPage, this.pageSize).subscribe(
+    this.wrService.getAllWRs(this.currentPage, this.pageSize, this.filterValue).subscribe(
       (response: HttpResponse<WorkRequest[]>) => {
         //console.log(response);
         this.workRequests = response.body;
+        this.workRequestsCopy = response.body;
         this.totalAmountOfRecords = response.headers.get("totalAmountOfRecords");
         this.dataSource = new MatTableDataSource(this.workRequests);
         //this.dataSource.paginator = this.paginator;
@@ -68,42 +70,13 @@ export class WorkRequestsComponent implements OnInit {
   showAllWorkRequests(){
     this.toggleAll = true;
     this.toggleMy = false;
-    this.wrService.getAllWRs(this.currentPage, this.pageSize).subscribe(
-      (response: HttpResponse<WorkRequest[]>) => {
-        //console.log(response.body);
-        this.workRequests = response.body;
-        this.totalAmountOfRecords = response.headers.get("totalAmountOfRecords");
-        this.dataSource = new MatTableDataSource(this.workRequests);
-        this.isLoading = false;
-        
-
-      },
-      (err) => {
-        console.log(err);
-        this.isLoading = false;
-
-      }
-      );
+    this.workRequests = this.workRequestsCopy;
     
   }
   showMyWorkRequests(){
     this.toggleAll = false;
     this.toggleMy = true;
-    this.wrService.getAllWRs(this.currentPage, this.pageSize).subscribe(
-      (response: HttpResponse<WorkRequest[]>) => {
-        //console.log(response);
-        this.workRequests = response.body;
-        this.workRequests = this.workRequests.filter(item1 => item1.createdBy.toString() === localStorage.getItem('user').toString());
-        this.totalAmountOfRecords = response.headers.get("totalAmountOfRecords");
-        this.dataSource = new MatTableDataSource(this.workRequests);
-        this.isLoading = false;
-
-      },
-      (err) => {
-        console.log(err);
-        this.isLoading = false;
-      }
-      );
+    this.workRequests = this.workRequestsCopy.filter(wr => wr.createdBy.toString() === localStorage.getItem('user'));
   }
   
   CreateNewWR(){

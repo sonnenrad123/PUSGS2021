@@ -49,6 +49,17 @@
     height: auto;
     justify-content: center;
   }
+  .custom-card1 {
+    width: 100% !important;
+    display: inline-block !important;
+    position: relative !important;
+    margin-top: 2rem;
+    margin-right: 2rem;
+    align-items: center;
+    
+    height: auto;
+    justify-content: center;
+  }
   sup {
     vertical-align: super;
     font-size: smaller;

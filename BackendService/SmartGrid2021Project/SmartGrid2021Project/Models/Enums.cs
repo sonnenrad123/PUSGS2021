@@ -29,7 +29,7 @@ namespace SmartGrid2021Project.Models
 
     public enum IncidentStatus
     {
-        Dispatched,Draft,Submited
+        Dispatched,Draft,Submitted
     }
 
     public enum WrDocumentStatus

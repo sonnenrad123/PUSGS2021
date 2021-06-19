@@ -3,23 +3,16 @@
 .mat-header-cell {
 word-wrap: initial;
 display: table-cell;
-padding: 0px 30px;
+padding: 0px 10px;
+line-break: unset;
 
 white-space: nowrap;
 overflow: hidden;
 vertical-align: middle;
 }
-
-
-
-
-table{
-    width: 100%;
-    
-}
-
 .main-table{
   
-    overflow-y:hidden;
-    overflow-x:scroll;
-  }
+  overflow-y:hidden;
+  overflow-x:scroll;
+}
+
