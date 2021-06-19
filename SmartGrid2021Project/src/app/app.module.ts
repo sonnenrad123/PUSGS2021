@@ -91,6 +91,7 @@ import { AddPlanStateChangeHistoryComponent } from './add-switching-plan/add-pla
 import { AddPlanEquipmentComponent } from './add-switching-plan/add-plan-equipment/add-plan-equipment.component';
 import { AddPlanAttachmentsComponent } from './add-switching-plan/add-plan-attachments/add-plan-attachments.component';
 import { AddPlanWorkInstructionsComponent } from './add-switching-plan/add-plan-work-instructions/add-plan-work-instructions.component';
+import { ReportOutageDialogComponent } from './report-outage-dialog/report-outage-dialog.component';
 
 
 
@@ -153,7 +154,8 @@ import { AddPlanWorkInstructionsComponent } from './add-switching-plan/add-plan-
     AddPlanStateChangeHistoryComponent,
     AddPlanEquipmentComponent,
     AddPlanAttachmentsComponent,
-    AddPlanWorkInstructionsComponent
+    AddPlanWorkInstructionsComponent,
+    ReportOutageDialogComponent
     
     
   ],

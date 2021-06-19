@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ReportOutageDialogComponent } from '../report-outage-dialog/report-outage-dialog.component';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -10,8 +12,12 @@ declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
+
     { path: '/SearchNetworkElements', title:'Search', icon: 'pe-7s-search',class:''},
+    { path: '/Report', title: 'Report', icon: 'fa fa-phone', class: ''},
+
     { path: '/NoRoute',title:'Dashboard',icon:'pe-7s-graph',class:''},
+    
     { path: '/IncidentBrowser',title:'Incidents browser', icon: 'pe-7s-note2',class:''}, 
     
     { path: '/map', title: 'Map', icon: 'pe-7s-map', class:''},
@@ -63,12 +69,11 @@ export class SidebarComponent implements OnInit {
   menuItems!: any[];
   showSubMenu: boolean;
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.showSubMenu = false;
-    
 
   }
   isMobileMenu() {
@@ -80,5 +85,15 @@ export class SidebarComponent implements OnInit {
 hideShowSubmenu(){
   this.showSubMenu = !this.showSubMenu;
   console.log(this.showSubMenu);
+}
+
+reportDialog(){
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.disableClose = true;
+  dialogConfig.autoFocus = true;
+  const dialogRef = this.dialog.open(ReportOutageDialogComponent, dialogConfig);
+  dialogRef.afterClosed().subscribe(
+    data => {
+    });
 }
 }

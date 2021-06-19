@@ -22,8 +22,9 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Address</mat-label>
-                                        <input matInput (change)="validateAddress($any($event.target).value)" (click)="$event.stopPropagation()" (keyup.enter)="addressLookup($any($event.target).value)" placeholder="Search address" formControlName="street" type="text" name="street" id="street" />
+                                        <input matInput (change)="validateAddress($any($event.target).value)" (click)="$event.stopPropagation()" (focus)="validateAddress($any($event.target).value)" (keyup.enter)="addressLookup($any($event.target).value)" placeholder="Search address" formControlName="street" type="text" name="street" id="street" />
                                         <app-results-list [results]="searchResults" (locationSelected)="getAddress($event)"></app-results-list>
+                                        <div *ngIf="addressInvalid" style="color: red;">Address is not valid.</div>
                                     </mat-form-field>
                                 </div>
                             </div>

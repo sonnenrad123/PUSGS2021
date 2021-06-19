@@ -10,7 +10,12 @@
     <ul class="nav responsive-nav">
         
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}}" >
-            <a *ngIf="menuItem.class != 'secondary' && menuItem.path !== '/docs'" [routerLink]="[menuItem.path]">
+            <a *ngIf="menuItem.path === '/Report'" (click)="reportDialog()" class="menuItem.class" style="cursor: pointer;" >
+                <i class="{{menuItem.icon}}"></i>
+                <p>{{menuItem.title}}
+                </p>
+            </a>
+            <a *ngIf="menuItem.class != 'secondary' && menuItem.path !== '/docs' && menuItem.path !== '/Report'" [routerLink]="[menuItem.path]">
                 <i class="{{menuItem.icon}}"></i>
                 <p>{{menuItem.title}}</p>
             </a>
@@ -34,7 +39,7 @@
                 
             
         </li>
-        <ul class="nav responsive-nav bottom">
+        <ul class="nav responsive-nav bottom" >
             <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="bottom">
                 <a *ngIf="menuItem.class == 'secondary'" [routerLink]="[menuItem.path]">
                     <i class="{{menuItem.icon}}"></i>

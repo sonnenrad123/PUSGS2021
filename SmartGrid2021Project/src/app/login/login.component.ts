@@ -3,6 +3,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserAccountService } from '../services/user-account/user-account.service';
 import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login'
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { ReportOutageDialogComponent } from '../report-outage-dialog/report-outage-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +18,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   socialProvider = "google";
 
-  constructor(private router: Router, private userService: UserAccountService, public OAuth: SocialAuthService) {
+  constructor(private _snackBar: MatSnackBar, private router: Router, private userService: UserAccountService, public OAuth: SocialAuthService,private dialog: MatDialog) {
     this.loginForm = new FormGroup({
       userEmail:  new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)])
@@ -65,8 +70,15 @@ export class LoginComponent {
   }
 
   reportOutage(){
-    this.router.navigate(['/test']);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    const dialogRef = this.dialog.open(ReportOutageDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+      });
   }
+    
   getErrorMessageEmail(){
     const field = this.loginForm.get('userEmail');
     
