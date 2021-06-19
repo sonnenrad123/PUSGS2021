@@ -86,8 +86,8 @@ namespace SmartGrid2021Project
                 options.ClientSecret = "tkcBliTz77B8tK2Zw838YbIo";
             }).AddFacebook(options =>
             {
-                options.ClientId = "152655660256522";
-                options.ClientSecret = "44d5558c0c3aa650f1782cc4d14deebd";
+                options.ClientId = "851355719107055";
+                options.ClientSecret = "afdf3fe0d99e4926f00cd4b2addd7e3e";
             });
 
             services.AddAuthorization(options =>

@@ -10,7 +10,7 @@ namespace SmartGrid2021Project.Models
         public int Page { get; set; } = 1;
         private int recordsPerPage = 5;
         private readonly int maxAmount = 25;
-
+        public string FilterValue { get; set; }
         public int RecordsPerPage 
         {
             get

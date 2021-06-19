@@ -24,6 +24,9 @@
     ".NETCoreApp,Version=v3.1": {
       "SmartGrid2021Project/1.0.0": {
         "dependencies": {
+          "Facebook.Api": "1.0.5",
+          "Google.Apis.Auth": "1.52.0",
+          "Google.Apis.PeopleService.v1": "1.52.0.2357",
           "MailKit": "2.11.1",
           "Microsoft.AspNetCore.Authentication.AzureAD.UI": "3.1.14",
           "Microsoft.AspNetCore.Authentication.Facebook": "3.1.14",
@@ -311,6 +314,84 @@
         },
         "compile": {
           "SmartGrid2021Project.dll": {}
+        }
+      },
+      "Facebook.Api/1.0.5": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "OpenSSL.X509Certificate2.Provider": "1.2.0"
+        },
+        "runtime": {
+          "lib/CloudrailSI.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/CloudrailSI.dll": {}
+        }
+      },
+      "Google.Apis/1.52.0": {
+        "dependencies": {
+          "Google.Apis.Core": "1.52.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.dll": {
+            "assemblyVersion": "1.52.0.0",
+            "fileVersion": "1.52.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.dll": {}
+        }
+      },
+      "Google.Apis.Auth/1.52.0": {
+        "dependencies": {
+          "Google.Apis": "1.52.0",
+          "Google.Apis.Core": "1.52.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {
+            "assemblyVersion": "1.52.0.0",
+            "fileVersion": "1.52.0.0"
+          },
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {
+            "assemblyVersion": "1.52.0.0",
+            "fileVersion": "1.52.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {}
+        }
+      },
+      "Google.Apis.Core/1.52.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Core.dll": {
+            "assemblyVersion": "1.52.0.0",
+            "fileVersion": "1.52.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.Core.dll": {}
+        }
+      },
+      "Google.Apis.PeopleService.v1/1.52.0.2357": {
+        "dependencies": {
+          "Google.Apis": "1.52.0",
+          "Google.Apis.Auth": "1.52.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.PeopleService.v1.dll": {
+            "assemblyVersion": "1.52.0.2357",
+            "fileVersion": "1.52.0.2357"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.PeopleService.v1.dll": {}
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -1653,6 +1734,31 @@
         },
         "compile": {
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
+        }
+      },
+      "OpenSSL.PrivateKeyDecoder/1.2.0": {
+        "runtime": {
+          "lib/netstandard2.0/OpenSSL.PrivateKeyDecoder.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/OpenSSL.PrivateKeyDecoder.dll": {}
+        }
+      },
+      "OpenSSL.X509Certificate2.Provider/1.2.0": {
+        "dependencies": {
+          "OpenSSL.PrivateKeyDecoder": "1.2.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/OpenSSL.X509Certificate2.Provider.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/OpenSSL.X509Certificate2.Provider.dll": {}
         }
       },
       "Portable.BouncyCastle/1.8.10": {
@@ -4385,6 +4491,41 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Facebook.Api/1.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iqD7PxSY0M8ya5rrXpfnP9pt5usBdDfcXrcqf/BlDSLBwBYk7gai4uoAEUIR9AC9TfeGOZueVz/LL6ItxmeVXA==",
+      "path": "facebook.api/1.0.5",
+      "hashPath": "facebook.api.1.0.5.nupkg.sha512"
+    },
+    "Google.Apis/1.52.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5YWTBzHuNUiYIUoIBkCGYMokyYuaOuAn+w96lIJ2WNqeiAurKq3ZLqZ86fYae32PDWHZa+itFYc9O1iVfYi5dQ==",
+      "path": "google.apis/1.52.0",
+      "hashPath": "google.apis.1.52.0.nupkg.sha512"
+    },
+    "Google.Apis.Auth/1.52.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-T7JKjq4zmk8b4lrOn+kyatgDQdLytoV+i6Fw4agyWlm4Q+bbZbu3DcCz+UuliEtXHbShgHD1PWfiMJoQGuPEog==",
+      "path": "google.apis.auth/1.52.0",
+      "hashPath": "google.apis.auth.1.52.0.nupkg.sha512"
+    },
+    "Google.Apis.Core/1.52.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cgQpnZ9IC5SBNsAFTXHKUMB8bOkBWPLtXcLgwSYkV8oL0FfUdHwrDzH5qrf/mFB9fQIPgJyV6tdUwf2hu1UJ+A==",
+      "path": "google.apis.core/1.52.0",
+      "hashPath": "google.apis.core.1.52.0.nupkg.sha512"
+    },
+    "Google.Apis.PeopleService.v1/1.52.0.2357": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IQUVIxJr9uua7zz6WpHxFskKIATcSrii9wLNFlilpU7FF9Qtkd2zDu73ksVy62SyUaAI2wcrnvt05TyJH3jw5Q==",
+      "path": "google.apis.peopleservice.v1/1.52.0.2357",
+      "hashPath": "google.apis.peopleservice.v1.1.52.0.2357.nupkg.sha512"
+    },
     "Humanizer.Core/2.8.26": {
       "type": "package",
       "serviceable": true,
@@ -5042,6 +5183,20 @@
       "sha512": "sha512-qbXaB76XYUVLocLBs8Z9TS/ERGK2wm797feO+0JEPFvT7o7MRadOR77mqaSD4J1k8G+DlZQyq+MlkCuxrkr3ag==",
       "path": "nuget.frameworks/4.7.0",
       "hashPath": "nuget.frameworks.4.7.0.nupkg.sha512"
+    },
+    "OpenSSL.PrivateKeyDecoder/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2+NGfjqjpIyXEVtsEg5ML7E6bzPGiw6RtH0a7rUhtAEBWWo/d/7uI/TKtHW+/EPO4E/0Gpz4ozG2ETqOAhpmVw==",
+      "path": "openssl.privatekeydecoder/1.2.0",
+      "hashPath": "openssl.privatekeydecoder.1.2.0.nupkg.sha512"
+    },
+    "OpenSSL.X509Certificate2.Provider/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mXoKvCxJHgzIIxvC3VQ1QZC4KeyLUDuxIVD2DAzEJG7aLOC+zvlE0QsNG1tNbp/1eoI0u0RHnM8UL/y88vdiRQ==",
+      "path": "openssl.x509certificate2.provider/1.2.0",
+      "hashPath": "openssl.x509certificate2.provider.1.2.0.nupkg.sha512"
     },
     "Portable.BouncyCastle/1.8.10": {
       "type": "package",

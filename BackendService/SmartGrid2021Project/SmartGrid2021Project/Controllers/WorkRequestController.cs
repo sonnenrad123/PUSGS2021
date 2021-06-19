@@ -91,7 +91,7 @@ namespace SmartGrid2021Project.Controllers
                     var appUser = _context.AppUsers.Where(_ => _.Email.Equals(wr.CreatedBy)).SingleOrDefault();
                     if(appUser != null)
                     {
-                        workRequestfromDb.AppUserId = appUser.Id;
+                        workRequestfromDb.AppUserId = appUser.IdNum;
                         workRequestfromDb.AppUser = appUser;
                     }
                 }
@@ -152,6 +152,111 @@ namespace SmartGrid2021Project.Controllers
                     
                 
             }catch(Exception e)
+            {
+
+            }
+            throw new Exception();
+        }
+
+        [HttpPost]
+        [Route("UpdateWorkRequest")]
+        public async Task<ActionResult<WorkRequest>> UpdateWorkRequest(WorkRequest wr)
+        {
+
+            try
+            {
+
+                var workRequestfromDb = _context.WorkRequests.Where(_ => _.WR_id == wr.WR_id).SingleOrDefault();
+                if (workRequestfromDb == null)
+                {
+                    workRequestfromDb = new WorkRequest()
+                    {
+                        TypeOfDocument = wr.TypeOfDocument,
+                        Street = wr.Street,
+                        Company = wr.Company,
+                        CreatedBy = wr.CreatedBy,
+                        DateTimeCreated = wr.DateTimeCreated,
+                        Details = wr.Details,
+                        EmergencyWork = wr.EmergencyWork,
+                        EndDateTime = wr.EndDateTime,
+                        Notes = wr.Notes,
+                        PhoneNo = wr.PhoneNo,
+                        Purpose = wr.Purpose,
+                        StartDateTime = wr.StartDateTime,
+                        StatusOfDocument = wr.StatusOfDocument,
+
+                    };
+
+                    _context.WorkRequests.Add(workRequestfromDb);
+                }
+
+                if (!String.IsNullOrWhiteSpace(wr.CreatedBy))
+                {
+                    var appUser = _context.AppUsers.Where(_ => _.Email.Equals(wr.CreatedBy)).SingleOrDefault();
+                    if (appUser != null)
+                    {
+                        workRequestfromDb.AppUserId = appUser.IdNum;
+                        workRequestfromDb.AppUser = appUser;
+                    }
+                }
+
+                if (wr.Incident != null)
+                {
+                    workRequestfromDb.IncidentId = wr.Incident.Id;
+                    var inc = _context.Incidents.FirstOrDefault(_ => _.Id == wr.Incident.Id);
+                    if (inc != null)
+                    {
+                        workRequestfromDb.Incident = inc;
+                        _context.SaveChanges();
+                    }
+                }
+
+                if (wr.Attachments != null)
+                {
+                    if (wr.Attachments.Count > 0)
+                    {
+                        foreach (Attachment d in wr.Attachments)
+                        {
+                            workRequestfromDb.Attachments.Add(d);
+                        }
+
+                    }
+                }
+
+
+                if (wr.StateChangesHistory.Count > 0)
+                {
+                    workRequestfromDb.StateChangesHistory.Add(wr.StateChangesHistory.First());
+                }
+
+
+                if (wr.Equipment != null)
+                {
+                    if (wr.Equipment.Count > 0)
+                    {
+                        foreach (Device d in wr.Equipment)
+                        {
+                            var fromDbDevice = _context.Devices.Where(_ => _.Id == d.Id).SingleOrDefault();
+                            if (fromDbDevice != null)
+                            {
+                                workRequestfromDb.Equipment.Add(fromDbDevice);
+
+                            }
+                            else
+                            {
+                                workRequestfromDb.Equipment.Add(d);
+                            }
+                        }
+                    }
+                }
+
+
+                await _context.SaveChangesAsync();
+                return Ok();
+
+
+            }
+            catch (Exception e)
             {
 
             }

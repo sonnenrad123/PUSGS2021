@@ -75,7 +75,7 @@ import { ResultsListComponent } from './results-list/results-list.component';
 import { MapPointFormComponent } from './map-point-form/map-point-form.component';
 import { IncidentDevicesDialogComponent } from './incident-devices-dialog/incident-devices-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import { DeviceLocationDialogComponent } from './device-location-dialog/device-location-dialog.component';
 import { AllUsersComponent } from './admin-access/all-users/all-users/all-users.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -87,6 +87,9 @@ import { AvailableIncidentsDisplayComponent } from './incidents/available-incide
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SecureViewComponent } from './security/secure-view/secure-view.component'
 import { JwtInterceptorService } from './security/jwt-interceptor.service';
+import { SocialLoginStepDisplayComponent } from './security/social-login-step-display/social-login-step-display.component';
+import { FbSocialLoginStepDisplayComponent } from './security/fb-social-login-step-display/fb-social-login-step-display.component';
+import { ChartsModule } from 'ng2-charts'
 @NgModule({
   declarations: [
     AppComponent,
@@ -142,7 +145,11 @@ import { JwtInterceptorService } from './security/jwt-interceptor.service';
 
     AvailableIncidentsDisplayComponent,
 
-    SecureViewComponent
+    SecureViewComponent,
+
+    SocialLoginStepDisplayComponent,
+
+    FbSocialLoginStepDisplayComponent
     
     
   ],
@@ -178,7 +185,8 @@ import { JwtInterceptorService } from './security/jwt-interceptor.service';
     MatSnackBarModule,
     DragDropModule,
     MatListModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ChartsModule
   ],
   exports:[MatDatepickerModule],
   providers: 
@@ -195,7 +203,7 @@ import { JwtInterceptorService } from './security/jwt-interceptor.service';
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('152655660256522')
+            provider: new FacebookLoginProvider('851355719107055')
           }
         ]
       } as SocialAuthServiceConfig,
@@ -205,6 +213,9 @@ import { JwtInterceptorService } from './security/jwt-interceptor.service';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptorService,
       multi: true
+    },
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3500}
     }
   ],
   bootstrap: [AppComponent],

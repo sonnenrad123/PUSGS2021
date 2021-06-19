@@ -15,8 +15,9 @@
                   <b>Username: </b>{{user.userName}}
                 </p>
                 <p><b>Email: </b>{{user.email}}</p>
-                <p><b>Address: </b>{{user.address}}</p>
-                <p><b>Bday: </b>{{user.dateOfBirth}}</p>
+                <p *ngIf="user.address.length <= 115"><b>Address: </b>{{user.address.toString()}}</p>
+                <p *ngIf="user.address.length > 115"><b>Address: </b>{{user.address.toString().substring(0, 115)}}...</p>
+                <p><b>Bday: </b>{{user.dateOfBirth.split('T')[0] | date}}</p>
               </mat-card-content>
             </div>
               <div style="border-top: 1px solid lightblue;">
