@@ -29,7 +29,8 @@ namespace SmartGrid2021Project.Controllers
                 var queryable = _context.WorkRequests.Include(_ => _.AppUser)
                                                      .Include(_ => _.Attachments)
                                                      .Include(_ => _.Equipment)
-                                                     .Include(_ => _.StateChangesHistory).AsQueryable();
+                                                     .Include(_ => _.StateChangesHistory)
+                                                     .Include(_ => _.Incident).AsQueryable();
                 await HttpContext.InsertParametersPaginationInHeader(queryable);
                 var wrs = await queryable.OrderBy(_ => _.WR_id).Paginate(paginationDTO).ToListAsync();
                 return wrs;
@@ -45,10 +46,12 @@ namespace SmartGrid2021Project.Controllers
         [Route("GetWorkRequest")]
         public async Task<ActionResult<WorkRequest>> GetWorkRequest([FromQuery]int id)
         {
-            return await _context.WorkRequests.Where(_ => _.WR_id == id).Include(_ => _.AppUser)
+            return await _context.WorkRequests.Where(_ => _.WR_id == id)
+                                               .Include(_ => _.AppUser)
                                                .Include(_ => _.Attachments)
                                                .Include(_ => _.Equipment)
                                                .Include(_ => _.StateChangesHistory)
+                                               .Include(_ => _.Incident)
                                                .SingleOrDefaultAsync();
             return Ok();
         }
@@ -166,28 +169,15 @@ namespace SmartGrid2021Project.Controllers
             try
             {
 
-                var workRequestfromDb = _context.WorkRequests.Where(_ => _.WR_id == wr.WR_id).SingleOrDefault();
-                if (workRequestfromDb == null)
+                var workRequestfromDb =  await _context.WorkRequests.Where(_ => _.WR_id == wr.WR_id).Include(_ => _.AppUser)
+                                               .Include(_ => _.Attachments)
+                                               .Include(_ => _.Equipment)
+                                               .Include(_ => _.StateChangesHistory)
+                                               .Include(_ => _.Incident)
+                                               .SingleOrDefaultAsync();
+                if (workRequestfromDb != null)
                 {
-                    workRequestfromDb = new WorkRequest()
-                    {
-                        TypeOfDocument = wr.TypeOfDocument,
-                        Street = wr.Street,
-                        Company = wr.Company,
-                        CreatedBy = wr.CreatedBy,
-                        DateTimeCreated = wr.DateTimeCreated,
-                        Details = wr.Details,
-                        EmergencyWork = wr.EmergencyWork,
-                        EndDateTime = wr.EndDateTime,
-                        Notes = wr.Notes,
-                        PhoneNo = wr.PhoneNo,
-                        Purpose = wr.Purpose,
-                        StartDateTime = wr.StartDateTime,
-                        StatusOfDocument = wr.StatusOfDocument,
-
-                    };
-
-                    _context.WorkRequests.Add(workRequestfromDb);
+                    _context.Entry(workRequestfromDb).CurrentValues.SetValues(wr);
                 }
 
                 if (!String.IsNullOrWhiteSpace(wr.CreatedBy))
@@ -226,7 +216,7 @@ namespace SmartGrid2021Project.Controllers
 
                 if (wr.StateChangesHistory.Count > 0)
                 {
-                    workRequestfromDb.StateChangesHistory.Add(wr.StateChangesHistory.First());
+                    workRequestfromDb.StateChangesHistory.Add(wr.StateChangesHistory.Last());
                 }
 
 

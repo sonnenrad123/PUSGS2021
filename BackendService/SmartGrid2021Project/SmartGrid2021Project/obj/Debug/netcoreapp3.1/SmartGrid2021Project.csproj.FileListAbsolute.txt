@@ -384,3 +384,18 @@ E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Pro
 E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\OpenSSL.PrivateKeyDecoder.dll
 E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\OpenSSL.X509Certificate2.Provider.dll
 >>>>>>> origin/FeatureBranch/WorkOnMap
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\SmartGrid2021Project.Views.dll
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\SmartGrid2021Project.Views.pdb
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\SmartGrid2021Project.RazorAssemblyInfo.cache
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\SmartGrid2021Project.RazorAssemblyInfo.cs
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\SmartGrid2021Project.TagHelpers.input.cache
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\SmartGrid2021Project.TagHelpers.output.cache
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\SmartGrid2021Project.RazorCoreGenerate.cache
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\Razor\Views\SafetyDocuments\Create.cshtml.g.cs
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\Razor\Views\SafetyDocuments\Delete.cshtml.g.cs
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\Razor\Views\SafetyDocuments\Details.cshtml.g.cs
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\Razor\Views\SafetyDocuments\Edit.cshtml.g.cs
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\Razor\Views\SafetyDocuments\Index.cshtml.g.cs
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\SmartGrid2021Project.RazorTargetAssemblyInfo.cs
+E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\obj\Debug\netcoreapp3.1\SmartGrid2021Project.Views.pdb

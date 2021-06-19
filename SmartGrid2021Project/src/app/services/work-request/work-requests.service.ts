@@ -20,10 +20,10 @@ export class WorkRequestsService {
 
   constructor(private http:HttpClient) { }
   
-  /*public get(id){
+  public get(id){
     return this.http.get<WorkRequest>(environment.apiUrl + 'WorkRequest/GetWorkRequest?id='+id);
   }
-*/
+
   public getAllWRs(page: number = 0, recordsPerPage:number = 5, filterValue:string = ''): Observable<any>{
     let params = new HttpParams();
     params = params.append('page', page.toString());
@@ -31,19 +31,7 @@ export class WorkRequestsService {
     params = params.append('filterValue', filterValue.toString());
     return this.http.get<WorkRequest[]>(environment.apiUrl+'WorkRequest/GetAllWorkRequests', {observe: 'response', params});
   }
-  
-  /*public getAllWRs(filter= '', sortOrder= 'asc', pageNumber = 0, pageSize = 3){
-    return this.http.get<Array<WorkRequest>>(environment.apiUrl+'WorkRequest/GetAllWorkRequests', {
-           params: new HttpParams()
-             .set('filter', filter)
-             .set('sortOrder', sortOrder)
-             .set('pageNumber', pageNumber.toString())
-             .set('pageSize', pageSize.toString())
-          }).pipe(
-              map(res => res["payload"])
-            );
-  }*/
-
+ 
   public CreateNewWR(){
       let bInfo = JSON.parse(window.sessionStorage.getItem('WRBICurrValue'));
       let stateChange : WRStateChange = {WRCurrentState :WorkRequestDocumentState.DRAFT, changedByUser: localStorage.getItem('user').toString(), changedOn: new Date() }
@@ -63,14 +51,43 @@ export class WorkRequestsService {
                              typeOfDocument: bInfo.typeOfDocument === "PLANNED_WORK" ? WorkRequestDocumentType.PLANNED_WORK: WorkRequestDocumentType.UNPLANNED_WORK,
                              details: bInfo.details,
                              incident: bInfo.incident,
-                             notes: bInfo.notes
+                             notes: bInfo.notes,
+                             wR_id : bInfo.wR_id
                             };
       wr.stateChangesHistory.push(stateChange);
       console.log(wr);
-      window.sessionStorage.removeItem('WRBICurrValue');
-      window.sessionStorage.removeItem('WRCHCurrValue');
-      window.sessionStorage.removeItem('WRMAttCurrValue');
-      window.sessionStorage.removeItem('WREquCurrValue');
+      
+
       return this.http.post(environment.apiUrl + "WorkRequest/CreateNewWorkRequest", wr);
   }
+
+  public UpdateWR(){
+    let bInfo = JSON.parse(window.sessionStorage.getItem('WRBICurrValue'));
+    let stateChange : WRStateChange[] = JSON.parse(window.sessionStorage.getItem('WRCHCurrValue'));
+    stateChange.push(JSON.parse(window.sessionStorage.getItem('LastWRCH')));
+    
+    let wr: WorkRequest = {equipment: JSON.parse(window.sessionStorage.getItem('WREquCurrValue')),
+                           attachments: JSON.parse(window.sessionStorage.getItem('WRMAttCurrValue')),
+                           stateChangesHistory: new Array<WRStateChange>(),
+                           company: bInfo.company,
+                           createdBy: bInfo.createdBy,
+                           dateTimeCreated: bInfo.dateTimeCreated,
+                           emergencyWork: bInfo.emergencyWork === "" ? false : true,
+                           endDateTime: bInfo.endDateTime,
+                           phoneNo: bInfo.phoneNo,
+                           purpose: bInfo.purpose,
+                           startDateTime: bInfo.startDateTime,
+                           statusOfDocument: JSON.parse(window.sessionStorage.getItem('LastWRCH')).WRCurrentState,
+                           street: bInfo.street,
+                           typeOfDocument: bInfo.typeOfDocument === "PLANNED_WORK" ? WorkRequestDocumentType.PLANNED_WORK: WorkRequestDocumentType.UNPLANNED_WORK,
+                           details: bInfo.details,
+                           incident: bInfo.incident,
+                           notes: bInfo.notes,
+                           wR_id : JSON.parse(window.sessionStorage.getItem('WR_ID'))
+                          };
+    wr.stateChangesHistory = stateChange;
+    console.log(wr);
+    
+    return this.http.post(environment.apiUrl + "WorkRequest/UpdateWorkRequest", wr);
+}
 }

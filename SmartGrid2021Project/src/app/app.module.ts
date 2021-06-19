@@ -89,7 +89,9 @@ import { SecureViewComponent } from './security/secure-view/secure-view.componen
 import { JwtInterceptorService } from './security/jwt-interceptor.service';
 import { SocialLoginStepDisplayComponent } from './security/social-login-step-display/social-login-step-display.component';
 import { FbSocialLoginStepDisplayComponent } from './security/fb-social-login-step-display/fb-social-login-step-display.component';
-import { ChartsModule } from 'ng2-charts'
+import { ChartsModule } from 'ng2-charts';
+import { SaveChangesComponent } from './security/save-changes/save-changes.component';
+import { DisplayServerErrorsComponent } from './utilities/display-server-errors/display-server-errors.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -149,7 +151,11 @@ import { ChartsModule } from 'ng2-charts'
 
     SocialLoginStepDisplayComponent,
 
-    FbSocialLoginStepDisplayComponent
+    FbSocialLoginStepDisplayComponent,
+
+    SaveChangesComponent,
+
+    DisplayServerErrorsComponent
     
     
   ],

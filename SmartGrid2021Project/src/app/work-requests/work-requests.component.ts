@@ -96,7 +96,10 @@ export class WorkRequestsComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.loadWRs();
   }
-
+  getWorkRequest(row){
+    var id = row.wR_id;
+    this.router.navigate(["createworkrequest/"+id]);
+  }
   
 }
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {

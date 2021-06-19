@@ -48,12 +48,13 @@
                         <mat-form-field class="full-width" appearance="outline">
                             <div>
                             <mat-label style="float: left; vertical-align: middle;" *ngIf="this.currentIncId === undefined"><b>Incident</b></mat-label>
-                            <button type="button" style="min-width: 50%;" *ngIf="this.currentIncId !== undefined">                             
+                            <button type="button" style="min-width: 50%;" *ngIf="this.currentIncId !== undefined" disabled="{{formDisabledButton === true}}">                              
                                 <mat-label style="float: left; vertical-align: middle;"></mat-label>
                                 <b>Incident: {{this.currentIncId}}</b>
                             </button>
+                            
                             <input matInput hidden/>
-                            <button color="Primary" type="button" (click)="OpenIncDialog()" style="float: right; vertical-align: middle;">...</button>
+                            <button color="Primary" type="button" (click)="OpenIncDialog(this.currentIncId)" style="float: right; vertical-align: middle;">...</button>
                         </div>
                             <!--mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessageUsername()}}</mat-error-->
                         </mat-form-field>
@@ -101,7 +102,7 @@
                     <div class="form-group col-md-4">
                         <mat-form-field class="full-width" appearance="outline" >
                             <mat-label>Phone No</mat-label>
-                            <input  matInput placeholder="phoneNo" formControlName="phoneNo" type="text" name="phoneNo" id="phoneNo"/>
+                            <input  matInput placeholder="phoneNo" formControlName="phoneNo" type="number" name="phoneNo" id="phoneNo"/>
                             <mat-error *ngIf="basicInfoForm.invalid">{{getErrorMessagePhoneNo()}}</mat-error>
                         </mat-form-field>
                         
@@ -152,12 +153,7 @@
                         </mat-form-field>
                     </div>    
                 </div>
-                <div class="row">
-                    <div class="button-center-align">
-                    <button mat-flat-button color="primary" (click)=SaveWRBasicInfo() [disabled]="basicInfoForm.invalid">Save</button>
-                    <button mat-flat-button (click)=Cancel()>Cancel</button>
-                </div>
-                </div>
+                
             </form>
         </div>
     </div>

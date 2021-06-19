@@ -2,19 +2,6 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "Facebook.Api/1.0.5": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "10.0.3",
-          "OpenSSL.X509Certificate2.Provider": "1.2.0"
-        },
-        "compile": {
-          "lib/CloudrailSI.dll": {}
-        },
-        "runtime": {
-          "lib/CloudrailSI.dll": {}
-        }
-      },
       "Google.Apis/1.52.0": {
         "type": "package",
         "dependencies": {
@@ -1556,27 +1543,6 @@
         },
         "runtime": {
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
-        }
-      },
-      "OpenSSL.PrivateKeyDecoder/1.2.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/OpenSSL.PrivateKeyDecoder.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/OpenSSL.PrivateKeyDecoder.dll": {}
-        }
-      },
-      "OpenSSL.X509Certificate2.Provider/1.2.0": {
-        "type": "package",
-        "dependencies": {
-          "OpenSSL.PrivateKeyDecoder": "1.2.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/OpenSSL.X509Certificate2.Provider.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/OpenSSL.X509Certificate2.Provider.dll": {}
         }
       },
       "Portable.BouncyCastle/1.8.10": {
@@ -3423,18 +3389,6 @@
     }
   },
   "libraries": {
-    "Facebook.Api/1.0.5": {
-      "sha512": "iqD7PxSY0M8ya5rrXpfnP9pt5usBdDfcXrcqf/BlDSLBwBYk7gai4uoAEUIR9AC9TfeGOZueVz/LL6ItxmeVXA==",
-      "type": "package",
-      "path": "facebook.api/1.0.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "facebook.api.1.0.5.nupkg.sha512",
-        "facebook.api.nuspec",
-        "lib/CloudrailSI.dll"
-      ]
-    },
     "Google.Apis/1.52.0": {
       "sha512": "5YWTBzHuNUiYIUoIBkCGYMokyYuaOuAn+w96lIJ2WNqeiAurKq3ZLqZ86fYae32PDWHZa+itFYc9O1iVfYi5dQ==",
       "type": "package",
@@ -5741,48 +5695,6 @@
         "lib/netstandard1.6/NuGet.Frameworks.xml",
         "nuget.frameworks.4.7.0.nupkg.sha512",
         "nuget.frameworks.nuspec"
-      ]
-    },
-    "OpenSSL.PrivateKeyDecoder/1.2.0": {
-      "sha512": "2+NGfjqjpIyXEVtsEg5ML7E6bzPGiw6RtH0a7rUhtAEBWWo/d/7uI/TKtHW+/EPO4E/0Gpz4ozG2ETqOAhpmVw==",
-      "type": "package",
-      "path": "openssl.privatekeydecoder/1.2.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net20/OpenSSL.PrivateKeyDecoder.dll",
-        "lib/net20/OpenSSL.PrivateKeyDecoder.xml",
-        "lib/net35/OpenSSL.PrivateKeyDecoder.dll",
-        "lib/net35/OpenSSL.PrivateKeyDecoder.xml",
-        "lib/net45/OpenSSL.PrivateKeyDecoder.dll",
-        "lib/net45/OpenSSL.PrivateKeyDecoder.xml",
-        "lib/netstandard1.3/OpenSSL.PrivateKeyDecoder.dll",
-        "lib/netstandard1.3/OpenSSL.PrivateKeyDecoder.xml",
-        "lib/netstandard2.0/OpenSSL.PrivateKeyDecoder.dll",
-        "lib/netstandard2.0/OpenSSL.PrivateKeyDecoder.xml",
-        "openssl.privatekeydecoder.1.2.0.nupkg.sha512",
-        "openssl.privatekeydecoder.nuspec"
-      ]
-    },
-    "OpenSSL.X509Certificate2.Provider/1.2.0": {
-      "sha512": "mXoKvCxJHgzIIxvC3VQ1QZC4KeyLUDuxIVD2DAzEJG7aLOC+zvlE0QsNG1tNbp/1eoI0u0RHnM8UL/y88vdiRQ==",
-      "type": "package",
-      "path": "openssl.x509certificate2.provider/1.2.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net20/OpenSSL.X509Certificate2.Provider.dll",
-        "lib/net20/OpenSSL.X509Certificate2.Provider.xml",
-        "lib/net35/OpenSSL.X509Certificate2.Provider.dll",
-        "lib/net35/OpenSSL.X509Certificate2.Provider.xml",
-        "lib/net45/OpenSSL.X509Certificate2.Provider.dll",
-        "lib/net45/OpenSSL.X509Certificate2.Provider.xml",
-        "lib/netstandard1.3/OpenSSL.X509Certificate2.Provider.dll",
-        "lib/netstandard1.3/OpenSSL.X509Certificate2.Provider.xml",
-        "lib/netstandard2.0/OpenSSL.X509Certificate2.Provider.dll",
-        "lib/netstandard2.0/OpenSSL.X509Certificate2.Provider.xml",
-        "openssl.x509certificate2.provider.1.2.0.nupkg.sha512",
-        "openssl.x509certificate2.provider.nuspec"
       ]
     },
     "Portable.BouncyCastle/1.8.10": {
@@ -10511,7 +10423,6 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Facebook.Api >= 1.0.5",
       "Google.Apis.Auth >= 1.52.0",
       "Google.Apis.PeopleService.v1 >= 1.52.0.2357",
       "MailKit >= 2.11.1",
@@ -10535,19 +10446,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\juzni\\.nuget\\packages\\": {}
+    "C:\\Users\\mlade\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projekti2020-2021\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
+      "projectUniqueName": "E:\\WebAppProjekat\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
       "projectName": "SmartGrid2021Project",
-      "projectPath": "D:\\Projekti2020-2021\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
-      "packagesPath": "C:\\Users\\juzni\\.nuget\\packages\\",
-      "outputPath": "D:\\Projekti2020-2021\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\obj\\",
+      "projectPath": "E:\\WebAppProjekat\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\SmartGrid2021Project.csproj",
+      "packagesPath": "C:\\Users\\mlade\\.nuget\\packages\\",
+      "outputPath": "E:\\WebAppProjekat\\PUSGS2021\\BackendService\\SmartGrid2021Project\\SmartGrid2021Project\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\juzni\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mlade\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10559,6 +10475,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -10570,11 +10487,8 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
-          "Facebook.Api": {
-            "target": "Package",
-            "version": "[1.0.5, )"
-          },
           "Google.Apis.Auth": {
             "target": "Package",
             "version": "[1.52.0, )"
@@ -10676,20 +10590,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.204\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Facebook.Api 1.0.5' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "Facebook.Api",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  }
 }

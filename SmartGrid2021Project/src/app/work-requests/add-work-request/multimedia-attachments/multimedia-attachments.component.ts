@@ -46,15 +46,8 @@ export class MultimediaAttachmentsComponent implements OnInit {
   prepareFilesList(files: Array<any>) {
     for (const item of files) {
         const file: File = item;
-        this.attachment = {id: 0, toBase64 : item.toBase64, name : file.name, progress:100, size: file.size, type: file.type};
-
-        toBase64(file).then((value:any) => this.imageBase64 = value.toString()).then(_ =>  {
-          item.toBase64 = this.imageBase64;
-          this.images.push(this.imageBase64);
-          this.attachment.toBase64 = this.imageBase64;
-
-        });
-        
+        this.attachment = {id: 0, toBase64 : '', name : file.name, progress:100, size: file.size, type: file.type};
+        console.log(file);
       item.progress = 0;
       this.files.push(item);
       
