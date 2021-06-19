@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { isObservable } from 'rxjs';
+import { DeviceLocationDialogComponent } from 'src/app/device-location-dialog/device-location-dialog.component';
+import { IncidentDevicesDialogComponent } from 'src/app/incident-devices-dialog/incident-devices-dialog.component';
 
 enum DeviceType{
   Breaker= "Breaker",
@@ -29,26 +33,27 @@ export interface Device{
 
 export class AddPlanEquipmentComponent implements OnInit {
 
-  displayedColumns: string[] = ['id','name','type','address','location','add','remove'];
+  displayedColumns: string[] = ['id','name','type','address','location','remove'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  AllDevices:Device[]=[
-    {id:"device1",name:"device1name",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice1"},
-    {id:"device3",name:"device3name",type:DeviceType.Switch,coordinates:"xyz",address:"AdresaDevice3"},
-    {id:"device6",name:"device6name",type:DeviceType.Break,coordinates:"xyz",address:"AdresaDevice6"},
-    {id:"device2",name:"device4name",type:DeviceType.Fuse,coordinates:"xyz",address:"AdresaDevice5"},
-    {id:"device8",name:"device2name",type:DeviceType.Disconnector,coordinates:"xyz",address:"AdresaDevice10"},
-    {id:"device9",name:"device9name",type:DeviceType.Breaker,coordinates:"xyz",address:"AdresaDevice11"},
-  ]
+  AllDevices:Device[]=[];
 
   dataSource: MatTableDataSource<Device>;
   sortedData: Device[];
+  responseData: any[];
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.AllDevices);
+    if(window.sessionStorage.getItem('switchingPlanSelectedEquipment')!=null){
+      let data = JSON.parse(window.sessionStorage.getItem('switchingPlanSelectedEquipment'));
+      this.AllDevices = data;
+      this.dataSource = new MatTableDataSource(this.AllDevices);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   ngAfterViewInit(){
@@ -66,14 +71,58 @@ export class AddPlanEquipmentComponent implements OnInit {
   }
 
   showLocation(row:any){
-    console.log('Show location for device with id: ' + row.id);
-  }
-  
-  addDevice(row:any){
-    console.log('Add device with id: ' + row.id);
+    this.deviceLocationModalDialog(row);
   }
 
+  deviceLocationModalDialog(device:any){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '1000px';
+    dialogConfig.minHeight = '800px';
+    dialogConfig.data = device;
+    const dialogRef2 = this.dialog.open(DeviceLocationDialogComponent, dialogConfig);
+    dialogRef2.afterClosed().subscribe(
+      data => {
+      }
+      
+    );
+  }
+
+  devicesModalDialog(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '1000px';
+    dialogConfig.minHeight = '800px';
+    const dialogRef = this.dialog.open(IncidentDevicesDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        console.log("Dialog output:", data);
+        if(data === undefined){}
+        else if(data == 0){}
+        else{
+          window.sessionStorage.setItem('switchingPlanSelectedEquipment',JSON.stringify(data));
+          this.AllDevices = data;
+          this.dataSource = new MatTableDataSource(this.AllDevices);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+      }
+    );
+  }
+  
   removeDevice(row:any){
-    console.log('Remove device with id: ' + row.id);
+    let switchingPlanSelectedDevicestemp = JSON.parse(window.sessionStorage.getItem('switchingPlanSelectedEquipment'));
+    switchingPlanSelectedDevicestemp.forEach((device,index) => {
+      if(device.id == row.id){
+        switchingPlanSelectedDevicestemp.splice(index,1);
+      }
+    });
+    window.sessionStorage.setItem('switchingPlanSelectedEquipment',JSON.stringify(switchingPlanSelectedDevicestemp));
+    this.AllDevices = switchingPlanSelectedDevicestemp;
+    this.dataSource = new MatTableDataSource(this.AllDevices);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 }

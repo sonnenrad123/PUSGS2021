@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { SwitchingPlanService } from '../services/switching-plan/switching-plan.service';
 
 export interface SwitchingPlan{
     id :string;
@@ -55,49 +56,18 @@ export class SwitchingPlansComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-
-  docType : any[] = ['Planned work', 'Unplanned work'];
-  docStatus : any[] = ['Draft', 'Submitted'];
-  docState: any[] = ['Approved', 'Denied', 'Canceled'];
-
-  SwitchingPlansALL : SwitchingPlan[] = 
-  [
-    {
-    id: '1',
-    typeOfDocument : 'Planned work',
-    warrantForWork : 'wfw1',
-    status : 'Draft',
-    incident  : 'Inc1',
-    street : 'didnt street',
-    startDateTime : new Date(),
-    endDateTime : new Date(),
-    team : 'team1',
-    createdBy : 'todoo',
-    purpose : "string",
-    notes: "string",
-    company : "ring",
-    phoneNo : 1123,
-    dateTimeCreated : new Date()
-    }
-  ]
-  //test
-  SwitchingPlansMine : SwitchingPlan[] = 
-  [
-
-  ]
-
-  constructor() { }
+  responseData : any[];
+  constructor(private SwitchingPlanService: SwitchingPlanService) { }
 
   ngOnInit(): void {
     this.toggleAll = true;
     this.toggleMine = false;
-    this.switchingPlans = this.SwitchingPlansALL;
-    this.dataSource = new MatTableDataSource(this.switchingPlans);
+    this.readData();
   }
 
   ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    //this.dataSource.paginator = this.paginator;
+    //this.dataSource.sort = this.sort;
   }
   
   applyFilter(event: Event) {
@@ -110,17 +80,61 @@ export class SwitchingPlansComponent implements OnInit {
   }
 
   showAllData(){
-    this.switchingPlans = this.SwitchingPlansALL;
-    this.dataSource.data = this.switchingPlans;
+    this.mapData();
     this.toggleAll = true;
     this.toggleMine = false;
 
   }
   showMineData(){
-    this.switchingPlans = this.SwitchingPlansMine;
-    this.dataSource.data = this.switchingPlans;
+    this.mapMineData();
     this.toggleAll = false;
     this.toggleMine = true;
   }
+
+  readData(){
+    this.SwitchingPlanService.getSwitchingPlans().subscribe(
+      switchingPlans => {
+        this.responseData = switchingPlans;
+        console.log(switchingPlans);
+        this.mapData();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  mapData(){
+    var ss = JSON.stringify(this.responseData);
+    
+    this.switchingPlans = JSON.parse(ss).map(item => ({
+      id : item.customId,
+      typeOfDocument : item.typeOfDocument,
+      warrantForWork : item.warrantForWork,
+      status : item.status,
+      incident  : item.incident ,
+      street : item.street,
+      startDateTime : item.startDateTime,
+      endDateTime : item.endDateTime,
+      team : item.team,
+      createdBy : item.createdBy,
+      purpose : item.purpose,
+      notes: item.notes,
+      company : item.company,
+      phoneNo : item.phoneNo,
+      dateTimeCreated : item.dateTimeCreated,
+    }));
+    this.dataSource = new MatTableDataSource(this.switchingPlans);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  mapMineData(){
+    //let userEmail = localStorage.getItem('user');
+    //this.switchingPlans = this.switchingPlans.filter(x => x.creatorEmail == userEmail);
+    this.dataSource = new MatTableDataSource(this.switchingPlans);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  };
 
 }

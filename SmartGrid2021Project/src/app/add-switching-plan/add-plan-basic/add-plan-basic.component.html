@@ -10,7 +10,7 @@
                                 <div class="from-group col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Swithing plan ID (auto-generated)</mat-label>
-                                        <input type="text" id="id" matInput formControlName="id" readonly>
+                                        <input type="text" id="customId" matInput formControlName="customId" readonly>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4">
@@ -22,7 +22,8 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Address</mat-label>
-                                        <input type="text" id="street" matInput formControlName="street">
+                                        <input matInput (change)="validateAddress($any($event.target).value)" (click)="$event.stopPropagation()" (keyup.enter)="addressLookup($any($event.target).value)" placeholder="Search address" formControlName="street" type="text" name="street" id="street" />
+                                        <app-results-list [results]="searchResults" (locationSelected)="getAddress($event)"></app-results-list>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -113,11 +114,11 @@
                                         <mat-error>Please choose team.</mat-error>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" >
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Created at date/time</mat-label>
-                                        <input matInput [matDatepicker]="picker2" formControlName="dateTimeCreated" name="dateTimeCreated" id="dateTimeCreated"  readonly onkeydown="return false">
-                                        <mat-datepicker-toggle matSuffix [for]="picker2">
+                                        <input readonly matInput [matDatepicker]="picker2" formControlName="dateTimeCreated" name="dateTimeCreated" id="dateTimeCreated" onkeydown="return false">
+                                        <mat-datepicker-toggle matSuffix>
                                         </mat-datepicker-toggle>
                                         <mat-datepicker #picker2></mat-datepicker>
                                     </mat-form-field>
@@ -136,7 +137,7 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Phone number</mat-label>
-                                        <input type="text" id="phoneNo" matInput formControlName="phoneNo" readonly>
+                                        <input type="text" id="phoneNo" matInput formControlName="phoneNo">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4"></div>

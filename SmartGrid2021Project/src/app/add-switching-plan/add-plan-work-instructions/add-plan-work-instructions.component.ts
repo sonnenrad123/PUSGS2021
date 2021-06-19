@@ -3,12 +3,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatAccordion, MatExpansionModule} from '@angular/material/expansion';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SelectCallerDialogComponent } from 'src/app/add-incident/incident-calls/incident-calls-new-call/select-caller-dialog/select-caller-dialog.component';
 
 export interface WorkInstruction{
-  id:string;
   desc:string;
   device:string;
   executed:string;
+  id?:string;
+  canExecute?:boolean;
 }
 
 @Component({
@@ -18,20 +20,14 @@ export interface WorkInstruction{
 })
 export class AddPlanWorkInstructionsComponent implements OnInit {
 
-  displayedColumns: string[] = ['id','desc','device','executed', 'remove','execute'];
+  displayedColumns: string[] = ['desc','device','executed', 'remove','execute'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatAccordion) accordion: MatAccordion;
   addWorkInstuction : FormGroup;
-  color : string;
-  badColor: string;
+  color : string = "#FF6464";
+  goodColor: string = "#64FF64";
 
-  allWorkInstructions : WorkInstruction[] =[
-    {id:"1", desc:"otvori", device:"dev1", executed:"executed"},
-    {id:"2", desc:"otvori", device:"dev1", executed:"executed"},
-    {id:"3", desc:"otvori", device:"dev1", executed:"executed"},
-    {id:"4", desc:"otvori", device:"dev1", executed:"executed"},
-    {id:"5", desc:"otvori", device:"dev1", executed:"executed"}
-  ]
+  allWorkInstructions : WorkInstruction[] =[]
 
   dataSource: MatTableDataSource<WorkInstruction>;
 
@@ -39,12 +35,13 @@ export class AddPlanWorkInstructionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.addWorkInstuction = new FormGroup({
-      'id':new FormControl('hidden',[Validators.required]),
       'desc':new FormControl('',[Validators.required]),
       'device':new FormControl('',[Validators.required]),
-      'executed' : new FormControl('unexecuted',[Validators.required])
+      'executed' : new FormControl('Unexecuted',[Validators.required])
     });
-    this.badColor = "#FF6464";
+    if(window.sessionStorage.getItem('switchingPlanInsForm') != null){
+      this.allWorkInstructions = JSON.parse(window.sessionStorage.getItem('switchingPlanInsForm'));
+    }
     this.dataSource = new MatTableDataSource(this.allWorkInstructions);
   }
 
@@ -53,17 +50,35 @@ export class AddPlanWorkInstructionsComponent implements OnInit {
   }
 
   onSubmit(){
-    
+    console.log(this.addWorkInstuction.value);
+    this.allWorkInstructions.push({desc: this.addWorkInstuction.get('desc').value, device: this.addWorkInstuction.get('device').value,executed: this.addWorkInstuction.get('executed').value})
+    window.sessionStorage.setItem('switchingPlanInsForm',JSON.stringify(this.allWorkInstructions));
+    this.dataSource =new MatTableDataSource(this.allWorkInstructions);
+    this.dataSource.paginator = this.paginator;
   };
 
   removeWorkInstruction(row:any){
-    console.log('Remove device with id: ' + row.id);
-    this.color = "#FF6464"
+    console.log('Remove work instruction' + row);
+    let switchingPlanSelectedRow = JSON.parse(window.sessionStorage.getItem('switchingPlanInsForm'));
+
+    switchingPlanSelectedRow.forEach((x,index) => {
+      if(x.desc == row.desc && x.device == row.device && x.executed == row.executed){
+        switchingPlanSelectedRow.splice(index,1);
+      }
+    });
+
+    window.sessionStorage.setItem('switchingPlanInsForm',JSON.stringify(switchingPlanSelectedRow));
+    this.allWorkInstructions = switchingPlanSelectedRow;
+    this.dataSource = new MatTableDataSource(this.allWorkInstructions);
+    this.dataSource.paginator = this.paginator;
   }
 
   removeAll(){
     console.log('Remove all work instructions');
-    this.color = "#64FF64"
-  }
+    this.allWorkInstructions = [];
+    window.sessionStorage.setItem('switchingPlanInsForm',JSON.stringify(this.allWorkInstructions));
+    this.dataSource = new MatTableDataSource(this.allWorkInstructions);
+    this.dataSource.paginator = this.paginator;
+    }
 
 }

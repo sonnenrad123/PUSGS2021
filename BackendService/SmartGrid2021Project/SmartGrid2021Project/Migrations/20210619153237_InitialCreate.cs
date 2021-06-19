@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SmartGrid2021Project.Migrations
 {
-    public partial class DatabasePUSGS : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -248,6 +248,39 @@ namespace SmartGrid2021Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SwitchingPlans",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TypeOfDocument = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WarrantForWork = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Incident = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Team = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Company = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateTimeCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SwitchingPlans", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SwitchingPlans_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WorkRequests",
                 columns: table => new
                 {
@@ -288,6 +321,75 @@ namespace SmartGrid2021Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AttachmentSPs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SwitchingPlanId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AttachmentSPs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AttachmentSPs_SwitchingPlans_SwitchingPlanId",
+                        column: x => x.SwitchingPlanId,
+                        principalTable: "SwitchingPlans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StateChangesSPs",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Autor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SwitchingPlanId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StateChangesSPs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StateChangesSPs_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_StateChangesSPs_SwitchingPlans_SwitchingPlanId",
+                        column: x => x.SwitchingPlanId,
+                        principalTable: "SwitchingPlans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkInstructionSPs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Desc = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Device = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Executed = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SwitchingPlanId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkInstructionSPs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkInstructionSPs_SwitchingPlans_SwitchingPlanId",
+                        column: x => x.SwitchingPlanId,
+                        principalTable: "SwitchingPlans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Attachments",
                 columns: table => new
                 {
@@ -317,11 +419,18 @@ namespace SmartGrid2021Project.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Coordinates = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WorkRequestId = table.Column<int>(type: "int", nullable: true)
+                    WorkRequestId = table.Column<int>(type: "int", nullable: true),
+                    SwitchingPlanId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Devices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Devices_SwitchingPlans_SwitchingPlanId",
+                        column: x => x.SwitchingPlanId,
+                        principalTable: "SwitchingPlans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Devices_WorkRequests_WorkRequestId",
                         column: x => x.WorkRequestId,
@@ -433,6 +542,11 @@ namespace SmartGrid2021Project.Migrations
                 column: "WorkRequestId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AttachmentSPs_SwitchingPlanId",
+                table: "AttachmentSPs",
+                column: "SwitchingPlanId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Calls_CallerId",
                 table: "Calls",
                 column: "CallerId");
@@ -441,6 +555,11 @@ namespace SmartGrid2021Project.Migrations
                 name: "IX_DeviceIncident_IncidentsId",
                 table: "DeviceIncident",
                 column: "IncidentsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Devices_SwitchingPlanId",
+                table: "Devices",
+                column: "SwitchingPlanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Devices_WorkRequestId",
@@ -456,6 +575,26 @@ namespace SmartGrid2021Project.Migrations
                 name: "IX_Incidents_UserId",
                 table: "Incidents",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StateChangesSPs_SwitchingPlanId",
+                table: "StateChangesSPs",
+                column: "SwitchingPlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StateChangesSPs_UserId",
+                table: "StateChangesSPs",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SwitchingPlans_UserId",
+                table: "SwitchingPlans",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkInstructionSPs_SwitchingPlanId",
+                table: "WorkInstructionSPs",
+                column: "SwitchingPlanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkRequests_AppUserId1",
@@ -499,10 +638,19 @@ namespace SmartGrid2021Project.Migrations
                 name: "Attachments");
 
             migrationBuilder.DropTable(
+                name: "AttachmentSPs");
+
+            migrationBuilder.DropTable(
                 name: "Calls");
 
             migrationBuilder.DropTable(
                 name: "DeviceIncident");
+
+            migrationBuilder.DropTable(
+                name: "StateChangesSPs");
+
+            migrationBuilder.DropTable(
+                name: "WorkInstructionSPs");
 
             migrationBuilder.DropTable(
                 name: "WRStateChange");
@@ -512,6 +660,9 @@ namespace SmartGrid2021Project.Migrations
 
             migrationBuilder.DropTable(
                 name: "Devices");
+
+            migrationBuilder.DropTable(
+                name: "SwitchingPlans");
 
             migrationBuilder.DropTable(
                 name: "WorkRequests");

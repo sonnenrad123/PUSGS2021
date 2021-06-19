@@ -1,7 +1,9 @@
+import { JsonpClientBackend } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
+import { SwitchingPlanService } from '../services/switching-plan/switching-plan.service';
 
 @Component({
   selector: 'app-add-switching-plan',
@@ -18,7 +20,7 @@ export class AddSwitchingPlanComponent implements OnInit {
   triedToCrash: boolean = false;
   intervalFormCheck: any;
 
-  constructor(private router: Router,/*private IncidentService: IncidentServiceService,*/private _snackBar: MatSnackBar) {
+  constructor(private router: Router,private SwitchingPlanService: SwitchingPlanService ,private _snackBar: MatSnackBar) {
     this.links = [
       {
         label: 'Basic Info',
@@ -65,11 +67,26 @@ export class AddSwitchingPlanComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-     
+    this.intervalFormCheck = setInterval(() => {
+      console.log('Checking session storage for forms.');
+      if(window.sessionStorage.getItem('basicInfoForm') != null)
+      {
+        this.buttonEnabled = true;
+        this.triedToCrash = false;
+      }
+      else{
+        this.buttonEnabled = false;
+        this.triedToCrash = false;
+      }
+    }, 2000);
   }
   
   ngOnDestroy(){
-
+    clearInterval(this.intervalFormCheck);
+    window.sessionStorage.removeItem('basicInfoForm');
+    window.sessionStorage.removeItem('switchingPlanStateForm') ;
+    window.sessionStorage.removeItem('switchingPlanSelectedEquipment');
+    window.sessionStorage.removeItem('switchingPlanInsForm');
   }
 
   toggle(param){
@@ -78,8 +95,58 @@ export class AddSwitchingPlanComponent implements OnInit {
 
   submitSwitchingPlan(){
     console.log("Submit Switching Plan.");
+    let basicInfoFormValue = JSON.parse(window.sessionStorage.getItem('basicInfoForm'));
+    let switchingPlanStateValue = JSON.parse(window.sessionStorage.getItem('switchingPlanStateForm')) ;
+    let switchingPlanSelectedEquipmentValue = JSON.parse(window.sessionStorage.getItem('switchingPlanSelectedEquipment'));
+    let switchingPlanInsFormValue = JSON.parse(window.sessionStorage.getItem('switchingPlanInsForm'))
 
-    //window.sessionStorage.removeItem('basicInformationForm');
+    let deviceIds = "";
+    if(switchingPlanSelectedEquipmentValue !=null){
+    switchingPlanSelectedEquipmentValue.forEach(device => {
+      deviceIds = deviceIds + ';' + device.id;
+    });
+    }
+    
+    let stateChangesString =""
+    if(switchingPlanStateValue != null){
+    switchingPlanStateValue.forEach(state => {
+      stateChangesString = stateChangesString + ';' + state.state;
+    });
+    } 
+
+    let workInstrutcionsString = ""
+    if(switchingPlanInsFormValue !=null){
+      switchingPlanInsFormValue.forEach(ins=>{
+        workInstrutcionsString = workInstrutcionsString + ';' + ins.desc + ',' + ins.device + ',' + ins.executed;
+      });
+    }
+
+    let creatorEmail = localStorage.getItem('user');
+
+    let mergedObjects = {...basicInfoFormValue,...switchingPlanStateValue,stateChangesString,workInstrutcionsString,deviceIds,creatorEmail};
+
+    if(basicInfoFormValue != null){
+      console.log(basicInfoFormValue);
+
+      this.SwitchingPlanService.addSwitchingPlan(mergedObjects).subscribe(
+        response =>{
+          console.log(response);
+          window.sessionStorage.removeItem('basicInfoForm');
+          window.sessionStorage.removeItem('switchingPlanStateForm');
+          window.sessionStorage.removeItem('switchingPlanSelectedEquipment')
+          window.sessionStorage.removeItem('switchingPlanInsForm');
+          this._snackBar.open('Switching plan added!','Ok');
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+    else{
+      this.triedToCrash = true;
+    }
+    
+    
   }
 
   onIndexChanged(event : MatTabChangeEvent){
