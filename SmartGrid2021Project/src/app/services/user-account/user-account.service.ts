@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationResponse } from 'src/app/models/common/authentication-response';
 import { User } from 'src/app/models/user/user';
 import { environment } from 'src/environments/environment';
-
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -87,5 +87,8 @@ export class UserAccountService {
   }
   blockLogin(username){
     return this.http.get(this.BaseURI + 'account/BlockLogin?username='+username);
+  }
+  GetUsersCountWithAddress(address):Observable<any>{
+    return this.http.get(this.BaseURI+'account/GetUsersCountWithAddress/'+address);
   }
 }

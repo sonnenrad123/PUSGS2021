@@ -92,7 +92,13 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Status</mat-label>
-                                        <input type="text" id="status" matInput formControlName="status" class="form-control" readonly>
+                                        
+                                        
+                                        <mat-select formControlName="status" id="status">
+                                            <mat-option *ngFor="let status of incidentStatuses" [value]="status">{{status}}</mat-option>
+                                        </mat-select>
+                                        
+                                        
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4" style="float:right">

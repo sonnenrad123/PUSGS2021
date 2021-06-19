@@ -98,6 +98,13 @@ namespace SmartGrid2021Project.Controllers
 
             try
             {
+                if (_context.Devices.Where(x => x.Address == device.Address).Count() > 1)
+                {
+                    return BadRequest(new { message = "Max number of devices in same street exceeded." });
+                }
+
+
+
                 _context.Devices.Add(device);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction("GetDevice", new { id = device.Id }, device);

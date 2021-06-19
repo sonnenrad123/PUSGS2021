@@ -45,7 +45,7 @@ export class AddNetworkElementComponent implements OnInit {
         this._snackBar.open('Device added!','Ok');
       },
       error => {
-        console.log(error);
+        this._snackBar.open('Max number of devices in same street exceeded!','Ok');
       }
     );
     

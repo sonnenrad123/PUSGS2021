@@ -51,7 +51,6 @@ namespace SmartGrid2021Project.Controllers
        
         [HttpGet]
         [Route("GetAllUsers")]
-
         public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers()
         {
 
@@ -65,6 +64,7 @@ namespace SmartGrid2021Project.Controllers
 
         [HttpGet]
         [Route("GetAllCustomers")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetAllCustomers()
         {
             return await Task.Run(() =>
@@ -74,7 +74,19 @@ namespace SmartGrid2021Project.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Route("GetUsersCountWithAddress/{address}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<int>> GetUsersCountWithAddress(string address)
+        {
+            var maxID = await _context.AppUsers.FindAsync("Ivan");
+            var usercount = _context.AppUsers.Where((x) => x.Address == address).Count();
+            return usercount;
+        }
+
+
+
+            [HttpPost]
         [AllowAnonymous]
         [Route("Register")]
         //POST : /api/Account/Register

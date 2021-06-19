@@ -384,3 +384,11 @@ E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Pro
 E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\OpenSSL.PrivateKeyDecoder.dll
 E:\WebAppProjekat\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\OpenSSL.X509Certificate2.Provider.dll
 >>>>>>> origin/FeatureBranch/WorkOnMap
+D:\Projekti2020-2021\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\CloudrailSI.dll
+D:\Projekti2020-2021\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Google.Apis.dll
+D:\Projekti2020-2021\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Google.Apis.Auth.PlatformServices.dll
+D:\Projekti2020-2021\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Google.Apis.Auth.dll
+D:\Projekti2020-2021\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Google.Apis.Core.dll
+D:\Projekti2020-2021\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\Google.Apis.PeopleService.v1.dll
+D:\Projekti2020-2021\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\OpenSSL.PrivateKeyDecoder.dll
+D:\Projekti2020-2021\PUSGS2021\BackendService\SmartGrid2021Project\SmartGrid2021Project\bin\Debug\netcoreapp3.1\OpenSSL.X509Certificate2.Provider.dll

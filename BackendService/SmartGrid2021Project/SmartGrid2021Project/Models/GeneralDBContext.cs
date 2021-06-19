@@ -29,5 +29,6 @@ namespace SmartGrid2021Project.Models
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<WRStateChange> WRStateChange { get; set; }
         public DbSet<SafetyDocument> SafetyDocuments { get; set; }
+        public DbSet<StreetPriority> StreetPriorities { get; set; }
     }
 }
