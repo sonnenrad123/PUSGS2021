@@ -44,7 +44,7 @@ export class BasicInfoComponent implements OnInit {
     
     this.basicInfoForm = new FormGroup({
       typeOfDocument: new FormControl('', Validators.required),
-      statusOfDocument: new FormControl('Draft'),
+      statusOfDocument: new FormControl('DRAFT', Validators.required),
       incident: new FormControl(''),
       emergencyWork: new FormControl(''),
       //typeOfWork: new FormControl(''),
@@ -87,7 +87,7 @@ export class BasicInfoComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe(
       data => {
-        //console.log("Dialog output:", data);
+        console.log("Dialog output:", data);
         if(data !== undefined){
           console.log(data);
           this.SaveWRBasicInfo();

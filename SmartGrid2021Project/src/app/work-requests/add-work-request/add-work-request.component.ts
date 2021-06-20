@@ -20,6 +20,7 @@ export class AddWorkRequestComponent implements OnInit {
   modifyModeActivated: boolean = false;
   workRequestReplyData: any;
   errors:string[] = [];
+  hiddenButton: boolean = false;
   constructor(private router: Router, private wrService:WorkRequestsService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
 
     this.links = [
@@ -51,7 +52,7 @@ export class AddWorkRequestComponent implements OnInit {
    }
 
   ngOnInit(): void {
-  
+  this.hiddenButton = false;
     this.activeLinkIndex = this.links.indexOf(this.links.find(tab => tab.link === '.' + this.router.url));
     
     if(this.router.url.endsWith('createworkrequest')){
@@ -123,14 +124,18 @@ export class AddWorkRequestComponent implements OnInit {
   ngAfterViewInit() {
     this.intervalFormCheck = setInterval(() => {
       console.log('Checking session storage for forms.');
-      if(window.sessionStorage.getItem('WRBICurrValue') != null && 
-         window.sessionStorage.getItem('WRCHCurrValue') != null && 
-         window.sessionStorage.getItem('WREquCurrValue')!=null && 
-         window.sessionStorage.getItem('LastWRCH')!=null &&
-         window.sessionStorage.getItem('WRMAttCurrValue')!=null
+      if(window.sessionStorage.getItem('WRBICurrValue') != null  
+         //window.sessionStorage.getItem('WRCHCurrValue') != null && 
+         //window.sessionStorage.getItem('WREquCurrValue')!=null && 
+         //window.sessionStorage.getItem('LastWRCH')!=null &&
+         //window.sessionStorage.getItem('WRMAttCurrValue')!=null
          ){
+        var v = JSON.parse(sessionStorage.getItem('LastWRCH')).wrCurrentState;
+        if(v === 'APPROVED' || v === 'CANCELED'){
+        this.hiddenButton = true;
         
-        
+      }
+      console.log(this.hiddenButton);
         if( this.modifyModeActivated == false){
           this.buttonEnabled = true;
           this.triedToCrash = false;

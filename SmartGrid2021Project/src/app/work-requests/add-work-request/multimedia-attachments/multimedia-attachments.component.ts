@@ -46,7 +46,7 @@ export class MultimediaAttachmentsComponent implements OnInit {
   prepareFilesList(files: Array<any>) {
     for (const item of files) {
         const file: File = item;
-        this.attachment = {id: 0, toBase64 : '', name : file.name, progress:100, size: file.size, type: file.type};
+        this.attachment = {id: 0, toBase64 : '111', name : file.name, progress:100, size: file.size, type: file.type};
         console.log(file);
       item.progress = 0;
       this.files.push(item);
@@ -101,5 +101,6 @@ export class MultimediaAttachmentsComponent implements OnInit {
   SaveChanges(){
     window.sessionStorage.removeItem('WRMAttCurrValue');
     window.sessionStorage.setItem('WRMAttCurrValue', JSON.stringify(this.wrAttachments));
+    console.log(this.wrAttachments);
   }
 }

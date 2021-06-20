@@ -10,7 +10,7 @@ using SmartGrid2021Project.Models;
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    [Migration("20210619111511_Initial")]
+    [Migration("20210619205300_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

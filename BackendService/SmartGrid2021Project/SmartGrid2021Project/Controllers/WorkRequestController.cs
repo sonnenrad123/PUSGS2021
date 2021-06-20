@@ -205,6 +205,7 @@ namespace SmartGrid2021Project.Controllers
                 {
                     if (wr.Attachments.Count > 0)
                     {
+                        wr.Attachments = new HashSet<Attachment>();
                         foreach (Attachment d in wr.Attachments)
                         {
                             workRequestfromDb.Attachments.Add(d);
