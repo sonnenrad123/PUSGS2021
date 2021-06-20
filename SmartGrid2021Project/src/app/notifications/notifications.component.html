@@ -1,0 +1,52 @@
+<div class="main-content">
+    <div class="row">
+        <form>
+            <mat-form-field class="full-width" appearance="outline" style="left: 20px;">
+                <mat-label>Select type</mat-label>
+                <mat-select id="ntype" name="ntype" #selectedType>
+                    <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field style="left: 50px">
+                <input #searchTerm matInput type="text" name="searchTerm" placeholder="Enter search term">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="button" (click)="doSearch(selectedType.value,searchTerm.value)" style="left: 80px;">Search
+            </button>
+            <button mat-raised-button color="primary" type="button" (click)="cancelSearch()" style="left: 100px;">Cancel
+            </button>
+            <button mat-button type="button" (click)="markAllUnread()" style="margin-left:55%; margin-top: 20px;"><mat-icon>markunread</mat-icon>Mark all as read</button> 
+        </form>
+       
+    </div>
+    <div class="mat-elevation-z8">
+        <div class="main-table">
+            <table mat-table  [dataSource]="dataSource" matSort>
+                 <ng-container matColumnDef="icon" >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;text-align: center;"> </th>
+                    <td mat-cell *matCellDef="let row" [style.background] = 'row.color'><button mat-button (click)="clickedOnRow(row)"><mat-icon> {{row.icon}} </mat-icon></button></td>
+                 </ng-container>
+
+                 <ng-container matColumnDef="type" >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;text-align: center;"> Type </th>
+                    <td mat-cell *matCellDef="let row" [style.background] = 'row.color'>{{row.type}}</td>
+                 </ng-container>
+
+                 <ng-container matColumnDef="desc">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 940px;text-align: center;"> Description </th>
+                    <td mat-cell *matCellDef="let row" [style.background] = 'row.color'>{{row.desc}}</td>
+                 </ng-container>
+                 <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:400px;text-align: center;"> Date </th>
+                    <td mat-cell *matCellDef="let row" [style.background] = 'row.color'>{{row.date | date: 'dd.MM.yyyy HH:mm'}}</td>
+                 </ng-container>
+                 
+
+                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+            </table>
+            <mat-paginator  [pageSize]="5" [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+        </div>
+                        
+    </div>
+</div>

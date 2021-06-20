@@ -1,0 +1,153 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Basic information</h4>
+                    <div class="content">
+                        <form [formGroup]="basicInfoForm" (ngSubmit)="onSubmit()" >
+                            <div class="row">
+                                <div class="from-group col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Swithing plan ID (auto-generated)</mat-label>
+                                        <input type="text" id="customId" matInput formControlName="customId" readonly>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Created by</mat-label>
+                                        <input type="text" id="createdBy" matInput formControlName="createdBy" readonly>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Address</mat-label>
+                                        <input matInput (change)="validateAddress($any($event.target).value)" (click)="$event.stopPropagation()" (focus)="validateAddress($any($event.target).value)" (keyup.enter)="addressLookup($any($event.target).value)" placeholder="Search address" formControlName="street" type="text" name="street" id="street" />
+                                        <app-results-list [results]="searchResults" (locationSelected)="getAddress($event)"></app-results-list>
+                                        <div *ngIf="addressInvalid" style="color: red;">Address is not valid.</div>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="from-group col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Status</mat-label>
+                                        <input type="text" id="status" matInput formControlName="status" readonly>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Work type</mat-label>
+                                        <mat-select formControlName="typeOfDocument" id="typeOfDocument">
+                                            <mat-option *ngFor="let type of WorkTypeKeys()" [value]="type">{{type}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Purpose</mat-label>
+                                        <input type="text" id="purpose" matInput formControlName="purpose">
+                                    </mat-form-field>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="from-group col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Warrant for work</mat-label>
+                                        <input type="text" id="warrantForWork" matInput formControlName="warrantForWork">
+                                        <mat-error>Please choose warrant for work.</mat-error>
+                                    </mat-form-field>
+                                    
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Start date/time</mat-label>
+                                        <input matInput [matDatepicker]="picker" formControlName="startDateTime" name="startDateTime" id="startDateTime"  onkeydown="return false">
+                                        <mat-datepicker-toggle matSuffix [for]="picker">
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-error>Please input start date/time.</mat-error>
+                                    </mat-form-field>
+                                    
+                                </div>
+                                <div class="col-md-4"><mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>Notes</mat-label>
+                                    <input type="text" id="notes" matInput formControlName="notes">
+                                </mat-form-field></div>
+                                
+
+                            </div>
+
+                            <div class="row">
+                                <div class="from-group col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Incident</mat-label>
+                                        <input type="text" id="incident" matInput formControlName="incident">
+                                        <mat-error>Please choose incident.</mat-error>
+                                    </mat-form-field>
+                                    
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>End date/time</mat-label>
+                                        <input matInput [matDatepicker]="picker1" formControlName="endDateTime" name="endDateTime" id="endDateTime"  onkeydown="return false">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1">
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                        <mat-error>Please input end date/time.</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="button-center-align">
+                                    <button class="btn btn-success" [disabled]="!basicInfoForm.valid"  type="submit" >Save</button>
+                                    <button type="button" class="btn btn-danger" (click)="onClear()" type="button">Clear</button>
+                                </div>
+                                
+                            </div>
+
+                            <div class="row">
+                                <div class="from-group col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Team</mat-label>
+                                        <input type="text" id="team" matInput formControlName="team">
+                                        <mat-error>Please choose team.</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4" >
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Created at date/time</mat-label>
+                                        <input readonly matInput [matDatepicker]="picker2" formControlName="dateTimeCreated" name="dateTimeCreated" id="dateTimeCreated" onkeydown="return false">
+                                        <mat-datepicker-toggle matSuffix>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="from-group col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Company</mat-label>
+                                        <input type="text" id="company" matInput formControlName="company">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Phone number</mat-label>
+                                        <input type="text" id="phoneNo" matInput formControlName="phoneNo">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

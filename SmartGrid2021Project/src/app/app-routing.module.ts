@@ -34,6 +34,15 @@ import { AddNetworkElementComponent } from './add-network-element/add-network-el
 import { AllUsersComponent } from './admin-access/all-users/all-users/all-users.component';
 import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
 import { IsAdminGuard } from './guards/is-admin.guard';
+import { UserAccountComponent } from './user-account/user-account.component';
+import { SwitchingPlansComponent } from './switching-plans/switching-plans.component';
+import { AddPlanBasicComponent } from './add-switching-plan/add-plan-basic/add-plan-basic.component';
+import { AddPlanEquipmentComponent } from './add-switching-plan/add-plan-equipment/add-plan-equipment.component';
+import { AddPlanStateChangeHistoryComponent } from './add-switching-plan/add-plan-state-change-history/add-plan-state-change-history.component';
+import { AddPlanAttachmentsComponent } from './add-switching-plan/add-plan-attachments/add-plan-attachments.component';
+import { AddPlanWorkInstructionsComponent } from './add-switching-plan/add-plan-work-instructions/add-plan-work-instructions.component';
+import { AddSwitchingPlanComponent } from './add-switching-plan/add-switching-plan.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
   {
@@ -66,6 +75,16 @@ const routes: Routes = [
     children:[
       {path: '',component: MapComponent},
     ]
+    
+  },
+
+  {
+    path:'UserAccount',
+    component: GeneralLayoutComponent,
+    children:
+    [{
+      path: '', component: UserAccountComponent,
+    },]
   },
   {
     path:'IncidentBrowser',
@@ -121,6 +140,30 @@ const routes: Routes = [
       },
     ]
   },
+
+  {
+    path:'AddSwitchingPlan',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: AddSwitchingPlanComponent, children:[
+        {path:'BasicInfo', component: AddPlanBasicComponent},
+        {path:'Equipment', component: AddPlanEquipmentComponent},
+        {path:'StateChanged', component: AddPlanStateChangeHistoryComponent},
+        {path: 'Attachments', component: AddPlanAttachmentsComponent},
+        {path:'WorkInstructions', component: AddPlanWorkInstructionsComponent, children:[
+          {path:'AddNew', component:AddPlanWorkInstructionsComponent}
+        ]},
+      ]},
+    ]
+  },
+
+  {path: 'SwitchingPlans',
+  component : GeneralLayoutComponent,
+  children:[
+    {path: '', component: SwitchingPlansComponent},
+  ]
+  },
+
   {
     path:'WorkRequests',
     component: GeneralLayoutComponent,
@@ -199,6 +242,13 @@ const routes: Routes = [
     component: GeneralLayoutComponent,
     children:[
       {path: '',component: TestComponentComponent},
+    ]
+  },
+  {
+    path:'Notifications',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '', component:NotificationsComponent}
     ]
   },
   {

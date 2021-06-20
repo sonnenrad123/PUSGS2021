@@ -98,8 +98,6 @@ export class IncidentBrowserComponent implements OnInit {
   }
     
   mapData(){
-    
-    
     var ss = JSON.stringify(this.responseData);
     
     this.Incidents = JSON.parse(ss).map(item => ({

@@ -1,31 +1,27 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li class="dropdown">
+                    <a [href]="" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-globe"></i>
+                        <b class="caret"></b>
+                        <span class="notification">{{count}}</span>
+                    </a>
+                    <ul class="dropdown-menu" style="width:400px;">
+                        <li style="text-align: center;"  *ngFor="let not of notifications">{{not.desc}}<mat-icon>{{not.icon}}</mat-icon><li>
+                        <li style="text-align: center;"><a href="/Notifications"><mat-icon>open_in_browser</mat-icon></a></li>
+                    </ul>
+                </li>
+            </ul>
+            
         <div class = "navbar-header">
-            <a class="navbar-brand" role="button"  href="#"> {{getTitle()}} </a>
+            <p class="navbar-brand" style="color:darkslateblue;" >{{getTitle()}}</p>
         </div>
-    
-    <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-left">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-globe"></i>
-                    <b class="caret"></b>
-                    <span class="notification">5</span>
-                
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Notification 1</a></li>
-                    <li><a href="#">Notification 2</a></li>
-                    <li><a href="#">Notification 3</a></li>
-                    <li><a href="#">Notification 4</a></li>
-                    <li><a href="#">Another notification</a></li>
-                </ul>
-            </li>
-        </ul>
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a *ngIf="user" href="#">
+                <a *ngIf="user" href="/UserAccount">
                     {{ user }}
                 </a>
             </li>

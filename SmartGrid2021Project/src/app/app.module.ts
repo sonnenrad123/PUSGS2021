@@ -89,7 +89,20 @@ import { SecureViewComponent } from './security/secure-view/secure-view.componen
 import { JwtInterceptorService } from './security/jwt-interceptor.service';
 import { SocialLoginStepDisplayComponent } from './security/social-login-step-display/social-login-step-display.component';
 import { FbSocialLoginStepDisplayComponent } from './security/fb-social-login-step-display/fb-social-login-step-display.component';
-import { ChartsModule } from 'ng2-charts'
+import { ChartsModule } from 'ng2-charts';
+import { UserAccountComponent } from './user-account/user-account.component';
+import { SwitchingPlansComponent } from './switching-plans/switching-plans.component';
+import { AddSwitchingPlanComponent } from './add-switching-plan/add-switching-plan.component';
+import { AddPlanBasicComponent } from './add-switching-plan/add-plan-basic/add-plan-basic.component';
+import { AddPlanStateChangeHistoryComponent } from './add-switching-plan/add-plan-state-change-history/add-plan-state-change-history.component';
+import { AddPlanEquipmentComponent } from './add-switching-plan/add-plan-equipment/add-plan-equipment.component';
+import { AddPlanAttachmentsComponent } from './add-switching-plan/add-plan-attachments/add-plan-attachments.component';
+import { AddPlanWorkInstructionsComponent } from './add-switching-plan/add-plan-work-instructions/add-plan-work-instructions.component';
+import { ReportOutageDialogComponent } from './report-outage-dialog/report-outage-dialog.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -149,7 +162,17 @@ import { ChartsModule } from 'ng2-charts'
 
     SocialLoginStepDisplayComponent,
 
-    FbSocialLoginStepDisplayComponent
+    FbSocialLoginStepDisplayComponent,
+    UserAccountComponent,
+    SwitchingPlansComponent,
+    AddSwitchingPlanComponent,
+    AddPlanBasicComponent,
+    AddPlanStateChangeHistoryComponent,
+    AddPlanEquipmentComponent,
+    AddPlanAttachmentsComponent,
+    AddPlanWorkInstructionsComponent,
+    ReportOutageDialogComponent,
+    NotificationsComponent
     
     
   ],

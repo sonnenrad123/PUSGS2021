@@ -1,0 +1,42 @@
+<h2 mat-dialog-title style="text-align: center;">Report outage</h2>
+
+<mat-dialog-content>
+    <div class="row" style="margin-top: 20px; width: 800px;">
+        <form [formGroup]="addNewCallForm" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()" >
+            <div class="row" style="width: 600px; margin-left: 100px;">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Reason:</mat-label>
+                        <mat-select formControlName="reason" id="reason">
+                            <mat-option *ngFor="let reason of callReasons" [value]="reason">{{reason}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+            </div>
+            <div class="row" style="width: 600px; margin-left: 100px;">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Comment:</mat-label>
+                        <input type="text" id="comment" matInput formControlName="comment" class="form-control">
+                    </mat-form-field>
+            </div>
+            <div class="row" style="width: 600px; margin-left: 100px;">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Hazard:</mat-label>
+                        <input type="text" id="hazard" matInput formControlName="hazard" class="form-control">
+                    </mat-form-field>
+            </div>
+            <div class="row" style="width: 600px; margin-left: 100px;">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Incident address:</mat-label>
+                        <input type="text" (change)="validateAddress($any($event.target).value)" (focus)="validateAddress($any($event.target).value)" (click)="$event.stopPropagation()" (keyup.enter)="addressLookup($any($event.target).value)" id="address" matInput formControlName="address" class="form-control">
+                        <app-results-list [results]="searchResults" (locationSelected)="getAddress($event)"></app-results-list>
+                        <div *ngIf="addressInvalid" style="color: red;">Address is not valid.</div>
+                    </mat-form-field>
+            </div>
+            <div class="row" style="width: 600px; margin-left: 100px;">
+                <div class="button-center-align">
+                    <button mat-flat-button type="submit" [disabled]="!addNewCallForm.valid || addressInvalid" color="primary">Report</button>
+                    <button mat-flat-button type="button" (click)=onClear()>Cancel</button>
+                </div>
+        </div>
+        </form>
+    </div>
+</mat-dialog-content>

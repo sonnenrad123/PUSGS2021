@@ -1,0 +1,105 @@
+<div class="main-content" style="padding-top: 15px;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="main-content">
+                    
+                    <!--
+                    <h2 class="position-h2">{{title}}</h2>
+                    -->
+
+                    <form (submit)="SaveAccountChanges()" [formGroup]="form">
+                        <div class="row">
+                            <div class="image-placeholder form-group col-md-2">
+                                <div class="form-group component-position" matTooltip="Upload image">
+                                    <app-input-image>
+                                    </app-input-image>
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <mat-form-field class='custom-width-div' appearance='outline'>
+                                    <mat-label>Username*</mat-label>
+                                    <input matInput formControlName="username" type="text" name="username" id="username" placeholder="Username"/>
+                                    <mat-error *ngIf="form.invalid">{{getErrorMessageUsername()}}</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class='custom-width-div' appearance='outline'>
+                                    <mat-label>Email*</mat-label>
+                                    <input matInput formControlName="userEmail" type="email" name="userEmail" id="userEmail"  placeholder="Ex. xyz@example.com"/>
+                                    <mat-error *ngIf="form.invalid">{{getErrorMessageEmail()}}</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="custom-width-div" appearance="outline">
+                                    <mat-label>Password*</mat-label>
+                                    <input matInput formControlName="password" type="password" name="password" id="password" (change)="onPasswordChange()"/>
+                                    <mat-error *ngIf="form.invalid">{{getErrorMessagePassword()}}</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="custom-width-div" appearance="outline" [disabled]="!form.get('password')">
+                                    <mat-label>Confirm password*</mat-label>
+                                    <input matInput formControlName="confirmPassword" type="password" name="confirmPassword" id="confirmPassword" (change)="onPasswordChange()"/>
+                                    <mat-error *ngIf="form.invalid">{{getErrorMessagePasswordConfirmation()}}</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="custom-width-div" appearance="outline">
+                                    <mat-label>First Name*</mat-label>
+                                    <input matInput formControlName="firstname" type="text" name="firstname" id="firstname" placeholder="First name"/>
+                                    <mat-error *ngIf="form.invalid">{{getErrorMessageFirstname()}}</mat-error>
+                                </mat-form-field>
+                                  
+                                <mat-form-field class="custom-width-div" appearance="outline">
+                                    <mat-label>Last Name*</mat-label>
+                                    <input matInput formControlName="lastname" type="text" name="lastname" id="lastname" placeholder="Last name"/>
+                                    <mat-error *ngIf="form.invalid">{{getErrorMessageLastname()}}</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="custom-width-div" style="margin-left: 212px;" appearance="outline">
+                                    <mat-label>Address*</mat-label>
+                                    <input matInput formControlName="address" type="text" name="address" id="address" placeholder="Address"/>
+                                    <mat-error *ngIf="form.invalid">{{getErrorMessageAddress()}}</mat-error>
+                                </mat-form-field>
+                                
+                                <mat-form-field class="custom-width-div" appearance="outline">
+                                    <mat-label>Date of birth*</mat-label>
+                                    <input matInput [matDatepicker]="picker" [max]="maxDate" [min]="minDate" formControlName="birthday" name="birthday" id="birthday" onkeydown="return false">
+                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <mat-error *ngIf="form.invalid">{{getErrorMessageBirthday()}}</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="custom-width-div" style="margin-left: 212px;" appearance="outline">
+                                    <mat-label>User role*</mat-label>
+                                    <mat-select formControlName="roleOfUser">
+                                        <mat-option>--</mat-option>
+                                        <mat-option *ngFor="let role of userRolesKeys()" value="{{role}}">{{role}}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="form.invalid">{{getErrorMessageUserRole()}}</mat-error>
+                                </mat-form-field>
+                                
+                                <mat-form-field *ngIf="form.get('roleOfUser')!.value === 'TEAM_MEMBER'" class="custom-width-div" appearance="outline">
+                                    <mat-label>Team*</mat-label>
+                                    <mat-select formControlName="teamOfUser">
+                                        <mat-option>--</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="form.invalid"></mat-error>
+                                </mat-form-field>
+
+                            </div>
+                            
+                        </div>
+
+                        <div class="parent">
+                            <div class="custom-width-div" style="text-align: center; margin-top: 2rem;">          
+                            <button class="custom-width-btn" mat-flat-button color="Primary" [disabled]="form.invalid">Save</button>
+                            <a class="custom-width-btn" mat-stroked-button color="Accent" routerLink="/home">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -5,6 +5,9 @@ import { ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { UserAccountService } from '../services/user-account/user-account.service';
+import { Notification } from '../notifications/notifications.component';
+import { NotificationService } from '../services/notification/notification.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'navbar-cmp',
@@ -16,9 +19,16 @@ export class NavbarComponent implements OnInit {
   private sidebarVisible: boolean;
   private listTitles: any[] = [];
   private listCTitles: any[] = [];
+
+  responseData:any[];
+  notifications:Notification[]=[];
+  tempnot:Notification[];
+
+  count:number = 0;
+
   user!: string;
   location! : Location;
-  constructor(location: Location,  private element: ElementRef, private router: Router, private oAuth: SocialAuthService, private userService: UserAccountService) { 
+  constructor(private NotificationService: NotificationService,location: Location,  private element: ElementRef, private router: Router, private oAuth: SocialAuthService,private userService: UserAccountService) { 
 
     this.location = location;
     this.sidebarVisible = false;
@@ -32,9 +42,33 @@ export class NavbarComponent implements OnInit {
 
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+    this.readData();
+  }
 
-    
+  readData(){
+    this.NotificationService.getNotifications().subscribe(
+      not => {
+        this.responseData = not;
+        if(not != null){
+        this.tempnot = this.responseData;
+        let counter = 0;
+        this.notifications = [];
+        this.tempnot.forEach(not =>{
+            if(not.color == "#969696"){
+              this.count = this.count + 1;
+              if(counter < 5)
+                this.notifications.push(not);
 
+              counter = counter+ 1;
+            }
+        });
+        }
+        console.log(not);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
  
   getTitle(){
@@ -48,9 +82,20 @@ export class NavbarComponent implements OnInit {
             return this.listTitles[item].title;
         }
     }
+    console.log()
+  }
 
-  
+  getPath(){
+    var titlee = this.location.prepareExternalUrl(this.location.path());
+    if(titlee.charAt(0) === '#'){
+        titlee = titlee.slice( 1 );
+    }
 
+    for(var item = 0; item < this.listTitles.length; item++){
+        if(this.listTitles[item].path === titlee){
+            return this.listTitles[item].path;
+        }
+    }
     console.log()
   }
 
