@@ -8,6 +8,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { IncidentDevicesDialogComponent } from 'src/app/incident-devices-dialog/incident-devices-dialog.component';
 import { DeviceLocationDialogComponent } from 'src/app/device-location-dialog/device-location-dialog.component';
 import { Router } from '@angular/router';
+import { UserAccountService } from 'src/app/services/user-account/user-account.service';
 
 enum DeviceType{
   Breaker= "Breaker",
@@ -42,11 +43,14 @@ export class IncidentDevicesComponent implements OnInit {
   dataSource: MatTableDataSource<Device>;
   sortedData: Device[];
   
+  role:string;
+
   responseData:any[];
 
-  constructor(private dialog: MatDialog,private RouterObject: Router,private dialog2: MatDialog) { }
+  constructor(private dialog: MatDialog,private RouterObject: Router,private dialog2: MatDialog, private userAcc: UserAccountService) { }
 
   ngOnInit(): void {
+    this.role = this.userAcc.getRole();
     this.dataSource = new MatTableDataSource(this.AllDevices);
     if(window.sessionStorage.getItem('incidentSelectedDevices')!=null){
       let data = JSON.parse(window.sessionStorage.getItem('incidentSelectedDevices'));

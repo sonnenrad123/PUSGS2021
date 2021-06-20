@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartGrid2021Project.Models;
@@ -21,6 +22,7 @@ namespace SmartGrid2021Project.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("GetActuallyIncidents")]
         public async Task<ActionResult<IEnumerable<Incident>>> GetActuallyIncidents(){
 

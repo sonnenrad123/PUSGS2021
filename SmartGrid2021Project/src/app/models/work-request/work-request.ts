@@ -15,7 +15,7 @@ export class WorkRequest {
     emergencyWork: boolean;
     startDateTime: Date;
     endDateTime: Date;
-    phoneNo: number;
+    phoneNo: string;
     street: string;
     company: string;
     purpose: string;
@@ -24,5 +24,5 @@ export class WorkRequest {
     stateChangesHistory: Array<WRStateChange> = [];
     attachments: Array<Attachment> = [];
     equipment: Array<Device> = [];
-    
+    wR_id: number;
 }

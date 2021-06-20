@@ -36,3 +36,28 @@ button{
     margin-top: 1rem;
     float: inline-end;
 }
+
+.custom-row{
+  margin-top: 2rem;
+  width: 100%;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  min-height: 50px;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: lightcyan;
+ 
+}
+.custom-row-1{
+  margin-top: 2rem;
+  width: 100%;
+  
+  vertical-align: middle;
+}
+.custom-col{
+  
+  vertical-align: middle;
+  
+}

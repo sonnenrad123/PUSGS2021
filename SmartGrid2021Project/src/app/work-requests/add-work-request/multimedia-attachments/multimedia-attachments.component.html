@@ -12,7 +12,7 @@
         <div class="row">
             <div class="files-list">
                 <div class="single-file" *ngFor="let file of files; let i = index">
-                  <img src="{{file?.toBase64}}" width="45px" alt="file">
+                  <img src="../../../../assets/img/ic-file.svg" width="45px" alt="file">
                   <div class="info">
                     <h4 class="name">
                       {{ file?.name }}
@@ -29,7 +29,7 @@
         </div>
         <div class="row">
           <div class="button-center-align">
-              <button mat-flat-button color="primary" (click)=SaveChanges() [disabled]="images.length === 0">Save</button>
+              <button mat-flat-button color="primary" (click)=SaveChanges() [disabled]="wrAttachments.length === 0">Save</button>
               <button mat-flat-button (click)=Cancel()>Cancel</button>
           </div>
       </div>

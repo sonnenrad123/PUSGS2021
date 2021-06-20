@@ -8,6 +8,7 @@ import {IncidentServiceService } from '../services/incident/incident-service.ser
 import { MatTab } from '@angular/material/tabs';
 import { V4MAPPED } from 'node:dns';
 import { Router } from '@angular/router';
+import { UserAccountService } from '../services/user-account/user-account.service';
 export interface Incident{
   id:string;
   startDate:Date;
@@ -45,7 +46,8 @@ export class IncidentBrowserComponent implements OnInit {
   Incidents:Incident[];
 
   sortedData: Incident[];
-  constructor(private IncidentService: IncidentServiceService,private router:Router) {
+  role:string;
+  constructor(private IncidentService: IncidentServiceService,private router:Router, private userService: UserAccountService) {
 
   }
 
@@ -55,6 +57,7 @@ export class IncidentBrowserComponent implements OnInit {
   } 
 
   ngOnInit(): void {
+    this.role = this.userService.getRole();
     this.toggleAll = true;
     this.toggleMine = false;
     this.readData();

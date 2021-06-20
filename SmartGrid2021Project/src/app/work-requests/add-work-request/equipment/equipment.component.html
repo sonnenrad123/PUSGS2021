@@ -11,8 +11,9 @@
               [cdkDropListData]="allEquipment"
               [cdkDropListConnectedTo]="[doneList]"
               class="example-list"
+              
               (cdkDropListDropped)="drop($event)">
-              <div class="example-box" *ngFor="let item of allEquipment" cdkDrag>{{"["+item.id+"] "+item.name+" "+item.type}}<div style="margin-left: 2rem;">{{item.address}}</div></div>
+              <div class="example-box" *ngFor="let item of allEquipment" [cdkDragDisabled]="formDisabledButton" cdkDrag>{{"["+item.id+"] "+item.name+" "+item.type}}<div style="margin-left: 2rem;">{{item.address}}</div></div>
             </div>
           </div>
         </div>
@@ -25,9 +26,10 @@
               #doneList="cdkDropList"
               [cdkDropListData]="done"
               [cdkDropListConnectedTo]="[todoList]"
+              
               class="example-list"
               (cdkDropListDropped)="drop($event)">
-              <div class="example-box" *ngFor="let item of done" cdkDrag>{{"["+item.id+"] "+item.name+" "+item.type}}<div style="margin-left: 2rem;">{{item.address}}</div></div>
+              <div class="example-box" *ngFor="let item of done" [cdkDragDisabled]="formDisabledButton" cdkDrag>{{"["+item.id+"] "+item.name+" "+item.type}}<div style="margin-left: 2rem;">{{item.address}}</div></div>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
     <div class="row">
         
         <div class="col-md-2">
-            <button class="btn btn-default btn-block" (click)="CreateNewWR()" matTooltip="createworkrequest"><i class="pe-7s-plus" ></i> New</button>
+            <button *ngIf="role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER'" class="btn btn-default btn-block" (click)="CreateNewWR()" matTooltip="createworkrequest"><i class="pe-7s-plus" ></i> New</button>
          </div>
          <div class="col-md-2">
             <button class=" pull-left" (click)="showAllWorkRequests()" [ngClass]="{'btn btn-info' : !toggleAll, 'btn btn-info btn-fill': toggleAll}">  All</button>
@@ -45,7 +45,12 @@
                </ng-container>
                
                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+               <ng-container *ngIf="role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER'">
+                    <tr  mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getWorkRequest(row)"></tr>
+               </ng-container>
+               <ng-container *ngIf="role === 'TEAM_MEMBER' || role === 'USER'">
+                    <tr  mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+               </ng-container>
                <tr class="mat-row" *matNoDataRow>
                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
                </tr>    

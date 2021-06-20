@@ -12,7 +12,7 @@ import TileLayer from 'ol/layer/Tile';
 import Layer from 'ol/layer/Layer';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { ActivatedRoute } from '@angular/router'
+import {  ActivatedRoute, Router } from '@angular/router'
 import { Device } from '../incident-devices-dialog/incident-devices-dialog.component';
 import { DeviceService} from '../services/device/device.service';
 import { MapPoint } from '../models/map-point/map-point.model';
@@ -27,6 +27,7 @@ import { Incident } from '../incident-browser/incident-browser.component';
 import Stroke from 'ol/style/Stroke';
 import Fill from 'ol/style/Fill';
 import { MapService } from '../services/map/map.service';
+import { Route } from '@angular/compiler/src/core';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -44,7 +45,7 @@ export class MapComponent implements OnInit {
   lastLayer:any;
   allIncidents: any[] = [];
   
-  constructor(private route: ActivatedRoute,private DeviceService:DeviceService, private mapService: MapService, private incService: IncidentServiceService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private DeviceService:DeviceService, private mapService: MapService, private incService: IncidentServiceService) { }
   
   ngOnInit(): void {
     this.map = new Map({
@@ -76,15 +77,18 @@ export class MapComponent implements OnInit {
         return feature;
       });
       if(feature){
+        this.router.navigate(["AddIncident/"+(feature as Feature).get('IncID')]);
             //console.log((feature as Feature).get('IncID'));
-            this.incService.getIncident((feature as Feature).get('IncID')). subscribe(
+            /*this.incService.getIncident((feature as Feature).get('IncID')). subscribe(
               (data) => {
                 console.log(data);
+                var id = data;
+                this.router.navigate(["createworkrequest/"+id]);
               },
               (err) => {
                 console.log(err);
               }
-            );
+            );*/
       }
     });
     var markerLayer = new VectorLayer({

@@ -104,6 +104,8 @@ import { SelectSwitchingPlanModalDialogComponent } from './select-switching-plan
 
 
 
+import { SaveChangesComponent } from './security/save-changes/save-changes.component';
+import { DisplayServerErrorsComponent } from './utilities/display-server-errors/display-server-errors.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -174,7 +176,11 @@ import { SelectSwitchingPlanModalDialogComponent } from './select-switching-plan
     AddPlanWorkInstructionsComponent,
     ReportOutageDialogComponent,
     NotificationsComponent,
-    SelectSwitchingPlanModalDialogComponent
+    SelectSwitchingPlanModalDialogComponent,
+
+    SaveChangesComponent,
+
+    DisplayServerErrorsComponent
     
     
   ],

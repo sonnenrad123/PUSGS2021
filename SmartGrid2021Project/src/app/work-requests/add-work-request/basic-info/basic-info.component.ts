@@ -8,6 +8,7 @@ import { Device } from 'src/app/incident-devices-dialog/incident-devices-dialog.
 import { AvailableIncidentsDisplayComponent } from 'src/app/incidents/available-incidents-display/available-incidents-display.component';
 import { NominatimResponse } from 'src/app/models/nominatim-response/nominatim-response.model';
 import { WorkRequest } from 'src/app/models/work-request/work-request';
+import { SaveChangesComponent } from 'src/app/security/save-changes/save-changes.component';
 import { NominatimService } from 'src/app/services/nominatim/nominatim.service';
 import { WorkRequestsService } from 'src/app/services/work-request/work-requests.service';
 
@@ -27,6 +28,7 @@ export class BasicInfoComponent implements OnInit {
   user: string ;
   currentDate: Date = new Date();
   currentIncId: any;
+  formDisabledButton: boolean = false;
   constructor(private router: Router, 
               private workReqService: WorkRequestsService, 
               private nominatimService: NominatimService, 
@@ -34,6 +36,7 @@ export class BasicInfoComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.formDisabledButton = true;
     this.wrID = this.route.snapshot.queryParams['wr'];
     
 
@@ -41,7 +44,7 @@ export class BasicInfoComponent implements OnInit {
     
     this.basicInfoForm = new FormGroup({
       typeOfDocument: new FormControl('', Validators.required),
-      statusOfDocument: new FormControl('Draft'),
+      statusOfDocument: new FormControl('DRAFT'),
       incident: new FormControl(''),
       emergencyWork: new FormControl(''),
       //typeOfWork: new FormControl(''),
@@ -59,45 +62,43 @@ export class BasicInfoComponent implements OnInit {
     this.basicInfoForm.controls['createdBy'].setValue(this.user);
     
     if(window.sessionStorage.getItem('WRBICurrValue') !== null){
-      this.basicInfoForm.patchValue(JSON.parse(window.sessionStorage.getItem('WRBICurrValue')));
+      var bInfo = JSON.parse(window.sessionStorage.getItem('WRBICurrValue'));
+      this.basicInfoForm.patchValue(bInfo);
+      this.basicInfoForm.controls['startDateTime'].setValue(bInfo.startDateTime.toString().split('T')[0]);
+      this.basicInfoForm.controls['endDateTime'].setValue(bInfo.endDateTime.toString().split('T')[0]);
+      this.basicInfoForm.controls['dateTimeCreated'].setValue(bInfo.dateTimeCreated.toString().split('T')[0]);
+      this.currentIncId = bInfo.incidentId;
+      
+      this.formDisabledButton = false;
+      var lastChange = JSON.parse(window.sessionStorage.getItem('LastWRCH'));
+      if(lastChange.wrCurrentState === 'CANCELED' || lastChange.wrCurrentState === 'APPROVED'){
+        this.basicInfoForm.disable();
+        this.formDisabledButton = true;
+      }
     }
-    /*if(this.wrID){
-      this.workReqService.get(this.wrID).subscribe(
-        (data) => {
-          console.log(data);
-          
-          let binfo = {
-          typeOfDocument: data.typeOfDocument,
-          statusOfDocument: data.statusOfDocument,
-          incident: data.incident,
-          emergencyWork: data.emergencyWork,
-          company: data.company,
-          startDateTime: data.startDateTime,
-          endDateTime: data.endDateTime,
-          createdBy: data.createdBy,
-          purpose: data.purpose,
-          details: data.details,
-          notes: data.notes,
-          phoneNo: data.phoneNo,
-          dateTimeCreated: data.dateTimeCreated,
-          street: data.street 
-        };
-          //this.basicInfoForm.patchValue(binfo);
-          console.log('BI: '+binfo);
-          let scs = {stateChangesHistory: [data.stateChangesHistory]};
-          console.log('SCS: '+scs);
-          let equ = new Array<Device>();
-          data.equipment.forEach(_ => equ.push(_));
-          console.log('EQU: '+equ);
-          let att = {attachments : [data.attachments]};
-          console.log('ATT: '+att);
-        },
-        (err) => {
-          console.log(err);
-        }
-        );
-    }*/
+     this.basicInfoForm.valueChanges.subscribe(
+       (data) => {
+         console.log(data);
+         const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '400px';
+    dialogConfig.minHeight = '200px';
+    const dialogRef = this.dialog.open(SaveChangesComponent, dialogConfig);
     
+    dialogRef.afterClosed().subscribe(
+      data => {
+        console.log("Dialog output:", data);
+        if(data !== undefined){
+          console.log(data);
+          this.SaveWRBasicInfo();
+        }
+        
+      }
+      
+    );
+       }
+     );
   }
   Cancel(){
     this.router.navigate(['WorkRequests']);
@@ -140,12 +141,13 @@ export class BasicInfoComponent implements OnInit {
     }
     return '';
   }
-  OpenIncDialog(){
+  OpenIncDialog(data){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = '800px';
     dialogConfig.minHeight = '600px';
+    dialogConfig.data = this.currentIncId;
     const dialogRef = this.dialog.open(AvailableIncidentsDisplayComponent, dialogConfig);
     
     dialogRef.afterClosed().subscribe(

@@ -18,9 +18,11 @@ export class SecureViewComponent implements OnInit {
 
   isAuthorized(){
     if(this.role){
+      console.log(this.role);
       return this.securityService.getRole() === this.role;
     }
     else{
+      console.log(this.role);
       return this.securityService.isAuthenticated();
     }
   }

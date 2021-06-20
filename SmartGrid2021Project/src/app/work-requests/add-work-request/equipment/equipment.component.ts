@@ -16,9 +16,11 @@ export class EquipmentComponent implements OnInit {
   done = [
     
   ];
+  formDisabledButton: boolean = false;
   constructor(private deviceService: DeviceService, private wrService: WorkRequestsService, private router:Router) { }
 
   ngOnInit(): void {
+    this.formDisabledButton = false;
     this.deviceService.getDevices().subscribe(
       (data) => {
         this.allEquipment = data;
@@ -45,7 +47,11 @@ export class EquipmentComponent implements OnInit {
         console.log(err);
       }
     );
-    
+    var lastChange = JSON.parse(window.sessionStorage.getItem('LastWRCH'));
+    if(lastChange.wrCurrentState === 'CANCELED' || lastChange.wrCurrentState === 'APPROVED'){
+      
+      this.formDisabledButton = true;
+    }
 
   }
   drop(event: CdkDragDrop<string[]>) {

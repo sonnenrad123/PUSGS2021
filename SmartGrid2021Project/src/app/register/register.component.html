@@ -88,7 +88,7 @@
                                     
                                             <mat-form-field class="full-width" appearance="outline">
                                                 <mat-label>Birthday*</mat-label>
-                                                <input formControlName="dateOfBirth" type="date" name="dateOfBirth" id="dateOfBirth" matInput/>
+                                                <input (change)="onDateChanged()" formControlName="dateOfBirth" type="date" name="dateOfBirth" id="dateOfBirth" matInput/>
                                                 <mat-error *ngIf="form.invalid">{{getErrorMessageBirthday()}}</mat-error>
                                             </mat-form-field>
                         

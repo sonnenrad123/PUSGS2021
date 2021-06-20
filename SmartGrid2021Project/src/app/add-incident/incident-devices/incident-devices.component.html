@@ -3,7 +3,7 @@
         
         <div class="col-md-2">
             <a >
-                <button  (click)="devicesModalDialog()" class="btn btn-default btn-block pull-left" ><i class="pe-7s-plus"></i> Add device</button>
+                <button  (click)="devicesModalDialog()" *ngIf="role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER'" class="btn btn-default btn-block pull-left" ><i class="pe-7s-plus"></i> Add device</button>
             </a>
          </div>
          <div class="col-md-2 pull-right" >

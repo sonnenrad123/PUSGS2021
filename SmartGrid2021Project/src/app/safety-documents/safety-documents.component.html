@@ -2,7 +2,7 @@
     <div class="row">
         
         <div class="col-md-2">
-            <a routerLink ='/AddSafetyDocument'>
+            <a routerLink ='/AddSafetyDocument' *ngIf="role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER'">
                 <button  class="btn btn-default btn-block pull-left" ><i class="pe-7s-plus"></i> New</button>
             </a>
          </div>
@@ -75,7 +75,12 @@
 
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getSafetyDocument(row)"></tr>
+                <ng-container *ngIf="role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER'">
+                  <tr  mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getSafetyDocument(row)"></tr>
+               </ng-container>
+               <ng-container *ngIf="role === 'TEAM_MEMBER' || role === 'USER'">
+                     <tr  mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+               </ng-container>
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
                  </tr>  

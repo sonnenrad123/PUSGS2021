@@ -155,7 +155,7 @@ namespace SmartGrid2021Project.Controllers
                         var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { token, email = appUser.Email }, Request.Scheme);
                         
 
-                        await emailHelper.SendEmailAsync(appUser.Email, "Successfully registered. Your account must be allowed by admin!", confirmationLink);
+                        await emailHelper.SendEmailAsync(appUser.Email, "Successfully registered. [Request is processing] Your account must be allowed by admin and then you can log in into application!", confirmationLink);
 
                        
                         
@@ -371,9 +371,22 @@ namespace SmartGrid2021Project.Controllers
         public async Task<IActionResult> AllowUserLogin([FromQuery] string username)
         {
             try {
-                _context.AppUsers.FirstOrDefault(_ => _.UserName == username).AccountAllowed = true;
-                _context.SaveChanges();
-                return Ok();
+                var user = _context.AppUsers.FirstOrDefault(_ => _.UserName == username);
+
+                if (user != null)
+                {
+                    user.AccountAllowed = true;
+                    _context.SaveChanges();
+
+                    EmailHelper emailHelper = new EmailHelper();
+                    
+
+                    await emailHelper.SendEmailAsync(user.Email, "[Request is processed]", "Your account is allowed by admin and now you can log in into application! \nAPP LINK: http://localhost:4200");
+
+
+
+                    return Ok();
+                }
             }catch(Exception e)
             {
 
@@ -387,9 +400,21 @@ namespace SmartGrid2021Project.Controllers
         {
             try
             {
-                _context.AppUsers.FirstOrDefault(_ => _.UserName == username).AccountAllowed = false;
-                _context.SaveChanges();
-                return Ok();
+                var user = _context.AppUsers.FirstOrDefault(_ => _.UserName == username);
+                if (user != null)
+                {
+                    user.AccountAllowed = false;
+                    _context.SaveChanges();
+
+                    EmailHelper emailHelper = new EmailHelper();
+
+
+                    await emailHelper.SendEmailAsync(user.Email, "[Request is processed]", "Your account is not allowed by admin and you can not use application!");
+
+
+
+                    return Ok();
+                }
             }
             catch (Exception e)
             {

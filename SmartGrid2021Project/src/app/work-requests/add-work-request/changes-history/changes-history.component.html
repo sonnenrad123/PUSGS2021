@@ -1,28 +1,51 @@
 <div class="main-content" >
     <div class="container-fluid">
-        <div class="row">
+        <div class="row"  [hidden]="this.changesHistory.length == 0">
             <form [formGroup]="Form">
             <div class="form-group col-md-4">
                 <mat-form-field class="full-width" appearance="outline">
                     <mat-label>State of document*</mat-label>
-                    <mat-select formControlName="WRCurrentState" name="WRCurrentState" id="WRCurrentState">
+                    <mat-select formControlName="wrCurrentState" name="wrCurrentState" id="wrCurrentState">
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let status of WRDocStatusKeys()" value="{{status}}">{{status}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="Form.invalid">{{getErrorMessageWRCurrentState()}}</mat-error>
                 </mat-form-field>
             </div>
-            <div class="row">
-                <div class="button-center-align">
-                    <div class="col-md-3" ></div>
-                    <button mat-flat-button color="primary" (click)=SaveChanges() [disabled]="Form.invalid">Save</button>
-                    <button mat-flat-button (click)=Cancel()>Cancel</button>
-                </div>
-            </div>
+            
         </form>
         </div>
         <div class="row">
             <div class="col-md-4"><b>Work request changes history:</b></div>
+        </div>
+        <div *ngIf="this.changesHistory.length > 0">
+            <div class="row custom-row-1">
+                <div class="col-md-3"><b>Date Modified</b></div>
+                <div class="col-md-6"><b>Modified By</b></div>
+                <div class="col-md-3"><b>Status</b></div>
+            </div>
+            <div *ngFor="let change of this.changesHistory">
+                <div class="row custom-row" *ngIf="change.wrCurrentState.toString() === 'DENIED'" style="background-color: red;" >
+                    <div class="col-md-3 custom-col">{{change.changedOn.toString().split('T')[0]}}</div>
+                    <div class="col-md-6 custom-col">{{change.changedByUser}}</div>
+                    <div class="col-md-3 custom-col">{{change.wrCurrentState}}</div>
+                </div>
+                <div class="row custom-row" *ngIf="change.wrCurrentState.toString() === 'DRAFT'" style="background-color:lightgray;" >
+                    <div class="col-md-3 custom-col">{{change.changedOn.toString().split('T')[0]}}</div>
+                    <div class="col-md-6 custom-col">{{change.changedByUser}}</div>
+                    <div class="col-md-3 custom-col">{{change.wrCurrentState}}</div>
+                </div>
+                <div class="row custom-row" *ngIf="change.wrCurrentState.toString() === 'CANCELED'" style="background-color: lightsalmon;" >
+                    <div class="col-md-3 custom-col">{{change.changedOn.toString().split('T')[0]}}</div>
+                    <div class="col-md-6 custom-col">{{change.changedByUser}}</div>
+                    <div class="col-md-3 custom-col">{{change.wrCurrentState}}</div>
+                </div>
+                <div class="row custom-row" *ngIf="change.wrCurrentState.toString() === 'APPROVED'" style="background-color: lightgreen;" >
+                    <div class="col-md-3 custom-col">{{change.changedOn.toString().split('T')[0]}}</div>
+                    <div class="col-md-6 custom-col">{{change.changedByUser}}</div>
+                    <div class="col-md-3 custom-col">{{change.wrCurrentState}}</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

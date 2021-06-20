@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { TableColumn } from '../common/mat-table/table-column';
 import { WorkRequest } from '../models/work-request/work-request';
 import { WrDocumentStatus } from '../models/wr-document-status/wr-document-status.enum';
+import { UserAccountService } from '../services/user-account/user-account.service';
 import { WorkRequestsService } from '../services/work-request/work-requests.service';
 import { AddWorkRequestComponent } from './add-work-request/add-work-request.component';
 
@@ -33,11 +34,13 @@ export class WorkRequestsComponent implements OnInit {
   
   workRequests: WorkRequest[];
   workRequestsCopy: WorkRequest[];
-  constructor(private router: Router, private wrService: WorkRequestsService) { 
+  role:string;
+  constructor(private router: Router, private wrService: WorkRequestsService, private userService: UserAccountService) { 
   }
   
 
   ngOnInit(): void {
+    this.role = this.userService.getRole();
     this.isLoading = true;
     this.toggleAll = true;
     this.toggleMy = false;
@@ -71,12 +74,15 @@ export class WorkRequestsComponent implements OnInit {
     this.toggleAll = true;
     this.toggleMy = false;
     this.workRequests = this.workRequestsCopy;
+    this.dataSource = new MatTableDataSource(this.workRequests);
     
   }
   showMyWorkRequests(){
     this.toggleAll = false;
     this.toggleMy = true;
     this.workRequests = this.workRequestsCopy.filter(wr => wr.createdBy.toString() === localStorage.getItem('user'));
+    this.dataSource = new MatTableDataSource(this.workRequests);
+    console.log(this.workRequests);
   }
   
   CreateNewWR(){
@@ -96,7 +102,10 @@ export class WorkRequestsComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.loadWRs();
   }
-
+  getWorkRequest(row){
+    var id = row.wR_id;
+    this.router.navigate(["createworkrequest/"+id]);
+  }
   
 }
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
