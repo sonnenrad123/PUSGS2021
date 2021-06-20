@@ -32,9 +32,9 @@ export class AddPlanBasicComponent implements OnInit {
     this.basicInfoForm = new FormGroup({
       'customId' : new FormControl('SP'), 
       'typeOfDocument' : new FormControl(this.workTypes.Planned, [Validators.required]),
-      'warrantForWork' : new FormControl('', [Validators.required]),
+      'warrantForWork' : new FormControl(''),
       'status' : new FormControl('Draft',[Validators.required]),
-      'incident' : new FormControl('',[Validators.required]),
+      'incident' : new FormControl(''),
       'street' : new FormControl('',[Validators.required]),
       'startDateTime' : new FormControl(new Date(),[Validators.required]),
       'endDateTime' :new FormControl(new Date(),[Validators.required]) ,
@@ -43,7 +43,7 @@ export class AddPlanBasicComponent implements OnInit {
       'purpose' : new FormControl(''),
       'notes' : new FormControl(''),
       'company' : new FormControl('',[Validators.required]),
-      'phoneNo' : new FormControl(''),
+      'phoneNo' : new FormControl('',[Validators.required]),
       'dateTimeCreated' : new FormControl(new Date(),[Validators.required])
     });
 
@@ -59,9 +59,9 @@ export class AddPlanBasicComponent implements OnInit {
     this.basicInfoForm = new FormGroup({
       'customId' : new FormControl('SP'), 
       'typeOfDocument' : new FormControl(this.workTypes.Planned, [Validators.required]),
-      'warrantForWork' : new FormControl('', [Validators.required]),
+      'warrantForWork' : new FormControl(''),
       'status' : new FormControl('Draft',[Validators.required]),
-      'incident' : new FormControl('',[Validators.required]),
+      'incident' : new FormControl(''),
       'street' : new FormControl('',[Validators.required]),
       'startDateTime' : new FormControl(new Date(),[Validators.required]),
       'endDateTime' :new FormControl(new Date(),[Validators.required]) ,
@@ -70,7 +70,7 @@ export class AddPlanBasicComponent implements OnInit {
       'purpose' : new FormControl(''),
       'notes' : new FormControl(''),
       'company' : new FormControl('',[Validators.required]),
-      'phoneNo' : new FormControl(''),
+      'phoneNo' : new FormControl('',[Validators.required]),
       'dateTimeCreated' : new FormControl(new Date(),[Validators.required])
     });
 

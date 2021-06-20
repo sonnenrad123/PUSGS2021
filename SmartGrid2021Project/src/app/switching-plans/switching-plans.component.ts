@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { SwitchingPlanService } from '../services/switching-plan/switching-plan.service';
 
 export interface SwitchingPlan{
@@ -57,7 +58,7 @@ export class SwitchingPlansComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   responseData : any[];
-  constructor(private SwitchingPlanService: SwitchingPlanService) { }
+  constructor(private SwitchingPlanService: SwitchingPlanService,private router:Router) { }
 
   ngOnInit(): void {
     this.toggleAll = true;
@@ -127,6 +128,11 @@ export class SwitchingPlansComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.switchingPlans);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  getSWP(row){
+    var id = row.id.replace('SP','');
+    this.router.navigate(["AddSwitchingPlan/"+id]);
   }
 
   mapMineData(){

@@ -1,3 +1,4 @@
+import { style } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,22 +31,23 @@ export interface Notification{
 
 export class NotificationsComponent implements OnInit {
 
-  displayedColumns: string[] = ['icon', 'type' ,'desc', 'date'];
+  displayedColumns: string[] = ['icon', 'type' ,'desc', 'open', 'date'];
   types: string[] = ['All', 'Info', 'Warning', 'Error', 'Success'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   allNotifications:Notification[];
   
+  buttonDraw:boolean=false;
 
   filteredData: Notification[];
   searchData: Notification[];
   dataSource: MatTableDataSource<Notification>;
   sortedData: Notification[];;
-  
   responseData:any[];
   notifications:Notification[];
   incident:Incident;
+
 
   constructor(private NotificationService:NotificationService,
               private IncidentService:IncidentServiceService,
@@ -53,6 +55,39 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.readData();
+  }
+
+  isValid(row:any){
+      let styles = {
+        'display' : 'none'
+      };
+      this.allNotifications.forEach(not => {
+        if(not.id == row.id){
+          if(not.inc != null){
+            styles = {
+              'display' : 'block'
+            };
+          }
+        }
+      });
+      return styles;
+    
+  }
+
+  buttonClick(row:any){
+    this.allNotifications.forEach(not => {
+      if(not.id == row.id){
+        if(not.inc != null){
+          this.RouterObject.navigate(["AddIncident/"+not.inc]);
+        }else if(not.sd !=null){
+          
+        }else if(not.sp != null){
+          this.RouterObject.navigate(["AddSwitchingPlan/"+not.sp]);
+        }else if(not.wr != null){
+    
+        }
+      }
+    });
   }
 
   clickedOnRow(row:any){
@@ -66,17 +101,6 @@ export class NotificationsComponent implements OnInit {
           error => {
             console.log(error);
           });
-        }
-        if(not.inc != null){
-          this.IncidentService.getIncident(not.inc).subscribe(
-            response =>{
-              this.responseData = response;
-              console.log(this.responseData);
-            },
-            error => {
-              console.log(error);
-            }
-          );
         }
       }
     });

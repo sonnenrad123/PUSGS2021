@@ -17,6 +17,7 @@ namespace SmartGrid2021Project.Models
         public DateTime Date { get; set; }
         public string Icon { get; set; }
         public string Color { get; set; } //#969696 unread #F0F0F0 read
+        //public string UserEmail { get; set; }
         public string Wr {get;set;}
         public string Sp { get; set; }
         public string Sd { get; set; }

@@ -157,6 +157,22 @@ const routes: Routes = [
     ]
   },
 
+  {
+    path:'AddSwitchingPlan/:swpId',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '',component: AddSwitchingPlanComponent, children:[
+        {path:'BasicInfo', component: AddPlanBasicComponent},
+        {path:'Equipment', component: AddPlanEquipmentComponent},
+        {path:'StateChanged', component: AddPlanStateChangeHistoryComponent},
+        {path: 'Attachments', component: AddPlanAttachmentsComponent},
+        {path:'WorkInstructions', component: AddPlanWorkInstructionsComponent, children:[
+          {path:'AddNew', component:AddPlanWorkInstructionsComponent}
+        ]},
+      ]},
+    ]
+  },
+
   {path: 'SwitchingPlans',
   component : GeneralLayoutComponent,
   children:[

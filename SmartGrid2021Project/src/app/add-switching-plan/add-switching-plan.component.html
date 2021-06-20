@@ -7,7 +7,10 @@
     (click)="activeLinkIndex = link.index"
     routerLinkActive #rla="routerLinkActive"
     [active]="rla.isActive"><mat-icon>{{link.icon}}</mat-icon><hr>{{link.label}}</a>
-    <button type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="submitSwitchingPlan()" disabled="{{!buttonEnabled}}" style="left: 10px;" #si>Submit switching plan</button>
+
+    <button *ngIf="modifyModeActivated == false" type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="submitSwitchingPlan()" disabled="{{!buttonEnabled}}" style="left: 10px;" #si>Submit switching plan</button>
+
+    <button *ngIf="modifyModeActivated == true" type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="modifySWP()" disabled="{{!modifyModeActivated}}" style="left: 10px;" #si>Modify switching plan</button>
 </nav>
 <router-outlet></router-outlet>
 

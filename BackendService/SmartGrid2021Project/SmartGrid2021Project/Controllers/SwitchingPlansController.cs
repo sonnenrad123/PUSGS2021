@@ -43,6 +43,17 @@ namespace SmartGrid2021Project.Controllers
                 return NotFound();
             }
 
+            var switchingPlans = await _context.SwitchingPlans.
+                Include(sp => sp.Equipment).
+                Include(sp => sp.StateChanges).
+                Include(sp => sp.WorkInstructions).
+                Include(sp => sp.Attachments).
+                ToListAsync();
+
+            foreach (var item in switchingPlans)
+                if (item.Id == switchingPlan.Id)
+                    switchingPlan = item;
+
             return switchingPlan;
         }
 
@@ -54,6 +65,62 @@ namespace SmartGrid2021Project.Controllers
             if (id != switchingPlan.Id)
             {
                 return BadRequest();
+            }
+
+            //_context.Database.ExecuteSqlRaw(string.Format("delete from Devices where SwitchingPlanId = {0}", switchingPlan.Id));
+            //_context.Database.ExecuteSqlRaw(string.Format("delete from WorkInstructionSPs where SwitchingPlanId = {0}", switchingPlan.Id));
+            //_context.Database.ExecuteSqlRaw(string.Format("delete from StateChangesSPs where SwitchingPlanId = {0}", switchingPlan.Id));
+            //await _context.SaveChangesAsync();
+
+            switchingPlan.Equipment = new HashSet<Device>();
+            string[] deviceIds = deviceIds = switchingPlan.DeviceIds.Split(';');
+
+            foreach (string deviceid in deviceIds)
+            {
+                if (deviceid == "")
+                    continue;
+                if (int.TryParse(deviceid, out int idd))
+                {
+                    Device devtemp = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == id);
+                    switchingPlan.Equipment.Add(devtemp);
+                }
+            }
+
+            //AppUser creator = await _context.AppUsers.FirstOrDefaultAsync((x) => x.Email == switchingPlan.CreatorEmail);
+            //switchingPlan.User;
+
+            switchingPlan.StateChanges = new HashSet<StateChangesSP>();
+            string[] stateChanges = switchingPlan.StateChangesString.Split(';');
+            foreach (string state in stateChanges)
+            {
+                if (state == "")
+                    continue;
+                StateChangesSP scp = new StateChangesSP() { State = state, Date = DateTime.Now, Autor = switchingPlan.CreatedBy};
+                switchingPlan.StateChanges.Add(scp);
+            }
+
+            switchingPlan.WorkInstructions = new HashSet<WorkInstructionSP>();
+            string[] workIns = switchingPlan.WorkInstrutcionsString.Split(';');
+            foreach (string ins in workIns)
+            {
+                if (ins == "")
+                    continue;
+                string[] split = ins.Split(',');
+
+                /*Device d = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == int.Parse(split[1]));
+                string color = "";
+                if(d.Address == switchingPlan.Street)
+                {
+                    color = "#64FF64";
+                }
+                else
+                {
+                    color = "#FF6464";
+                }*/
+
+
+                WorkInstructionSP wi = new WorkInstructionSP() { Desc = split[0], Device = split[1], Executed = split[2]/*, Color=color*/ };
+                switchingPlan.WorkInstructions.Add(wi);
             }
 
             _context.Entry(switchingPlan).State = EntityState.Modified;
