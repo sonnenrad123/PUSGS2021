@@ -31,6 +31,19 @@ namespace SmartGrid2021Project.Controllers
                 .Include(incident => incident.User)
                 .Include(Incident => Incident.WorkRequests)
                 .ToListAsync();
-        }    
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetActuallySwitchingPlans")]
+        public async Task<ActionResult<IEnumerable<SwitchingPlan>>> GetSwitchingPlans()
+        {
+            return await _context.SwitchingPlans.
+                Include(sp => sp.Equipment).
+                Include(sp => sp.StateChanges).
+                Include(sp => sp.WorkInstructions).
+                Include(sp => sp.Attachments).
+                ToListAsync();
+        }
     }
 }

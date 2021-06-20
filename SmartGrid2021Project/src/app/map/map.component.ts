@@ -28,6 +28,8 @@ import Stroke from 'ol/style/Stroke';
 import Fill from 'ol/style/Fill';
 import { MapService } from '../services/map/map.service';
 import { Route } from '@angular/compiler/src/core';
+import { SwitchingPlanService } from '../services/switching-plan/switching-plan.service';
+import { SwitchingPlan } from '../select-switching-plan-modal-dialog/select-switching-plan-modal-dialog.component';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -44,10 +46,24 @@ export class MapComponent implements OnInit {
   mapPoint: MapPoint;
   lastLayer:any;
   allIncidents: any[] = [];
-  
-  constructor(private route: ActivatedRoute, private router: Router, private DeviceService:DeviceService, private mapService: MapService, private incService: IncidentServiceService) { }
+  allSWPlans:any[] = [];
+  constructor(private route: ActivatedRoute,
+              private router: Router, 
+              private DeviceService:DeviceService, 
+              private mapService: MapService, 
+              private incService: IncidentServiceService,
+              private swPlansService: SwitchingPlanService) { }
   
   ngOnInit(): void {
+    this.mapService.getSwPlansForMap().subscribe(
+      (data) => {
+        console.log(data as SwitchingPlan);
+        this.allSWPlans = data;
+      },
+      (err)=>{
+        console.log(err);
+      }
+    )
     this.map = new Map({
       target: 'smart_grid_map',
       layers: [
@@ -77,18 +93,15 @@ export class MapComponent implements OnInit {
         return feature;
       });
       if(feature){
-        this.router.navigate(["AddIncident/"+(feature as Feature).get('IncID')]);
-            //console.log((feature as Feature).get('IncID'));
-            /*this.incService.getIncident((feature as Feature).get('IncID')). subscribe(
-              (data) => {
-                console.log(data);
-                var id = data;
-                this.router.navigate(["createworkrequest/"+id]);
-              },
-              (err) => {
-                console.log(err);
-              }
-            );*/
+        let featType = (feature as Feature).getProperties();
+        if(featType[1].TypeOfDoc.toString() === 'Incident'){
+          this.router.navigate(["AddIncident/"+featType[0].IncID]);
+        }
+        else if(featType[1].TypeOfDoc.toString() === 'SWPlan'){
+          this.router.navigate(["AddSwitchingPlan/"+featType[0].IncID]);
+          //console.log(featType[1].TypeOfDoc+' '+featType[0].IncID)
+        }
+        
       }
     });
     var markerLayer = new VectorLayer({
@@ -103,7 +116,6 @@ export class MapComponent implements OnInit {
             image: new Icon(
               {
                 src: '../../assets/img/outline_report_problem_black_24dp.png', 
-                 
               }
               )
             }
@@ -121,8 +133,8 @@ export class MapComponent implements OnInit {
             {
               image: new Icon(
                 {
-                  src: '../../assets/img/images.png', 
-                   
+                  src: '../../assets/img/outline_directions_car_black_24dp.png', 
+                   anchor:[0.5,1]
                 }
                 )
               }
@@ -141,24 +153,27 @@ export class MapComponent implements OnInit {
             var newFeat = new Feature({
               geometry: new Point(olProj.fromLonLat([Number(latLon[4]), Number(latLon[1])]))
             });
-            newFeat.set('IncID' , this.allIncidents[j].id.toString())
+            newFeat.setProperties([{'IncID' : this.allIncidents[j].id.toString()}, {'TypeOfDoc': 'Incident'}]);
+            
             
             features.push(newFeat);
         }
         markerLayer.setSource(new VectorSource({features}));
         features = new Array<Feature>();
-      /*
+      
       //For switching plans
-        for(var j = 0; j < this.allIncidents.length; j++){
+        for(var j = 0; j < this.allSWPlans.length; j++){
           
-          var latLon : string[] = this.allIncidents[j].devices[0].coordinates.split(' ');
+          var latLon : string[] = this.allSWPlans[j].equipment[0].coordinates.split(' ');
+          
           var newFeat = new Feature({
-            geometry: new Point(olProj.fromLonLat([Number(latLon[4])+0.100016, Number(latLon[1])-0.000009]))
+            geometry: new Point(olProj.fromLonLat([Number(latLon[4]), Number(latLon[1])]))
           })
+          newFeat.setProperties([{'IncID' : this.allSWPlans[j].id.toString()}, {'TypeOfDoc': 'SWPlan'}])
           features.push(newFeat);
       }
       markerTeamLayer.setSource(new VectorSource({features}));
-      this.map.addLayer(markerTeamLayer);*/
+      this.map.addLayer(markerTeamLayer);
       },
       (err) => {
         console.log(err);
