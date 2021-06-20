@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { isObservable, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -17,6 +17,10 @@ export class SwitchingPlanService {
 
   getSwitchingPlan(id):Observable<any>{
     return this.http.get(this.BaseURI + '/'+id);
+  }
+
+  modifySwitchingPlan(id,data){
+    return this.http.put(this.BaseURI + '/'+id,data);
   }
 
   addSwitchingPlan(data){

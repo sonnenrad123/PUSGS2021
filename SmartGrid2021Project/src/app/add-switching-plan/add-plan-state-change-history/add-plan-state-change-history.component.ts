@@ -41,34 +41,10 @@ export class AddPlanStateChangeHistoryComponent implements OnInit {
     }
   }
 
-  /*readData(){
-    this.SwitchingPlanService.getSwitchingPlans().subscribe(
-      switchingPlans => {
-        this.responseData = switchingPlans.filter(x=> x.StateChanges);
-        console.log(switchingPlans);
-        this.mapData();
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  mapData(){
-    var ss = JSON.stringify(this.responseData);
-    
-    this.stateChanges = JSON.parse(ss).map(item => ({
-      id : item.id,
-      state: item.state,
-      date: item.date,
-      autor: item.autor
-    }));
-  }*/
-
   onSubmit() {
     console.log(this.changeStateForm.value);
     let userEmail = localStorage.getItem('user');
-    this.stateChanges.push({state:this.changeStateForm.get('switchingPlanState').value,date:this.datePipe.transform(new Date(),'dd-MM-yyyy HH:mm'),autor:userEmail});
+    this.stateChanges.push({state:this.changeStateForm.get('switchingPlanState').value,date:this.datePipe.transform(new Date()),autor:userEmail});
     window.sessionStorage.setItem('switchingPlanStateForm',JSON.stringify(this.stateChanges));
   }
 

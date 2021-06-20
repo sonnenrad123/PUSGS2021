@@ -21,3 +21,8 @@ table{
   overflow-y:hidden;
   overflow-x:scroll;
 }
+
+.mat-row:hover {
+  background-color: lightblue;
+  cursor: pointer;
+}

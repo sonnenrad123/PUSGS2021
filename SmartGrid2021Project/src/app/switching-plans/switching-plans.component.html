@@ -100,7 +100,7 @@
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <ng-container *ngIf="role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER'">
-                  <tr  mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getSwitchingPlan(row)"></tr>
+                  <tr  mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getSWP(row)"></tr>
                   </ng-container>
                   <ng-container *ngIf="role === 'TEAM_MEMBER' || role === 'USER'">
                           <tr  mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -2,9 +2,10 @@ import { JsonpClientBackend } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SwitchingPlanService } from '../services/switching-plan/switching-plan.service';
 import { UserAccountService } from '../services/user-account/user-account.service';
+import { SwitchingPlan } from '../switching-plans/switching-plans.component';
 
 @Component({
   selector: 'app-add-switching-plan',
@@ -21,7 +22,15 @@ export class AddSwitchingPlanComponent implements OnInit {
   triedToCrash: boolean = false;
   intervalFormCheck: any;
   role:string;
-  constructor(private router: Router,private SwitchingPlanService: SwitchingPlanService ,private _snackBar: MatSnackBar, private userService:UserAccountService) {
+  
+
+  modifyModeActivated: boolean = false;
+
+  swpId:string;
+  swpReplyData:any;
+  swp:SwitchingPlan;
+
+  constructor(private route: ActivatedRoute, private router: Router,private SwitchingPlanService: SwitchingPlanService ,private _snackBar: MatSnackBar, private userService:UserAccountService) {
     this.links = [
       {
         label: 'Basic Info',
@@ -65,6 +74,108 @@ export class AddSwitchingPlanComponent implements OnInit {
     if(this.router.url.endsWith('AddSwitchingPlan')){
       this.router.navigate(["AddSwitchingPlan/BasicInfo"]);
     }
+
+    this.swpId  = this.route.snapshot.paramMap.get('swpId');
+    if(this.swpId != null){
+      console.log('Modify switching plan: ' + this.swpId);
+      this.modifyModeActivated = true;
+      window.sessionStorage.setItem('modifyModeActivated',JSON.stringify(this.modifyModeActivated));
+      this.getSWPAndMakeForms();
+    }
+  }
+
+  getSWPAndMakeForms(){
+    this.SwitchingPlanService.getSwitchingPlan(this.swpId).subscribe(
+      response =>{
+        console.log(response);
+        this.swpReplyData = response;
+        
+        var basicform = 
+        {'customId' : this.swpReplyData.customId, 
+        'typeOfDocument' : this.swpReplyData.typeOfDocument,
+        'warrantForWork' : this.swpReplyData.warrantForWork,
+        'status' : this.swpReplyData.status,
+        'incident' : this.swpReplyData.incident,
+        'street' : this.swpReplyData.street,
+        'startDateTime' : this.swpReplyData.startDateTime,
+        'endDateTime' : this.swpReplyData.endDateTime,
+        'team' : this.swpReplyData.team,
+        'createdBy' :this.swpReplyData.createdBy,
+        'purpose' : this.swpReplyData.purpose,
+        'notes' : this.swpReplyData.notes,
+        'company' : this.swpReplyData.company,
+        'phoneNo' : this.swpReplyData.phoneNo,
+        'dateTimeCreated' : this.swpReplyData.dateTimeCreated,
+        }
+
+        
+        window.sessionStorage.setItem('basicInfoForm',JSON.stringify(basicform));
+        window.sessionStorage.setItem('ModifySWPObject',JSON.stringify(response));
+        window.sessionStorage.setItem('switchingPlanStateForm',JSON.stringify(response.stateChanges));
+        window.sessionStorage.setItem('switchingPlanSelectedEquipment',JSON.stringify(response.equipment));
+        window.sessionStorage.setItem('switchingPlanInsForm',JSON.stringify(response.workInstructions));
+        this.router.navigate(["AddSwitchingPlan/"+this.swpId+"/BasicInfo"]);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  modifySWP(){
+    let basicInfoFormValue = JSON.parse(window.sessionStorage.getItem('basicInfoForm'));
+    let switchingPlanStateValue = JSON.parse(window.sessionStorage.getItem('switchingPlanStateForm')) ;
+    let switchingPlanSelectedEquipmentValue = JSON.parse(window.sessionStorage.getItem('switchingPlanSelectedEquipment'));
+    let switchingPlanInsFormValue = JSON.parse(window.sessionStorage.getItem('switchingPlanInsForm'))
+
+    let deviceIds = "";
+    if(switchingPlanSelectedEquipmentValue !=null){
+    switchingPlanSelectedEquipmentValue.forEach(device => {
+      deviceIds = deviceIds + ';' + device.id;
+    });
+    }
+    
+    let stateChangesString =""
+    if(switchingPlanStateValue != null){
+    switchingPlanStateValue.forEach(state => {
+      stateChangesString = stateChangesString + ';' + state.state;
+    });
+    } 
+
+    let workInstrutcionsString = ""
+    if(switchingPlanInsFormValue !=null){
+      switchingPlanInsFormValue.forEach(ins=>{
+        workInstrutcionsString = workInstrutcionsString + ';' + ins.desc + ',' + ins.device + ',' + ins.executed;
+      });
+    }
+
+    let id = this.swpReplyData.id;
+    let user = this.swpReplyData.user;
+
+    let mergedObjects = {...basicInfoFormValue,...switchingPlanStateValue,stateChangesString,workInstrutcionsString,deviceIds,user,id};
+
+    if(basicInfoFormValue != null){
+      console.log(basicInfoFormValue);
+
+      this.SwitchingPlanService.modifySwitchingPlan(this.swpReplyData.id,mergedObjects).subscribe(
+        response =>{
+          console.log(response);
+          window.sessionStorage.removeItem('basicInfoForm');
+          window.sessionStorage.removeItem('switchingPlanStateForm');
+          window.sessionStorage.removeItem('switchingPlanSelectedEquipment')
+          window.sessionStorage.removeItem('switchingPlanInsForm');
+          this._snackBar.open('Switching plan modified!','Ok');
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+    else{
+      this.triedToCrash = true;
+    }
+    this.router.navigate(["SwitchingPlans"]);
+    
   }
 
   ngAfterViewInit() {
@@ -88,6 +199,8 @@ export class AddSwitchingPlanComponent implements OnInit {
     window.sessionStorage.removeItem('switchingPlanStateForm') ;
     window.sessionStorage.removeItem('switchingPlanSelectedEquipment');
     window.sessionStorage.removeItem('switchingPlanInsForm');
+    window.sessionStorage.removeItem('ModifySWPObject');
+    window.sessionStorage.removeItem('modifyModeActivated');
   }
 
   toggle(param){
@@ -142,6 +255,7 @@ export class AddSwitchingPlanComponent implements OnInit {
           console.log(error);
         }
       );
+      this.router.navigate(["SwitchingPlans"]);
     }
     else{
       this.triedToCrash = true;

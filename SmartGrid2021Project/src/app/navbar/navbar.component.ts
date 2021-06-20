@@ -26,6 +26,9 @@ export class NavbarComponent implements OnInit {
 
   count:number = 0;
 
+  
+  intervalCheck:any;
+
   user!: string;
   location! : Location;
   constructor(private NotificationService: NotificationService,location: Location,  private element: ElementRef, private router: Router, private oAuth: SocialAuthService,private userService: UserAccountService) { 
@@ -45,6 +48,12 @@ export class NavbarComponent implements OnInit {
     this.readData();
   }
 
+  ngAfterViewInit():void{
+    this.intervalCheck = setInterval(() => {
+      this.readData();
+    }, 25000);
+  }
+
   readData(){
     this.NotificationService.getNotifications().subscribe(
       not => {
@@ -52,6 +61,7 @@ export class NavbarComponent implements OnInit {
         if(not != null){
         this.tempnot = this.responseData;
         let counter = 0;
+        this.count = 0;
         this.notifications = [];
         this.tempnot.forEach(not =>{
             if(not.color == "#969696"){
