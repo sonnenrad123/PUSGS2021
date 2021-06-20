@@ -14,7 +14,6 @@ namespace SmartGrid2021Project.Controllers
     public class DevicesController : ControllerBase
     {
         private readonly GeneralDBContext _context;
-
         public DevicesController(GeneralDBContext context)
         {
             _context = context;
@@ -100,6 +99,10 @@ namespace SmartGrid2021Project.Controllers
             {
                 _context.Devices.Add(device);
                 await _context.SaveChangesAsync();
+
+                _context.Notifications.Add(new Notification() {Desc="Successfully added new device.", Type="Success", Icon="done", Color = "#969696" });
+                await _context.SaveChangesAsync();
+
                 return CreatedAtAction("GetDevice", new { id = device.Id }, device);
             }
             catch(Exception e)

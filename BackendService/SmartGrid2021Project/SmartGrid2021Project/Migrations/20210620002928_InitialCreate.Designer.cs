@@ -10,7 +10,7 @@ using SmartGrid2021Project.Models;
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    [Migration("20210619153237_InitialCreate")]
+    [Migration("20210620002928_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -455,6 +455,45 @@ namespace SmartGrid2021Project.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Incidents");
+                });
+
+            modelBuilder.Entity("SmartGrid2021Project.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Desc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Inc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sd")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Wr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.StateChangesSP", b =>

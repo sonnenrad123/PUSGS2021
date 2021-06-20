@@ -4,6 +4,9 @@ import {ROUTES} from "../../app/sidebar/sidebar.component";
 import { ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
+import { Notification } from '../notifications/notifications.component';
+import { NotificationService } from '../services/notification/notification.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'navbar-cmp',
@@ -15,9 +18,15 @@ export class NavbarComponent implements OnInit {
   private sidebarVisible: boolean;
   private listTitles: any[] = [];
   private listCTitles: any[] = [];
+
+  responseData:any[];
+  notifications:Notification[];
+
+  count:number = 0;
+
   user!: string;
   location! : Location;
-  constructor(location: Location,  private element: ElementRef, private router: Router, private oAuth: SocialAuthService) { 
+  constructor(private NotificationService: NotificationService,location: Location,  private element: ElementRef, private router: Router, private oAuth: SocialAuthService) { 
 
     this.location = location;
     this.sidebarVisible = false;
@@ -31,9 +40,24 @@ export class NavbarComponent implements OnInit {
 
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+    this.readData();
+    this.notifications.forEach(not =>{
+      if(not!=null)
+      this.count = this.count + 1;
+    });
+  }
 
-    
-
+  readData(){
+    this.NotificationService.getNotifications().subscribe(
+      not => {
+        this.responseData = not;
+        this.notifications = this.responseData;
+        console.log(not);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
  
   getTitle(){

@@ -22,6 +22,27 @@ namespace SmartGrid2021Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Desc = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Wr = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sd = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Inc = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
                 {
@@ -645,6 +666,9 @@ namespace SmartGrid2021Project.Migrations
 
             migrationBuilder.DropTable(
                 name: "DeviceIncident");
+
+            migrationBuilder.DropTable(
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "StateChangesSPs");

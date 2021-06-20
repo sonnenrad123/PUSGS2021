@@ -41,6 +41,7 @@ import { AddPlanStateChangeHistoryComponent } from './add-switching-plan/add-pla
 import { AddPlanAttachmentsComponent } from './add-switching-plan/add-plan-attachments/add-plan-attachments.component';
 import { AddPlanWorkInstructionsComponent } from './add-switching-plan/add-plan-work-instructions/add-plan-work-instructions.component';
 import { AddSwitchingPlanComponent } from './add-switching-plan/add-switching-plan.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
   {
@@ -212,6 +213,13 @@ const routes: Routes = [
     component: GeneralLayoutComponent,
     children:[
       {path: '',component: TestComponentComponent},
+    ]
+  },
+  {
+    path:'Notifications',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '', component:NotificationsComponent}
     ]
   },
   {

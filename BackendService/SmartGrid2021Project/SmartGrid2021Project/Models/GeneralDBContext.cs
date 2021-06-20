@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SmartGrid2021Project.Models;
 
 namespace SmartGrid2021Project.Models
 {
@@ -22,6 +23,7 @@ namespace SmartGrid2021Project.Models
         public DbSet<AttachmentSP> AttachmentSPs{get;set;}
         public DbSet<WorkInstructionSP> WorkInstructionSPs{get;set;}
         public DbSet<SwitchingPlan> SwitchingPlans{get;set;}
+        public DbSet<Notification> Notifications { get; set; }
 
     }
 }

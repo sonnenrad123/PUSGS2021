@@ -14,7 +14,7 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
 
     { path: '/SearchNetworkElements', title:'Search', icon: 'pe-7s-search',class:''},
-    { path: '/Report', title: 'Report', icon: 'fa fa-phone', class: ''},
+    { path: '/Report', title: 'Report', icon: 'pe-7s-call', class: ''},
 
     { path: '/NoRoute',title:'Dashboard',icon:'pe-7s-graph',class:''},
     
@@ -33,11 +33,11 @@ export const ROUTES: RouteInfo[] = [
       }
     ]},
     { path: '/AddNetworkElement', title: 'Add network element',icon: 'pe-7s-network',class:''},
-    { path:'/NoRoute', title:'Add consumer',icon:'pe-7s-add-user',class:''},
+    { path:'/NoRoute', title:'Consumers',icon:'pe-7s-user',class:''},
     { path: '/TeamsView', title:'Add teams',icon:'pe-7s-users',class:''},
     
 
-    { path: '/NoRoute', title: 'Notifications' , icon:'pe-7s-bell', class:'secondary'},
+    { path: '/Notifications', title: 'Notifications' , icon:'pe-7s-bell', class:'secondary'},
     { path: '/NoRoute', title:'Settings',icon:'pe-7s-tools',class:'secondary'},
     { path: '/AllUsers', title: 'All Users', icon:'pe-7s-uses', class: 'secondary'},
     //ispod su hidden rute da bi title funkcija radila

@@ -92,6 +92,7 @@ import { AddPlanEquipmentComponent } from './add-switching-plan/add-plan-equipme
 import { AddPlanAttachmentsComponent } from './add-switching-plan/add-plan-attachments/add-plan-attachments.component';
 import { AddPlanWorkInstructionsComponent } from './add-switching-plan/add-plan-work-instructions/add-plan-work-instructions.component';
 import { ReportOutageDialogComponent } from './report-outage-dialog/report-outage-dialog.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 
 
@@ -155,7 +156,8 @@ import { ReportOutageDialogComponent } from './report-outage-dialog/report-outag
     AddPlanEquipmentComponent,
     AddPlanAttachmentsComponent,
     AddPlanWorkInstructionsComponent,
-    ReportOutageDialogComponent
+    ReportOutageDialogComponent,
+    NotificationsComponent
     
     
   ],
