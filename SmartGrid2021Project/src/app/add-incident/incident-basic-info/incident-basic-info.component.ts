@@ -50,6 +50,7 @@ export class IncidentBasicInfoComponent implements OnInit {
     this.basicInformationForm.controls['priority'].setValue(this.incidentPriority);
     this.basicInformationForm.controls['affectedCustomers'].setValue(this.affectedCustomers);
 
+    this.streetPriorityService.addDummyPriorities().subscribe();
 
     let incidentSelectedDevicestemp = JSON.parse(window.sessionStorage.getItem('incidentSelectedDevices'));
     if(incidentSelectedDevicestemp != null){
