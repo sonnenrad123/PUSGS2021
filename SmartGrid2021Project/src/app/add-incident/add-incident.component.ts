@@ -7,6 +7,7 @@ import {IncidentServiceService } from '../services/incident/incident-service.ser
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ThisReceiver } from '@angular/compiler';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserAccountService } from '../services/user-account/user-account.service';
 
 
 @Component({
@@ -31,8 +32,8 @@ export class AddIncidentComponent implements OnInit {
   incidentId:string;
   incidentReplyData:any;
   resolutionForm: FormGroup;
-
-  constructor(private router: Router,private IncidentService: IncidentServiceService,private _snackBar: MatSnackBar,private route: ActivatedRoute) {
+  role:string;
+  constructor(private router: Router, private secService: UserAccountService, private IncidentService: IncidentServiceService,private _snackBar: MatSnackBar,private route: ActivatedRoute) {
     this.links = [
       {
         label: 'Basic Info',
@@ -76,6 +77,7 @@ export class AddIncidentComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.role = this.secService.getRole();
     this.resolutionForm = new FormGroup({
       'cause': new FormControl('Weather'),
       'subcause': new FormControl('Lighting',[Validators.required]),

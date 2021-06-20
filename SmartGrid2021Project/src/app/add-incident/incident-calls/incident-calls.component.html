@@ -2,7 +2,7 @@
     <ng-container *ngIf="!NewCallToggle;else addCall">
         <div class="row">
             <div class="col-md-2" *ngIf="!NewCallToggle">
-                <button (click)="toggleNew()" routerLink="./AddNew"  class="btn btn-default btn-block pull-left" ><i class="pe-7s-plus"></i> New</button>   
+                <button (click)="toggleNew()" *ngIf="role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER'" routerLink="./AddNew"  class="btn btn-default btn-block pull-left" ><i class="pe-7s-plus"></i> New</button>   
             </div>
             <div class="col-md-2 pull-right" >
                 <mat-form-field>

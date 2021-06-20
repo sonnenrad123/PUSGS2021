@@ -4,5 +4,5 @@ import { WorkRequestDocumentState } from "../work-reques-doc-state/work-request-
 export class WRStateChange {
     changedByUser: string;
     changedOn: Date;
-    WRCurrentState: WorkRequestDocumentState;
+    wrCurrentState: WorkRequestDocumentState;
 }

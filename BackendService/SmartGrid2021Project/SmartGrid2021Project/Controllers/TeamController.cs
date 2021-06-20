@@ -106,9 +106,13 @@ namespace SmartGrid2021Project.Controllers
         {
             try
             {
-                _context.Teams.Remove(_context.Teams.FirstOrDefault(_ => _.teamID == id));
-                _context.SaveChanges();
-                return Ok();
+                var team = _context.Teams.Include(_ => _.teamMembers).SingleOrDefault(_ => _.teamID == id);
+                if (team != null)
+                {
+                    _context.Teams.Remove(_context.Teams.FirstOrDefault(_ => _.teamID == id));
+                    _context.SaveChanges();
+                    return Ok();
+                }
             }
             catch (Exception e)
             {

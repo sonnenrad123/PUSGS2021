@@ -86,7 +86,7 @@ export class AddWorkRequestComponent implements OnInit {
   UpdateWR(){
     this.wrService.UpdateWR().subscribe(
       (data) => {
-        console.log(data);
+        console.log('dsfsdfsd');
         this.errors = [];
         this.snackBar.open('Work request updated successfully!', 'OK');
         this.router.navigate(['WorkRequests']);
@@ -130,12 +130,11 @@ export class AddWorkRequestComponent implements OnInit {
          //window.sessionStorage.getItem('LastWRCH')!=null &&
          //window.sessionStorage.getItem('WRMAttCurrValue')!=null
          ){
-        var v = JSON.parse(sessionStorage.getItem('LastWRCH')).wrCurrentState;
-        if(v === 'APPROVED' || v === 'CANCELED'){
-        this.hiddenButton = true;
+
         
-      }
-      console.log(this.hiddenButton);
+        
+     
+      
         if( this.modifyModeActivated == false){
           this.buttonEnabled = true;
           this.triedToCrash = false;
@@ -144,13 +143,14 @@ export class AddWorkRequestComponent implements OnInit {
           this.buttonEnabled = false;
           this.triedToCrash = false;
         }
-        
+        //console.log(this.buttonEnabled);
        
       }
       else{
         this.buttonEnabled = false;
         this.triedToCrash = false;
       }
+      
     }, 2000);
  }
 

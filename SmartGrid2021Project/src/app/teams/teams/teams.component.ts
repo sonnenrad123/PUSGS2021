@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Team } from 'src/app/models/team/team';
 import { TeamService } from 'src/app/services/teams/team.service';
+import { UserAccountService } from 'src/app/services/user-account/user-account.service';
 import { TeamDisplayComponent } from '../team-display/team-display/team-display.component';
 
 @Component({
@@ -13,12 +14,12 @@ import { TeamDisplayComponent } from '../team-display/team-display/team-display.
 })
 export class TeamsComponent implements OnInit {
   teams: any;
-  
-  constructor(private router: Router, private teamService: TeamService, private snackBar: MatSnackBar, private dialog: MatDialog) { }
+  role: string;
+  constructor(private router: Router, private teamService: TeamService, private snackBar: MatSnackBar, private dialog: MatDialog, private security: UserAccountService) { }
 
   ngOnInit(): void {
     this.RetrieveAllTeams();
-    
+    this.role = this.security.getRole();
   }
   
   RetrieveAllTeams(){

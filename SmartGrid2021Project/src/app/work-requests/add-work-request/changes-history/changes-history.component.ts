@@ -24,11 +24,12 @@ export class ChangesHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.errors = [];
+    
     this.formDisabledButton = false;
     this.Form = new FormGroup({
       changedByUser: new FormControl('', Validators.required),
       changedOn: new FormControl('', Validators.required),
-      WRCurrentState: new FormControl('', Validators.required)
+      wrCurrentState: new FormControl('', Validators.required)
     });
 
     this.Form.controls['changedByUser'].setValue(localStorage.getItem('user'));
@@ -37,8 +38,8 @@ export class ChangesHistoryComponent implements OnInit {
       var Allchs = JSON.parse(window.sessionStorage.getItem('WRCHCurrValue'));
       var lastChange = JSON.parse(window.sessionStorage.getItem('LastWRCH'));
       
-      this.Form.controls['WRCurrentState'].setValue(lastChange.wrCurrentState.toString());
-      this.disabledButton = lastChange.wrCurrentState === this.Form.controls['WRCurrentState'].value;
+      this.Form.controls['wrCurrentState'].setValue(lastChange.wrCurrentState.toString());
+      this.disabledButton = lastChange.wrCurrentState === this.Form.controls['wrCurrentState'].value;
       
       console.log(this.disabledButton);
       this.changesHistory = Allchs;
@@ -50,7 +51,7 @@ export class ChangesHistoryComponent implements OnInit {
         
       }
     }else{
-      this.Form.controls['WRCurrentState'].setValue('DRAFT');
+      this.Form.controls['wrCurrentState'].setValue('DRAFT');
       window.sessionStorage.removeItem('WRCHCurrValue');
       window.sessionStorage.setItem('WRCHCurrValue', JSON.stringify(this.Form.value));
     }
@@ -80,7 +81,7 @@ export class ChangesHistoryComponent implements OnInit {
     );
   }
   WRDocStatusKeys(): Array<string>{
-    var keys = Object.keys(this.documentStatus);
+    var keys = Object.keys(this.documentStatus).filter(s => s !== this.documentStatus.DRAFT);
     return keys;
   }
   SaveChanges(){
@@ -88,7 +89,7 @@ export class ChangesHistoryComponent implements OnInit {
     window.sessionStorage.setItem('LastWRCH', JSON.stringify(this.Form.value));
   }
   getErrorMessageWRCurrentState(){
-    const field = this.Form.get('WRCurrentState');
+    const field = this.Form.get('wrCurrentState');
     if(field !== null){
       if(field.hasError('required')){
         return 'The WRState field is required';

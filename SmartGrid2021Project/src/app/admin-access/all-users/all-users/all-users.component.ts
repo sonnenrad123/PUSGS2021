@@ -18,6 +18,7 @@ export class AllUsersComponent implements OnInit {
       (data) => {
         console.log(data);
         this.allUsers = data;
+        this.allUsers = this.allUsers.filter(user => user.email !== localStorage.getItem('user'));
       },
       (err) => {
         console.log(err);

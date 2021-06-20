@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserAccountService } from '../services/user-account/user-account.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -55,14 +56,14 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems!: any[];
   showSubMenu: boolean;
-
-  constructor() { }
+  role;
+  constructor(private sec: UserAccountService) { }
 
   ngOnInit(): void {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.showSubMenu = false;
-    
-
+    this.role = this.sec.getRole();
+    console.log(this.role);
   }
   isMobileMenu() {
     if ($(window).width() > 991) {

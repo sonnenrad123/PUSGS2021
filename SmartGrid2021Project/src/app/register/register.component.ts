@@ -1,5 +1,7 @@
+import { formatDate } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthenticationResponse } from '../models/common/authentication-response';
 import { NominatimResponse } from '../models/nominatim-response/nominatim-response.model';
@@ -33,7 +35,7 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   userProfileImage : any;
 
-  constructor(private router: Router, private userAccService: UserAccountService, private teamService: TeamService,private nominatimService: NominatimService) 
+  constructor(private router: Router, private userAccService: UserAccountService, private teamService: TeamService,private nominatimService: NominatimService, private snack: MatSnackBar) 
   {
     this.userProfileImage = "../../assets/img/sidebar-background.png";
     
@@ -75,6 +77,7 @@ export class RegisterComponent implements OnInit {
       (data) => {
         //console.log(data);
         this.userAccService.saveToken(data as AuthenticationResponse);
+        this.snack.open('Successfully registered! Check your email please!', 'Ok');
         this.router.navigate(["/login"])
       },
       (err) => {
@@ -104,7 +107,9 @@ export class RegisterComponent implements OnInit {
   get Address(): AbstractControl {
     return this.form.controls['address'];
   }
-
+  get dateOfBirth():AbstractControl{
+    return this.form.controls['dateOfBirth'];
+  }
   userRolesKeys(): Array<string>{
     var keys = Object.keys(this.userRoles);
     return keys;
@@ -160,15 +165,23 @@ export class RegisterComponent implements OnInit {
     const field = this.form.get('dateOfBirth');
       
     if(field !== null){
-      if(field !== null){
+      
         if(field.hasError('required')){
           return 'The birthday field is required';
         }
-      }
+        if(field.hasError('dateViolation')){
+          return 'The date of birth must be in past!';
+        }
     }
     return '';
   }
-
+  onDateChanged(){
+    if (formatDate(this.dateOfBirth.value, 'yyyy-MM-dd', 'en_US') <= formatDate(new Date(), 'yyyy-MM-dd', 'en_US')) {
+      this.dateOfBirth.setErrors(null);
+    } else {
+      this.dateOfBirth.setErrors({ dateViolation: true });
+    }
+  }
   getErrorMessageUserRole(){
     const field = this.form.get('roleOfUser');
     

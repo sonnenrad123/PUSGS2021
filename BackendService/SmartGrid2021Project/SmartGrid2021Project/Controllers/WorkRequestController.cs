@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartGrid2021Project.Helpers;
 using SmartGrid2021Project.Models;
@@ -22,6 +23,7 @@ namespace SmartGrid2021Project.Controllers
 
         [HttpGet]
         [Route("GetAllWorkRequests")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<WorkRequest>>> GetAllWorkRequests([FromQuery]PaginationDTO paginationDTO)
         {
 
@@ -217,6 +219,7 @@ namespace SmartGrid2021Project.Controllers
 
                 if (wr.StateChangesHistory.Count > 0)
                 {
+                    if(wr.StateChangesHistory.Last().WRCurrentState != workRequestfromDb.StateChangesHistory.Last().WRCurrentState)
                     workRequestfromDb.StateChangesHistory.Add(wr.StateChangesHistory.Last());
                 }
 

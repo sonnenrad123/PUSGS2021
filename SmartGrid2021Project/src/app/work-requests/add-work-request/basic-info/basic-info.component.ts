@@ -44,7 +44,7 @@ export class BasicInfoComponent implements OnInit {
     
     this.basicInfoForm = new FormGroup({
       typeOfDocument: new FormControl('', Validators.required),
-      statusOfDocument: new FormControl('DRAFT', Validators.required),
+      statusOfDocument: new FormControl('DRAFT'),
       incident: new FormControl(''),
       emergencyWork: new FormControl(''),
       //typeOfWork: new FormControl(''),
@@ -68,6 +68,7 @@ export class BasicInfoComponent implements OnInit {
       this.basicInfoForm.controls['endDateTime'].setValue(bInfo.endDateTime.toString().split('T')[0]);
       this.basicInfoForm.controls['dateTimeCreated'].setValue(bInfo.dateTimeCreated.toString().split('T')[0]);
       this.currentIncId = bInfo.incidentId;
+      
       this.formDisabledButton = false;
       var lastChange = JSON.parse(window.sessionStorage.getItem('LastWRCH'));
       if(lastChange.wrCurrentState === 'CANCELED' || lastChange.wrCurrentState === 'APPROVED'){

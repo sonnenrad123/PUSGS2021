@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IncidentServiceService } from 'src/app/services/incident/incident-service.service';
+import { UserAccountService } from 'src/app/services/user-account/user-account.service';
 
 @Component({
   selector: 'app-available-incidents-display',
@@ -11,9 +12,11 @@ export class AvailableIncidentsDisplayComponent implements OnInit {
   allIncidents: Array<any> = new Array<any>();
   currentValue: any;
   retVal: any;
-  constructor(@Inject(MAT_DIALOG_DATA) public data:any, private dialogRef: MatDialogRef<AvailableIncidentsDisplayComponent>, private incidentService: IncidentServiceService) { }
+  role: string;
+  constructor(@Inject(MAT_DIALOG_DATA) public data:any, private roleService: UserAccountService, private dialogRef: MatDialogRef<AvailableIncidentsDisplayComponent>, private incidentService: IncidentServiceService) { }
 
   ngOnInit(): void {
+    this.role  = this.roleService.getRole();
     this.incidentService.getIncidents().subscribe(
       (data) => {
         //console.log(data);

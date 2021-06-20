@@ -34,6 +34,9 @@ import { AddNetworkElementComponent } from './add-network-element/add-network-el
 import { AllUsersComponent } from './admin-access/all-users/all-users/all-users.component';
 import { IncidentCrewComponent } from './add-incident/incident-crew/incident-crew.component';
 import { IsAdminGuard } from './guards/is-admin.guard';
+import { IsDispatcherGuard } from './guards/is-dispatcher.guard';
+import { IsWorkerWithRightsGuard } from './guards/is-worker-with-rights.guard';
+import { IsWithPrivilegiesGuard } from './guards/is-with-privilegies.guard';
 
 const routes: Routes = [
   {
@@ -77,6 +80,7 @@ const routes: Routes = [
   {
     path:'AddIncident',
     component: GeneralLayoutComponent,
+    
     children:[
       {path: '',component: AddIncidentComponent, children:[
         {path:'BasicInfo', component: IncidentBasicInfoComponent},
@@ -92,6 +96,7 @@ const routes: Routes = [
   },
   {
     path:'AddIncident/:incidentId',
+    
     component: GeneralLayoutComponent,
     children:[
       {path: '',component: AddIncidentComponent, children:[
@@ -109,6 +114,7 @@ const routes: Routes = [
   {
     path:'AddSafetyDocument',
     component: GeneralLayoutComponent,
+    canActivate:[IsWithPrivilegiesGuard],
     children:[
       {
         path:'',component: AddSafetyDocumentComponent, children:[
@@ -152,13 +158,14 @@ const routes: Routes = [
     component: GeneralLayoutComponent,
     children:[
       {
-        path:'',component:AddNetworkElementComponent
+        path:'',component:AddNetworkElementComponent, canActivate:[IsAdminGuard]
       }
     ]
   },
   {
     path:'createworkrequest',
     component: GeneralLayoutComponent,
+    canActivate:[IsWithPrivilegiesGuard],
     children:[
       {path: '',component: AddWorkRequestComponent, children: [
         {path: 'BasicInfo', component: BasicInfoComponent},
@@ -171,8 +178,9 @@ const routes: Routes = [
   {
     path:'createworkrequest/:id',
     component: GeneralLayoutComponent,
+    canActivate:[IsWithPrivilegiesGuard],
     children:[
-      {path: '',component: AddWorkRequestComponent, children: [
+      {path: '',component: AddWorkRequestComponent,  children: [
         {path: 'BasicInfo', component: BasicInfoComponent},
         {path: 'ChangesHistory', component: ChangesHistoryComponent},
         {path: 'MultimediaAttachments', component: MultimediaAttachmentsComponent},
@@ -191,12 +199,13 @@ const routes: Routes = [
     path:'CreateNewTeam',
     component: GeneralLayoutComponent,
     children:[
-      {path: '',component: AddNewTeamComponent},
+      {path: '',component: AddNewTeamComponent, canActivate:[IsAdminGuard]},
     ]
   },
   {
     path:'switchingplans',
     component: GeneralLayoutComponent,
+    canActivate:[IsWithPrivilegiesGuard],
     children:[
       {path: '',component: TestComponentComponent},
     ]

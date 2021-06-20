@@ -34,7 +34,7 @@ export class WorkRequestsService {
  
   public CreateNewWR(){
       let bInfo = JSON.parse(window.sessionStorage.getItem('WRBICurrValue'));
-      let stateChange : WRStateChange = {WRCurrentState :WorkRequestDocumentState.DRAFT, changedByUser: localStorage.getItem('user').toString(), changedOn: new Date() }
+      let stateChange : WRStateChange = {wrCurrentState :WorkRequestDocumentState.DRAFT, changedByUser: localStorage.getItem('user').toString(), changedOn: new Date() }
       let wr: WorkRequest = {equipment: JSON.parse(window.sessionStorage.getItem('WREquCurrValue')),
                              attachments: JSON.parse(window.sessionStorage.getItem('WRMAttCurrValue')),
                              stateChangesHistory: new Array<WRStateChange>(),
@@ -65,7 +65,7 @@ export class WorkRequestsService {
     let bInfo = JSON.parse(window.sessionStorage.getItem('WRBICurrValue'));
     let stateChange : WRStateChange[] = JSON.parse(window.sessionStorage.getItem('WRCHCurrValue'));
     stateChange.push(JSON.parse(window.sessionStorage.getItem('LastWRCH')));
-    
+    console.log(JSON.parse(window.sessionStorage.getItem('LastWRCH')).wrCurrentState);
     let wr: WorkRequest = {equipment: JSON.parse(window.sessionStorage.getItem('WREquCurrValue')),
                            attachments: JSON.parse(window.sessionStorage.getItem('WRMAttCurrValue')),
                            stateChangesHistory: new Array<WRStateChange>(),
@@ -77,7 +77,7 @@ export class WorkRequestsService {
                            phoneNo: bInfo.phoneNo,
                            purpose: bInfo.purpose,
                            startDateTime: bInfo.startDateTime,
-                           statusOfDocument: JSON.parse(window.sessionStorage.getItem('LastWRCH')).WRCurrentState,
+                           statusOfDocument: JSON.parse(window.sessionStorage.getItem('LastWRCH')).wrCurrentState,
                            street: bInfo.street,
                            typeOfDocument: bInfo.typeOfDocument === "PLANNED_WORK" ? WorkRequestDocumentType.PLANNED_WORK: WorkRequestDocumentType.UNPLANNED_WORK,
                            details: bInfo.details,

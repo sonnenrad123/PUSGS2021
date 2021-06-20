@@ -8,6 +8,7 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatTab } from '@angular/material/tabs';
 import { CallService } from 'src/app/services/call/call.service';
+import { UserAccountService } from 'src/app/services/user-account/user-account.service';
 export interface Call{
   callId:string;
   reason:string;
@@ -29,12 +30,14 @@ export class IncidentCallsComponent implements OnInit {
   dataSource: MatTableDataSource<Call>;
   sortedData: Call[];
   
+  role:string;
 
-  constructor(private router: Router,private CallService:CallService) {
+  constructor(private router: Router,private CallService:CallService, private service: UserAccountService) {
     this.dataSource = new MatTableDataSource(this.AllCalls);
   }
 
   ngOnInit(): void {
+    this.role = this.service.getRole();
     let incidentSelectedDevicestemp = JSON.parse(window.sessionStorage.getItem('incidentSelectedDevices'));
     this.NewCallToggle = false;
     if(incidentSelectedDevicestemp!=null){

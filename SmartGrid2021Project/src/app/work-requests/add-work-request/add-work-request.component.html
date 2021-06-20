@@ -26,15 +26,15 @@
                 <app-equipment></app-equipment>
             </mat-tab-group>
 </div-->
-<div class="title" *ngIf="modifyModeActivated == false" >
-    <h4 class="header" hidden="{{hiddenButton}}">
+<div class="title" *ngIf="modifyModeActivated == false">
+    <h4 class="header">
         Create new work request <button type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="SubmitWR()" disabled="{{!buttonEnabled}}" style="left: 30px;" #si>Submit work request</button>
     </h4>
     
 </div>
 <div class="title" *ngIf="modifyModeActivated == true">
-    <h4 class="header" hidden="{{hiddenButton}}">
-        View and modify work request <button type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'"  (click)="UpdateWR()" disabled="{{!modifyModeActivated}}" style="left: 30px;" #si>Modify work request</button>
+    <h4 class="header">
+        View and modify work request <button type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="UpdateWR()" disabled="{{!modifyModeActivated}}" style="left: 30px;" #si>Modify work request</button>
     </h4>
     
 </div>

@@ -6,6 +6,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { SafetyDocumentService } from '../services/safety-documents/safety-document.service';
 import { Router } from '@angular/router';
+import { UserAccountService } from '../services/user-account/user-account.service';
 
 export interface SafetyDocument{
   id:string;
@@ -43,16 +44,19 @@ export class SafetyDocumentsComponent implements OnInit {
   
   dataSource: MatTableDataSource<SafetyDocument>;
   sortedData: SafetyDocument[];
-  
+  role:string;
 
-  constructor(private router:Router,private SafetyDocService:SafetyDocumentService) { }
+  constructor(private router:Router,private SafetyDocService:SafetyDocumentService, private serviceSecurity: UserAccountService) { }
 
   ngOnInit(): void {
+    this.role = this.serviceSecurity.getRole();
     this.toggleAll = true;
     this.toggleMine = false;
     this.readData();
   }
-
+  getSafetyDoc(row){
+    
+  }
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
