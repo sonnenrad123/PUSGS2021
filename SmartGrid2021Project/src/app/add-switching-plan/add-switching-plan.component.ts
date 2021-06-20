@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { SwitchingPlanService } from '../services/switching-plan/switching-plan.service';
+import { UserAccountService } from '../services/user-account/user-account.service';
 
 @Component({
   selector: 'app-add-switching-plan',
@@ -19,8 +20,8 @@ export class AddSwitchingPlanComponent implements OnInit {
   buttonEnabled: boolean;
   triedToCrash: boolean = false;
   intervalFormCheck: any;
-
-  constructor(private router: Router,private SwitchingPlanService: SwitchingPlanService ,private _snackBar: MatSnackBar) {
+  role:string;
+  constructor(private router: Router,private SwitchingPlanService: SwitchingPlanService ,private _snackBar: MatSnackBar, private userService:UserAccountService) {
     this.links = [
       {
         label: 'Basic Info',
@@ -60,7 +61,7 @@ export class AddSwitchingPlanComponent implements OnInit {
   ngOnInit(): void {
     this.toggledButton = "BI";
     this.activeLinkIndex = this.links.indexOf(this.links.find(tab => tab.link === '.' + this.router.url));
-    
+    this.role = this.userService.getRole();
     if(this.router.url.endsWith('AddSwitchingPlan')){
       this.router.navigate(["AddSwitchingPlan/BasicInfo"]);
     }

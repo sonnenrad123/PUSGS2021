@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SwitchingPlanService } from '../services/switching-plan/switching-plan.service';
+import { UserAccountService } from '../services/user-account/user-account.service';
 
 export interface SwitchingPlan{
     id :string;
@@ -32,6 +33,7 @@ export class SwitchingPlansComponent implements OnInit {
 
   toggleAll: boolean;
   toggleMine: boolean;
+  role:string;
   displayedColumns: string[] = 
   [
   'id',
@@ -57,14 +59,18 @@ export class SwitchingPlansComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   responseData : any[];
-  constructor(private SwitchingPlanService: SwitchingPlanService) { }
+  constructor(private SwitchingPlanService: SwitchingPlanService, private userService:UserAccountService) { }
 
   ngOnInit(): void {
+    this.role= this.userService.getRole();
     this.toggleAll = true;
     this.toggleMine = false;
     this.readData();
   }
 
+  getSwitchingPlan(row){
+    
+  }
   ngAfterViewInit(){
     //this.dataSource.paginator = this.paginator;
     //this.dataSource.sort = this.sort;

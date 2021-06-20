@@ -2,7 +2,7 @@
     <div class="row">
         
         <div class="col-md-2">
-            <a routerLink ='/AddSwitchingPlan'>
+            <a routerLink ='/AddSwitchingPlan' *ngIf="role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER'">
                 <button  class="btn btn-default btn-block pull-left" ><i class="pe-7s-plus"></i> New</button>
             </a>
          </div>
@@ -99,7 +99,12 @@
                  </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <ng-container *ngIf="role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER'">
+                  <tr  mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getSwitchingPlan(row)"></tr>
+                  </ng-container>
+                  <ng-container *ngIf="role === 'TEAM_MEMBER' || role === 'USER'">
+                          <tr  mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </ng-container>
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="15">No data matching the filter  "{{input.value}}"</td>
                  </tr>  
