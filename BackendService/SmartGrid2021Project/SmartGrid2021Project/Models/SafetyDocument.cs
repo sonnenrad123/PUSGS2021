@@ -24,12 +24,18 @@ namespace SmartGrid2021Project.Models
         public string Notes { get; set; }
         [JsonIgnore]
         public ICollection<Device> Devices { get; set; }
+        public string StateChanges { get; set; }
         public bool WorkCompleted { get; set; }
         public bool TagsRemoved { get; set; }
         public bool GroundingRemoved { get; set; }
         public bool ReadyForService { get; set; }
+        public string FieldCrew { get; set; }
+        [JsonIgnore]
+        public SwitchingPlan SwitchingPlan { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Attachment> Attachments { get; set; }
         [NotMapped]
-        public int switchingPlanId { get; set; }
+        public string SwitchingPlanId { get; set; }
         [NotMapped]
         public string CreatorEmail { get; set; }
         [NotMapped]

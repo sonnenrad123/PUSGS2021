@@ -26,6 +26,7 @@ namespace SmartGrid2021Project.Controllers
         {
             return await _context.SafetyDocuments
                 .Include(x => x.Creator)
+                .Include(_ => _.Attachments)
                 .ToListAsync();
         }
 
@@ -35,6 +36,9 @@ namespace SmartGrid2021Project.Controllers
         {
             var safetyDocument = await _context.SafetyDocuments
                 .Include(x => x.Creator)
+                .Include(x => x.Devices)
+                .Include(x => x.SwitchingPlan)
+                .Include(_ => _.Attachments)
                 .FirstOrDefaultAsync((x) => x.Id == id);
 
             if (safetyDocument == null)
@@ -55,6 +59,36 @@ namespace SmartGrid2021Project.Controllers
             {
                 return BadRequest();
             }
+            AppUser creator = await _context.AppUsers.FirstOrDefaultAsync((x) => x.Email == safetyDocument.CreatorEmail);
+            safetyDocument.Creator = creator;
+
+            safetyDocument.Devices = new List<Device>();
+            string[] deviceIds = safetyDocument.DeviceIds.Split(';');
+            foreach (string deviceid in deviceIds)
+            {
+                if (int.TryParse(deviceid, out int iddev))
+                {
+                    Device devtemp = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == iddev);
+                    safetyDocument.Devices.Add(devtemp);
+                }
+            }
+
+            string spid = safetyDocument.SwitchingPlanId.Substring(2);
+            if (int.TryParse(spid, out int SwitchingPlanId))
+            {
+                SwitchingPlan sp = _context.SwitchingPlans.FirstOrDefault(x => x.Id == SwitchingPlanId);
+                if (sp == null)
+                {
+                    return NotFound();
+                }
+                safetyDocument.SwitchingPlan = sp;
+            }
+            else
+            {
+                return NotFound();
+            }
+            _context.Database.ExecuteSqlRaw(string.Format("delete from DeviceSafetyDocument where SafetyDocumentsId = {0}", safetyDocument.Id));
+
 
             _context.Entry(safetyDocument).State = EntityState.Modified;
 
@@ -98,12 +132,28 @@ namespace SmartGrid2021Project.Controllers
                 }
             }
 
+            string spid = safetyDocument.SwitchingPlanId.Substring(2);
+            if(int.TryParse(spid,out int SwitchingPlanId))
+            {
+                SwitchingPlan sp = _context.SwitchingPlans.FirstOrDefault(x => x.Id == SwitchingPlanId);
+                if(sp== null)
+                {
+                    return NotFound();
+                }
+                safetyDocument.SwitchingPlan = sp;
 
 
-            _context.SafetyDocuments.Add(safetyDocument);
-            await _context.SaveChangesAsync();
+                _context.SafetyDocuments.Add(safetyDocument);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSafetyDocument", new { id = safetyDocument.Id }, safetyDocument);
+                return CreatedAtAction("GetSafetyDocument", new { id = safetyDocument.Id }, safetyDocument);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            
         }
 
         // DELETE: api/SafetyDocuments/5

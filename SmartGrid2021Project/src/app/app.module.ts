@@ -100,6 +100,7 @@ import { AddPlanAttachmentsComponent } from './add-switching-plan/add-plan-attac
 import { AddPlanWorkInstructionsComponent } from './add-switching-plan/add-plan-work-instructions/add-plan-work-instructions.component';
 import { ReportOutageDialogComponent } from './report-outage-dialog/report-outage-dialog.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { SelectSwitchingPlanModalDialogComponent } from './select-switching-plan-modal-dialog/select-switching-plan-modal-dialog.component';
 
 
 
@@ -172,7 +173,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     AddPlanAttachmentsComponent,
     AddPlanWorkInstructionsComponent,
     ReportOutageDialogComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    SelectSwitchingPlanModalDialogComponent
     
     
   ],
@@ -243,6 +245,6 @@ import { NotificationsComponent } from './notifications/notifications.component'
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [IncidentDevicesDialogComponent,DeviceLocationDialogComponent,SelectCallerDialogComponent]
+  entryComponents: [IncidentDevicesDialogComponent,DeviceLocationDialogComponent,SelectCallerDialogComponent,SelectSwitchingPlanModalDialogComponent]
 })
 export class AppModule { }

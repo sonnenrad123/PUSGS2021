@@ -19,11 +19,22 @@ export class SafetyDocumentChecklistComponent implements OnInit {
       'groundingRemoved':new FormControl(false),
       'readyForService':new FormControl(false),
     });
-
-    let formValue = window.sessionStorage.getItem('AddSafetyDocumentChecklist');
-    if(formValue!=null){
-      this.checklistForm.setValue(JSON.parse(formValue));
+    let modifyMode = window.sessionStorage.getItem('safetyDocModifyMode');
+    if(modifyMode!=null){
+      let safetyDocument = JSON.parse(window.sessionStorage.getItem('ModifySafetyDocumentObject'));
+      this.checklistForm.patchValue(safetyDocument);
+      let formValue = window.sessionStorage.getItem('AddSafetyDocumentChecklist');
+      if(formValue!=null){
+        this.checklistForm.setValue(JSON.parse(formValue));
+      }
     }
+    else{
+      let formValue = window.sessionStorage.getItem('AddSafetyDocumentChecklist');
+      if(formValue!=null){
+        this.checklistForm.setValue(JSON.parse(formValue));
+      }
+    }
+    
 
   }
 

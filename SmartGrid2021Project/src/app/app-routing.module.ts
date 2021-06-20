@@ -140,7 +140,21 @@ const routes: Routes = [
       },
     ]
   },
-
+  {
+    path:'AddSafetyDocument/:safetyDocumentId',
+    component: GeneralLayoutComponent,
+    children:[
+      {
+        path:'',component: AddSafetyDocumentComponent, children:[
+          {path:'BasicInfo', component: SafetyDocumentBasicInfoComponent},
+          {path:'StatesHistory', component: SafetyDocumentStatesHistoryComponent},
+          {path:'MultimediaAttachments', component:SafetyDocumentMultimediaAttachmentsComponent},
+          {path:'Equipment', component:SafetyDocumentEquipmentComponent},
+          {path:'Checklist', component:SafetyDocumentChecklistComponent}
+        ]
+      },
+    ]
+  },
   {
     path:'AddSwitchingPlan',
     component: GeneralLayoutComponent,

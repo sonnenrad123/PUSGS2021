@@ -18,12 +18,8 @@ export interface StateChange{
 export class SafetyDocumentStatesHistoryComponent implements OnInit {
   tableData1!:any;
   changeStateForm:FormGroup;
-  stateChanges:StateChange[]=[
-    {state:"Draft",date:this.datePipe.transform(new Date(),'dd-MM-yyyy HH:mm'),autor:"Ivan Gajic (TODO)"},
-    {state:"Issue",date:this.datePipe.transform(new Date("2021-05-26"),'dd-MM-yyyy HH:mm'),autor:"Ivan Gajic (TODO)"},
-    {state:"Cancel",date:this.datePipe.transform(new Date("2021-05-28"),'dd-MM-yyyy HH:mm'),autor:"Ivan Gajic (TODO)"}
-  ]
-  safetyDocumentStates: any = ['Draft','Issue','Cancel'];
+  stateChanges:StateChange[]=[];
+  safetyDocumentStates: any = [];
 
   constructor(private datePipe: DatePipe) { 
    
@@ -34,7 +30,22 @@ export class SafetyDocumentStatesHistoryComponent implements OnInit {
       'safetyDocumentState':new FormControl('',[Validators.required]),
       
     });
+    this.tableData1 = {
+      headerRow: [ 'Date','State','Changed By']
+    };
+    let modifyMode = window.sessionStorage.getItem('safetyDocModifyMode');
+    if(modifyMode!=null){
+      this.safetyDocumentStates = ['Draft','Issue','Cancel'];
+      if(window.sessionStorage.getItem('AddSafetyDocumentChangeStateHistory') != null){
+        this.stateChanges = JSON.parse(window.sessionStorage.getItem('AddSafetyDocumentChangeStateHistory'));
+      }
+    }
+    else{
+      let firstState:StateChange = {state:'Draft',date:this.datePipe.transform(new Date(),'dd-MM-yyyy HH:mm'),autor:localStorage.getItem('user')}
+      this.stateChanges.push(firstState);
 
+
+    }
 
     this.tableData1 = {
       headerRow: [ 'Date','State','Changed By']
@@ -43,8 +54,9 @@ export class SafetyDocumentStatesHistoryComponent implements OnInit {
 
   onSubmit() {
     console.log(this.changeStateForm.value);
-    this.stateChanges.push({state:this.changeStateForm.get('safetyDocumentState').value,date:this.datePipe.transform(new Date(),'dd-MM-yyyy HH:mm'),autor:"Ivan Gajic (TODO)"});
-    window.sessionStorage.setItem('AddSafetyDocumentChangeStateForm',JSON.stringify(this.safetyDocumentStates.value));
+    this.stateChanges.push({state:this.changeStateForm.get('safetyDocumentState').value,date:this.datePipe.transform(new Date(),'dd-MM-yyyy HH:mm'),autor:localStorage.getItem('user')});
+    window.sessionStorage.setItem('AddSafetyDocumentChangeStateHistory',JSON.stringify(this.stateChanges));
     
   }
+  
 }

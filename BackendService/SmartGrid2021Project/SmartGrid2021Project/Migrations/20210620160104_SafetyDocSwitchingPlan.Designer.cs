@@ -3,36 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartGrid2021Project.Models;
 
 namespace SmartGrid2021Project.Migrations
 {
     [DbContext(typeof(GeneralDBContext))]
-    partial class GeneralDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210620160104_SafetyDocSwitchingPlan")]
+    partial class SafetyDocSwitchingPlan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("AttachmentSafetyDocument", b =>
-                {
-                    b.Property<int>("AttachmentsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SafetyDocumentsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AttachmentsId", "SafetyDocumentsId");
-
-                    b.HasIndex("SafetyDocumentsId");
-
-                    b.ToTable("AttachmentSafetyDocument");
-                });
 
             modelBuilder.Entity("AttachmentWorkRequest", b =>
                 {
@@ -603,7 +590,7 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SwitchingPlanId1")
+                    b.Property<int?>("SwitchingPlanId")
                         .HasColumnType("int");
 
                     b.Property<bool>("TagsRemoved")
@@ -619,7 +606,7 @@ namespace SmartGrid2021Project.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.HasIndex("SwitchingPlanId1");
+                    b.HasIndex("SwitchingPlanId");
 
                     b.ToTable("SafetyDocuments");
                 });
@@ -893,21 +880,6 @@ namespace SmartGrid2021Project.Migrations
                     b.ToTable("WorkRequests");
                 });
 
-            modelBuilder.Entity("AttachmentSafetyDocument", b =>
-                {
-                    b.HasOne("SmartGrid2021Project.Models.Attachment", null)
-                        .WithMany()
-                        .HasForeignKey("AttachmentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SmartGrid2021Project.Models.SafetyDocument", null)
-                        .WithMany()
-                        .HasForeignKey("SafetyDocumentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("AttachmentWorkRequest", b =>
                 {
                     b.HasOne("SmartGrid2021Project.Models.Attachment", null)
@@ -1074,7 +1046,7 @@ namespace SmartGrid2021Project.Migrations
 
                     b.HasOne("SmartGrid2021Project.Models.SwitchingPlan", "SwitchingPlan")
                         .WithMany()
-                        .HasForeignKey("SwitchingPlanId1");
+                        .HasForeignKey("SwitchingPlanId");
 
                     b.Navigation("Creator");
 

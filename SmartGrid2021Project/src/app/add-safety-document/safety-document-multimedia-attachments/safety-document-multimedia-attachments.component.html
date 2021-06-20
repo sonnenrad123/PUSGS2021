@@ -28,4 +28,9 @@
               </div>
         </div>
     </div>
+    <div class="row">
+      <div class="button-center-align">
+          <button mat-flat-button color="primary" (click)=SaveChanges() [disabled]="images.length === 0">Save</button>
+      </div>
+  </div>
 </div>

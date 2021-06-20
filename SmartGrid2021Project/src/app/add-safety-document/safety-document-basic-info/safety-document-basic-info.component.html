@@ -30,8 +30,8 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="full-width" appearance="fill">
                                         <mat-label>Switching plan</mat-label>
-                                        <input type="text" matInput class="form-control" id="switchingPlan" formControlName="switchingPlan" readonly>
-                                        <button type="button" mat-icon-button matSuffix >
+                                        <input type="text" matInput class="form-control" id="switchingPlanId" formControlName="switchingPlanId" readonly>
+                                        <button type="button" mat-icon-button matSuffix (click) = 'ChooseSwitchingPlan()' >
                                             <mat-icon>more_horiz</mat-icon>
                                           </button>
                                     </mat-form-field>
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <mat-label>Field crew:</mat-label><br/>
-                                    <label style="font-size: large;"> NS Crew (TODO) </label>
+                                    <input type="text" matInput class="form-control" id="fieldCrew" formControlName="fieldCrew" readonly>
                                 </div>
                                 
                             </div>
@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <mat-label>Status</mat-label><br/>
-                                    <label style="font-size: large;"> Draft (TODO) </label>
+                                    <input type="text" matInput class="form-control" id="status" formControlName="status" readonly>
                                 </div>
                                 
                             </div>

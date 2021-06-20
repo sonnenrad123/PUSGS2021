@@ -110,6 +110,11 @@ export class SafetyDocumentsComponent implements OnInit {
     this.toggleMine = true;
   }
 
+  getSafetyDocument(row){
+    var id = row.id;
+    this.router.navigate(["AddSafetyDocument/"+id]);
+  }
+
 }
 
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {

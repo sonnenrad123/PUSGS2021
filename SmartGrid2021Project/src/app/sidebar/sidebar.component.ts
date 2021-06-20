@@ -17,7 +17,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/test',title:'Dashboard',icon:'pe-7s-graph',class:''},
     { path: '/Report', title: 'Report', icon: 'pe-7s-call', class: ''},
 
-    { path: '/NoRoute',title:'Dashboard',icon:'pe-7s-graph',class:''},
+    
     
     { path: '/IncidentBrowser',title:'Incidents browser', icon: 'pe-7s-note2',class:''}, 
     

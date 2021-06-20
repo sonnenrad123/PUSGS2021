@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
+import { toBase64 } from 'src/app/utilities/utils';
+import { Attachment } from 'src/app/models/common/attachment';
+import { SafetyDocumentService } from '../../services/safety-documents/safety-document.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-safety-document-multimedia-attachments',
   templateUrl: './safety-document-multimedia-attachments.component.html',
@@ -8,11 +11,18 @@ import { Component, OnInit } from '@angular/core';
 export class SafetyDocumentMultimediaAttachmentsComponent implements OnInit {
   files: any[] = [];
   URL: string = "";
+  imageBase64: string = "";
+  images: string[] = [];
+  sdAttachments: Array<Attachment> = new Array<Attachment>();
+  attachment: Attachment = {id : 0, type : '', progress:0, toBase64:'', name:'', size:0};
 
-
-  constructor() { }
+  constructor(private sdService: SafetyDocumentService, private router:Router) { }
 
   ngOnInit(): void {
+    if(window.sessionStorage.getItem('SDMAttCurrValue') !== null){      
+      this.files = JSON.parse(window.sessionStorage.getItem('SDMAttCurrValue')) as Array<any>; 
+      console.log(this.files);
+    }
   }
 
   onFileDropped($event){
@@ -29,11 +39,23 @@ export class SafetyDocumentMultimediaAttachmentsComponent implements OnInit {
    */
    prepareFilesList(files: Array<any>) {
     for (const item of files) {
-      item.progress = 0;
-      this.files.push(item);
-    }
+      const file: File = item;
+      this.attachment = {id: 0, toBase64 : item.toBase64, name : file.name, progress:100, size: file.size, type: file.type};
+
+      toBase64(file).then((value:any) => this.imageBase64 = value.toString()).then(_ =>  {
+        item.toBase64 = this.imageBase64;
+        this.images.push(this.imageBase64);
+        this.attachment.toBase64 = this.imageBase64;
+
+      });
+      
+    item.progress = 0;
+    this.files.push(item);
     
-    this.uploadFilesSimulator(0);
+    this.sdAttachments.push(this.attachment);
+  }
+  
+  this.uploadFilesSimulator(0);
   }
 
   formatBytes(bytes, decimals = 2) {
@@ -48,12 +70,12 @@ export class SafetyDocumentMultimediaAttachmentsComponent implements OnInit {
   }
 
   deleteFile(index: number) {
-    console.log(this.files);
-  if (this.files[index].progress < 100) {
-    console.log("Upload in progress.");
-    return;
-  }
-  this.files.splice(index, 1);
+    if (this.files[index].progress < 100) {
+      console.log("Upload in progress.");
+      return;
+    }
+    this.files.splice(index, 1);
+    this.images.splice(index, 1);
 }
 uploadFilesSimulator(index: number) {
   setTimeout(() => {
@@ -70,5 +92,9 @@ uploadFilesSimulator(index: number) {
       }, 200);
     }
   }, 500);
+}
+SaveChanges(){
+  window.sessionStorage.removeItem('SDMAttCurrValue');
+  window.sessionStorage.setItem('SDMAttCurrValue', JSON.stringify(this.sdAttachments));
 }
 }
