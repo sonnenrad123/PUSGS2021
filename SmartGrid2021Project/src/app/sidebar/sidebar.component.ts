@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ReportOutageDialogComponent } from '../report-outage-dialog/report-outage-dialog.component';
 import { UserAccountService } from '../services/user-account/user-account.service';
 
 declare const $: any;
@@ -61,7 +63,7 @@ export class SidebarComponent implements OnInit {
   menuItems!: any[];
   showSubMenu: boolean;
   role;
-  constructor(private sec: UserAccountService) { }
+  constructor(private sec: UserAccountService, private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -78,5 +80,14 @@ export class SidebarComponent implements OnInit {
 hideShowSubmenu(){
   this.showSubMenu = !this.showSubMenu;
   console.log(this.showSubMenu);
+}
+reportDialog(){
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.disableClose = true;
+  dialogConfig.autoFocus = true;
+  const dialogRef = this.dialog.open(ReportOutageDialogComponent, dialogConfig);
+  dialogRef.afterClosed().subscribe(
+    data => {
+    });
 }
 }

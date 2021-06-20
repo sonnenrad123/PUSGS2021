@@ -46,6 +46,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { IsDispatcherGuard } from './guards/is-dispatcher.guard';
 import { IsWorkerWithRightsGuard } from './guards/is-worker-with-rights.guard';
 import { IsWithPrivilegiesGuard } from './guards/is-with-privilegies.guard';
+import { ReportOutageDialogComponent } from './report-outage-dialog/report-outage-dialog.component';
 
 const routes: Routes = [
   {
@@ -283,6 +284,7 @@ const routes: Routes = [
       {path: '',component: TestComponentComponent},
     ]
   },
+  
   {
     path:'Notifications',
     component: GeneralLayoutComponent,

@@ -46,8 +46,8 @@ export class TestComponentComponent implements OnInit {
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
-  public pieChartLabels: Label[] = ['WP', 'WR', 'SD'];
-  public pieChartData: SingleDataSet = [this.WPCount, this.WRCount, this.SDCount];
+  public pieChartLabels: Label[] = ['WR', 'SP', 'SD'];
+  public pieChartData: SingleDataSet = [this.WPCount, this.SPCount, this.SDCount];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
@@ -99,6 +99,8 @@ export class TestComponentComponent implements OnInit {
         this.WPCanceledCount = wrNumbers[2];
         this.WPExecCount = wrNumbers[3];
         this.WPCompCount = wrNumbers[4];
+     this.pieChartData = [this.WPCount, this.SPCount, this.SDCount];
+
      },
      (err) =>{
        console.log(err);
@@ -113,6 +115,8 @@ export class TestComponentComponent implements OnInit {
         this.SPCanceledCount = spNumbers[2];
         this.SPExecCount = spNumbers[3];
         this.SPCompCount = spNumbers[4];
+     this.pieChartData = [this.WPCount, this.SPCount, this.SDCount];
+
      },
      (err) =>{
        console.log(err);
@@ -126,6 +130,8 @@ export class TestComponentComponent implements OnInit {
         this.SDDraftsCount = sdNumbers[1];
         this.SDCanceledCount = sdNumbers[2];
         this.SDExecCount = sdNumbers[3];
+     this.pieChartData = [this.WPCount, this.SPCount, this.SDCount];
+
      },
      (err) =>{
        console.log(err);
