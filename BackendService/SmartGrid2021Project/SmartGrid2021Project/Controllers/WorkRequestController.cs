@@ -163,6 +163,37 @@ namespace SmartGrid2021Project.Controllers
             throw new Exception();
         }
 
+
+        [HttpGet]
+        [Route("getDashboardData")]
+        public async Task<ActionResult<string>> getDashboardData()
+        {
+            List<WorkRequest> incidents = await _context.WorkRequests.ToListAsync();
+            int IncidentsCount = incidents.Count();
+            int draft = 0, canceled = 0, approved = 0, denied = 0;
+            foreach (WorkRequest wr in incidents)
+            {
+                if (wr.StatusOfDocument == "DRAFT")
+                {
+                    draft++;
+                }
+                if (wr.StatusOfDocument == "CANCELED")
+                {
+                    canceled++;
+                }
+                if (wr.StatusOfDocument == "APPROVED")
+                {
+                    approved++;
+                }
+                if (wr.StatusOfDocument == "DENIED")
+                {
+                    denied++;
+                }
+            }
+            return string.Format("{0};{1};{2};{3};{4}", IncidentsCount, draft, canceled,approved,denied);
+        }
+
+
         [HttpPost]
         [Route("UpdateWorkRequest")]
         public async Task<ActionResult<WorkRequest>> UpdateWorkRequest(WorkRequest wr)

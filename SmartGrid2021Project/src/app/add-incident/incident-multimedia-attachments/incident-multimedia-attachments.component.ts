@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { toBase64 } from 'src/app/utilities/utils';
+import { Attachment } from 'src/app/models/common/attachment';
+import { IncidentServiceService } from '../../services/incident/incident-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-incident-multimedia-attachments',
@@ -8,9 +12,19 @@ import { Component, OnInit } from '@angular/core';
 export class IncidentMultimediaAttachmentsComponent implements OnInit {
   files: any[] = [];
   URL: string = "";
-  constructor() { }
+  imageBase64: string = "";
+  images: string[] = [];
+  incAttachments: Array<Attachment> = new Array<Attachment>();
+  attachment: Attachment = {id : 0, type : '', progress:0, toBase64:'', name:'', size:0};
+  
+  constructor(private incService: IncidentServiceService, private router:Router) { }
+
 
   ngOnInit(): void {
+    if(window.sessionStorage.getItem('INCMAttCurrValue') !== null){      
+      this.files = JSON.parse(window.sessionStorage.getItem('INCMAttCurrValue')) as Array<any>; 
+      console.log(this.files);
+    }
   }
 
   onFileDropped($event){
@@ -27,12 +41,18 @@ export class IncidentMultimediaAttachmentsComponent implements OnInit {
    */
    prepareFilesList(files: Array<any>) {
     for (const item of files) {
-      item.progress = 0;
-      this.files.push(item);
-    }
+      const file: File = item;
+      this.attachment = {id: 0, toBase64 : '111', name : file.name, progress:100, size: file.size, type: file.type};
+      console.log(file);
+    item.progress = 0;
+    this.files.push(item);
     
-    this.uploadFilesSimulator(0);
+    this.incAttachments.push(this.attachment);
   }
+  
+  this.uploadFilesSimulator(0);
+  }
+  
 
   formatBytes(bytes, decimals = 2) {
     if (bytes === 0) {
@@ -46,12 +66,12 @@ export class IncidentMultimediaAttachmentsComponent implements OnInit {
   }
 
   deleteFile(index: number) {
-    console.log(this.files);
-  if (this.files[index].progress < 100) {
-    console.log("Upload in progress.");
-    return;
-  }
-  this.files.splice(index, 1);
+    if (this.files[index].progress < 100) {
+      console.log("Upload in progress.");
+      return;
+    }
+    this.files.splice(index, 1);
+    this.images.splice(index, 1);
 }
 uploadFilesSimulator(index: number) {
   setTimeout(() => {
@@ -68,6 +88,11 @@ uploadFilesSimulator(index: number) {
       }, 200);
     }
   }, 500);
+}
+SaveChanges(){
+  window.sessionStorage.removeItem('INCMAttCurrValue');
+    window.sessionStorage.setItem('INCMAttCurrValue', JSON.stringify(this.incAttachments));
+    console.log(this.incAttachments);
 }
 
 }

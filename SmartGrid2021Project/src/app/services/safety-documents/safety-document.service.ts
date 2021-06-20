@@ -30,4 +30,7 @@ export class SafetyDocumentService {
   update(id, data): Observable<any> {
     return this.http.put(this.BaseURI+'/'+id, data);
   }
+  getDashboardData():Observable<any>{
+    return this.http.get(this.BaseURI+'/getDashboardData',{responseType:'text'});
+  }
 }

@@ -60,7 +60,9 @@ export class WorkRequestsService {
 
       return this.http.post(environment.apiUrl + "WorkRequest/CreateNewWorkRequest", wr);
   }
-
+  getDashboardData():Observable<any>{
+    return this.http.get(environment.apiUrl+'WorkRequest/getDashboardData',{responseType:'text'});
+  }
   public UpdateWR(){
     let bInfo = JSON.parse(window.sessionStorage.getItem('WRBICurrValue'));
     let stateChange : WRStateChange[] = JSON.parse(window.sessionStorage.getItem('WRCHCurrValue'));

@@ -26,4 +26,7 @@ export class SwitchingPlanService {
   deleteSwitchingPlan(id): Observable<any> {
     return this.http.delete(this.BaseURI + '/'+id);
   }
+  getDashboardData():Observable<any>{
+    return this.http.get(this.BaseURI+'/getDashboardData',{responseType:'text'});
+  }
 }

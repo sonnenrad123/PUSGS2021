@@ -38,6 +38,8 @@ namespace SmartGrid2021Project.Models
         public ICollection<Device> Devices { get; set; }
         [JsonIgnore]
         public Team IncidentCrew { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Attachment> Attachments { get; set; }
         [NotMapped]
         public string CustomId
         {

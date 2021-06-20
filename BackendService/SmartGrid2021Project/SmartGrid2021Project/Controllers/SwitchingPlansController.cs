@@ -45,7 +45,35 @@ namespace SmartGrid2021Project.Controllers
 
             return switchingPlan;
         }
+        [HttpGet]
+        [Route("getDashboardData")]
+        public async Task<ActionResult<string>> getDashboardData()
+        {
+            List<SwitchingPlan> incidents = await _context.SwitchingPlans.ToListAsync();
+            int IncidentsCount = incidents.Count();
+            int draft = 0, canceled = 0, executing = 0, completed = 0;
+            foreach (SwitchingPlan sp in incidents)
+            {
+                if (sp.Status == "Draft")
+                {
+                    draft++;
+                }
+                if (sp.Status == "Canceled")
+                {
+                    canceled++;
+                }
+                if (sp.Status == "Executing")
+                {
+                    executing++;
+                }
+                if (sp.Status == "Completed")
+                {
+                    completed++;
+                }
 
+            }
+            return string.Format("{0};{1};{2};{3};{4}", IncidentsCount, draft, canceled, executing, completed);
+        }
         // PUT: api/SwitchingPlans/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

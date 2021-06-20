@@ -38,7 +38,7 @@ namespace SmartGrid2021Project.Models
 
         public virtual ICollection<WorkRequest> WorkRequests { get; set; }
         public virtual ICollection<SafetyDocument> SafetyDocuments { get; set; }
-
+        public virtual ICollection<Incident> Incidents { get; set; }
         public Attachment()
         {
             WorkRequests = new HashSet<WorkRequest>();

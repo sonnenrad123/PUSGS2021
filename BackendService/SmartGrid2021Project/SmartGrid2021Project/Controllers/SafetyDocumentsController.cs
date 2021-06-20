@@ -111,6 +111,32 @@ namespace SmartGrid2021Project.Controllers
             return NoContent();
         }
 
+
+        [HttpGet]
+        [Route("getDashboardData")]
+        public async Task<ActionResult<string>> getDashboardData()
+        {
+            List<SafetyDocument> incidents = await _context.SafetyDocuments.ToListAsync();
+            int IncidentsCount = incidents.Count();
+            int draft = 0, canceled = 0, executing = 0, completed = 0;
+            foreach (SafetyDocument sp in incidents)
+            {
+                if (sp.Status == "Draft")
+                {
+                    draft++;
+                }
+                if (sp.Status == "Cancel")
+                {
+                    canceled++;
+                }
+                if (sp.Status == "Issue")
+                {
+                    executing++;
+                }
+            }
+            return string.Format("{0};{1};{2};{3}", IncidentsCount, draft, canceled, executing);
+        }
+
         // POST: api/SafetyDocuments
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

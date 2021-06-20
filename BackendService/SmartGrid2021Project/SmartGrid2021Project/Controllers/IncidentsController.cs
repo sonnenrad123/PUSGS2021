@@ -40,6 +40,7 @@ namespace SmartGrid2021Project.Controllers
                                 .Include(incident => incident.Devices)
                                 .Include(incident => incident.User)
                                 .Include(incident => incident.IncidentCrew)
+                                .Include(incident => incident.Attachments)
                                   .FirstOrDefaultAsync((x) => x.Id == id);
 
             if (incident == null)
@@ -157,6 +158,45 @@ namespace SmartGrid2021Project.Controllers
             await _context.SaveChangesAsync();
 
             return incident;
+        }
+
+        [HttpGet]
+        [Route("getDashboardData")]
+        public async Task<ActionResult<string>> getDashboardData()
+        {
+            List<Incident> incidents = await _context.Incidents.ToListAsync();
+            int IncidentsCount = incidents.Count();
+            int draft = 0, subbmited = 0, rejected = 0, accepted = 0;
+            int planned = 0;
+            int unplanned = 0;
+            foreach (Incident inc in incidents)
+            {
+                if (inc.Status == "Draft")
+                {
+                    draft++;
+                }
+                if (inc.Status == "Subbmited")
+                {
+                    subbmited++;
+                }
+                if (inc.Status == "Rejected")
+                {
+                    rejected++;
+                }
+                if (inc.Status == "Accepted")
+                {
+                    accepted++;
+                }
+                if (inc.IncidentType == "Planned")
+                {
+                    planned++;
+                }
+                if (inc.IncidentType == "Unplanned")
+                {
+                    unplanned++;
+                }
+            }
+            return string.Format("{0};{1};{2};{3};{4};{5};{6}",IncidentsCount, draft, subbmited, rejected, accepted,planned,unplanned);
         }
 
         private bool IncidentExists(int id)

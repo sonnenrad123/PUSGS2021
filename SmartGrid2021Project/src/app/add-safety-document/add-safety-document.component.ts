@@ -99,6 +99,7 @@ export class AddSafetyDocumentComponent implements OnInit {
   window.sessionStorage.removeItem('AddSafetyDocumentChangeStateHistory');
   window.sessionStorage.removeItem('safetyDocumentSelectedDevices');
   window.sessionStorage.removeItem('safetyDocModifyMode');
+  window.sessionStorage.removeItem('SDMAttCurrValue');
 }
 
 
@@ -129,6 +130,7 @@ submitSafetyDocument(){
         window.sessionStorage.removeItem('AddSafetyDocumentBasicInformationForm');
          window.sessionStorage.removeItem('AddSafetyDocumentChecklist');
          window.sessionStorage.removeItem('safetyDocumentSelectedDevices');
+         window.sessionStorage.removeItem('SDMAttCurrValue');
         this._snackBar.open('Safety document added!','Ok');
       },
       error => {
@@ -163,6 +165,7 @@ modifySafetyDocument(){
         window.sessionStorage.removeItem('AddSafetyDocumentBasicInformationForm');
          window.sessionStorage.removeItem('AddSafetyDocumentChecklist');
          window.sessionStorage.removeItem('safetyDocumentSelectedDevices');
+         window.sessionStorage.removeItem('SDMAttCurrValue');
          this._snackBar.open('Safety document with id ' + this.safetyDocumentId + ' modified!','Ok');
       },
       error => {
@@ -183,6 +186,7 @@ getSafetyDocumentAndMakeForms(){
       window.sessionStorage.setItem('safetyDocumentSelectedDevices',JSON.stringify(response.devices));
       let safetyDocument = JSON.parse(window.sessionStorage.getItem('ModifySafetyDocumentObject'));
       window.sessionStorage.setItem('AddSafetyDocumentChangeStateHistory',safetyDocument.stateChanges);
+      window.sessionStorage.setItem('SDMAttCurrValue',JSON.stringify(safetyDocument.attachments));
       this.router.navigate(["AddSafetyDocument/"+this.safetyDocumentId+"/BasicInfo"]);
     },
     error => {

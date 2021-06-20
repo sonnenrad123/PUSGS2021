@@ -136,7 +136,7 @@ export class AddIncidentComponent implements OnInit {
     window.sessionStorage.removeItem('incidentCrewId');
     window.sessionStorage.removeItem('ModifyIncidentObject');
     window.sessionStorage.removeItem('modifyModeActivated');
-    
+    window.sessionStorage.removeItem('INCMAttCurrValue');
   }
 
 
@@ -160,9 +160,14 @@ export class AddIncidentComponent implements OnInit {
     });
 
     let creatorEmail = localStorage.getItem('user');
+    
+    let attachments;
+    if(window.sessionStorage.getItem('INCMAttCurrValue') !== null){      
+      attachments = JSON.parse(window.sessionStorage.getItem('INCMAttCurrValue')) as Array<any>; 
+      
+    }
 
-
-    let mergedObjects = {...basicInformationFormValue,...resolutionFormValue,deviceIds,creatorEmail,crewId};
+    let mergedObjects = {...basicInformationFormValue,...resolutionFormValue,deviceIds,creatorEmail,crewId,attachments};
 
     if(basicInformationFormValue != null && resolutionFormValue != null && incidentSelectedDevicestemp!=null && incidentSelectedDevicestemp.length > 0){
       console.log(basicInformationFormValue);
@@ -177,6 +182,7 @@ export class AddIncidentComponent implements OnInit {
           window.sessionStorage.removeItem('incidentCrewId');
           window.sessionStorage.removeItem('ModifyIncidentObject');
           window.sessionStorage.removeItem('modifyModeActivated');
+          window.sessionStorage.removeItem('INCMAttCurrValue');
           this._snackBar.open('Incident added!','Ok');
         },
         error => {
@@ -245,6 +251,9 @@ export class AddIncidentComponent implements OnInit {
           window.sessionStorage.setItem('incidentSelectedDevices',JSON.stringify(response.devices));
           window.sessionStorage.setItem('incidentCrewId',response.incidentCrew.teamID);
           window.sessionStorage.setItem('resolutionForm',JSON.stringify(this.resolutionForm.value));
+
+          window.sessionStorage.setItem('INCMAttCurrValue',JSON.stringify(response.attachments));
+
           this.router.navigate(["AddIncident/"+this.incidentId+"/BasicInfo"]);
         },
         error => {
