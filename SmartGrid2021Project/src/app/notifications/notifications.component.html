@@ -22,16 +22,22 @@
         <div class="main-table">
             <table mat-table  [dataSource]="dataSource" matSort>
                  <ng-container matColumnDef="icon" >
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;text-align: center;"> Type </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;text-align: center;"> </th>
                     <td mat-cell *matCellDef="let row" [style.background] = 'row.color'><button mat-button (click)="clickedOnRow(row)"><mat-icon> {{row.icon}} </mat-icon></button></td>
                  </ng-container>
+
+                 <ng-container matColumnDef="type" >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;text-align: center;"> Type </th>
+                    <td mat-cell *matCellDef="let row" [style.background] = 'row.color'>{{row.type}}</td>
+                 </ng-container>
+
                  <ng-container matColumnDef="desc">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 1140px;text-align: center;"> Description </th>
-                    <td mat-cell *matCellDef="let row" [style.background] = 'row.color'><button mat-button (click)="clickedOnRow(row)"></button>{{row.desc}}</td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 940px;text-align: center;"> Description </th>
+                    <td mat-cell *matCellDef="let row" [style.background] = 'row.color'>{{row.desc}}</td>
                  </ng-container>
                  <ng-container matColumnDef="date">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:400px;text-align: center;"> Date </th>
-                    <td mat-cell *matCellDef="let row" [style.background] = 'row.color'> <button mat-button (click)="clickedOnRow(row)"></button>{{row.date}}</td>
+                    <td mat-cell *matCellDef="let row" [style.background] = 'row.color'>{{row.date | date: 'dd.MM.yyyy HH:mm'}}</td>
                  </ng-container>
                  
 

@@ -8,9 +8,10 @@
                         <b class="caret"></b>
                         <span class="notification">{{count}}</span>
                     </a>
-                    <mat-list class="dropdown-menu" *ngFor="let not of notifications">
-                        <mat-list-item style="text-align: center;">{{not.type}}<mat-icon>{{not.icon}}</mat-icon></mat-list-item>
-                    </mat-list>
+                    <ul class="dropdown-menu" style="width:400px;">
+                        <li style="text-align: center;"  *ngFor="let not of notifications">{{not.desc}}<mat-icon>{{not.icon}}</mat-icon><li>
+                        <li style="text-align: center;"><a href="/Notifications"><mat-icon>open_in_browser</mat-icon></a></li>
+                    </ul>
                 </li>
             </ul>
             

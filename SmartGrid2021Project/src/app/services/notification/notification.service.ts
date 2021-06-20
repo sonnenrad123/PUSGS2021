@@ -19,6 +19,10 @@ export class NotificationService {
     return this.http.get(this.BaseURI + '/'+id);
   }
 
+  modifyNotification(id, data){
+    return this.http.put(this.BaseURI + '/'+id,data);
+  }
+
   addNotification(data){
     return this.http.post(this.BaseURI,data);
   }

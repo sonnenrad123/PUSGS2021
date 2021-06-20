@@ -101,6 +101,10 @@ namespace SmartGrid2021Project.Controllers
                 incident.User = creator;
                 _context.Incidents.Add(incident);
                 await _context.SaveChangesAsync();
+
+                _context.Notifications.Add(new Notification() { Desc = "Successfully added new incident. Id: INC" + incident.Id.ToString(), Type = "Success", Icon = "done", Date = DateTime.Now, Color = "#969696", Inc = incident.Id.ToString() });
+                await _context.SaveChangesAsync();
+
             }
             catch(Exception e)
             {

@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Incident } from '../incident-browser/incident-browser.component';
+import { IncidentServiceService } from '../services/incident/incident-service.service';
 import { NotificationService } from '../services/notification/notification.service';
+import { SwitchingPlanService } from '../services/switching-plan/switching-plan.service';
 
 export interface Notification{
   id? : string;
@@ -26,7 +30,7 @@ export interface Notification{
 
 export class NotificationsComponent implements OnInit {
 
-  displayedColumns: string[] = ['icon', 'desc', 'date'];
+  displayedColumns: string[] = ['icon', 'type' ,'desc', 'date'];
   types: string[] = ['All', 'Info', 'Warning', 'Error', 'Success'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -41,22 +45,54 @@ export class NotificationsComponent implements OnInit {
   
   responseData:any[];
   notifications:Notification[];
+  incident:Incident;
 
-
-  constructor(private NotificationService:NotificationService,private RouterObject:Router) { }
+  constructor(private NotificationService:NotificationService,
+              private IncidentService:IncidentServiceService,
+              private RouterObject:Router, private _snackBar:MatSnackBar) { }
 
   ngOnInit(): void {
     this.readData();
   }
 
   clickedOnRow(row:any){
-    console.log("cliekedOnRow");
+    this.allNotifications.forEach(not => {
+      if(not.id == row.id){
+        if(not.color != "#F0F0F0"){
+        not.color = "#F0F0F0";
+        this.NotificationService.modifyNotification(not.id, not).subscribe(
+          response =>{
+          },
+          error => {
+            console.log(error);
+          });
+        }
+        if(not.inc != null){
+          this.IncidentService.getIncident(not.inc).subscribe(
+            response =>{
+              this.responseData = response;
+              console.log(this.responseData);
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        }
+      }
+    });
   }
 
   markAllUnread(){
     this.allNotifications.forEach(not=>{
-      not.color = "#F0F0F0"
-    })
+      not.color = "#F0F0F0";
+      this.NotificationService.modifyNotification(not.id, not).subscribe(
+        response =>{
+          this._snackBar.open('Marked all notifications as read!','Ok');
+        },
+        error => {
+          console.log(error);
+        });
+      });
     this.dataSource = new MatTableDataSource(this.responseData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

@@ -20,7 +20,8 @@ export class NavbarComponent implements OnInit {
   private listCTitles: any[] = [];
 
   responseData:any[];
-  notifications:Notification[];
+  notifications:Notification[]=[];
+  tempnot:Notification[];
 
   count:number = 0;
 
@@ -41,17 +42,26 @@ export class NavbarComponent implements OnInit {
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
     this.readData();
-    this.notifications.forEach(not =>{
-      if(not!=null)
-      this.count = this.count + 1;
-    });
   }
 
   readData(){
     this.NotificationService.getNotifications().subscribe(
       not => {
         this.responseData = not;
-        this.notifications = this.responseData;
+        if(not != null){
+        this.tempnot = this.responseData;
+        let counter = 0;
+        this.notifications = [];
+        this.tempnot.forEach(not =>{
+            if(not.color == "#969696"){
+              this.count = this.count + 1;
+              if(counter < 5)
+                this.notifications.push(not);
+
+              counter = counter+ 1;
+            }
+        });
+        }
         console.log(not);
       },
       error => {
