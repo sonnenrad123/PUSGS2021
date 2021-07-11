@@ -5,6 +5,7 @@ import { AuthenticationResponse } from 'src/app/models/common/authentication-res
 import { User } from 'src/app/models/user/user';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { appUser, UserAccountComponent } from 'src/app/user-account/user-account.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -80,6 +81,14 @@ export class UserAccountService {
   }
   deleteUser(username){
     return this.http.delete(environment.apiUrl+ 'account/DeleteUser?username='+username)
+  }
+
+  getUserProfile(username){
+    return this.http.get<appUser>(environment.apiUrl + 'account/GetUser?username='+username)
+  }
+
+  modifyUser(id,userData){
+    return this.http.put(this.BaseURI + 'account/ModifyUser?id='+id,userData)
   }
 
   allowLogin(username){

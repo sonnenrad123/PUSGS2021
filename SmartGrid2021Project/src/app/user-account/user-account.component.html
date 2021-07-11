@@ -12,15 +12,19 @@
                     <form (submit)="SaveAccountChanges()" [formGroup]="form">
                         <div class="row">
                             <div class="image-placeholder form-group col-md-2">
-                                <div class="form-group component-position" matTooltip="Upload image">
-                                    <app-input-image>
-                                    </app-input-image>
+                                <div class="form-group " matTooltip="Your profile picture">
+                                    <img mat-card-image class="img-size" *ngIf="userImg !== ''" src="{{userImg}}" alt="Photo of user">
+                                    <img mat-card-image class="img-size" *ngIf="userImg == ''" src="../../assets/img/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt="Photo of user">
+                                </div>
+                                <div class="appinput form-group" matTooltip="Upload new image">
+                                    <app-input-image (onImageUploaded)="uploadImage($event)"></app-input-image>
                                 </div>
                             </div>
                             <div class="form-group full-width">
+                                <input matInput formControlName="id" type="text" name="id" id="id" hidden>
                                 <mat-form-field class='custom-width-div' appearance='outline'>
                                     <mat-label>Username*</mat-label>
-                                    <input matInput formControlName="username" type="text" name="username" id="username" placeholder="Username"/>
+                                    <input matInput formControlName="userName" type="text" name="userName" id="userName" placeholder="Username"/>
                                     <mat-error *ngIf="form.invalid">{{getErrorMessageUsername()}}</mat-error>
                                 </mat-form-field>
 
@@ -56,7 +60,8 @@
 
                                 <mat-form-field class="custom-width-div" style="margin-left: 212px;" appearance="outline">
                                     <mat-label>Address*</mat-label>
-                                    <input matInput formControlName="address" type="text" name="address" id="address" placeholder="Address"/>
+                                    <input matInput (change)="onAddressChanged()" (click)="$event.stopPropagation()" (keyup.enter)="addressLookup($any($event.target).value)" formControlName="address" type="text" name="address" id="address" />
+                                    <app-results-list [results]="searchResults" (locationSelected)="getAddress($event)"></app-results-list>
                                     <mat-error *ngIf="form.invalid">{{getErrorMessageAddress()}}</mat-error>
                                 </mat-form-field>
                                 
@@ -69,7 +74,7 @@
                                     <mat-error *ngIf="form.invalid">{{getErrorMessageBirthday()}}</mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field class="custom-width-div" style="margin-left: 212px;" appearance="outline">
+                                <mat-form-field *ngIf="form.get('roleOfUser')!.value !== 'ADMINISTRATOR'" class="custom-width-div" style="margin-left: 212px;" appearance="outline">
                                     <mat-label>User role*</mat-label>
                                     <mat-select formControlName="roleOfUser">
                                         <mat-option>--</mat-option>
@@ -82,6 +87,7 @@
                                     <mat-label>Team*</mat-label>
                                     <mat-select formControlName="teamOfUser">
                                         <mat-option>--</mat-option>
+                                        <mat-option *ngFor="let team of userTeams" value="{{team.teamName}}">{{team.teamName}}</mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="form.invalid"></mat-error>
                                 </mat-form-field>
@@ -93,7 +99,7 @@
                         <div class="parent">
                             <div class="custom-width-div" style="text-align: center; margin-top: 2rem;">          
                             <button class="custom-width-btn" mat-flat-button color="Primary" [disabled]="form.invalid">Save</button>
-                            <a class="custom-width-btn" mat-stroked-button color="Accent" routerLink="/home">Cancel</a>
+                            <a class="custom-width-btn" mat-stroked-button color="Accent" (click)= "OnCancel()">Cancel</a>
                             </div>
                         </div>
                     </form>

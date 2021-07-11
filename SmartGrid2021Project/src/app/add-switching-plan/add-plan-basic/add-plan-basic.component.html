@@ -56,11 +56,12 @@
                             <div class="row">
                                 <div class="from-group col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
-                                        <mat-label>Warrant for work</mat-label>
-                                        <input type="text" id="warrantForWork" matInput formControlName="warrantForWork">
-                                        <mat-error>Please choose warrant for work.</mat-error>
+                                        <mat-label>Work request</mat-label>
+                                        <input type="text" matInput  id="warrantForWork" formControlName="warrantForWork" readonly>
+                                        <button type="button" mat-icon-button matSuffix (click) = 'ChooseWorkRequest()' >
+                                            <mat-icon>more_horiz</mat-icon>
+                                          </button>
                                     </mat-form-field>
-                                    
                                 </div>
                                 <div class="col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
@@ -85,8 +86,10 @@
                                 <div class="from-group col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Incident</mat-label>
-                                        <input type="text" id="incident" matInput formControlName="incident">
-                                        <mat-error>Please choose incident.</mat-error>
+                                        <input type="text" matInput  id="incident" formControlName="incident" readonly>
+                                        <button type="button" mat-icon-button matSuffix (click) = 'ChooseIncident()' >
+                                            <mat-icon>more_horiz</mat-icon>
+                                          </button>
                                     </mat-form-field>
                                     
                                 </div>
@@ -111,8 +114,10 @@
                                 <div class="from-group col-md-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Team</mat-label>
-                                        <input type="text" id="team" matInput formControlName="team">
-                                        <mat-error>Please choose team.</mat-error>
+                                        <input type="text" matInput  id="team" formControlName="team" readonly>
+                                        <button type="button" mat-icon-button matSuffix (click) = 'ChooseTeam()' >
+                                            <mat-icon>more_horiz</mat-icon>
+                                          </button>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4" >

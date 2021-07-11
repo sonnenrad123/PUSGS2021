@@ -26,11 +26,13 @@ namespace SmartGrid2021Project.Models
 
         public virtual ICollection<WorkRequest> WorkRequests { get; set; }
         public virtual ICollection<SafetyDocument> SafetyDocuments { get; set; }
+        public virtual ICollection<SwitchingPlan> SwitchingPlans { get; set; }
         
 
         public Device()
         {
             WorkRequests = new HashSet<WorkRequest>();
+            SwitchingPlans = new List<SwitchingPlan>();
         }
 
     }

@@ -79,12 +79,12 @@
                 <p>Add network element</p>
             </a>
         </li>
-        <li *ngIf="this.role === 'ADMINISTRATOR'" routerLinkActive="active" >
+        <!--<li *ngIf="this.role === 'ADMINISTRATOR'" routerLinkActive="active" >
             <a [routerLink]="'/NoRoute'">
                 <i class="pe-7s-add-user"></i>
                 <p>Add consumer</p>
             </a>
-        </li>
+        </li>-->
         <li routerLinkActive="active" >
             <a [routerLink]="'/TeamsView'">
                 <i class="pe-7s-users"></i>
@@ -110,7 +110,7 @@
             </li>
             
             <li *ngIf="this.role === 'ADMINISTRATOR'" routerLinkActive="active" class="bottom">
-                <a [routerLink]="'/NoRoute1'">
+                <a [routerLink]="'/Settings'">
                     <i class="pe-7s-tools"></i>
                     <p>Settings</p>
                 </a>

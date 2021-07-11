@@ -20,7 +20,7 @@ export class AddPlanStateChangeHistoryComponent implements OnInit {
   tableData1!:any;
   changeStateForm:FormGroup;
   stateChanges:StateChange[]=[]
-  switchingPlanStates: any = ['Approve','Deny','Cancel'];
+  switchingPlanStates: any = [];
   responseData: any[];
 
   constructor(private datePipe: DatePipe, private SwitchingPlanService: SwitchingPlanService) { 
@@ -36,8 +36,16 @@ export class AddPlanStateChangeHistoryComponent implements OnInit {
       headerRow: [ 'Date','State','Changed By']
     };
 
-    if(window.sessionStorage.getItem('switchingPlanStateForm') != null){
-      this.stateChanges = JSON.parse(window.sessionStorage.getItem('switchingPlanStateForm'));
+    let modifyMode = window.sessionStorage.getItem('modifyModeActivated');
+    if(modifyMode!=null){
+      this.switchingPlanStates = ['Approve','Deny','Cancel'];
+      if(window.sessionStorage.getItem('switchingPlanStateForm') != null){
+        this.stateChanges = JSON.parse(window.sessionStorage.getItem('switchingPlanStateForm'));
+      }
+    }
+    else{
+      let firstState:StateChange = {state:'Draft',date:this.datePipe.transform(new Date()),autor:localStorage.getItem('user')}
+      this.stateChanges.push(firstState);
     }
   }
 

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Attachment } from 'src/app/models/common/attachment';
+import { SwitchingPlanService } from 'src/app/services/switching-plan/switching-plan.service';
 
 @Component({
   selector: 'app-add-plan-attachments',
@@ -9,9 +12,23 @@ export class AddPlanAttachmentsComponent implements OnInit {
 
   files: any[] = [];
   URL: string = "";
-  constructor() { }
+  imageBase64: string = "";
+  images: string[] = [];
+  sdAttachments: Array<Attachment> = new Array<Attachment>();
+  attachment: Attachment = {id : 0, type : '', progress:0, toBase64:'', name:'', size:0};
+
+  constructor(private sdService: SwitchingPlanService, private router:Router) { }
 
   ngOnInit(): void {
+    if(window.sessionStorage.getItem('SWPMAttCurrValue') !== null){      
+      this.files = JSON.parse(window.sessionStorage.getItem('SWPMAttCurrValue')) as Array<any>; 
+      for (const item of this.files) {
+        const file: File = item;
+        this.attachment = {id: 0, toBase64 : '111', name : file.name, progress:100, size: file.size, type: file.type};
+        this.sdAttachments.push(this.attachment);
+      }
+      console.log(this.files);
+    }
   }
 
   onFileDropped($event){
@@ -28,12 +45,21 @@ export class AddPlanAttachmentsComponent implements OnInit {
    */
    prepareFilesList(files: Array<any>) {
     for (const item of files) {
-      item.progress = 0;
-      this.files.push(item);
-    }
+      const file: File = item;
+      this.attachment = {id: 0, toBase64 : '111', name : file.name, progress:100, size: file.size, type: file.type};
+      console.log(file);
+    item.progress = 0;
+    this.files.push(item);
     
-    this.uploadFilesSimulator(0);
+    this.sdAttachments.push(this.attachment);
   }
+  
+  this.uploadFilesSimulator(0);
+
+  window.sessionStorage.removeItem('SWPMAttCurrValue');
+  window.sessionStorage.setItem('SWPMAttCurrValue', JSON.stringify(this.sdAttachments));
+  }
+  
 
   formatBytes(bytes, decimals = 2) {
     if (bytes === 0) {
@@ -47,12 +73,15 @@ export class AddPlanAttachmentsComponent implements OnInit {
   }
 
   deleteFile(index: number) {
-    console.log(this.files);
-  if (this.files[index].progress < 100) {
-    console.log("Upload in progress.");
-    return;
-  }
-  this.files.splice(index, 1);
+    if (this.files[index].progress < 100) {
+      console.log("Upload in progress.");
+      return;
+    }
+    this.sdAttachments.splice(index,1);
+    this.files.splice(index, 1);
+    this.images.splice(index, 1);
+    window.sessionStorage.removeItem('SWPMAttCurrValue');
+    window.sessionStorage.setItem('SWPMAttCurrValue', JSON.stringify(this.sdAttachments));
 }
 uploadFilesSimulator(index: number) {
   setTimeout(() => {

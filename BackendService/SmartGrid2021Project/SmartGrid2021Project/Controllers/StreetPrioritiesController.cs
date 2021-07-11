@@ -67,6 +67,8 @@ namespace SmartGrid2021Project.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                _context.Notifications.Add(new Notification() { Desc = "Street priority has been modified.", Type = "Info", Icon = "info", Date = DateTime.Now, Color = "#969696" });
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -92,6 +94,8 @@ namespace SmartGrid2021Project.Controllers
             _context.StreetPriorities.Add(streetPriority);
             try
             {
+                await _context.SaveChangesAsync();
+                _context.Notifications.Add(new Notification() { Desc = "Successfully added priority to street.", Type = "Success", Icon = "done", Date = DateTime.Now, Color = "#969696"});
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)

@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using System.Globalization;
+using Newtonsoft.Json.Linq;
 
 namespace SmartGrid2021Project.Controllers
 {
@@ -30,8 +31,8 @@ namespace SmartGrid2021Project.Controllers
 
     public class AccountController : ControllerBase
     {
-        private  UserManager<AppUser> userManager;
-        private  SignInManager<AppUser> signInManager;
+        private UserManager<AppUser> userManager;
+        private SignInManager<AppUser> signInManager;
         private readonly ApplicationSettings appSettings;
         private readonly GeneralDBContext _context;
         private const string GoogleApiTokenInfoUrl = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={0}";
@@ -48,7 +49,7 @@ namespace SmartGrid2021Project.Controllers
             this._context = dBContext;
         }
 
-       
+
         [HttpGet]
         [Route("GetAllUsers")]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers()
@@ -86,26 +87,26 @@ namespace SmartGrid2021Project.Controllers
 
 
 
-            [HttpPost]
+        [HttpPost]
         [AllowAnonymous]
         [Route("Register")]
         //POST : /api/Account/Register
-        public async Task<ActionResult<AuthenticationResponse>> RegisterApplicationUser([FromBody]UserModel user)
+        public async Task<ActionResult<AuthenticationResponse>> RegisterApplicationUser([FromBody] UserModel user)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     //da li vec postoji registrovan
-                    var userFromDb =  _context.AppUsers.SingleOrDefault(_ => _.Email == user.UserEmail);
-                    if(userFromDb != null)
+                    var userFromDb = _context.AppUsers.SingleOrDefault(_ => _.Email == user.UserEmail);
+                    if (userFromDb != null)
                     {
                         //TODO
-                        
+
                     }
                     AppUser appUser;
                     if (user.UserTeam == null) {
-                         appUser = new AppUser()
+                        appUser = new AppUser()
                         {
                             UserName = user.Username,
                             Email = user.UserEmail,
@@ -147,33 +148,34 @@ namespace SmartGrid2021Project.Controllers
                     try
                     {
                         var result = await userManager.CreateAsync(appUser, user.Password);
-                    
-                    if (result.Succeeded)
-                    {
-                        var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
-                        EmailHelper emailHelper = new EmailHelper();
-                        var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { token, email = appUser.Email }, Request.Scheme);
-                        
 
-                        await emailHelper.SendEmailAsync(appUser.Email, "Successfully registered. [Request is processing] Your account must be allowed by admin and then you can log in into application!", confirmationLink);
+                        if (result.Succeeded)
+                        {
+                            var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
+                            EmailHelper emailHelper = new EmailHelper();
+                            var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { token, email = appUser.Email }, Request.Scheme);
 
-                       
-                        
 
-                        return await BuildToken(appUser);
+                            await emailHelper.SendEmailAsync(appUser.Email, "Successfully registered. [Request is processing] Your account must be allowed by admin and then you can log in into application!", confirmationLink);
+
+                            _context.Notifications.Add(new Notification() { Desc = "New user registered.", Type = "Info", Icon = "info", Date = DateTime.Now, Color = "#969696" });
+                            await _context.SaveChangesAsync();
+
+
+                            return await BuildToken(appUser);
+                        }
+                        else
+                        {
+                            return BadRequest(result.Errors);
+                        }
                     }
-                    else
-                    {
-                        return BadRequest(result.Errors);
-                    }
-                    }
-                    catch (Exception e){
+                    catch (Exception e) {
 
                     }
                 }
-            }catch(Exception e)
+            } catch (Exception e)
             {
-                
+
             }
             throw new Exception();
         }
@@ -183,7 +185,7 @@ namespace SmartGrid2021Project.Controllers
             var claims = new List<Claim>()
             {
                 new Claim("email", userModel.Email)
-                
+
             };
 
             var user = await userManager.FindByEmailAsync(userModel.Email);
@@ -207,19 +209,19 @@ namespace SmartGrid2021Project.Controllers
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
             var user = await userManager.FindByEmailAsync(email);
-            if(user == null)
+            if (user == null)
             {
                 throw new Exception();
             }
             var result = await userManager.ConfirmEmailAsync(user, token);
-            
+
             return Redirect("https://localhost:4200/test");
         }
 
         [HttpPost]
         [AllowAnonymous]
         [Route("Login")]
-        public async Task<ActionResult<AuthenticationResponse>> Login([FromBody]UserLoginCredentials model)
+        public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] UserLoginCredentials model)
         {
             var user = await userManager.FindByEmailAsync(model.UserEmail);
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password) && user.AccountAllowed == true)
@@ -241,35 +243,35 @@ namespace SmartGrid2021Project.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(it => it.Errors).Select(it => it.ErrorMessage));
 
-            
+
             UserModel validateUser = VerifyToken(loginModel);
             if (validateUser != null)
             {
                 return await RegisterApplicationUser(validateUser);
-                
+
             }
-            
+
             return NoContent();
         }
-        
+
 
         [HttpPost]
         [Route("FacebookSocialLogin")]
         [AllowAnonymous]
         // POST: api/<controller>/Login
-        public async Task<ActionResult<AuthenticationResponse>> FacebookSocialLogin([FromBody]AuthenticateRequest loginModel)
+        public async Task<ActionResult<AuthenticationResponse>> FacebookSocialLogin([FromBody] AuthenticateRequest loginModel)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(it => it.Errors).Select(it => it.ErrorMessage));
             UserModel uModel = VerifyFacebookToken(loginModel);
-            if(uModel != null)
+            if (uModel != null)
             {
-                return await RegisterApplicationUser(uModel); 
+                return await RegisterApplicationUser(uModel);
             }
 
             return NoContent();
         }
-        
+
         public UserModel VerifyToken(AuthenticateRequest providerToken)
         {
             var httpClient = new HttpClient();
@@ -311,7 +313,7 @@ namespace SmartGrid2021Project.Controllers
                 idName++;
                 return var;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
             }
@@ -359,7 +361,7 @@ namespace SmartGrid2021Project.Controllers
                 return var;
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
             }
@@ -379,7 +381,7 @@ namespace SmartGrid2021Project.Controllers
                     _context.SaveChanges();
 
                     EmailHelper emailHelper = new EmailHelper();
-                    
+
 
                     await emailHelper.SendEmailAsync(user.Email, "[Request is processed]", "Your account is allowed by admin and now you can log in into application! \nAPP LINK: http://localhost:4200");
 
@@ -387,7 +389,7 @@ namespace SmartGrid2021Project.Controllers
 
                     return Ok();
                 }
-            }catch(Exception e)
+            } catch (Exception e)
             {
 
             }
@@ -432,6 +434,79 @@ namespace SmartGrid2021Project.Controllers
                 _context.Users.Remove(_context.AppUsers.FirstOrDefault(_ => _.UserName == username));
                 _context.SaveChanges();
                 return Ok();
+            }
+            catch (Exception e)
+            {
+
+            }
+            return NotFound();
+        }
+
+        [HttpGet("{username}")]
+        [Route("GetUser")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetUser([FromQuery] string username)
+        {
+            try
+            {
+                var user = _context.AppUsers.FirstOrDefault(_ => _.Email == username);
+                return new
+                {
+                    id = user.Id,
+                    userName = user.UserName,
+                    firstname = user.FirstName,
+                    lastname = user.LastName,
+                    address = user.Address,
+                    userEmail = user.Email,
+                    birthday = user.DateOfBirth,
+                    roleOfUser = user.RoleOfUser,
+                    teamOfUser = user.UserTeamId,
+                    userImage = user.UserImage,
+                };
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
+        }
+
+        [HttpPut("{id}")]
+        [Route("ModifyUser")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ModifyUser([FromQuery]string id,[FromBody] object userData)
+        {
+            var newUser = JObject.Parse(userData.ToString());
+            try
+            {
+                var user = _context.AppUsers.FirstOrDefault(_ => _.Id == id);
+                if(user != null)
+                {
+                    string s = user.PasswordHash;
+                    user.UserName = newUser["userName"].ToString();
+                    user.FirstName = newUser["firstname"].ToString();
+                    user.LastName = newUser["lastname"].ToString();
+                    user.Address = newUser["address"].ToString();
+                    //user.Email = newUser["userEmail"].ToString();
+                    user.DateOfBirth = DateTime.Parse(newUser["birthday"].ToString());
+                    user.UserImage = newUser["userImage"].ToString();
+                    if(user.RoleOfUser != newUser["roleOfUser"].ToString())
+                    {
+                        user.AccountAllowed = false;
+                    }
+                    user.RoleOfUser = newUser["roleOfUser"].ToString();
+                    if (newUser["teamOfUser"].ToString() != "")
+                    {
+                        user.UserTeamId = Int32.Parse(newUser["teamOfUser"].ToString());
+                    }
+                    else
+                    {
+                        user.UserTeamId = null;
+                    }
+
+                    _context.SaveChanges();
+                    return Ok();
+                }
             }
             catch (Exception e)
             {

@@ -68,6 +68,21 @@ export class NotificationsComponent implements OnInit {
               'display' : 'block'
             };
           }
+          else if(not.sp != null){
+            styles = {
+              'display' : 'block'
+            };
+          }
+          else if(not.sd != null){
+            styles = {
+              'display' : 'block'
+            };
+          }
+          else if(not.wr != null){
+            styles = {
+              'display' : 'block'
+            };
+          }
         }
       });
       return styles;
@@ -80,11 +95,11 @@ export class NotificationsComponent implements OnInit {
         if(not.inc != null){
           this.RouterObject.navigate(["AddIncident/"+not.inc]);
         }else if(not.sd !=null){
-          
+          this.RouterObject.navigate(["AddSafetyDocument/"+not.sd]);
         }else if(not.sp != null){
           this.RouterObject.navigate(["AddSwitchingPlan/"+not.sp]);
         }else if(not.wr != null){
-    
+          this.RouterObject.navigate(["createworkrequest/"+not.wr]);
         }
       }
     });
@@ -123,7 +138,6 @@ export class NotificationsComponent implements OnInit {
   }
 
   doSearch(ntype:string,searchTerm:string){
-    
     if(ntype == undefined || ntype == 'All'){
       this.filteredData = this.allNotifications;
     }
@@ -143,27 +157,28 @@ export class NotificationsComponent implements OnInit {
         this.searchData.push(this.filteredData[i]);
       }
 
-      if(this.filteredData[i].wr != null)
+      else if(this.filteredData[i].wr != null)
         if(this.filteredData[i].wr.toLowerCase().includes(searchTerm.trim().toLowerCase())){
           this.searchData.push(this.filteredData[i]);
         }
 
-      if(this.filteredData[i].sp != null)
+      else if(this.filteredData[i].sp != null)
         if(this.filteredData[i].sp.toLowerCase().includes(searchTerm.trim().toLowerCase())){
           this.searchData.push(this.filteredData[i]);
         }
 
-      if(this.filteredData[i].sd != null)
+      else if(this.filteredData[i].sd != null)
         if(this.filteredData[i].sd.toLowerCase().includes(searchTerm.trim().toLowerCase())){
           this.searchData.push(this.filteredData[i]);
         }
 
-      if(this.filteredData[i].wr != null)
+      else if(this.filteredData[i].wr != null)
         if(this.filteredData[i].inc.toLowerCase().includes(searchTerm.trim().toLowerCase())){
           this.searchData.push(this.filteredData[i]);
         }
 
     }
+    
     this.dataSource = new MatTableDataSource(this.searchData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

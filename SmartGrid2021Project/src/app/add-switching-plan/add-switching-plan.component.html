@@ -11,7 +11,7 @@
 
     <button *ngIf="modifyModeActivated == false && (role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER')" type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="submitSwitchingPlan()" disabled="{{!buttonEnabled}}" style="left: 10px;" #si>Submit switching plan</button>
 
-    <button *ngIf="modifyModeActivated == true && (role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER')" type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="modifySWP()" disabled="{{!modifyModeActivated}}" style="left: 10px;" #si>Modify switching plan</button>
+    <button *ngIf="documentInvalid == false && modifyModeActivated == true && (role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER')" type="button" mat-raised-button [color]="triedToCrash === true ? 'warn' : 'primary'" (click)="modifySWP()" disabled="{{!modifyModeActivated}}" style="left: 10px;" #si>Modify switching plan</button>
 </nav>
 <router-outlet></router-outlet>
 

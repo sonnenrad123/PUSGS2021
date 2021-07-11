@@ -73,7 +73,7 @@ export class NavbarComponent implements OnInit {
             }
         });
         }
-        console.log(not);
+        //console.log(not);
       },
       error => {
         console.log(error);

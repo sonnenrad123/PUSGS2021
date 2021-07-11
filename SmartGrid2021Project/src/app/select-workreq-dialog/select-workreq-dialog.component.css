@@ -1,0 +1,32 @@
+
+.mat-cell,
+.mat-header-cell {
+word-wrap: initial;
+display: table-cell;
+padding: 0px 10px;
+line-break: unset;
+
+white-space: nowrap;
+overflow: hidden;
+vertical-align: middle;
+}
+.main-table{
+  
+  overflow-y:hidden;
+  overflow-x:scroll;
+}
+
+table{
+  width: 100%;
+  overflow-y:hidden;
+  overflow-x:scroll;
+}
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+.mat-row:hover {
+  background-color: lightblue;
+  cursor: pointer;
+}

@@ -47,6 +47,7 @@ import { IsDispatcherGuard } from './guards/is-dispatcher.guard';
 import { IsWorkerWithRightsGuard } from './guards/is-worker-with-rights.guard';
 import { IsWithPrivilegiesGuard } from './guards/is-with-privilegies.guard';
 import { ReportOutageDialogComponent } from './report-outage-dialog/report-outage-dialog.component';
+import { SettingsComponentComponent } from './settings-component/settings-component.component';
 
 const routes: Routes = [
   {
@@ -290,6 +291,13 @@ const routes: Routes = [
     component: GeneralLayoutComponent,
     children:[
       {path: '', component:NotificationsComponent}
+    ]
+  },
+  {
+    path:'Settings',
+    component: GeneralLayoutComponent,
+    children:[
+      {path: '', component:SettingsComponentComponent}
     ]
   },
   {

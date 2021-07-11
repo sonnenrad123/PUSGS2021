@@ -23,6 +23,7 @@ export class AddSwitchingPlanComponent implements OnInit {
   intervalFormCheck: any;
   role:string;
   
+  documentInvalid:boolean = false;
 
   modifyModeActivated: boolean = false;
 
@@ -108,12 +109,17 @@ export class AddSwitchingPlanComponent implements OnInit {
         'dateTimeCreated' : this.swpReplyData.dateTimeCreated,
         }
 
+        if(basicform.status === "Canceled" || basicform.status === "Completed"){
+          this.documentInvalid = true;
+        } 
+
         
         window.sessionStorage.setItem('basicInfoForm',JSON.stringify(basicform));
         window.sessionStorage.setItem('ModifySWPObject',JSON.stringify(response));
         window.sessionStorage.setItem('switchingPlanStateForm',JSON.stringify(response.stateChanges));
         window.sessionStorage.setItem('switchingPlanSelectedEquipment',JSON.stringify(response.equipment));
         window.sessionStorage.setItem('switchingPlanInsForm',JSON.stringify(response.workInstructions));
+        window.sessionStorage.setItem('SWPMAttCurrValue', JSON.stringify(response.attachments));
         this.router.navigate(["AddSwitchingPlan/"+this.swpId+"/BasicInfo"]);
       },
       error => {
@@ -149,10 +155,15 @@ export class AddSwitchingPlanComponent implements OnInit {
       });
     }
 
+    let attachments;
+    if(window.sessionStorage.getItem('SWPMAttCurrValue') !== null){      
+      attachments = JSON.parse(window.sessionStorage.getItem('SWPMAttCurrValue')) as Array<any>; 
+    }
+
     let id = this.swpReplyData.id;
     let user = this.swpReplyData.user;
 
-    let mergedObjects = {...basicInfoFormValue,...switchingPlanStateValue,stateChangesString,workInstrutcionsString,deviceIds,user,id};
+    let mergedObjects = {...basicInfoFormValue,...switchingPlanStateValue,stateChangesString,workInstrutcionsString,deviceIds,user,id,attachments};
 
     if(basicInfoFormValue != null){
       console.log(basicInfoFormValue);
@@ -164,6 +175,8 @@ export class AddSwitchingPlanComponent implements OnInit {
           window.sessionStorage.removeItem('switchingPlanStateForm');
           window.sessionStorage.removeItem('switchingPlanSelectedEquipment')
           window.sessionStorage.removeItem('switchingPlanInsForm');
+          window.sessionStorage.removeItem('SWPMAttCurrValue');
+          this.router.navigate(["SwitchingPlans"]);
           this._snackBar.open('Switching plan modified!','Ok');
         },
         error => {
@@ -174,8 +187,6 @@ export class AddSwitchingPlanComponent implements OnInit {
     else{
       this.triedToCrash = true;
     }
-    this.router.navigate(["SwitchingPlans"]);
-    
   }
 
   ngAfterViewInit() {
@@ -201,6 +212,7 @@ export class AddSwitchingPlanComponent implements OnInit {
     window.sessionStorage.removeItem('switchingPlanInsForm');
     window.sessionStorage.removeItem('ModifySWPObject');
     window.sessionStorage.removeItem('modifyModeActivated');
+    window.sessionStorage.removeItem('SWPMAttCurrValue');
   }
 
   toggle(param){
@@ -234,10 +246,14 @@ export class AddSwitchingPlanComponent implements OnInit {
         workInstrutcionsString = workInstrutcionsString + ';' + ins.desc + ',' + ins.device + ',' + ins.executed;
       });
     }
+    let attachments;
+    if(window.sessionStorage.getItem('SWPMAttCurrValue') !== null){      
+      attachments = JSON.parse(window.sessionStorage.getItem('SWPMAttCurrValue')) as Array<any>; 
+    }
 
     let creatorEmail = localStorage.getItem('user');
 
-    let mergedObjects = {...basicInfoFormValue,...switchingPlanStateValue,stateChangesString,workInstrutcionsString,deviceIds,creatorEmail};
+    let mergedObjects = {...basicInfoFormValue,...switchingPlanStateValue,stateChangesString,workInstrutcionsString,deviceIds,creatorEmail,attachments};
 
     if(basicInfoFormValue != null){
       console.log(basicInfoFormValue);
@@ -249,13 +265,14 @@ export class AddSwitchingPlanComponent implements OnInit {
           window.sessionStorage.removeItem('switchingPlanStateForm');
           window.sessionStorage.removeItem('switchingPlanSelectedEquipment')
           window.sessionStorage.removeItem('switchingPlanInsForm');
+          window.sessionStorage.removeItem('SWPMAttCurrValue');
+          this.router.navigate(["SwitchingPlans"]);
           this._snackBar.open('Switching plan added!','Ok');
         },
         error => {
           console.log(error);
         }
       );
-      this.router.navigate(["SwitchingPlans"]);
     }
     else{
       this.triedToCrash = true;

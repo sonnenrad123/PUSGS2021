@@ -3,6 +3,7 @@ import { error } from 'protractor';
 import { User } from 'src/app/models/user/user';
 import { UserAccountService } from 'src/app/services/user-account/user-account.service';
 
+
 @Component({
   selector: 'app-all-users',
   templateUrl: './all-users.component.html',

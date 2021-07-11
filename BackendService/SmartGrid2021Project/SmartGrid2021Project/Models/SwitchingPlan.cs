@@ -11,22 +11,25 @@ namespace SmartGrid2021Project.Models
 {
     public class StateChangesSP{
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string State{ get; set; }
         public DateTime Date { get; set; }
         public string Autor { get; set; }
         [JsonIgnore]
         public AppUser User { get; set; }
 
-        public StateChangesSP() { }
+        public StateChangesSP() { SwitchingPlans = new List<SwitchingPlan>(); }
+
+        public virtual ICollection<SwitchingPlan> SwitchingPlans { get; set; }
     }
 
-    public class AttachmentSP
+    /*public class AttachmentSP
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public AttachmentSP() { }
-    }
+        public virtual ICollection<SwitchingPlan> SwitchingPlans { get; set; }
+    }*/
 
     public class WorkInstructionSP
     {
@@ -35,9 +38,10 @@ namespace SmartGrid2021Project.Models
         public string Desc { get; set; }
         public string Device { get; set; }
         public string Executed { get; set; }
-        //public string Color { get; set; }
+        public string Color { get; set; }
 
-        public WorkInstructionSP() { }
+        public WorkInstructionSP() { SwitchingPlans = new List<SwitchingPlan>(); }
+        public virtual ICollection<SwitchingPlan> SwitchingPlans { get; set; }
     }
 
     public class SwitchingPlan
@@ -66,7 +70,7 @@ namespace SmartGrid2021Project.Models
         [JsonIgnore]
         public ICollection<StateChangesSP> StateChanges { get; set; }
         [JsonIgnore]
-        public ICollection<AttachmentSP> Attachments { get; set; }
+        public ICollection<Attachment> Attachments { get; set; }
         [JsonIgnore]
         public ICollection<WorkInstructionSP> WorkInstructions { get; set; }
 
@@ -87,7 +91,13 @@ namespace SmartGrid2021Project.Models
         [NotMapped]
         public string CreatorEmail { get; set; }
 
-        public SwitchingPlan() { }
+        public SwitchingPlan() 
+        {
+            Equipment = new List<Device>();
+            StateChanges = new List<StateChangesSP>();
+            Attachments = new List<Attachment>();
+            WorkInstructions = new List<WorkInstructionSP>();
+        }
         
     }
 }

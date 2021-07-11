@@ -153,6 +153,9 @@ namespace SmartGrid2021Project.Controllers
                 
                 
                 await _context.SaveChangesAsync();
+
+                _context.Notifications.Add(new Notification() { Desc = "Successfully added new work request. Id: WR" + workRequestfromDb.WR_id.ToString(), Type = "Success", Icon = "done", Date = DateTime.Now, Color = "#969696", Wr = workRequestfromDb.WR_id.ToString() });
+                await _context.SaveChangesAsync();
                 return Ok();
                     
                 
@@ -276,6 +279,8 @@ namespace SmartGrid2021Project.Controllers
                 }
 
 
+                await _context.SaveChangesAsync();
+                _context.Notifications.Add(new Notification() { Desc = "Work request has been modified. Id: WR" + workRequestfromDb.WR_id.ToString(), Type = "Info", Icon = "info", Date = DateTime.Now, Color = "#969696", Wr = workRequestfromDb.WR_id.ToString() });
                 await _context.SaveChangesAsync();
                 return Ok();
 

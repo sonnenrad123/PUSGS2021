@@ -86,6 +86,8 @@ namespace SmartGrid2021Project.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                _context.Notifications.Add(new Notification() { Desc = "Incident has been modified. Id: INC" + incident.Id.ToString(), Type = "info", Icon = "info", Date = DateTime.Now, Color = "#969696", Inc = incident.Id.ToString() });
+                await _context.SaveChangesAsync();
             }
             
             catch (DbUpdateConcurrencyException)

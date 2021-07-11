@@ -71,7 +71,7 @@ namespace SmartGrid2021Project.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                _context.Notifications.Add(new Notification() { Desc = "Successfully modified device. Id:" + id.ToString(), Type = "Success", Icon = "done", Date = DateTime.Now, Color = "#969696" });
+                _context.Notifications.Add(new Notification() { Desc = "Device has been modified. Id:" + id.ToString(), Type = "Info", Icon = "info", Date = DateTime.Now, Color = "#969696" });
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -131,8 +131,17 @@ namespace SmartGrid2021Project.Controllers
                 return NotFound();
             }
 
-            _context.Devices.Remove(device);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Devices.Remove(device);
+                await _context.SaveChangesAsync();
+                _context.Notifications.Add(new Notification() { Desc = "Device has been deleted . Id:" + id.ToString(), Type = "Warning", Icon = "warning", Date = DateTime.Now, Color = "#969696" });
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
             return device;
         }

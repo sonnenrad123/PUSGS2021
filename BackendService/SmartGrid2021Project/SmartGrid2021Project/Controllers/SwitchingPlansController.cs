@@ -95,13 +95,36 @@ namespace SmartGrid2021Project.Controllers
                 return BadRequest();
             }
 
-            //_context.Database.ExecuteSqlRaw(string.Format("delete from Devices where SwitchingPlanId = {0}", switchingPlan.Id));
-            //_context.Database.ExecuteSqlRaw(string.Format("delete from WorkInstructionSPs where SwitchingPlanId = {0}", switchingPlan.Id));
-            //_context.Database.ExecuteSqlRaw(string.Format("delete from StateChangesSPs where SwitchingPlanId = {0}", switchingPlan.Id));
-            //await _context.SaveChangesAsync();
+            try
+            {
+                
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
-            switchingPlan.Equipment = new HashSet<Device>();
-            string[] deviceIds = deviceIds = switchingPlan.DeviceIds.Split(';');
+            var swpDb = await _context.SwitchingPlans.Where(_ => _.Id == switchingPlan.Id).
+                Include(sp => sp.Equipment).
+                Include(sp => sp.StateChanges).
+                Include(sp => sp.WorkInstructions).
+                Include(sp => sp.Attachments).
+                Include(sp => sp.User).
+                //Include(sp => sp.CustomId).
+                //Include(sp => sp.DeviceIds).
+                //Include(sp => sp.WorkInstrutcionsString).
+                //Include(sp => sp.StateChangesString).
+                //Include(sp => sp.AttachmentsString).
+                //Include(sp => sp.CreatorEmail).
+                SingleOrDefaultAsync();
+
+            if (swpDb != null)
+            {
+                _context.Entry(swpDb).CurrentValues.SetValues(switchingPlan);
+            }
+
+            swpDb.Equipment = new List<Device>();
+            string[] deviceIds = switchingPlan.DeviceIds.Split(';');
 
             foreach (string deviceid in deviceIds)
             {
@@ -109,25 +132,28 @@ namespace SmartGrid2021Project.Controllers
                     continue;
                 if (int.TryParse(deviceid, out int idd))
                 {
-                    Device devtemp = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == id);
-                    switchingPlan.Equipment.Add(devtemp);
+                    Device devtemp = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == idd);
+                    if(!swpDb.Equipment.Contains(devtemp))
+                        swpDb.Equipment.Add(devtemp);
                 }
             }
 
-            //AppUser creator = await _context.AppUsers.FirstOrDefaultAsync((x) => x.Email == switchingPlan.CreatorEmail);
-            //switchingPlan.User;
+            swpDb.CreatorEmail = switchingPlan.CreatedBy;
+            AppUser creator = await _context.AppUsers.FirstOrDefaultAsync((x) => x.Email == swpDb.CreatorEmail);
+            swpDb.User = creator;
 
-            switchingPlan.StateChanges = new HashSet<StateChangesSP>();
+            swpDb.StateChanges = new List<StateChangesSP>();
             string[] stateChanges = switchingPlan.StateChangesString.Split(';');
             foreach (string state in stateChanges)
             {
                 if (state == "")
                     continue;
-                StateChangesSP scp = new StateChangesSP() { State = state, Date = DateTime.Now, Autor = switchingPlan.CreatedBy};
-                switchingPlan.StateChanges.Add(scp);
+                StateChangesSP scp = new StateChangesSP() { State = state, Date = DateTime.Now, Autor = swpDb.CreatorEmail, User = swpDb.User};
+                if(!swpDb.StateChanges.Contains(scp))
+                    swpDb.StateChanges.Add(scp);
             }
 
-            switchingPlan.WorkInstructions = new HashSet<WorkInstructionSP>();
+            swpDb.WorkInstructions = new List<WorkInstructionSP>();
             string[] workIns = switchingPlan.WorkInstrutcionsString.Split(';');
             foreach (string ins in workIns)
             {
@@ -135,38 +161,74 @@ namespace SmartGrid2021Project.Controllers
                     continue;
                 string[] split = ins.Split(',');
 
-                /*Device d = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == int.Parse(split[1]));
+                Device d = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == int.Parse(split[1].Substring(3)));
                 string color = "";
-                if(d.Address == switchingPlan.Street)
+                if(d.Address == swpDb.Street && swpDb.Equipment.Contains(d) && swpDb.StateChanges.ToList()[swpDb.StateChanges.Count - 1].State == "Approve")
                 {
                     color = "#64FF64";
                 }
                 else
                 {
                     color = "#FF6464";
-                }*/
+                }
 
 
-                WorkInstructionSP wi = new WorkInstructionSP() { Desc = split[0], Device = split[1], Executed = split[2]/*, Color=color*/ };
-                switchingPlan.WorkInstructions.Add(wi);
+                WorkInstructionSP wi = new WorkInstructionSP() { Desc = split[0], Device = split[1], Executed = split[2], Color=color };
+                swpDb.WorkInstructions.Add(wi);
             }
 
-            _context.Entry(switchingPlan).State = EntityState.Modified;
+            bool gg = false;
+            foreach(var item in swpDb.WorkInstructions)
+            {
+                gg = true;
+                if(item.Executed == "Unexecuted")
+                {
+                    gg = false;
+                    break;
+                }
+            }
+
+            if (gg)
+                swpDb.Status = "Completed";
+
+            swpDb.AttachmentsString = "";
+            swpDb.Attachments = new List<Attachment>();
+            if (switchingPlan.Attachments != null)
+            {
+                swpDb.Attachments = switchingPlan.Attachments;    
+            
+            }
+            
+            //_context.Entry(switchingPlan).CurrentValues.SetValues(switchingPlan);
+
+            //var entry = _context.Entry(switchingPlan);
+
+            //entry.CurrentValues.SetValues(switchingPlan);
+
+            //_context.Database.ExecuteSqlRaw(string.Format("delete from DeviceSwitchingPlan where SwitchingPlansId = {0}", switchingPlan.Id));
+            //_context.Database.ExecuteSqlRaw(string.Format("delete from StateChangesSPSwitchingPlan where SwitchingPlansId = {0}", switchingPlan.Id));
+            //_context.Database.ExecuteSqlRaw(string.Format("delete from SwitchingPlanWorkInstructionSP where SwitchingPlansId = {0}", switchingPlan.Id));
+            
+
 
             try
             {
+                //_context.Entry(swpDb).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+
+                _context.Database.ExecuteSqlRaw(string.Format("delete from WorkInstructionSPs where Id not in (select x.WorkInstructionsId from SwitchingPlanWorkInstructionSP x)"));
+                _context.Database.ExecuteSqlRaw(string.Format("delete from StateChangesSPs where Id not in (select x.StateChangesId from StateChangesSPSwitchingPlan x)"));
+                //_context.Database.ExecuteSqlRaw(string.Format("delete from Attachments where Id not in (select x.StateChangesId from StateChangesSPSwitchingPlan x)"));
+
+                await _context.SaveChangesAsync();
+
+                _context.Notifications.Add(new Notification() { Desc = "Switching plan has been modified. Id: SWP" + switchingPlan.Id.ToString(), Type = "Info", Icon = "info", Date = DateTime.Now, Color = "#969696", Sp = switchingPlan.Id.ToString() });
+                await _context.SaveChangesAsync();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!SwitchingPlanExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw new Exception(e.Message);
             }
 
             return NoContent();
@@ -179,7 +241,7 @@ namespace SmartGrid2021Project.Controllers
         {
             try
             {
-                switchingPlan.Equipment = new HashSet<Device>();
+                switchingPlan.Equipment = new List<Device>();
                 string[] deviceIds = deviceIds = switchingPlan.DeviceIds.Split(';');
               
                 foreach (string deviceid in deviceIds)   
@@ -196,7 +258,7 @@ namespace SmartGrid2021Project.Controllers
                 AppUser creator = await _context.AppUsers.FirstOrDefaultAsync((x) => x.Email == switchingPlan.CreatorEmail);
                 switchingPlan.User = creator;
                 
-                switchingPlan.StateChanges = new HashSet<StateChangesSP>();
+                switchingPlan.StateChanges = new List<StateChangesSP>();
                 string[] stateChanges = switchingPlan.StateChangesString.Split(';');
                 foreach(string state in stateChanges)
                 {
@@ -206,7 +268,7 @@ namespace SmartGrid2021Project.Controllers
                     switchingPlan.StateChanges.Add(scp);
                 }
                 
-                switchingPlan.WorkInstructions = new HashSet<WorkInstructionSP>();
+                switchingPlan.WorkInstructions = new List<WorkInstructionSP>();
                 string[] workIns = switchingPlan.WorkInstrutcionsString.Split(';');
                 foreach(string ins in workIns)
                 {
@@ -214,25 +276,28 @@ namespace SmartGrid2021Project.Controllers
                         continue;
                     string[] split = ins.Split(',');
 
-                    /*Device d = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == int.Parse(split[1]));
+                    Device d = await _context.Devices.FirstOrDefaultAsync((x) => x.Id == int.Parse(split[1].Substring(3)));
                     string color = "";
-                    if(d.Address == switchingPlan.Street)
+                    if (d.Address == switchingPlan.Street && switchingPlan.Equipment.Contains(d) && switchingPlan.Status == "Approved")
                     {
                         color = "#64FF64";
                     }
                     else
                     {
                         color = "#FF6464";
-                    }*/
+                    }
 
 
-                    WorkInstructionSP wi = new WorkInstructionSP() {Desc = split[0], Device = split[1], Executed = split[2]/*, Color=color*/ };
+                    WorkInstructionSP wi = new WorkInstructionSP() {Desc = split[0], Device = split[1], Executed = split[2], Color=color };
                     switchingPlan.WorkInstructions.Add(wi);
                 }
 
+                //switchingPlan.Attachments = new List<Attachment>();
                 //attachments...*/
 
                 _context.SwitchingPlans.Add(switchingPlan);
+                await _context.SaveChangesAsync();
+                _context.Notifications.Add(new Notification() { Desc = "Successfully added new switching plan. Id: SWP" + switchingPlan.Id.ToString(), Type = "Success", Icon = "done", Date = DateTime.Now, Color = "#969696", Sp = switchingPlan.Id.ToString() });
                 await _context.SaveChangesAsync();
             }
             catch(Exception e)

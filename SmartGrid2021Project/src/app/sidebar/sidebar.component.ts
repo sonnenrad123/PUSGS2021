@@ -38,15 +38,15 @@ export const ROUTES: RouteInfo[] = [
     { path: '/TeamsView', title:'Add teams',icon:'pe-7s-users',class:''},
     
 
-    { path: '/NoRoute', title: 'Notifications' , icon:'pe-7s-bell', class:'secondary'},
-    { path: '/NoRoute', title:'Settings',icon:'pe-7s-tools',class:'secondary'},
+    { path: '/Notifications', title: 'Notifications' , icon:'pe-7s-bell', class:'secondary'},
+    { path: '/Settings', title:'Settings',icon:'pe-7s-tools',class:'secondary'},
     { path: '/AllUsers', title: 'All Users', icon:'pe-7s-users', class: ''},
     //ispod su hidden rute da bi title funkcija radila
 
     { path: '/AddIncident', title:'Add incident',icon:'',class:'hidden'},
     { path: '/WorkRequests', title: 'Work Requests', icon: 'pe-7s-note2', class: 'hidden'},
     { path: '/SafetyDocuments', title: 'Safety Documents', icon: 'pe-7s-note2', class: 'hidden'},
-    //{ path: '/switchingplans', title: 'Switching Plans', icon: 'pe-7s-note2', class: '' }
+    { path: '/SwitchingPlans', title: 'Switching Plans', icon: 'pe-7s-note2', class: 'hidden' }
 ];
 
 

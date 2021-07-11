@@ -49,6 +49,21 @@ namespace SmartGrid2021Project.Migrations
                     b.ToTable("AttachmentSafetyDocument");
                 });
 
+            modelBuilder.Entity("AttachmentSwitchingPlan", b =>
+                {
+                    b.Property<int>("AttachmentsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SwitchingPlansId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AttachmentsId", "SwitchingPlansId");
+
+                    b.HasIndex("SwitchingPlansId");
+
+                    b.ToTable("AttachmentSwitchingPlan");
+                });
+
             modelBuilder.Entity("AttachmentWorkRequest", b =>
                 {
                     b.Property<int>("AttachmentsId")
@@ -92,6 +107,21 @@ namespace SmartGrid2021Project.Migrations
                     b.HasIndex("SafetyDocumentsId");
 
                     b.ToTable("DeviceSafetyDocument");
+                });
+
+            modelBuilder.Entity("DeviceSwitchingPlan", b =>
+                {
+                    b.Property<int>("EquipmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SwitchingPlansId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EquipmentId", "SwitchingPlansId");
+
+                    b.HasIndex("SwitchingPlansId");
+
+                    b.ToTable("DeviceSwitchingPlan");
                 });
 
             modelBuilder.Entity("DeviceWorkRequest", b =>
@@ -387,23 +417,6 @@ namespace SmartGrid2021Project.Migrations
                     b.ToTable("Attachments");
                 });
 
-            modelBuilder.Entity("SmartGrid2021Project.Models.AttachmentSP", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("SwitchingPlanId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SwitchingPlanId");
-
-                    b.ToTable("AttachmentSPs");
-                });
-
             modelBuilder.Entity("SmartGrid2021Project.Models.Call", b =>
                 {
                     b.Property<int>("CallId")
@@ -447,15 +460,10 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SwitchingPlanId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SwitchingPlanId");
 
                     b.ToTable("Devices");
                 });
@@ -641,9 +649,10 @@ namespace SmartGrid2021Project.Migrations
 
             modelBuilder.Entity("SmartGrid2021Project.Models.StateChangesSP", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Autor")
                         .HasColumnType("nvarchar(max)");
@@ -654,15 +663,10 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SwitchingPlanId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SwitchingPlanId");
 
                     b.HasIndex("UserId");
 
@@ -805,6 +809,9 @@ namespace SmartGrid2021Project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Desc")
                         .HasColumnType("nvarchar(max)");
 
@@ -814,12 +821,7 @@ namespace SmartGrid2021Project.Migrations
                     b.Property<string>("Executed")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SwitchingPlanId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SwitchingPlanId");
 
                     b.ToTable("WorkInstructionSPs");
                 });
@@ -908,6 +910,36 @@ namespace SmartGrid2021Project.Migrations
                     b.ToTable("WorkRequests");
                 });
 
+            modelBuilder.Entity("StateChangesSPSwitchingPlan", b =>
+                {
+                    b.Property<int>("StateChangesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SwitchingPlansId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StateChangesId", "SwitchingPlansId");
+
+                    b.HasIndex("SwitchingPlansId");
+
+                    b.ToTable("StateChangesSPSwitchingPlan");
+                });
+
+            modelBuilder.Entity("SwitchingPlanWorkInstructionSP", b =>
+                {
+                    b.Property<int>("SwitchingPlansId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkInstructionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SwitchingPlansId", "WorkInstructionsId");
+
+                    b.HasIndex("WorkInstructionsId");
+
+                    b.ToTable("SwitchingPlanWorkInstructionSP");
+                });
+
             modelBuilder.Entity("AttachmentIncident", b =>
                 {
                     b.HasOne("SmartGrid2021Project.Models.Attachment", null)
@@ -934,6 +966,21 @@ namespace SmartGrid2021Project.Migrations
                     b.HasOne("SmartGrid2021Project.Models.SafetyDocument", null)
                         .WithMany()
                         .HasForeignKey("SafetyDocumentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AttachmentSwitchingPlan", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.Attachment", null)
+                        .WithMany()
+                        .HasForeignKey("AttachmentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartGrid2021Project.Models.SwitchingPlan", null)
+                        .WithMany()
+                        .HasForeignKey("SwitchingPlansId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -979,6 +1026,21 @@ namespace SmartGrid2021Project.Migrations
                     b.HasOne("SmartGrid2021Project.Models.SafetyDocument", null)
                         .WithMany()
                         .HasForeignKey("SafetyDocumentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DeviceSwitchingPlan", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.Device", null)
+                        .WithMany()
+                        .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartGrid2021Project.Models.SwitchingPlan", null)
+                        .WithMany()
+                        .HasForeignKey("SwitchingPlansId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1058,13 +1120,6 @@ namespace SmartGrid2021Project.Migrations
                     b.Navigation("UserTeam");
                 });
 
-            modelBuilder.Entity("SmartGrid2021Project.Models.AttachmentSP", b =>
-                {
-                    b.HasOne("SmartGrid2021Project.Models.SwitchingPlan", null)
-                        .WithMany("Attachments")
-                        .HasForeignKey("SwitchingPlanId");
-                });
-
             modelBuilder.Entity("SmartGrid2021Project.Models.Call", b =>
                 {
                     b.HasOne("SmartGrid2021Project.Models.AppUser", "Caller")
@@ -1072,13 +1127,6 @@ namespace SmartGrid2021Project.Migrations
                         .HasForeignKey("CallerId");
 
                     b.Navigation("Caller");
-                });
-
-            modelBuilder.Entity("SmartGrid2021Project.Models.Device", b =>
-                {
-                    b.HasOne("SmartGrid2021Project.Models.SwitchingPlan", null)
-                        .WithMany("Equipment")
-                        .HasForeignKey("SwitchingPlanId");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.Incident", b =>
@@ -1113,10 +1161,6 @@ namespace SmartGrid2021Project.Migrations
 
             modelBuilder.Entity("SmartGrid2021Project.Models.StateChangesSP", b =>
                 {
-                    b.HasOne("SmartGrid2021Project.Models.SwitchingPlan", null)
-                        .WithMany("StateChanges")
-                        .HasForeignKey("SwitchingPlanId");
-
                     b.HasOne("SmartGrid2021Project.Models.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -1148,13 +1192,6 @@ namespace SmartGrid2021Project.Migrations
                     b.Navigation("WorkRequest");
                 });
 
-            modelBuilder.Entity("SmartGrid2021Project.Models.WorkInstructionSP", b =>
-                {
-                    b.HasOne("SmartGrid2021Project.Models.SwitchingPlan", null)
-                        .WithMany("WorkInstructions")
-                        .HasForeignKey("SwitchingPlanId");
-                });
-
             modelBuilder.Entity("SmartGrid2021Project.Models.WorkRequest", b =>
                 {
                     b.HasOne("SmartGrid2021Project.Models.AppUser", "AppUser")
@@ -1170,6 +1207,36 @@ namespace SmartGrid2021Project.Migrations
                     b.Navigation("Incident");
                 });
 
+            modelBuilder.Entity("StateChangesSPSwitchingPlan", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.StateChangesSP", null)
+                        .WithMany()
+                        .HasForeignKey("StateChangesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartGrid2021Project.Models.SwitchingPlan", null)
+                        .WithMany()
+                        .HasForeignKey("SwitchingPlansId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SwitchingPlanWorkInstructionSP", b =>
+                {
+                    b.HasOne("SmartGrid2021Project.Models.SwitchingPlan", null)
+                        .WithMany()
+                        .HasForeignKey("SwitchingPlansId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartGrid2021Project.Models.WorkInstructionSP", null)
+                        .WithMany()
+                        .HasForeignKey("WorkInstructionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SmartGrid2021Project.Models.AppUser", b =>
                 {
                     b.Navigation("Calls");
@@ -1180,17 +1247,6 @@ namespace SmartGrid2021Project.Migrations
             modelBuilder.Entity("SmartGrid2021Project.Models.Incident", b =>
                 {
                     b.Navigation("WorkRequests");
-                });
-
-            modelBuilder.Entity("SmartGrid2021Project.Models.SwitchingPlan", b =>
-                {
-                    b.Navigation("Attachments");
-
-                    b.Navigation("Equipment");
-
-                    b.Navigation("StateChanges");
-
-                    b.Navigation("WorkInstructions");
                 });
 
             modelBuilder.Entity("SmartGrid2021Project.Models.Team", b =>

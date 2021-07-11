@@ -105,7 +105,12 @@ import { SelectSwitchingPlanModalDialogComponent } from './select-switching-plan
 
 
 import { SaveChangesComponent } from './security/save-changes/save-changes.component';
-import { DisplayServerErrorsComponent } from './utilities/display-server-errors/display-server-errors.component'
+import { DisplayServerErrorsComponent } from './utilities/display-server-errors/display-server-errors.component';
+import { SelectWorkreqDialogComponent } from './select-workreq-dialog/select-workreq-dialog.component';
+import { SelectIncidentDialogComponent } from './select-incident-dialog/select-incident-dialog.component';
+import { SelectTeamDialogComponent } from './select-team-dialog/select-team-dialog.component';
+import { SelectDeviceDialogComponent } from './select-device-dialog/select-device-dialog.component';
+import { SettingsComponentComponent } from './settings-component/settings-component.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -180,7 +185,17 @@ import { DisplayServerErrorsComponent } from './utilities/display-server-errors/
 
     SaveChangesComponent,
 
-    DisplayServerErrorsComponent
+    DisplayServerErrorsComponent,
+
+    SelectWorkreqDialogComponent,
+
+    SelectIncidentDialogComponent,
+
+    SelectTeamDialogComponent,
+
+    SelectDeviceDialogComponent,
+
+    SettingsComponentComponent
     
     
   ],

@@ -119,6 +119,9 @@ namespace SmartGrid2021Project.Controllers
             }
             await _context.SaveChangesAsync();
 
+            _context.Notifications.Add(new Notification() { Desc = "Outage reported in "+call.Address, Type = "Warning", Icon = "warning", Date = DateTime.Now, Color = "#969696" });
+            await _context.SaveChangesAsync();
+
             return CreatedAtAction("GetCall", new { id = call.CallId }, call);
         }
 

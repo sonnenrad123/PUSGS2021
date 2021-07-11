@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>Please select work request</h2>
+
+<mat-dialog-content>
+    <div class="main-content">
+        <div class="row">
+             <div class="col-md-2">
+                <button class="pull-left" (click)="showAllWorkRequests()" [ngClass]="{'btn btn-info' : !toggleAll, 'btn btn-info btn-fill': toggleAll}">  All</button>
+                <button class="pull-left" (click)="showMyWorkRequests()" [ngClass]="{'btn btn-info' : !toggleMine, 'btn btn-info btn-fill': toggleMine}">Mine</button>
+             </div>
+             <div class="col-md-2 pull-right" >
+                
+                <mat-form-field>
+                    
+                    <mat-label> <i class="pe-7s-filter"></i>Filter</mat-label>
+                    
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+                    
+                </mat-form-field>
+             </div>
+             
+        </div>
+        <div class="mat-elevation-z2">
+            <div class="main-table">
+                <table mat-table  [dataSource]="dataSource" matSort> 
+                    <ng-container matColumnDef="customId" sticky>
+                       <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                       <td mat-cell *matCellDef="let row"> {{row.customId}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="startDateTime" sticky>
+                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date</th>
+                       <td mat-cell *matCellDef="let row"> {{row.startDateTime | date: "dd.MMM.yyyy"}} </td>
+                   </ng-container> 
+                   <ng-container matColumnDef="phoneNo">
+                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact Phone No. </th>
+                       <td mat-cell *matCellDef="let row"> {{row.phoneNo}} </td>
+                   </ng-container> 
+                   <ng-container matColumnDef="statusOfDocument">
+                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                       <td mat-cell *matCellDef="let row"> {{row.statusOfDocument}} </td>
+                   </ng-container> 
+                   <ng-container matColumnDef="street">
+                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+                       <td mat-cell *matCellDef="let row"> {{row.street}} </td>
+                   </ng-container>
+                   
+                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                   <ng-container *ngIf="role === 'ADMINISTRATOR' || role === 'DISPATCHER' || role === 'WORKER'">
+                        <tr  mat-row *matRowDef="let row; columns: displayedColumns;" (click)="RowClicked(row)" [class.demo-row-is-clicked]="clickedRow == row"></tr>
+                   </ng-container>
+                   <ng-container *ngIf="role === 'TEAM_MEMBER' || role === 'USER'">
+                        <tr  mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                   </ng-container>
+                   <tr class="mat-row" *matNoDataRow>
+                       <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                   </tr>    
+               </table>
+               <mat-paginator showFirstLastButtons [length]="totalAmountOfRecords" (page)="updatePagination($event)" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+          
+        </div>
+    </div>
+    </div>
+ 
+</mat-dialog-content>

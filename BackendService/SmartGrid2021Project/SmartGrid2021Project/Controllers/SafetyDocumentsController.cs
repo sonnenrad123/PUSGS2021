@@ -95,6 +95,8 @@ namespace SmartGrid2021Project.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                _context.Notifications.Add(new Notification() { Desc = "Safety document has been modified. Id: SD" + id.ToString(), Type = "Info", Icon = "info", Date = DateTime.Now, Color = "#969696", Sd = id.ToString() });
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -170,6 +172,9 @@ namespace SmartGrid2021Project.Controllers
 
 
                 _context.SafetyDocuments.Add(safetyDocument);
+                await _context.SaveChangesAsync();
+
+                _context.Notifications.Add(new Notification() { Desc = "Successfully added new safety document. Id: SD" + safetyDocument.Id.ToString(), Type = "Success", Icon = "done", Date = DateTime.Now, Color = "#969696", Sd = safetyDocument.Id.ToString() });
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction("GetSafetyDocument", new { id = safetyDocument.Id }, safetyDocument);
